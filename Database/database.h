@@ -1,10 +1,11 @@
-#ifndef DATABASE_DATABASE_H
-#define DATABASE_DATABASE_H
+#ifndef DATABASE_H
+#define DATABASE_H
 
 #include <QObject>
 
 #include <QSqlDatabase>
 #include <QFile>
+#include <QPointer>
 
 namespace Database {
 
@@ -20,21 +21,15 @@ class Database : public QObject
 {
     Q_OBJECT
 public:
-    /*!
-      Öffnet eine gegebene Datenbankdatei.
-      Existiert die Datei nicht, wird die Datenbank und alle zugehoerigen Tabellen neu erstellt.
-
-      \see ::Database(const QFile &databaseFile, QObject *parent)
-      */
-    explicit Database(const QString &databaseFilename, QObject *parent = 0);
+    static Database *instance();
 
     /*!
       Öffnet eine gegebene Datenbankdatei.
       Existiert die Datei nicht, wird die Datenbank und alle zugehoerigen Tabellen neu erstellt.
-
-      \see ::initialize(const QFile&);
       */
-    explicit Database(const QFile &databaseFile, QObject *parent = 0);
+    void initialize(const QFile &databaseFile);
+
+    QSqlDatabase sqlDatabase() const;
 
     /*!
       Schließt die QSqlDatabase.
@@ -42,11 +37,15 @@ public:
     ~Database();
 
 private:
-    /*!
-      Übernimmt die Arbeit der Konstruktoren.<br>
-      Öffnet eine gegebene Datenbankdatei. Existiert die Datei nicht, wird die Datenbank und alle zugehörigen Tabellen neu erstellt.
-      */
-    void initialize(const QFile &databaseFile);
+    class Guard
+    {
+    public:
+        ~Guard();
+    };
+    friend class Guard;
+
+    friend class TableRegistrar;
+    void registerTable(Table *table);
 
     /*!
       Erstellt alle Tabellen neu, falls sie nicht existieren und initialisiert ihre caches.
@@ -54,10 +53,20 @@ private:
     void createTables();
 
     QString m_databaseFilename; //!< Die Datenbankdatei
-    QList<Table> m_tables; //!< Alle registrierten Tabellen
-    QSqlDatabase m_database; //!< Die eigentliche Datenbank
+    QList<QPointer<Table> > m_tables; //!< Alle registrierten Tabellen
+    QSqlDatabase m_sqlDatabase; //!< Die eigentliche Datenbank
+    static QPointer<Database> m_instance; //!< Die eine Instanz der Datenbank
 };
+
+class TableRegistrar
+{
+public:
+    TableRegistrar(Table *table);
+};
+
+#define REGISTER_TABLE(classname) \
+    TableRegistrar _register_ ## classname(classname::instance());
 
 } // namespace Database
 
-#endif // DATABASE_DATABASE_H
+#endif // DATABASE_H

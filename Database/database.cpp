@@ -7,22 +7,27 @@
 
 namespace Database {
 
-Database::Database(const QString &databaseFilename, QObject *parent) :
-    QObject(parent)
+QPointer<Database> Database::m_instance(0);
+
+Database *Database::instance()
 {
-    const QFile databaseFile(databaseFilename);
-    initialize(databaseFile);
+    static Guard g;
+
+    if(m_instance.isNull())
+    {
+        m_instance = new Database();
+    }
+    return m_instance;
 }
 
-Database::Database(const QFile &databaseFile, QObject *parent) :
-    QObject(parent)
+Database::Guard::~Guard()
 {
-    initialize(databaseFile);
+    Database::m_instance->deleteLater();
 }
 
 Database::~Database()
 {
-    m_database.close();
+    m_sqlDatabase.close();
 }
 
 void Database::initialize(const QFile &databaseFile)
@@ -32,14 +37,14 @@ void Database::initialize(const QFile &databaseFile)
     m_databaseFilename = databaseFile.fileName();
 
     //Erstelle die Datenbank
-    m_database = QSqlDatabase::addDatabase("QSQLITE");
-    m_database.setDatabaseName(databaseFile.fileName());
+    m_sqlDatabase = QSqlDatabase::addDatabase("QSQLITE");
+    m_sqlDatabase.setDatabaseName(databaseFile.fileName());
 
     //Oeffne datenbank
-    if(!m_database.open("projectstats","projectstats"))
+    if(!m_sqlDatabase.open("projectstats","projectstats"))
     {
         qCritical() << "Database::loadFile: Could not open database file " << databaseFile.fileName();
-        qCritical() << "Database::loadFile: " << m_database.lastError();
+        qCritical() << "Database::loadFile: " << m_sqlDatabase.lastError();
         return;
     }
 
@@ -48,10 +53,27 @@ void Database::initialize(const QFile &databaseFile)
 
 void Database::createTables()
 {
-    //m_players->initializeTableIfNotExists();
+    foreach(QPointer<Table> table, m_tables)
+    {
+        Q_ASSERT(!table.isNull());
 
-    //m_players->initializeData();
+        table->initializeTableIfNotExists();
+    }
 }
 
+void Database::registerTable(Table *table)
+{
+    m_tables.append(table);
+}
+
+QSqlDatabase Database::Database::sqlDatabase() const
+{
+    return m_sqlDatabase;
+}
+
+TableRegistrar::TableRegistrar(Table *table)
+{
+    Database::instance()->registerTable(table);
+}
 
 } // namespace Database
