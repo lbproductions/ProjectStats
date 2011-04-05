@@ -1,5 +1,5 @@
-#ifndef DATABASE_H
-#define DATABASE_H
+#ifndef DATABASE_DATABASE_H
+#define DATABASE_DATABASE_H
 
 #include <QObject>
 
@@ -9,7 +9,7 @@
 
 namespace Database {
 
-class Table;
+class TableInterface;
 
 //! Repräsentiert eine komplette Datenbank.
 /*!
@@ -45,7 +45,7 @@ private:
     friend class Guard;
 
     friend class TableRegistrar;
-    void registerTable(Table *table);
+    void registerTable(TableInterface *table);
 
     /*!
       Erstellt alle Tabellen neu, falls sie nicht existieren und initialisiert ihre caches.
@@ -53,7 +53,7 @@ private:
     void createTables();
 
     QString m_databaseFilename; //!< Die Datenbankdatei
-    QList<QPointer<Table> > m_tables; //!< Alle registrierten Tabellen
+    QList<QPointer<TableInterface> > m_tables; //!< Alle registrierten Tabellen
     QSqlDatabase m_sqlDatabase; //!< Die eigentliche Datenbank
     static QPointer<Database> m_instance; //!< Die eine Instanz der Datenbank
 };
@@ -61,7 +61,7 @@ private:
 class TableRegistrar
 {
 public:
-    TableRegistrar(Table *table);
+    TableRegistrar(TableInterface *table);
 };
 
 #define REGISTER_TABLE(classname) \
@@ -69,4 +69,4 @@ public:
 
 } // namespace Database
 
-#endif // DATABASE_H
+#endif // DATABASE_DATABASE_H

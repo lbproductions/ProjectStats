@@ -53,7 +53,7 @@ void Database::initialize(const QFile &databaseFile)
 
 void Database::createTables()
 {
-    foreach(QPointer<Table> table, m_tables)
+    foreach(QPointer<TableInterface> table, m_tables)
     {
         Q_ASSERT(!table.isNull());
 
@@ -61,7 +61,7 @@ void Database::createTables()
     }
 }
 
-void Database::registerTable(Table *table)
+void Database::registerTable(TableInterface *table)
 {
     m_tables.append(table);
 }
@@ -71,7 +71,7 @@ QSqlDatabase Database::Database::sqlDatabase() const
     return m_sqlDatabase;
 }
 
-TableRegistrar::TableRegistrar(Table *table)
+TableRegistrar::TableRegistrar(TableInterface *table)
 {
     Database::instance()->registerTable(table);
 }

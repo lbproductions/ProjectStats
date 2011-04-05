@@ -14,11 +14,17 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     Database/table.cpp \
     Database/database.cpp \
-    singleton.cpp
+    singleton.cpp \
+    Database/drinks.cpp \
+    Database/drink.cpp \
+    Database/row.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
     Database/database.h \
-    singleton.h
+    singleton.h \
+    Database/drinks.h \
+    Database/drink.h \
+    Database/row.h
 
 FORMS    += mainwindow.ui
