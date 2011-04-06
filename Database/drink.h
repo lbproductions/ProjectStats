@@ -3,6 +3,8 @@
 
 #include "row.h"
 
+#include "databaseattribute.h"
+
 namespace Database {
 
 template<class RowType>
@@ -12,6 +14,8 @@ class Drink : public Row
 {
 public:
     Drink(int id, Table<Drink> *table);
+
+    DatabaseAttribute<QString> name;
 };
 
 } // namespace Database

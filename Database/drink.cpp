@@ -5,7 +5,8 @@
 namespace Database {
 
 Drink::Drink(int id, Table<Drink> *table) :
-    Row(id,table)
+    Row(id,table),
+    name("name",this)
 {
 }
 

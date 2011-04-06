@@ -28,11 +28,13 @@ public:
       */
     void deleteFromDatabase();
 
-protected:
     /*!
-      Erstellt ein Row Objekt, welches in der Tabelle \p table  die Daten mit der ID  \p id repräsentiert.
+      Liest den Wert \p key  dieser Reihe aus der Datenbank aus.
+
+      \param key Die Spalte, die ausgelesen werden soll.
+      \return Den Wert, den die Spalte \p key  in dieser Reihe hat.
       */
-    explicit Row(int id, TableInterface *table);
+    QVariant get(const QString &key) const;
 
     /*!
       Setzt den Wert \p key  dieser Reihe auf \p value .
@@ -43,18 +45,17 @@ protected:
       */
     bool set(const QString &key, const QVariant &value);
 
+protected:
+    /*!
+      Erstellt ein Row Objekt, welches in der Tabelle \p table  die Daten mit der ID  \p id repräsentiert.
+      */
+    explicit Row(int id, TableInterface *table);
+
+
     /*!
       Setzt den Wert \p key  dieser Reihe auf \p value  für die Reihe, für die die SQL-Conditon \p condition ilt. Diese Methode wird nur von set(const QString &key, const QVariant &value) verwendet.
       */
     bool set(const QString &key, const QVariant &value, const QString &condition);
-
-    /*!
-      Liest den Wert \p key  dieser Reihe aus der Datenbank aus.
-
-      \param key Die Spalte, die ausgelesen werden soll.
-      \return Den Wert, den die Spalte \p key  in dieser Reihe hat.
-      */
-    QVariant get(const QString &key) const;
 
     /*!
       Liest den Wert \p key  der Reihe, für die die SQL-Conditon \p condition gilt, aus der Datenbank aus. Diese Methode wird nur von get(const QString &key) verwendet.

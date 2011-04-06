@@ -35,19 +35,19 @@ class Attribute : public AttributeInterface
 {
 public:
     typedef T (Row::*CalculateFunction)();
-    typedef void (Row::*UpdateFunction)(AttributeInterface *changedDependency);
+    typedef T (Row::*UpdateFunction)(AttributeInterface *changedDependency);
 
     Attribute(const QString &name, Row *row);
 
     QString name() const;
 
-    T value();
+    virtual T value();
 
-    void setValue(T value);
+    virtual void setValue(T value);
 
     QFuture<T> valueASync();
 
-    void setCalculationFunction(CalculateFunction calculateFuntion);
+    virtual void setCalculationFunction(CalculateFunction calculateFuntion);
 
     void setUpdateFunction(CalculateFunction updateFunction);
 
@@ -55,8 +55,10 @@ public:
 
     void clearCache();
 
-private:
-    T calculate();
+    T operator()();
+
+protected:
+    virtual T calculate();
 
     bool m_cacheInitialized;
     T m_value;
@@ -83,6 +85,12 @@ template<class T>
 QString Attribute<T>::name() const
 {
     return m_name;
+}
+
+template<class T>
+T Attribute<T>::operator()()
+{
+    return value();
 }
 
 template<class T>
@@ -134,7 +142,7 @@ template<class T>
 void Attribute<T>::update()
 {
     AttributeInterface *dependentAttribute = static_cast<AttributeInterface*>(sender());
-    CALL_MEMBER_FN(m_row,m_updateFunction)(dependentAttribute);
+    setValue(CALL_MEMBER_FN(m_row,m_updateFunction)(dependentAttribute));
 }
 
 template<class T>
