@@ -9,8 +9,8 @@
 
 namespace Database {
 
-template<class T>
-class DatabaseAttribute : public Attribute<T>
+template<class T, class R>
+class DatabaseAttribute : public Attribute<T,R>
 {
 public:
     typedef T (Row::*CalculateFunction)();
@@ -25,29 +25,29 @@ protected:
     T calculate();
 };
 
-template<class T>
-DatabaseAttribute<T>::DatabaseAttribute(const QString &name, Row *row) :
-    Attribute<T>(name,row)
+template<class T, class R>
+DatabaseAttribute<T,R>::DatabaseAttribute(const QString &name, Row *row) :
+    Attribute<T,R>(name,row)
 {
 }
 
-template<class T>
-void DatabaseAttribute<T>::setValue(T value)
+template<class T, class R>
+void DatabaseAttribute<T,R>::setValue(T value)
 {
-    Attribute<T>::setValue(value);
-    Attribute<T>::m_row->set(Attribute<T>::m_name,value);
+    Attribute<T,R>::setValue(value);
+    Attribute<T,R>::m_row->set(Attribute<T,R>::m_name,value);
 }
 
-template<class T>
-void DatabaseAttribute<T>::setCalculationFunction(CalculateFunction /*calculateFuntion*/)
+template<class T, class R>
+void DatabaseAttribute<T,R>::setCalculationFunction(CalculateFunction /*calculateFuntion*/)
 {
     qWarning() << "DatabaseAttribute<T>::setCalculationFunction: You may not invoke this method on a DatabaseAttribute!";
 }
 
-template<class T>
-T DatabaseAttribute<T>::calculate()
+template<class T, class R>
+T DatabaseAttribute<T,R>::calculate()
 {
-    return QVariant(Attribute<T>::m_row->get(Attribute<T>::m_name)).value<T>();
+    return QVariant(Attribute<T,R>::m_row->get(Attribute<T,R>::m_name)).value<T>();
 }
 
 } // namespace Database

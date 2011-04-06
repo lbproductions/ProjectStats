@@ -30,12 +30,12 @@ protected:
     QPointer<Row> m_row;
 };
 
-template<class T>
+template<class T, class R>
 class Attribute : public AttributeInterface
 {
 public:
-    typedef T (Row::*CalculateFunction)();
-    typedef T (Row::*UpdateFunction)(AttributeInterface *changedDependency);
+    typedef T (R::*CalculateFunction)();
+    typedef T (R::*UpdateFunction)(AttributeInterface *changedDependency);
 
     Attribute(const QString &name, Row *row);
 
@@ -69,8 +69,8 @@ protected:
     QSemaphore m_semaphore;
 };
 
-template<class T>
-Attribute<T>::Attribute(const QString &name, Row *row) :
+template<class T, class R>
+Attribute<T,R>::Attribute(const QString &name, Row *row) :
     AttributeInterface(row),
     m_cacheInitialized(false),
     m_name(name),
@@ -81,20 +81,20 @@ Attribute<T>::Attribute(const QString &name, Row *row) :
 
 }
 
-template<class T>
-QString Attribute<T>::name() const
+template<class T, class R>
+QString Attribute<T,R>::name() const
 {
     return m_name;
 }
 
-template<class T>
-T Attribute<T>::operator()()
+template<class T, class R>
+T Attribute<T,R>::operator()()
 {
     return value();
 }
 
-template<class T>
-T Attribute<T>::value()
+template<class T, class R>
+T Attribute<T,R>::value()
 {
     if(!m_cacheInitialized)
     {
@@ -105,48 +105,48 @@ T Attribute<T>::value()
     return m_value;
 }
 
-template<class T>
-void Attribute<T>::setValue(T value)
+template<class T, class R>
+void Attribute<T,R>::setValue(T value)
 {
     m_value = value;
     m_cacheInitialized = true;
 }
 
-template<class T>
-QFuture<T> Attribute<T>::valueASync()
+template<class T, class R>
+QFuture<T> Attribute<T,R>::valueASync()
 {
     /// \todo Attribute<T>::valueASync() Implementieren
     qWarning() << "Attribute<T>::valueASync() has not been implemented yet!";
     return QFuture<T>();
 }
 
-template<class T>
-void Attribute<T>::setCalculationFunction(CalculateFunction calculateFuntion)
+template<class T, class R>
+void Attribute<T,R>::setCalculationFunction(CalculateFunction calculateFuntion)
 {
     m_calculateFunction = calculateFuntion;
 }
 
-template<class T>
-void Attribute<T>::setUpdateFunction(CalculateFunction updateFunction)
+template<class T, class R>
+void Attribute<T,R>::setUpdateFunction(CalculateFunction updateFunction)
 {
     m_updateFunction = updateFunction;
 }
 
-template<class T>
-T Attribute<T>::calculate()
+template<class T, class R>
+T Attribute<T,R>::calculate()
 {
-    return CALL_MEMBER_FN(m_row,m_calculateFunction)();
+    return CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_calculateFunction)();
 }
 
-template<class T>
-void Attribute<T>::update()
+template<class T, class R>
+void Attribute<T,R>::update()
 {
     AttributeInterface *dependentAttribute = static_cast<AttributeInterface*>(sender());
-    setValue(CALL_MEMBER_FN(m_row,m_updateFunction)(dependentAttribute));
+    setValue(CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_updateFunction)(dependentAttribute));
 }
 
-template<class T>
-void Attribute<T>::clearCache()
+template<class T, class R>
+void Attribute<T,R>::clearCache()
 {
     m_cacheInitialized = false;
 }

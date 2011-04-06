@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
     foreach( Database::Drink *d, Database::Drinks::instance()->allRows())
     {
-        qDebug() << d->id() << ": " << d->name();
+        qDebug() << d->id() << ": " << d->test();
     }
 
     return a.exec();

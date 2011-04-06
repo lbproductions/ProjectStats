@@ -15,7 +15,11 @@ class Drink : public Row
 public:
     Drink(int id, Table<Drink> *table);
 
-    DatabaseAttribute<QString> name;
+    DatabaseAttribute<QString,Drink> name;
+    DatabaseAttribute<QString,Drink> type;
+    Attribute<QString,Drink> test;
+
+    QString calculateTest();
 };
 
 } // namespace Database
