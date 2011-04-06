@@ -57,13 +57,14 @@ public:
 
     T operator()();
 
+    void addDependingAttribute(AttributeInterface *dependingAttribute);
+
 protected:
     virtual T calculate();
 
     bool m_cacheInitialized;
     T m_value;
     QString m_name;
-    QList<QPointer<Attribute> > m_dependendAttributes;
     CalculateFunction m_calculateFunction;
     UpdateFunction m_updateFunction;
     QSemaphore m_semaphore;
@@ -74,11 +75,9 @@ Attribute<T,R>::Attribute(const QString &name, Row *row) :
     AttributeInterface(row),
     m_cacheInitialized(false),
     m_name(name),
-    m_dependendAttributes(QList<QPointer<Attribute> >()),
     m_calculateFunction(0),
     m_updateFunction(0)
 {
-
 }
 
 template<class T, class R>
@@ -135,12 +134,23 @@ void Attribute<T,R>::setUpdateFunction(CalculateFunction updateFunction)
 template<class T, class R>
 T Attribute<T,R>::calculate()
 {
+    if(m_calculateFunction == 0)
+    {
+        return T();
+    }
+
     return CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_calculateFunction)();
 }
 
 template<class T, class R>
 void Attribute<T,R>::update()
 {
+    if(m_updateFunction == 0)
+    {
+        clearCache();
+        return;
+    }
+
     AttributeInterface *dependentAttribute = static_cast<AttributeInterface*>(sender());
     setValue(CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_updateFunction)(dependentAttribute));
 }
@@ -149,6 +159,12 @@ template<class T, class R>
 void Attribute<T,R>::clearCache()
 {
     m_cacheInitialized = false;
+}
+
+template<class T, class R>
+void Attribute<T,R>::addDependingAttribute(AttributeInterface *dependingAttribute)
+{
+    connect(this,SIGNAL(changed()),dependingAttribute,SLOT(update()));
 }
 
 } // namespace Database

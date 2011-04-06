@@ -23,5 +23,11 @@ int main(int argc, char *argv[])
         qDebug() << d->id() << ": " << d->test();
     }
 
+    foreach( Database::Drink *d, Database::Drinks::instance()->allRows())
+    {
+        d->name.setValue(d->name()+"test");
+        qDebug() << d->id() << ": " << d->test();
+    }
+
     return a.exec();
 }

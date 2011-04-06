@@ -11,6 +11,8 @@ Drink::Drink(int id, Table<Drink> *table) :
     test("test",this)
 {
     test.setCalculationFunction(&Drink::calculateTest);
+    name.addDependingAttribute(&test);
+    type.addDependingAttribute(&test);
 }
 
 QString Drink::calculateTest()
