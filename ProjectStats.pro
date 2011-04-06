@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     singleton.cpp \
     Database/drinks.cpp \
     Database/drink.cpp \
-    Database/row.cpp
+    Database/row.cpp \
+    Database/attribute.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -25,6 +26,7 @@ HEADERS  += mainwindow.h \
     singleton.h \
     Database/drinks.h \
     Database/drink.h \
-    Database/row.h
+    Database/row.h \
+    Database/attribute.h
 
 FORMS    += mainwindow.ui
