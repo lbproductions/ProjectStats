@@ -6,6 +6,7 @@
 #include "row.h"
 
 #include <QVariant>
+#include <QtConcurrentRun>
 
 namespace Database {
 
@@ -35,7 +36,7 @@ template<class T, class R>
 void DatabaseAttribute<T,R>::setValue(T value)
 {
     Attribute<T,R>::setValue(value);
-    Attribute<T,R>::m_row->set(Attribute<T,R>::m_name,value);
+    QtConcurrent::run(Attribute<T,R>::m_row.data(), &Row::set, Attribute<T,R>::m_name, value);
 }
 
 template<class T, class R>

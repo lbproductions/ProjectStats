@@ -18,8 +18,13 @@ public:
     DatabaseAttribute<QString,Drink> name;
     DatabaseAttribute<QString,Drink> type;
     Attribute<QString,Drink> test;
+    Attribute<QString,Drink> test2;
 
     QString calculateTest();
+    bool updateTest(AttributeInterface *changedDependency);
+
+    QString calculateTest2();
+
 };
 
 } // namespace Database

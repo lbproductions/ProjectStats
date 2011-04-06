@@ -51,6 +51,10 @@ protected:
       */
     virtual void createTable() = 0;
 
+    /*!
+      Befüllt die Liste aller in der Tabelle enthaltenen Rows. Wird von Database nach createTableIfNotExists() aufgerufen.
+      */
+    virtual void initializeCache() = 0;
 };
 
 //! Repräsentiert eine Tabelle in der Datenbank.
@@ -88,13 +92,7 @@ public:
       */
     QList<QPointer<RowType> > allRows();
 
-    /*!
-      Gibt alle Elemente dieser Tabelle zurück, die die SQL-Condition \a condition erfüllen. Diese erhalten den Typen des Templatearguments.
-
-      \param condition Eine SQL-Condition, die die Elemente der Tabelle filtert.
-      \return Eine Liste aller Objekte in dieser Tabelle.
-      */
-    QList<QPointer<RowType> > rowsBySqlCondition(const QString &condition);
+    QPointer<RowType> rowById(int id);
 
 protected:
     /*!
@@ -109,9 +107,18 @@ protected:
       Factory-Methode zum Erstellen der korrekten Row-Instanzen. In dieser Standardimplementierung wird immer eine Row vom template-Typ RowTyp erstellt.<br>
       Tabellen können diese Methode reimplementieren, um verschiedene Instanzen von Rows zu erstellen (z.B. Game, LiveGame, DokoLiveGame, ...).
       */
-    virtual QPointer<RowType> createRow(int id);
+    virtual QPointer<RowType> createRowInstance(int id);
+
+    /*!
+      Gibt alle Elemente dieser Tabelle zurück, die die SQL-Condition \a condition erfüllen. Diese erhalten den Typen des Templatearguments.
+
+      \param condition Eine SQL-Condition, die die Elemente der Tabelle filtert.
+      \return Eine Liste aller Objekte in dieser Tabelle.
+      */
+    QList<QPointer<RowType> > rowsBySqlCondition(const QString &condition);
 
     QString m_name; //!< Der Name der Tabelle.
+    QHash<int, QPointer<RowType> > m_rows; //!< Alle Rows gecacht
 
 private:
     /*!
@@ -123,6 +130,11 @@ private:
       Erstellt die Tabelle in der Datenbank.
       */
     void createTable();
+
+    /*!
+      Befüllt die Liste aller in der Tabelle enthaltenen Rows. Wird von Database nach createTableIfNotExists() aufgerufen.
+      */
+    void initializeCache();
 };
 
 template<class RowType>
@@ -135,11 +147,12 @@ Table<RowType>::Table(const QString &name) :
 template<class RowType>
 void Table<RowType>::createTableIfNotExists()
 {
-    QSqlQuery select(Database::instance()->sqlDatabase());
+    QSqlQuery select(Database::instance()->sqlDatabaseLocked());
 
     //Prüfe, ob der Name dieser Tabelle in der Datenbank existiert...
     QString query = "SELECT name FROM sqlite_master WHERE name='" + m_name + "';";
     select.exec(query);
+    Database::instance()->releaseDatabaseLock();
 
     select.first();
 
@@ -152,6 +165,45 @@ void Table<RowType>::createTableIfNotExists()
     select.finish();
 }
 
+
+template<class RowType>
+void Table<RowType>::createTable()
+{
+    //ein objekt vom Typ RowType erstellen
+    //über alle seine attribute iterieren und die tabelle dementsprechend erstellen.
+}
+
+template<class RowType>
+void Table<RowType>::initializeCache()
+{
+    QSqlQuery select = QSqlQuery(Database::instance()->sqlDatabaseLocked());
+    QString query("SELECT id FROM "+m_name);
+
+    select.exec(query);
+    Database::instance()->releaseDatabaseLock();
+
+    if(select.lastError().isValid())
+    {
+        qWarning() << "Table::initializeCache: Could not read the whole table "<< m_name <<".";
+        qWarning() << "Table::initializeCache: " << select.lastError();
+        qWarning() << "Table::initializeCache: " << select.lastQuery();
+    }
+
+    int id = 0;
+    while(select.next())
+    {
+        id = select.value(0).toInt();
+        m_rows.insert(id, createRowInstance(id));
+    }
+    select.finish();
+}
+
+template<class RowType>
+QPointer<RowType> Table<RowType>::createRowInstance(int id)
+{
+    qDebug() << "Creating row with id = " << id << " in table " << m_name;
+    return new RowType(id,this);
+}
 
 template<class RowType>
 QString Table<RowType>::name() const
@@ -172,8 +224,9 @@ int Table<RowType>::rowCount() const
 template<class RowType>
 QSqlQuery Table<RowType>::query(const QString &queryString) const
 {
-    QSqlQuery query(Database::instance()->sqlDatabase());
+    QSqlQuery query(Database::instance()->sqlDatabaseLocked());
     query.exec(queryString);
+    Database::instance()->releaseDatabaseLock();
 
     if(query.lastError().isValid())
     {
@@ -187,16 +240,9 @@ QSqlQuery Table<RowType>::query(const QString &queryString) const
 }
 
 template<class RowType>
-void Table<RowType>::createTable()
-{
-    //ein objekt vom Typ RowType erstellen
-    //über alle seine attribute iterieren und die tabelle dementsprechend erstellen.
-}
-
-template<class RowType>
 QList<QPointer<RowType> > Table<RowType>::allRows()
 {
-    return rowsBySqlCondition("");
+    return m_rows.values();
 }
 
 template<class RowType>
@@ -204,10 +250,10 @@ QList<QPointer<RowType> > Table<RowType>::rowsBySqlCondition(const QString &cond
 {
     QList<QPointer<RowType> > list;
 
-    QSqlQuery select = QSqlQuery(Database::instance()->sqlDatabase());
+    QSqlQuery select = QSqlQuery(Database::instance()->sqlDatabaseLocked());
     QString query = "SELECT id FROM "+m_name+" "+condition;
-
     select.exec(query);
+    Database::instance()->releaseDatabaseLock();
 
     if(select.lastError().isValid())
     {
@@ -219,7 +265,7 @@ QList<QPointer<RowType> > Table<RowType>::rowsBySqlCondition(const QString &cond
 
     while(select.next())
     {
-        list.insert(list.size(), createRow(select.value(0).toInt()));
+        list.insert(list.size(), createRowInstance(select.value(0).toInt()));
     }
     select.finish();
 
@@ -227,9 +273,9 @@ QList<QPointer<RowType> > Table<RowType>::rowsBySqlCondition(const QString &cond
 }
 
 template<class RowType>
-QPointer<RowType> Table<RowType>::createRow(int id)
+QPointer<RowType> Table<RowType>::rowById(int id)
 {
-    return new RowType(id,this);
+    return m_rows.value(id,0);
 }
 
 } // namespace Database

@@ -7,6 +7,7 @@
 #include <QSqlDatabase>
 #include <QFile>
 #include <QPointer>
+#include <QMutex>
 
 namespace Database {
 
@@ -22,6 +23,8 @@ class Database : public QObject, public Singleton<Database>
 {
     Q_OBJECT
 public:
+    explicit Database();
+
     /*!
       Öffnet eine gegebene Datenbankdatei.
       Existiert die Datei nicht, wird die Datenbank und alle zugehoerigen Tabellen neu erstellt.
@@ -29,11 +32,17 @@ public:
     void initialize(const QFile &databaseFile);
 
     /*!
-      Gibt die zu Grunde liegende QSqlDatabase zurueck.
+      Gibt die zu Grunde liegende QSqlDatabase zurueck und sperrt diese für weitere Zugriffe.<br>
+      Muss später mit releaseDatabase() wieder freigegeben werden.
 
       \return die zu Grunde liegende QSqlDatabase.
       */
-    QSqlDatabase sqlDatabase() const;
+    QSqlDatabase sqlDatabaseLocked();
+
+    /*!
+      Gibt die Datenbank wieder frei, falls diese gesperrt wurde.
+      */
+    void releaseDatabaseLock();
 
     /*!
       Schließt die QSqlDatabase.
@@ -42,6 +51,7 @@ public:
 
 private:
     friend class TableRegistrar;
+
     /*!
       Registriert die Tabelle \p table bei der Datenbank. Keine Tabelle muss diese Methode per Hand aufrufen, sondern stattdessen das Macro REGISTER_TABLE(Tabelle) verwenden.
       */
@@ -55,6 +65,7 @@ private:
     QString m_databaseFilename; //!< Die Datenbankdatei
     QList<QPointer<TableInterface> > m_tables; //!< Alle registrierten Tabellen
     QSqlDatabase m_sqlDatabase; //!< Die eigentliche Datenbank
+    QMutex m_databaseLock; //!< Wird gesperrt, wenn jemand die Datenbank exklusiv haben will.
 };
 
 //! Diese Klasse wird vom Macro REGISTER_TABLE() verwendet um Tabellen bei der Datenbank zu registrieren.
