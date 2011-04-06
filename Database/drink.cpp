@@ -26,7 +26,7 @@ QString Drink::calculateTest()
 {
     QWaitCondition sleep;
     QMutex m;
-    sleep.wait(&m,500);
+    sleep.wait(&m,2500);
     return "Name: " + name() + "; Type: " + type();
 }
 

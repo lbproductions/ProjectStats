@@ -115,6 +115,7 @@ public:
     void setFuture(QFuture<T> future);
 
 private:
+    friend class Attribute<T,R>;
     void update();
     void on_attributeAboutToChange();
     bool isRunning();
@@ -154,7 +155,14 @@ T Attribute<T,R>::value()
     m_lock.lockForWrite();
     if(!m_cacheInitialized)
     {
-        m_value = calculate();
+        if(!m_futureWatcher->isRunning())
+        {
+            m_value = calculate();
+        }
+        else
+        {
+            m_futureWatcher->m_futureWatcher->waitForFinished();
+        }
         m_cacheInitialized = true;
     }
 
@@ -182,7 +190,7 @@ AttributeFutureWatcher<T,R> *Attribute<T,R>::futureWatcher()
 {
     m_lock.lockForWrite();
 
-    if(!m_cacheInitialized)
+    if(!m_cacheInitialized && !m_futureWatcher->isRunning())
     {
         emit aboutToChange();
         QFuture<T> future = QtConcurrent::run(this, &Attribute<T,R>::calculate);
@@ -226,21 +234,19 @@ T Attribute<T,R>::calculate()
 template<class T, class R>
 void Attribute<T,R>::update()
 {
-    m_lock.lockForRead();
+    m_lock.lockForWrite();
     if(m_updateFunction == 0 || !m_cacheInitialized)
     {
         m_lock.unlock();
         clearCache();
         return;
     }
-    m_lock.unlock();
 
     AttributeInterface *dependentAttribute = static_cast<AttributeInterface*>(sender());
-    m_lock.lockForWrite();
     m_cacheInitialized = CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_updateFunction)(dependentAttribute);
-    m_lock.unlock();
 
     futureWatcher(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
+    m_lock.unlock();
 }
 
 template<class T, class R>
@@ -284,18 +290,17 @@ void AttributeFutureWatcher<T,R>::on_attributeAboutToChange()
 template<class T, class R>
 void AttributeFutureWatcher<T,R>::update()
 {
-    T value;
     if(sender() == m_futureWatcher)
     {
-        value = m_futureWatcher->future().result();
+        T value = m_futureWatcher->future().result();
         m_attribute->setValue(value);
+        emit valueChanged(QVariant(value).toString());
     }
     else
     {
-        value = m_attribute->value();
+        T value = m_attribute->value();
+        emit valueChanged(QVariant(value).toString());
     }
-
-    emit valueChanged(QVariant(value).toString());
 }
 
 template<class T, class R>
