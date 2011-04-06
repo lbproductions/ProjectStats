@@ -13,6 +13,11 @@ Drink::Drink(int id, Table<Drink> *table) :
     test("test",this),
     test2("test2",this)
 {
+    registerAttribute(name);
+    registerAttribute(type);
+    registerAttribute(test);
+    registerAttribute(test2);
+
     test.setCalculationFunction(&Drink::calculateTest);
     test.setUpdateFunction(&Drink::updateTest);
     name.addDependingAttribute(&test);

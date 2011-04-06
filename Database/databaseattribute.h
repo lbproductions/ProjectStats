@@ -22,6 +22,8 @@ public:
 
     void setCalculationFunction(CalculateFunction calculateFuntion);
 
+    bool isDatabaseAttribute() const;
+
 protected:
     T calculate();
 };
@@ -49,6 +51,12 @@ template<class T, class R>
 T DatabaseAttribute<T,R>::calculate()
 {
     return QVariant(Attribute<T,R>::m_row->get(Attribute<T,R>::m_name)).value<T>();
+}
+
+template<class T, class R>
+bool DatabaseAttribute<T,R>::isDatabaseAttribute() const
+{
+    return true;
 }
 
 } // namespace Database

@@ -18,6 +18,11 @@ AttributeFutureWatcherInterface::AttributeFutureWatcherInterface(AttributeInterf
 {
 }
 
+bool AttributeInterface::isDatabaseAttribute() const
+{
+    return false;
+}
+
 void AttributeFutureWatcherInterface::connectTo(QLabel *label)
 {
     if(isRunning())

@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "database.h"
+#include "attribute.h"
 
 #include <QPointer>
 #include <QSqlQuery>
@@ -169,8 +170,31 @@ void Table<RowType>::createTableIfNotExists()
 template<class RowType>
 void Table<RowType>::createTable()
 {
-    //ein objekt vom Typ RowType erstellen
-    //über alle seine attribute iterieren und die tabelle dementsprechend erstellen.
+    RowType row(0,this);
+
+    qDebug() << "Drinks::initializeTable: Creating drinks table.";
+
+    QString createQuery = "CREATE TABLE "+m_name+" (id INTEGER PRIMARY KEY";
+
+    foreach(AttributeInterface *attribute, row.databaseAttributes())
+    {
+        createQuery += ", " + attribute->name() + " " + attribute->sqlType();
+    }
+
+    createQuery += ")";
+
+    qDebug() << createQuery;
+
+    QSqlQuery create(Database::instance()->sqlDatabaseLocked());
+    create.exec(createQuery);
+    Database::instance()->releaseDatabaseLock();
+
+    create.finish();
+    if(create.lastError().isValid())
+    {
+        qWarning() << "Drinks::initializeTable: " << create.lastError();
+    }
+
 }
 
 template<class RowType>

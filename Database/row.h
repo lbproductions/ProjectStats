@@ -5,10 +5,12 @@
 
 #include <QPointer>
 #include <QSqlQuery>
+#include <QHash>
 
 namespace Database {
 
 class TableInterface;
+class AttributeInterface;
 
 //! Repräsentiert eine Row einer Tabelle.
 /*!
@@ -45,12 +47,17 @@ public:
       */
     bool set(const QString &key, const QVariant &value);
 
+    QList<AttributeInterface*> attributes() const;
+
+    QList<AttributeInterface*> databaseAttributes() const;
+
+    AttributeInterface *attribute(const QString &name) const;
+
 protected:
     /*!
       Erstellt ein Row Objekt, welches in der Tabelle \p table  die Daten mit der ID  \p id repräsentiert.
       */
     explicit Row(int id, TableInterface *table);
-
 
     /*!
       Setzt den Wert \p key  dieser Reihe auf \p value  für die Reihe, für die die SQL-Conditon \p condition ilt. Diese Methode wird nur von set(const QString &key, const QVariant &value) verwendet.
@@ -71,8 +78,12 @@ protected:
       */
     QSqlQuery query(const QString &queryString) const;
 
+    void registerAttribute(AttributeInterface &attribute);
+
     int m_id; //!< Die ID dieser Row
     QPointer<TableInterface> m_table; //!< Die Tabelle, in die diese Row liegt
+    QHash<QString, AttributeInterface* > m_attributes; //!< Alle Attribute der Row. Muss von Kindklassen befüllt werden.
+    QList<AttributeInterface*> m_databaseAttributes;
 
 private:
     /*!

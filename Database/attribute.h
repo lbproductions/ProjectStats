@@ -25,11 +25,15 @@ class AttributeInterface : public QObject
 public:
     explicit AttributeInterface(Row *row);
 
+    virtual bool isDatabaseAttribute() const;
+
 public slots:
     virtual void clearCache() = 0;
     virtual void update() = 0;
 
     virtual QString name() const = 0;
+
+    virtual QString sqlType() const = 0;
 
 signals:
     void changed();
@@ -68,6 +72,8 @@ public:
     void clearCache();
 
     T operator()();
+
+    QString sqlType() const;
 
     void addDependingAttribute(AttributeInterface *dependingAttribute);
 
@@ -200,6 +206,29 @@ AttributeFutureWatcher<T,R> *Attribute<T,R>::futureWatcher()
     m_lock.unlock();
 
     return m_futureWatcher;
+}
+
+template<class T, class R>
+QString Attribute<T,R>::sqlType() const
+{
+    switch(QVariant(T()).type())
+    {
+    case QVariant::String:
+        return "TEXT";
+        break;
+    case QVariant::Int:
+        return "INTEGER";
+        break;
+    case QVariant::Double:
+        return "DOUBLE";
+        break;
+    case QVariant::DateTime:
+        return "DATETIME";
+        break;
+    }
+
+    qWarning() << "Attribute::sqlType(): Unkown type!";
+    return "";
 }
 
 template<class T, class R>

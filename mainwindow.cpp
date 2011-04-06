@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     future = m_drink->test2.futureWatcher();
     future->connectTo(ui->labelTest2);
     future->connectTo(ui->labelTest2B);
- }
+}
 
 MainWindow::~MainWindow()
 {
