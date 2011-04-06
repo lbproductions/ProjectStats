@@ -15,13 +15,42 @@ namespace Database {
 
 class Database;
 
+//! Dieses Interface dient dazu, der template-Klasse Table signals und slots, sowie ein Dasein als QObject zu ermöglichen.
+/*!
+  In Qt ist es nicht möglich dass template-Klassen QObjects sind oder mit Hilfe des Q_OBJECT Macros über signals und slots verfügen. Aus diesem Grund haben wir diese Elternklasse, von der Tableeren kann, die diese Funktionalitäten enthält und damit auch für seine Kindklasse bereitstellt.
+  */
 class TableInterface : public QObject
 {
     Q_OBJECT
+public:
+    /*!
+     \return Den Namen der Tabelle.
+      */
+    virtual QString name() const = 0;
+
+    /*!
+      Diese Methode übernimmt lästige Überprüfungen beim Ausführen eines Queries in der Tabelle, wie das Checken, ob die Datenbank null ist.<br>
+      Anschließen wird ein QSqlQuery Objekt zurückgegeben, welches zuvor schon mit exec() ausgeführt wurde.<br>
+      Dieses Objekt sollte in jedem Fall nach Benutzung mit finish() beendet werden.
+
+      \param queryString Der Query, der ausgeführt werden soll.
+      \return Ein QSqlQuery Objekt, welches den gegebenen Query repräsentiert.
+      */
+    virtual QSqlQuery query(const QString &queryString) const = 0;
+
 protected:
     friend class Database;
-    virtual void initializeTable() = 0;
-    virtual void initializeTableIfNotExists() = 0;
+
+    /*!
+      Erstellt die Tabelle in der Datenbank.
+      */
+    virtual void createTableIfNotExists() = 0;
+
+    /*!
+      Überprueft, ob die Tabelle in der Datenbank existiert und erstellt sie gegebenenfalls (durch initializeTable()). Wird von Database aufgerufen.
+      */
+    virtual void createTable() = 0;
+
 };
 
 //! Repräsentiert eine Tabelle in der Datenbank.
@@ -76,6 +105,10 @@ protected:
       */
     Table(const QString &name);
 
+    /*!
+      Factory-Methode zum Erstellen der korrekten Row-Instanzen. In dieser Standardimplementierung wird immer eine Row vom template-Typ RowTyp erstellt.<br>
+      Tabellen können diese Methode reimplementieren, um verschiedene Instanzen von Rows zu erstellen (z.B. Game, LiveGame, DokoLiveGame, ...).
+      */
     virtual QPointer<RowType> createRow(int id);
 
     QString m_name; //!< Der Name der Tabelle.
@@ -84,9 +117,12 @@ private:
     /*!
       Überprueft, ob die Tabelle in der Datenbank existiert und erstellt sie gegebenenfalls (durch initializeTable()). Wird von Database aufgerufen.
       */
-    void initializeTableIfNotExists();
+    void createTableIfNotExists();
 
-    void initializeTable();
+    /*!
+      Erstellt die Tabelle in der Datenbank.
+      */
+    void createTable();
 };
 
 template<class RowType>
@@ -97,7 +133,7 @@ Table<RowType>::Table(const QString &name) :
 }
 
 template<class RowType>
-void Table<RowType>::initializeTableIfNotExists()
+void Table<RowType>::createTableIfNotExists()
 {
     QSqlQuery select(Database::instance()->sqlDatabase());
 
@@ -111,9 +147,16 @@ void Table<RowType>::initializeTableIfNotExists()
     if(select.lastError().isValid() || !select.value(0).isValid())
     {
         qDebug() << "Table::Table: Table does not exist: " << m_name;
-        initializeTable();
+        createTable();
     }
     select.finish();
+}
+
+
+template<class RowType>
+QString Table<RowType>::name() const
+{
+    return m_name;
 }
 
 template<class RowType>
@@ -144,7 +187,7 @@ QSqlQuery Table<RowType>::query(const QString &queryString) const
 }
 
 template<class RowType>
-void Table<RowType>::initializeTable()
+void Table<RowType>::createTable()
 {
     //ein objekt vom Typ RowType erstellen
     //über alle seine attribute iterieren und die tabelle dementsprechend erstellen.

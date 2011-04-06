@@ -4,7 +4,8 @@
 
 namespace Database {
 
-Drink::Drink(int id, Table<Drink> *table)
+Drink::Drink(int id, Table<Drink> *table) :
+    Row(id,table)
 {
 }
 

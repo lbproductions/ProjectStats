@@ -7,24 +7,6 @@
 
 namespace Database {
 
-QPointer<Database> Database::m_instance(0);
-
-Database *Database::instance()
-{
-    static Guard g;
-
-    if(m_instance.isNull())
-    {
-        m_instance = new Database();
-    }
-    return m_instance;
-}
-
-Database::Guard::~Guard()
-{
-    Database::m_instance->deleteLater();
-}
-
 Database::~Database()
 {
     m_sqlDatabase.close();
@@ -57,7 +39,7 @@ void Database::createTables()
     {
         Q_ASSERT(!table.isNull());
 
-        table->initializeTableIfNotExists();
+        table->createTableIfNotExists();
     }
 }
 

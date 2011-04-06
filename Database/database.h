@@ -2,6 +2,7 @@
 #define DATABASE_DATABASE_H
 
 #include <QObject>
+#include <singleton.h>
 
 #include <QSqlDatabase>
 #include <QFile>
@@ -17,18 +18,21 @@ class TableInterface;
   Dabei geht es vor allem um das Erstellen der jeweiligen Table-Objekte und Aufrufen der zugehörigen Methoden Table::initializeTableIfNotExists() und Table::initializeData().<br>
   Anschließend wird durch diese Klasse nur noch einfacher Zugriff auf die Tabellen geboten.
   */
-class Database : public QObject
+class Database : public QObject, public Singleton<Database>
 {
     Q_OBJECT
 public:
-    static Database *instance();
-
     /*!
       Öffnet eine gegebene Datenbankdatei.
       Existiert die Datei nicht, wird die Datenbank und alle zugehoerigen Tabellen neu erstellt.
       */
     void initialize(const QFile &databaseFile);
 
+    /*!
+      Gibt die zu Grunde liegende QSqlDatabase zurueck.
+
+      \return die zu Grunde liegende QSqlDatabase.
+      */
     QSqlDatabase sqlDatabase() const;
 
     /*!
@@ -37,14 +41,10 @@ public:
     ~Database();
 
 private:
-    class Guard
-    {
-    public:
-        ~Guard();
-    };
-    friend class Guard;
-
     friend class TableRegistrar;
+    /*!
+      Registriert die Tabelle \p table bei der Datenbank. Keine Tabelle muss diese Methode per Hand aufrufen, sondern stattdessen das Macro REGISTER_TABLE(Tabelle) verwenden.
+      */
     void registerTable(TableInterface *table);
 
     /*!
@@ -55,15 +55,25 @@ private:
     QString m_databaseFilename; //!< Die Datenbankdatei
     QList<QPointer<TableInterface> > m_tables; //!< Alle registrierten Tabellen
     QSqlDatabase m_sqlDatabase; //!< Die eigentliche Datenbank
-    static QPointer<Database> m_instance; //!< Die eine Instanz der Datenbank
 };
 
+//! Diese Klasse wird vom Macro REGISTER_TABLE() verwendet um Tabellen bei der Datenbank zu registrieren.
+/*!
+  Eine Tabelle kann sich also bei der Datenbank registrieren, indem sie im namespace Database REGISTER_TABLE(<Klassenname der Tabelle>) aufruft.
+  */
 class TableRegistrar
 {
 public:
+    /*!
+      Registriert die Tabelle \p table bei der Datenbank.
+      */
     TableRegistrar(TableInterface *table);
 };
 
+/*!
+  Mit Hilfe dieses Macros registrieren sich Tabellen bei der Datenbank.<br>
+  Authoren von Tabellen müssen nur noch irgendwo im namespace Database REGISTER_TABLE(<Klassenname der Tabelle>) aufrufen.
+  */
 #define REGISTER_TABLE(classname) \
     TableRegistrar _register_ ## classname(classname::instance());
 
