@@ -115,7 +115,7 @@ class Attribute : public AttributeInterface
 public:
     typedef T (R::*CalculateFunction)(); //!< Die Signatur der Calculatefunction
     typedef QFuture<T> (R::*UpdateFunction)(AttributeInterface *changedDependency); //!< Die Signatur der Updatefunction
-
+    typedef T (R::*AttributeSpecificUpdateFunction)();
     /*!
       Wird benutzt um Rows als MetaType registrieren zu können. Niemals benutzen!
       */
@@ -174,6 +174,12 @@ public:
     void setUpdateFunction(UpdateFunction updateFunction);
 
     /*!
+      Fügt eine Updatefunction \p updateFunction zu diesem Attribut hinzu.<br>
+      Diese wird dann aufgerufen, wenn sich das Attribut \p attribute geändert hat.<br>
+      */
+    void setUpdateFunction(AttributeInterface* attribute, AttributeSpecificUpdateFunction updateFunction);
+
+    /*!
       Geschrieben um den Zugriff auf Attribute zu erleichern.<br>
       Statt row->attribute.value() lässt sich nun kürzer schreiben row->attribute() um den Wert zu erhalten.
 
@@ -224,6 +230,7 @@ protected:
     UpdateFunction m_updateFunction; //!< Die Funktion zum Updaten des Attributs.
     QReadWriteLock m_lock; //!< Ein Mutex um die Klasse Threadsicher zu machen.
     AttributeFutureWatcher<T,R> *m_futureWatcher; //!< Der FutureWatcher dieser Klasse.
+    QHash<QString,AttributeSpecificUpdateFunction> m_updateFunctions;
 };
 
 //! Dieses Interface dient dazu, der template-Klasse AttributeFutureWatcher signals und slots, sowie ein Dasein als QObject zu ermöglichen.
@@ -458,6 +465,14 @@ void Attribute<T,R>::setUpdateFunction(UpdateFunction updateFunction)
 }
 
 template<class T, class R>
+void Attribute<T,R>::setUpdateFunction(AttributeInterface *attribute, AttributeSpecificUpdateFunction updateFunction)
+{
+    m_lock.lockForWrite();
+    m_updateFunctions.insert(attribute->name(), updateFunction);
+    m_lock.unlock();
+}
+
+template<class T, class R>
 T Attribute<T,R>::calculate() const
 {
     if(m_calculateFunction == 0)
@@ -473,16 +488,32 @@ T Attribute<T,R>::calculate() const
 template<class T, class R>
 void Attribute<T,R>::update()
 {
-    if(m_updateFunction == 0 || !m_cacheInitialized)
+    if(!m_cacheInitialized)
     {
         recalculate();
         return;
     }
 
-
     m_lock.lockForWrite();
     AttributeInterface *dependentAttribute = static_cast<AttributeInterface*>(sender());
-    QFuture<T> future = CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_updateFunction)(dependentAttribute);
+    AttributeSpecificUpdateFunction updateFunction = m_updateFunctions.value(dependentAttribute->name(), 0);
+    QFuture<T> future;
+
+    if(updateFunction != 0)
+    {
+        future = QtConcurrent::run(static_cast<R*>(m_row.data()), updateFunction);
+    }
+    else
+    {
+        if(m_updateFunction == 0)
+        {
+            m_lock.unlock();
+            recalculate();
+            return;
+        }
+
+        future = CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_updateFunction)(dependentAttribute);
+    }
 
     if(future.isRunning() || future.isResultReadyAt(0))
     {
@@ -507,7 +538,6 @@ template<class T, class R>
 void Attribute<T,R>::addDependingAttribute(AttributeInterface *dependingAttribute)
 {
     connect(this,SIGNAL(changed()),dependingAttribute,SLOT(update()));
-
 }
 
 template<class T, class R>

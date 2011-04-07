@@ -4,7 +4,7 @@
 
 #include <QWaitCondition>
 
-START_ROW_IMPLEMENTAION(Drink)
+START_ROW_IMPLEMENTATION(Drink)
 {
     IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, Drink, test)
     IMPLEMENT_ATTRIBUTE(QString,Drink,test2)
@@ -17,6 +17,7 @@ START_ROW_IMPLEMENTAION(Drink)
 
     test->addDependingAttribute(test2);
     type->addDependingAttribute(test2);
+    test2->setUpdateFunction(test, &Drink::update_test2_test);
 }
 
 QString Drink::calculate_test()
@@ -55,6 +56,10 @@ QString Drink::calculate_test2()
     return "Test: " + test->value() + "; Type: " + type->value();
 }
 
+QString Drink::update_test2_test()
+{
+    return "Name: " + test->value() + "; Type: " + type->value();
+}
 
 QList<Drink*> Drink::calculate_drinks()
 {

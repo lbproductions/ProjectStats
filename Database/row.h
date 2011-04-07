@@ -140,7 +140,7 @@ private:
     Q_DECLARE_METATYPE(Database::RowClassname*) \
     Q_DECLARE_METATYPE(QList<Database::RowClassname*>)
 
-#define START_ROW_IMPLEMENTAION( RowClassname ) \
+#define START_ROW_IMPLEMENTATION( RowClassname ) \
     namespace Database { \
     RowClassname::RowClassname() : Row(0,RowClassname ## s::instance()) {}  \
     RowClassname::RowClassname(const RowClassname &other) : Row(other.m_id, other.m_table) {} \
