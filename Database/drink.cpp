@@ -32,7 +32,7 @@ QString Drink::calculateTest()
 {
     QWaitCondition sleep;
     QMutex m;
-    sleep.wait(&m,10);
+    sleep.wait(&m,1000);
     return "Name: " + name() + "; Type: " + type();
 }
 
@@ -61,7 +61,7 @@ QString Drink::calculateTest2()
     qDebug() << "calculateTest2";
     QWaitCondition sleep;
     QMutex m;
-    sleep.wait(&m,8);
+    sleep.wait(&m,800);
     return "Test: " + test() + "; Type: " + type();
 }
 

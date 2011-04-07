@@ -19,6 +19,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void on_lineEditType_editingFinished();
 
