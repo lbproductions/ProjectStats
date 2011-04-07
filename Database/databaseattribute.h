@@ -135,10 +135,13 @@ QString DatabaseAttribute<T,R>::sqlType() const
 
 } // namespace Database
 
+#define STRINGIZE(s) # s
+#define XSTR(s) STRINGIZE(s)
+
 #define DECLARE_DATABASEATTRIBUTE(Type, RowClassname, Name) \
     DatabaseAttribute<Type,RowClassname> *Name;
 
 #define IMPLEMENT_DATABASEATTRIBUTE(Type, RowClassname, Name) \
-    Name = new DatabaseAttribute<Type,RowClassname>("Name",this);
+    Name = new DatabaseAttribute<Type,RowClassname>(XSTR(Name) "",this);
 
 #endif // DATABASE_DATABASEATTRIBUTE_H

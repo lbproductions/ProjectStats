@@ -612,6 +612,9 @@ QString AttributeFutureWatcher<T,R>::toString()
 
 } // namespace Database
 
+#define STRINGIZE(s) # s
+#define XSTR(s) STRINGIZE(s)
+
 #define DECLARE_ATTRIBUTE(Type, RowClassname, Name) \
 Attribute<Type, RowClassname> *Name; \
 Type calculate_ ## Name();
@@ -623,12 +626,12 @@ Type calculate_ ## Name();
     Type update_ ## Name(AttributeInterface *changedDependency);
 
 #define IMPLEMENT_ATTRIBUTE(Type, RowClassname, Name) \
-    Name = new Attribute<Type,RowClassname>("Name",this); \
+    Name = new Attribute<Type,RowClassname>(QString(XSTR(Name) "").toLower(),this); \
     Name->setCalculationFunction(& RowClassname::calculate_ ## Name); \
     registerAttribute(Name);
 
 #define IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(Type, RowClassname, Name) \
-    Name = new Attribute<Type,RowClassname>("Name",this); \
+    Name = new Attribute<Type,RowClassname>(QString(XSTR(Name) "").toLower(),this); \
     Name->setCalculationFunction(& RowClassname::calculate_ ## Name); \
     Name->setUpdateFunction(& RowClassname::updateIfPossible_ ## Name); \
     registerAttribute(Name);

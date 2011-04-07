@@ -310,4 +310,26 @@ QPointer<RowType> Table<RowType>::rowById(int id)
 
 } // namespace Database
 
+#define STRINGIZE(s) # s
+#define XSTR(s) STRINGIZE(s)
+
+#define DECLARE_TABLE( RowClassname ) \
+    namespace Database { \
+    class RowClassname ## s : public Table<RowClassname>, public Singleton<RowClassname ## s> \
+    { \
+    public: \
+    RowClassname ## s(); \
+    }; \
+    } // namespace Database)
+
+#define IMPLEMENT_TABLE( RowClassname ) \
+    namespace Database { \
+    REGISTER_TABLE(RowClassname ## s) \
+    RowClassname ## s::RowClassname ## s() : \
+    Table<Drink>(QString(XSTR(RowClassname ## s) "").toLower()), \
+        Singleton<RowClassname ## s>() \
+    { \
+    } \
+    } // namespace Database
+
 #endif // DATABASE_TABLE_H

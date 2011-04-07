@@ -15,7 +15,6 @@ SOURCES += main.cpp\
     Database/table.cpp \
     Database/database.cpp \
     singleton.cpp \
-    Database/drinks.cpp \
     Database/drink.cpp \
     Database/row.cpp \
     Database/attribute.cpp \
@@ -26,7 +25,6 @@ HEADERS  += mainwindow.h \
     Database/table.h \
     Database/database.h \
     singleton.h \
-    Database/drinks.h \
     Database/drink.h \
     Database/row.h \
     Database/attribute.h \

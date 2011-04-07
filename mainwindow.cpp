@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <Database/drinks.h>
+#include <Database/drink.h>
 
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     m_drink = Database::Drinks::instance()->rowById(5);
+    qDebug() << Database::Drinks::instance()->name();
     Database::AttributeFutureWatcher<QString,Database::Drink> *future = m_drink->name->calculateASync();
     future->connectTo(ui->labelName);
     future->connectTo(ui->lineEditName);

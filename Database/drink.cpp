@@ -1,8 +1,8 @@
 #include "drink.h"
 
-#include "drinks.h"
-
 #include <QWaitCondition>
+
+IMPLEMENT_TABLE(Drink)
 
 START_ROW_IMPLEMENTATION(Drink)
 {

@@ -2,8 +2,6 @@
 #include "mainwindow.h"
 
 #include <Database/database.h>
-#include <Database/drinks.h>
-#include <Database/drink.h>
 
 #include <QDebug>
 #include <QElapsedTimer>

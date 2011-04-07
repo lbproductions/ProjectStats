@@ -2,6 +2,7 @@
 #define DATABASE_DRINK_H
 
 #include "row.h"
+#include "table.h"
 #include "attribute.h"
 #include "databaseattribute.h"
 
@@ -19,5 +20,7 @@ START_ROW_DECLARATION(Drink)
     DECLARE_ATTRIBUTE(QList<Drink*>, Drink, drinks)
 
 END_ROW_DECLARATION(Drink)
+
+DECLARE_TABLE(Drink)
 
 #endif // DATABASE_DRINK_H
