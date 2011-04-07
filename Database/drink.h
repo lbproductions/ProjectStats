@@ -2,32 +2,21 @@
 #define DATABASE_DRINK_H
 
 #include "row.h"
-
+#include "attribute.h"
 #include "databaseattribute.h"
 
-namespace Database {
+START_ROW_DECLARATION(Drink)
+    DECLARE_ROW_CONSTRUCTORS(Drink)
 
-template<class RowType>
-class Table;
+    DECLARE_DATABASEATTRIBUTE(QString,Drink,name)
+    DECLARE_DATABASEATTRIBUTE(QString,Drink,type)
 
-class Drink : public Row
-{
-public:
-    Drink(int id, Table<Drink> *table);
+    DECLARE_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, Drink, test)
 
-    DatabaseAttribute<QString,Drink> name;
-    DatabaseAttribute<QString,Drink> type;
-    Attribute<QString,Drink> test;
-    Attribute<QString,Drink> test2;
+    DECLARE_ATTRIBUTE(QString, Drink, test2)
 
-    QString calculateTest();
-    QFuture<QString> updateTestIfPossible(AttributeInterface *changedDependency);
-    QString updateTest(AttributeInterface *changedDependency);
+    DECLARE_ATTRIBUTE(QList<Drink*>, Drink, drinks)
 
-    QString calculateTest2();
-
-};
-
-} // namespace Database
+END_ROW_DECLARATION(Drink)
 
 #endif // DATABASE_DRINK_H

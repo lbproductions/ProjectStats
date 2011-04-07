@@ -13,21 +13,26 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     m_drink = Database::Drinks::instance()->rowById(5);
-    Database::AttributeFutureWatcher<QString,Database::Drink> *future = m_drink->name.calculateASync();
+    Database::AttributeFutureWatcher<QString,Database::Drink> *future = m_drink->name->calculateASync();
     future->connectTo(ui->labelName);
     future->connectTo(ui->lineEditName);
 
-    future = m_drink->type.calculateASync();
+    future = m_drink->type->calculateASync();
     future->connectTo(ui->labelType);
     future->connectTo(ui->lineEditType);
 
-    future = m_drink->test.calculateASync();
+    future = m_drink->test->calculateASync();
     future->connectTo(ui->labelTest);
     future->connectTo(ui->labelTestB);
 
-    future = m_drink->test2.calculateASync();
+    future = m_drink->test2->calculateASync();
     future->connectTo(ui->labelTest2);
     future->connectTo(ui->labelTest2B);
+
+    foreach(Database::Drink *drink, m_drink->drinks->value())
+    {
+        qDebug() << drink->name->value();
+    }
 }
 
 MainWindow::~MainWindow()
@@ -51,12 +56,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::on_lineEditName_editingFinished()
 {
-    m_drink->name.setValue(ui->lineEditName->text());
+    m_drink->name->setValue(ui->lineEditName->text());
 }
 
 void MainWindow::on_lineEditType_editingFinished()
 {
-    m_drink->type.setValue(ui->lineEditType->text());
+    m_drink->type->setValue(ui->lineEditType->text());
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -71,7 +76,7 @@ void MainWindow::threadTest()
 {
     for(int i = 1; i <= 10; ++i)
     {
-        m_drink->name.setValue("name"+QString::number(i));
-        m_drink->type.setValue("type"+QString::number(i));
+        m_drink->name->setValue("name"+QString::number(i));
+        m_drink->type->setValue("type"+QString::number(i));
     }
 }

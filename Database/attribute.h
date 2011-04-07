@@ -34,6 +34,11 @@ class AttributeInterface : public QObject
     Q_OBJECT
 public:
     /*!
+      Wird benutzt um Rows als MetaType registrieren zu können. Niemals benutzen!
+      */
+    AttributeInterface();
+
+    /*!
       Erstellt ein Attribut für die Row \p row.
       */
     explicit AttributeInterface(Row *row);
@@ -110,6 +115,11 @@ class Attribute : public AttributeInterface
 public:
     typedef T (R::*CalculateFunction)(); //!< Die Signatur der Calculatefunction
     typedef QFuture<T> (R::*UpdateFunction)(AttributeInterface *changedDependency); //!< Die Signatur der Updatefunction
+
+    /*!
+      Wird benutzt um Rows als MetaType registrieren zu können. Niemals benutzen!
+      */
+    Attribute();
 
     /*!
       Erstellt ein Attribut für die Row \p row.
@@ -245,7 +255,7 @@ signals:
 
       \param value Der neue Wert.
       */
-    void valueChanged(QString value);
+    void valueChanged(QString toString);
 
 private slots:
     /*!
@@ -270,7 +280,7 @@ private:
     /*!
       Der Wert des Attributs.
       */
-    virtual QString value() = 0;
+    virtual QString toString() = 0;
 
 };
 
@@ -325,11 +335,23 @@ private:
     /*!
       Der Wert des Attributs. (Wird vom AttributeFutureWatcherInterface verwendet)
       */
-    QString value();
+    QString toString();
 
     QPointer<Attribute<T,R> > m_attribute; //!< Das beobachtete Attribut.
     QPointer<QFutureWatcher<T> > m_futureWatcher; //!< Der interne QFutureWatcher.
 };
+
+template<class T, class R>
+Attribute<T,R>::Attribute() :
+    AttributeInterface(),
+    m_cacheInitialized(false),
+    m_name(QString()),
+    m_calculateFunction(0),
+    m_updateFunction(0),
+    m_lock(QReadWriteLock::Recursive),
+    m_futureWatcher(new AttributeFutureWatcher<T,R>(this))
+{
+}
 
 template<class T, class R>
 Attribute<T,R>::Attribute(const QString &name, Row *row) :
@@ -415,23 +437,7 @@ AttributeFutureWatcher<T,R> *Attribute<T,R>::calculateASync()
 template<class T, class R>
 QString Attribute<T,R>::sqlType() const
 {
-    switch(QVariant(T()).type())
-    {
-    case QVariant::String:
-        return "TEXT";
-        break;
-    case QVariant::Int:
-        return "INTEGER";
-        break;
-    case QVariant::Double:
-        return "DOUBLE";
-        break;
-    case QVariant::DateTime:
-        return "DATETIME";
-        break;
-    }
-
-    qWarning() << "Attribute::sqlType(): Unkown type!";
+    qWarning() << "Attribute::sqlType(): You shall not call sqlType on a non-database attribute!";
     return "";
 }
 
@@ -546,12 +552,16 @@ void AttributeFutureWatcher<T,R>::update()
         {
             T value = m_futureWatcher->future().result();
             m_attribute->setValue(value);
-            emit valueChanged(QVariant(value).toString());
+            QVariant v;
+            v.setValue(value);
+            emit valueChanged(v.toString());
         }
         else
         {
             T value = m_attribute->value();
-            emit valueChanged(QVariant(value).toString());
+            QVariant v;
+            v.setValue(value);
+            emit valueChanged(v.toString());
         }
     }
 }
@@ -563,11 +573,34 @@ bool AttributeFutureWatcher<T,R>::isRunning()
 }
 
 template<class T, class R>
-QString AttributeFutureWatcher<T,R>::value()
+QString AttributeFutureWatcher<T,R>::toString()
 {
-    return m_attribute->value();
+    QVariant v;
+    v.setValue(m_attribute->value());
+    return v.toString();
 }
 
 } // namespace Database
+
+#define DECLARE_ATTRIBUTE(Type, RowClassname, Name) \
+Attribute<Type, RowClassname> *Name; \
+Type calculate_ ## Name();
+
+#define DECLARE_ATTRIBUTE_WITH_UPDATEFUNCTION(Type, RowClassname, Name) \
+    Attribute<Type, RowClassname> *Name; \
+    Type calculate_ ## Name(); \
+    QFuture<Type>  updateIfPossible_ ## Name(AttributeInterface *changedDependency); \
+    Type update_ ## Name(AttributeInterface *changedDependency);
+
+#define IMPLEMENT_ATTRIBUTE(Type, RowClassname, Name) \
+    Name = new Attribute<Type,RowClassname>("Name",this); \
+    Name->setCalculationFunction(& RowClassname::calculate_ ## Name); \
+    registerAttribute(Name);
+
+#define IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(Type, RowClassname, Name) \
+    Name = new Attribute<Type,RowClassname>("Name",this); \
+    Name->setCalculationFunction(& RowClassname::calculate_ ## Name); \
+    Name->setUpdateFunction(& RowClassname::updateIfPossible_ ## Name); \
+    registerAttribute(Name);
 
 #endif // DATABASE_ATTRIBUTE_H

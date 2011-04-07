@@ -24,6 +24,11 @@ public:
     typedef T (Row::*CalculateFunction)();
 
     /*!
+      Wird benutzt um Rows als MetaType registrieren zu können. Niemals benutzen!
+      */
+    DatabaseAttribute();
+
+    /*!
       Erstellt ein Datenbankattribut mit dem Namen \p name, das zur Row \p row gehört.
       */
     DatabaseAttribute(const QString &name, Row *row);
@@ -43,6 +48,13 @@ public:
       */
     bool isDatabaseAttribute() const;
 
+    /*!
+      Gibt den SQL-Typen dieses Attributs zurück. (z.B. QString -> TEXT, int -> Int).
+
+      \return der SQL-Typen dieses Attributs.
+      */
+    QString sqlType() const;
+
 protected:
     /*!
       Liest den Wert aus der Datenbank aus.<br>
@@ -51,6 +63,12 @@ protected:
       */
     T calculate() const;
 };
+
+template<class T, class R>
+DatabaseAttribute<T,R>::DatabaseAttribute() :
+    Attribute<T,R>()
+{
+}
 
 template<class T, class R>
 DatabaseAttribute<T,R>::DatabaseAttribute(const QString &name, Row *row) :
@@ -89,6 +107,38 @@ bool DatabaseAttribute<T,R>::isDatabaseAttribute() const
     return true;
 }
 
+template<class T, class R>
+QString DatabaseAttribute<T,R>::sqlType() const
+{
+    T t;
+    QVariant v;
+    v.setValue(t);
+    switch(v.type())
+    {
+    case QVariant::String:
+        return "TEXT";
+        break;
+    case QVariant::Int:
+        return "INTEGER";
+        break;
+    case QVariant::Double:
+        return "DOUBLE";
+        break;
+    case QVariant::DateTime:
+        return "DATETIME";
+        break;
+    }
+
+    qWarning() << "Attribute::sqlType(): Unkown type!";
+    return "";
+}
+
 } // namespace Database
+
+#define DECLARE_DATABASEATTRIBUTE(Type, RowClassname, Name) \
+    DatabaseAttribute<Type,RowClassname> *Name;
+
+#define IMPLEMENT_DATABASEATTRIBUTE(Type, RowClassname, Name) \
+    Name = new DatabaseAttribute<Type,RowClassname>("Name",this);
 
 #endif // DATABASE_DATABASEATTRIBUTE_H

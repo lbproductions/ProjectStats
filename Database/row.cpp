@@ -65,13 +65,13 @@ AttributeInterface *Row::attribute(const QString &name) const
     return m_attributes.value(name);
 }
 
-void Row::registerAttribute(AttributeInterface &attribute)
+void Row::registerAttribute(AttributeInterface *attribute)
 {
-    m_attributes.insert(attribute.name(), &attribute);
+    m_attributes.insert(attribute->name(), attribute);
 
-    if(attribute.isDatabaseAttribute())
+    if(attribute->isDatabaseAttribute())
     {
-        m_databaseAttributes.append(&attribute);
+        m_databaseAttributes.append(attribute);
     }
 }
 

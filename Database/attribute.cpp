@@ -7,6 +7,12 @@
 
 namespace Database {
 
+AttributeInterface::AttributeInterface() :
+    QObject(),
+    m_row(0)
+{
+}
+
 AttributeInterface::AttributeInterface(Row *row) :
     QObject(row),
     m_row(row)
@@ -31,7 +37,7 @@ void AttributeFutureWatcherInterface::connectTo(QLabel *label)
     }
     else
     {
-        label->setText(value());
+        label->setText(toString());
     }
 
     connect(this,SIGNAL(valueChanged(QString)),label,SLOT(setText(QString)));
@@ -45,7 +51,7 @@ void AttributeFutureWatcherInterface::connectTo(QLineEdit *lineEdit)
     }
     else
     {
-        lineEdit->setText(value());
+        lineEdit->setText(toString());
     }
 
     connect(this,SIGNAL(valueChanged(QString)),lineEdit,SLOT(setText(QString)));

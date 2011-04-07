@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     Database/drink.cpp \
     Database/row.cpp \
     Database/attribute.cpp \
-    Database/databaseattribute.cpp
+    Database/databaseattribute.cpp \
+    Database/samplerow.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -29,6 +30,7 @@ HEADERS  += mainwindow.h \
     Database/drink.h \
     Database/row.h \
     Database/attribute.h \
-    Database/databaseattribute.h
+    Database/databaseattribute.h \
+    Database/samplerow.h
 
 FORMS    += mainwindow.ui

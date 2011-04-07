@@ -20,6 +20,9 @@ class Row : public QObject
 {
     Q_OBJECT
 public:
+    Row() : QObject() {}
+    Row(const Row &other) : QObject(other.parent()) {}
+
     /*!
       \return Die ID der Reihe.
       */
@@ -99,7 +102,7 @@ protected:
 
       \param attribute Das Attribut, das hinzugefügt werden soll.
       */
-    void registerAttribute(AttributeInterface &attribute);
+    void registerAttribute(AttributeInterface *attribute);
 
     int m_id; //!< Die ID dieser Row
     QPointer<TableInterface> m_table; //!< Die Tabelle, in die diese Row liegt
@@ -116,5 +119,34 @@ private:
 };
 
 } // namespace Database
+
+#define START_ROW_DECLARATION( RowClassname ) \
+    namespace Database { \
+    template<class RowType> \
+    class Table; \
+    class RowClassname : public Row \
+    {
+
+#define DECLARE_ROW_CONSTRUCTORS( RowClassname ) \
+    public: \
+        RowClassname(const RowClassname &other); \
+        RowClassname(); \
+        RowClassname(int id, Table<RowClassname> *table);
+
+#define END_ROW_DECLARATION( RowClassname ) \
+    }; \
+    } \
+    Q_DECLARE_METATYPE(Database::RowClassname) \
+    Q_DECLARE_METATYPE(Database::RowClassname*) \
+    Q_DECLARE_METATYPE(QList<Database::RowClassname*>)
+
+#define START_ROW_IMPLEMENTAION( RowClassname ) \
+    namespace Database { \
+    RowClassname::RowClassname() : Row(0,RowClassname ## s::instance()) {}  \
+    RowClassname::RowClassname(const RowClassname &other) : Row(other.m_id, other.m_table) {} \
+    RowClassname::RowClassname(int id, Table<RowClassname> *table) : \
+        Row(id,table)
+
+#define END_ROW_IMPLEMENTATION() } // namespace Database
 
 #endif // DATABASE_ROW_H

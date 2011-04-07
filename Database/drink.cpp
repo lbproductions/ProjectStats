@@ -4,65 +4,61 @@
 
 #include <QWaitCondition>
 
-namespace Database {
-
-Drink::Drink(int id, Table<Drink> *table) :
-    Row(id,table),
-    name("name",this),
-    type("type",this),
-    test("test",this),
-    test2("test2",this)
+START_ROW_IMPLEMENTAION(Drink)
 {
-    registerAttribute(name);
-    registerAttribute(type);
-    registerAttribute(test);
-    registerAttribute(test2);
+    IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, Drink, test)
+    IMPLEMENT_ATTRIBUTE(QString,Drink,test2)
+    IMPLEMENT_ATTRIBUTE(QList<Drink*>,Drink,drinks)
+    IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, type)
+    IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, name)
 
-    test.setCalculationFunction(&Drink::calculateTest);
-    test.setUpdateFunction(&Drink::updateTestIfPossible);
-    name.addDependingAttribute(&test);
-    type.addDependingAttribute(&test);
+    name->addDependingAttribute(test);
+    type->addDependingAttribute(test);
 
-    test2.setCalculationFunction(&Drink::calculateTest2);
-    test.addDependingAttribute(&test2);
-    type.addDependingAttribute(&test2);
+    test->addDependingAttribute(test2);
+    type->addDependingAttribute(test2);
 }
 
-QString Drink::calculateTest()
+QString Drink::calculate_test()
 {
     QWaitCondition sleep;
     QMutex m;
     sleep.wait(&m,1000);
-    return "Name: " + name() + "; Type: " + type();
+    return "Name: " + name->value() + "; Type: " + type->value();
 }
 
-QFuture<QString> Drink::updateTestIfPossible(AttributeInterface *changedDependency)
+QFuture<QString> Drink::updateIfPossible_test(AttributeInterface *changedDependency)
 {
     if(changedDependency->name() == "name")
     {
-        return QtConcurrent::run(this, &Drink::updateTest, changedDependency);
+        return QtConcurrent::run(this, &Drink::update_test, changedDependency);
     }
 
     return QFuture<QString>();
 }
 
-QString Drink::updateTest(AttributeInterface *changedDependency)
+QString Drink::update_test(AttributeInterface *changedDependency)
 {
     if(changedDependency->name() == "name")
     {
-        return "Name: " + name() + "; Type: " + type();
+        return "Name: " + name->value() + "; Type: " + type->value();
     }
 
     return "";
 }
 
-QString Drink::calculateTest2()
+QString Drink::calculate_test2()
 {
-    qDebug() << "calculateTest2";
     QWaitCondition sleep;
     QMutex m;
     sleep.wait(&m,800);
-    return "Test: " + test() + "; Type: " + type();
+    return "Test: " + test->value() + "; Type: " + type->value();
 }
 
-} // namespace Database
+
+QList<Drink*> Drink::calculate_drinks()
+{
+    return Drinks::instance()->allRows();
+}
+
+END_ROW_IMPLEMENTATION()

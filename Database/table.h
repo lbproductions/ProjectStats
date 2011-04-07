@@ -91,7 +91,7 @@ public:
       \see getAll(const QString &condition)
       \return Eine Liste aller Objekte in dieser Tabelle.
       */
-    QList<QPointer<RowType> > allRows();
+    QList<RowType*> allRows();
 
     /*!
       Gibt die Row mit der ID \p id zurück, oder 0, falls die Row nicht in dieser Tabelle existiert.
@@ -124,7 +124,7 @@ protected:
     QList<QPointer<RowType> > rowsBySqlCondition(const QString &condition);
 
     QString m_name; //!< Der Name der Tabelle.
-    QHash<int, QPointer<RowType> > m_rows; //!< Alle Rows gecacht
+    QHash<int, RowType* > m_rows; //!< Alle Rows gecacht
 
 private:
     /*!
@@ -146,7 +146,8 @@ private:
 template<class RowType>
 Table<RowType>::Table(const QString &name) :
     TableInterface(),
-    m_name(name)
+    m_name(name),
+    m_rows(QHash<int, RowType* >())
 {
 }
 
@@ -269,7 +270,7 @@ QSqlQuery Table<RowType>::query(const QString &queryString) const
 }
 
 template<class RowType>
-QList<QPointer<RowType> > Table<RowType>::allRows()
+QList<RowType*> Table<RowType>::allRows()
 {
     return m_rows.values();
 }
