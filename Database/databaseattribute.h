@@ -10,22 +10,46 @@
 
 namespace Database {
 
+//! Ein DatabaseAttribute ist ein Attribut, das "physikalisch" in der Datenbank liegt.
+/*!
+  Die Klasse implementiert setValue() und calculate() so neu, dass alle Zugriffe an die Datenbank weitergeleitet werden.<br>
+  Aus diesem Grund ist es selberverständlich nicht möglich einem Databaseattribut eine Calculationfunction zu geben.<br>
+  <br>
+  Außerdem sei angemerkt, dass alle schreibenden Zugriffe auf die Datenbank in einem eigenen Thread gestartet werden.
+  */
 template<class T, class R>
 class DatabaseAttribute : public Attribute<T,R>
 {
 public:
     typedef T (Row::*CalculateFunction)();
 
+    /*!
+      Erstellt ein Datenbankattribut mit dem Namen \p name, das zur Row \p row gehört.
+      */
     DatabaseAttribute(const QString &name, Row *row);
 
+    /*!
+      Setzt den Wert des Attributs auf \p value. Der Wert wird außerdem von einem neu gestarteten Thread in die Datenbank geschrieben.
+      */
     void setValue(T value);
 
+    /*!
+      Diese Funktion tut nichts außer eine Warning auszugeben.
+      */
     void setCalculationFunction(CalculateFunction calculateFuntion);
 
+    /*!
+      \return true
+      */
     bool isDatabaseAttribute() const;
 
 protected:
-    T calculate();
+    /*!
+      Liest den Wert aus der Datenbank aus.<br>
+
+      \return Der Wert des Attributs in der Datenbank.
+      */
+    T calculate() const;
 };
 
 template<class T, class R>
@@ -37,8 +61,13 @@ DatabaseAttribute<T,R>::DatabaseAttribute(const QString &name, Row *row) :
 template<class T, class R>
 void DatabaseAttribute<T,R>::setValue(T value)
 {
+    bool change = value != Attribute<T,R>::m_value;
     Attribute<T,R>::setValue(value);
-    QtConcurrent::run(Attribute<T,R>::m_row.data(), &Row::set, Attribute<T,R>::m_name, value);
+
+    if(change)
+    {
+        QtConcurrent::run(Attribute<T,R>::m_row.data(), &Row::set, Attribute<T,R>::m_name, value);
+    }
     //Attribute<T,R>::m_row->set(Attribute<T,R>::m_name, value);
 }
 
@@ -49,7 +78,7 @@ void DatabaseAttribute<T,R>::setCalculationFunction(CalculateFunction /*calculat
 }
 
 template<class T, class R>
-T DatabaseAttribute<T,R>::calculate()
+T DatabaseAttribute<T,R>::calculate() const
 {
     return QVariant(Attribute<T,R>::m_row->get(Attribute<T,R>::m_name)).value<T>();
 }

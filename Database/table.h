@@ -18,7 +18,7 @@ class Database;
 
 //! Dieses Interface dient dazu, der template-Klasse Table signals und slots, sowie ein Dasein als QObject zu ermöglichen.
 /*!
-  In Qt ist es nicht möglich dass template-Klassen QObjects sind oder mit Hilfe des Q_OBJECT Macros über signals und slots verfügen. Aus diesem Grund haben wir diese Elternklasse, von der Tableeren kann, die diese Funktionalitäten enthält und damit auch für seine Kindklasse bereitstellt.
+  In Qt ist es nicht möglich dass template-Klassen QObjects sind oder mit Hilfe des Q_OBJECT Macros über signals und slots verfügen. Aus diesem Grund haben wir diese Elternklasse, von der Table erben kann, die diese Funktionalitäten enthält und damit auch für seine Kindklasse bereitstellt.
   */
 class TableInterface : public QObject
 {
@@ -93,6 +93,11 @@ public:
       */
     QList<QPointer<RowType> > allRows();
 
+    /*!
+      Gibt die Row mit der ID \p id zurück, oder 0, falls die Row nicht in dieser Tabelle existiert.
+
+      \return die Row mit der ID \p id, oder 0, falls die Row nicht in dieser Tabelle existiert.
+      */
     QPointer<RowType> rowById(int id);
 
 protected:

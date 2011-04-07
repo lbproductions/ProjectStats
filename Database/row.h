@@ -47,10 +47,25 @@ public:
       */
     bool set(const QString &key, const QVariant &value);
 
+    /*!
+      Gibt alle Attribute dieser Row zurück.
+
+      \return Alle Attribute dieser Row
+      */
     QList<AttributeInterface*> attributes() const;
 
+    /*!
+      Gibt alle Datenbankattribute dieser Row zurück.
+
+      \return Alle Datenbankattribute dieser Row
+      */
     QList<AttributeInterface*> databaseAttributes() const;
 
+    /*!
+      Gibt das Attribut mit dem Namen \p name oder 0 zurück, falls es dieses nicht gibt.
+
+      \return das Attribut mit dem Namen \p name oder 0, falls es dieses nicht gibt.
+      */
     AttributeInterface *attribute(const QString &name) const;
 
 protected:
@@ -78,12 +93,18 @@ protected:
       */
     QSqlQuery query(const QString &queryString) const;
 
+    /*!
+      Fügt das gegebene Attribut zu den Attributen der Row hinzu.<br>
+      Ist es ein Datenbankattribute wird es außerdem zusätzlich zu den Datenbankattributen hinzugefügt.
+
+      \param attribute Das Attribut, das hinzugefügt werden soll.
+      */
     void registerAttribute(AttributeInterface &attribute);
 
     int m_id; //!< Die ID dieser Row
     QPointer<TableInterface> m_table; //!< Die Tabelle, in die diese Row liegt
     QHash<QString, AttributeInterface* > m_attributes; //!< Alle Attribute der Row. Muss von Kindklassen befüllt werden.
-    QList<AttributeInterface*> m_databaseAttributes;
+    QList<AttributeInterface*> m_databaseAttributes; //!< Alle Datenbankattribute
 
 private:
     /*!
