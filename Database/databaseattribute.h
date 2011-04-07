@@ -142,6 +142,7 @@ QString DatabaseAttribute<T,R>::sqlType() const
     DatabaseAttribute<Type,RowClassname> *Name;
 
 #define IMPLEMENT_DATABASEATTRIBUTE(Type, RowClassname, Name) \
-    Name = new DatabaseAttribute<Type,RowClassname>(XSTR(Name) "",this);
+    Name = new DatabaseAttribute<Type,RowClassname>(XSTR(Name) "",this); \
+    registerAttribute(Name);
 
 #endif // DATABASE_DATABASEATTRIBUTE_H

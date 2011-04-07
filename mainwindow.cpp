@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <Database/drink.h>
+#include <Database/samplerow.h>
 
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -13,7 +14,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     m_drink = Database::Drinks::instance()->rowById(5);
-    qDebug() << Database::Drinks::instance()->name();
     Database::AttributeFutureWatcher<QString,Database::Drink> *future = m_drink->name->calculateASync();
     future->connectTo(ui->labelName);
     future->connectTo(ui->lineEditName);
@@ -30,9 +30,11 @@ MainWindow::MainWindow(QWidget *parent) :
     future->connectTo(ui->labelTest2);
     future->connectTo(ui->labelTest2B);
 
-    foreach(Database::Drink *drink, m_drink->drinks->value())
+    Database::SampleRow * row = new Database::SampleRow();
+
+    foreach(Database::Drink *d, row->drinks->value())
     {
-        qDebug() << drink->name->value();
+        qDebug() << d->name->value();
     }
 }
 

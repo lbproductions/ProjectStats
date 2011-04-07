@@ -131,7 +131,8 @@ private:
     public: \
         RowClassname(const RowClassname &other); \
         RowClassname(); \
-        RowClassname(int id, Table<RowClassname> *table);
+        RowClassname(int id, Table<RowClassname> *table); \
+        void initializeAttributes();
 
 #define END_ROW_DECLARATION( RowClassname ) \
     }; \
@@ -142,10 +143,10 @@ private:
 
 #define START_ROW_IMPLEMENTATION( RowClassname ) \
     namespace Database { \
-    RowClassname::RowClassname() : Row(0,RowClassname ## s::instance()) {}  \
-    RowClassname::RowClassname(const RowClassname &other) : Row(other.m_id, other.m_table) {} \
-    RowClassname::RowClassname(int id, Table<RowClassname> *table) : \
-        Row(id,table)
+    RowClassname::RowClassname() : Row(0,RowClassname ## s::instance()) { initializeAttributes(); }  \
+    RowClassname::RowClassname(const RowClassname &other) : Row(other.m_id, other.m_table) { initializeAttributes(); } \
+    RowClassname::RowClassname(int id, Table<RowClassname> *table) : Row(id,table) { initializeAttributes(); } \
+    void RowClassname::initializeAttributes()
 
 #define END_ROW_IMPLEMENTATION() } // namespace Database
 

@@ -100,6 +100,20 @@ public:
       */
     QPointer<RowType> rowById(int id);
 
+    /*!
+      Gibt alle Elemente dieser Tabelle zurück, die die SQL-Condition \a condition erfüllen. Diese erhalten den Typen des Templatearguments.
+
+      \param condition Eine SQL-Condition, die die Elemente der Tabelle filtert.
+      \return Eine Liste aller Objekte in dieser Tabelle.
+      */
+    QList<RowType *> rowsBySqlCondition(const QString &condition);
+
+    /*!
+      Fügt die Row \p row der Datenbank hinzu.<br>
+      Diese Row sollte eine nicht valide Row mit ID = 0 sein, mit korrektem Typ und allen entscheidenden Attributen gesetzt.
+      */
+    void insertRow(RowType *row);
+
 protected:
     /*!
       Erstellt ein Tabellen-Objekt mit Namen \a name, in der Datenbank \a database.
@@ -114,14 +128,6 @@ protected:
       Tabellen können diese Methode reimplementieren, um verschiedene Instanzen von Rows zu erstellen (z.B. Game, LiveGame, DokoLiveGame, ...).
       */
     virtual QPointer<RowType> createRowInstance(int id);
-
-    /*!
-      Gibt alle Elemente dieser Tabelle zurück, die die SQL-Condition \a condition erfüllen. Diese erhalten den Typen des Templatearguments.
-
-      \param condition Eine SQL-Condition, die die Elemente der Tabelle filtert.
-      \return Eine Liste aller Objekte in dieser Tabelle.
-      */
-    QList<QPointer<RowType> > rowsBySqlCondition(const QString &condition);
 
     QString m_name; //!< Der Name der Tabelle.
     QHash<int, RowType* > m_rows; //!< Alle Rows gecacht
@@ -189,8 +195,6 @@ void Table<RowType>::createTable()
 
     createQuery += ")";
 
-    qDebug() << createQuery;
-
     QSqlQuery create(Database::instance()->sqlDatabaseLocked());
     create.exec(createQuery);
     Database::instance()->releaseDatabaseLock();
@@ -231,7 +235,6 @@ void Table<RowType>::initializeCache()
 template<class RowType>
 QPointer<RowType> Table<RowType>::createRowInstance(int id)
 {
-    qDebug() << "Creating row with id = " << id << " in table " << m_name;
     return new RowType(id,this);
 }
 
@@ -276,9 +279,9 @@ QList<RowType*> Table<RowType>::allRows()
 }
 
 template<class RowType>
-QList<QPointer<RowType> > Table<RowType>::rowsBySqlCondition(const QString &condition)
+QList<RowType*> Table<RowType>::rowsBySqlCondition(const QString &condition)
 {
-    QList<QPointer<RowType> > list;
+    QList<RowType*> list;
 
     QSqlQuery select = QSqlQuery(Database::instance()->sqlDatabaseLocked());
     QString query = "SELECT id FROM "+m_name+" "+condition;
@@ -308,6 +311,39 @@ QPointer<RowType> Table<RowType>::rowById(int id)
     return m_rows.value(id,0);
 }
 
+template<class RowType>
+void Table<RowType>::insertRow(RowType *row)
+{
+//    qDebug() << "Table<RowType>::insertRow: Inserting row " << gameName;
+
+//    Q_ASSERT(!m_database.isNull());
+
+//    QSqlQuery create(m_database->database());
+//    create.prepare("INSERT INTO games (id  , type, live  , name, date  , length , siteID, comment) "
+//                    "VALUES            (null, ?   , ?     ,  ?  , null  ,  null  , null  ,    null       )");
+//    create.addBindValue(type);
+//    create.addBindValue(live);
+//    create.addBindValue(gameName);
+//    create.exec();
+//    int id = create.lastInsertId().toInt();
+//    create.finish();
+
+//    if(create.lastError().isValid())
+//    {
+//        qWarning() << "Games::createGame: " << create.lastError();
+//        return 0;
+//    }
+
+//    Game* game = createGameInstanceById(id);
+//    if(game->isLive())
+//    {
+//        LiveGame *lg = static_cast<LiveGame*>(game);
+//        lg->createRound();
+//    }
+//    emit rowCreated(game);
+//    return game;
+}
+
 } // namespace Database
 
 #define STRINGIZE(s) # s
@@ -326,7 +362,7 @@ QPointer<RowType> Table<RowType>::rowById(int id)
     namespace Database { \
     REGISTER_TABLE(RowClassname ## s) \
     RowClassname ## s::RowClassname ## s() : \
-    Table<Drink>(QString(XSTR(RowClassname ## s) "").toLower()), \
+    Table<RowClassname>(QString(XSTR(RowClassname ## s) "").toLower()), \
         Singleton<RowClassname ## s>() \
     { \
     } \
