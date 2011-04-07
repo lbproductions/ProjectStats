@@ -21,7 +21,8 @@ public:
     Attribute<QString,Drink> test2;
 
     QString calculateTest();
-    bool updateTest(AttributeInterface *changedDependency);
+    QFuture<QString> updateTestIfPossible(AttributeInterface *changedDependency);
+    QString updateTest(AttributeInterface *changedDependency);
 
     QString calculateTest2();
 

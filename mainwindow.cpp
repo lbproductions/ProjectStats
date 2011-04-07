@@ -25,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     future = m_drink->test2.futureWatcher();
     future->connectTo(ui->labelTest2);
     future->connectTo(ui->labelTest2B);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -40,4 +42,21 @@ void MainWindow::on_lineEditName_editingFinished()
 void MainWindow::on_lineEditType_editingFinished()
 {
     m_drink->type.setValue(ui->lineEditType->text());
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    for(int j = 0; j < 500; ++j)
+    {
+        QtConcurrent::run(this, &MainWindow::threadTest);
+    }
+}
+
+void MainWindow::threadTest()
+{
+    for(int i = 1; i <= 10; ++i)
+    {
+        m_drink->name.setValue("name"+QString::number(i));
+        m_drink->type.setValue("type"+QString::number(i));
+    }
 }

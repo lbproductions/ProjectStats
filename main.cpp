@@ -19,56 +19,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    //    Database::Drink *d = Database::Drinks::instance()->rowById(5);
-
-    //    d->name.setValue("name");
-    //    d->type.setValue("type");
-
-    //    QElapsedTimer timer;
-    //    timer.start();
-
-    //    qDebug() << "d->test(): " << d->test();
-    //    qDebug() << "Took " << timer.elapsed()  << " ms";
-    //    timer.restart();
-
-    //    qDebug() << "d->test(): " << d->test();
-    //    qDebug() << "Took " << timer.elapsed()  << " ms";
-    //    timer.restart();
-
-    //    qDebug() << "d->name.setValue(\"name2\")";
-    //    d->name.setValue("name2");
-    //    qDebug() << "Took " << timer.elapsed()  << " ms";
-    //    timer.restart();
-
-    //    qDebug() << "d->name.setValue(\"name2\")";
-    //    d->name.setValue("name2");
-    //    qDebug() << "Took " << timer.elapsed()  << " ms";
-    //    timer.restart();
-
-    //    qDebug() << "d->test(): " << d->test();
-    //    qDebug() << "Took " << timer.elapsed()  << " ms";
-    //    timer.restart();
-
-    //    qDebug() << "d->test(): " << d->test();
-    //    qDebug() << "Took " << timer.elapsed()  << " ms";
-    //    timer.restart();
-
-    //    qDebug() << "d->type.setValue(\"type2\")";
-    //    d->type.setValue("type2");
-    //    qDebug() << "Took " << timer.elapsed()  << " ms";
-    //    timer.restart();
-
-    //    qDebug() << "d->type.setValue(\"type2\")";
-    //    d->type.setValue("type2");
-    //    qDebug() << "Took " << timer.elapsed()  << " ms";
-    //    timer.restart();
-
-    //    qDebug() << "d->test(): " << d->test();
-    //    qDebug() << "Took " << timer.elapsed()  << " ms";
-    //    timer.restart();
-
-    //    qDebug() << "d->test(): " << d->test();
-    //    qDebug() << "Took " << timer.elapsed()  << " ms";
-    //    timer.restart();
     return a.exec();
 }

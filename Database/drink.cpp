@@ -19,38 +19,49 @@ Drink::Drink(int id, Table<Drink> *table) :
     registerAttribute(test2);
 
     test.setCalculationFunction(&Drink::calculateTest);
-    test.setUpdateFunction(&Drink::updateTest);
+    test.setUpdateFunction(&Drink::updateTestIfPossible);
     name.addDependingAttribute(&test);
     type.addDependingAttribute(&test);
 
     test2.setCalculationFunction(&Drink::calculateTest2);
     test.addDependingAttribute(&test2);
+    type.addDependingAttribute(&test2);
 }
 
 QString Drink::calculateTest()
 {
     QWaitCondition sleep;
     QMutex m;
-    sleep.wait(&m,2500);
+    sleep.wait(&m,10);
     return "Name: " + name() + "; Type: " + type();
 }
 
-bool Drink::updateTest(AttributeInterface *changedDependency)
+QFuture<QString> Drink::updateTestIfPossible(AttributeInterface *changedDependency)
 {
     if(changedDependency->name() == "name")
     {
-        test.setValue("Name: " + name() + "; Type: " + type());
-        return true;
+        return QtConcurrent::run(this, &Drink::updateTest, changedDependency);
     }
 
-    return false;
+    return QFuture<QString>();
+}
+
+QString Drink::updateTest(AttributeInterface *changedDependency)
+{
+    if(changedDependency->name() == "name")
+    {
+        return "Name: " + name() + "; Type: " + type();
+    }
+
+    return "";
 }
 
 QString Drink::calculateTest2()
 {
+    qDebug() << "calculateTest2";
     QWaitCondition sleep;
     QMutex m;
-    sleep.wait(&m,1500);
+    sleep.wait(&m,8);
     return "Test: " + test() + "; Type: " + type();
 }
 

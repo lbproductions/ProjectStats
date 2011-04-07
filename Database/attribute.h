@@ -28,7 +28,7 @@ public:
     virtual bool isDatabaseAttribute() const;
 
 public slots:
-    virtual void clearCache() = 0;
+    virtual void recalculate() = 0;
     virtual void update() = 0;
 
     virtual QString name() const = 0;
@@ -51,7 +51,7 @@ class Attribute : public AttributeInterface
 {
 public:
     typedef T (R::*CalculateFunction)();
-    typedef bool (R::*UpdateFunction)(AttributeInterface *changedDependency);
+    typedef QFuture<T> (R::*UpdateFunction)(AttributeInterface *changedDependency);
 
     Attribute(const QString &name, Row *row);
 
@@ -69,7 +69,7 @@ public:
 
     void update();
 
-    void clearCache();
+    void recalculate();
 
     T operator()();
 
@@ -194,16 +194,16 @@ void Attribute<T,R>::setValue(T value)
 template<class T, class R>
 AttributeFutureWatcher<T,R> *Attribute<T,R>::futureWatcher()
 {
-    m_lock.lockForWrite();
 
     if(!m_cacheInitialized && !m_futureWatcher->isRunning())
     {
+        m_lock.lockForWrite();
         emit aboutToChange();
         QFuture<T> future = QtConcurrent::run(this, &Attribute<T,R>::calculate);
         m_futureWatcher->setFuture(future);
+        m_lock.unlock();
     }
 
-    m_lock.unlock();
 
     return m_futureWatcher;
 }
@@ -263,34 +263,41 @@ T Attribute<T,R>::calculate()
 template<class T, class R>
 void Attribute<T,R>::update()
 {
-    m_lock.lockForWrite();
     if(m_updateFunction == 0 || !m_cacheInitialized)
     {
-        m_lock.unlock();
-        clearCache();
+        recalculate();
         return;
     }
 
-    AttributeInterface *dependentAttribute = static_cast<AttributeInterface*>(sender());
-    m_cacheInitialized = CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_updateFunction)(dependentAttribute);
 
-    futureWatcher(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
+    m_lock.lockForWrite();
+    AttributeInterface *dependentAttribute = static_cast<AttributeInterface*>(sender());
+    QFuture<T> future = CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_updateFunction)(dependentAttribute);
+
+    if(future.isRunning() || future.isResultReadyAt(0))
+    {
+        m_futureWatcher->setFuture(future);
+    }
+    else
+    {
+        recalculate(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
+    }
+
     m_lock.unlock();
 }
 
 template<class T, class R>
-void Attribute<T,R>::clearCache()
+void Attribute<T,R>::recalculate()
 {
-    m_lock.lockForWrite();
     m_cacheInitialized = false;
     futureWatcher(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
-    m_lock.unlock();
 }
 
 template<class T, class R>
 void Attribute<T,R>::addDependingAttribute(AttributeInterface *dependingAttribute)
 {
     connect(this,SIGNAL(changed()),dependingAttribute,SLOT(update()));
+
 }
 
 template<class T, class R>
@@ -308,6 +315,11 @@ template<class T, class R>
 void AttributeFutureWatcher<T,R>::setFuture(QFuture<T> future)
 {
     m_futureWatcher->setFuture(future);
+
+    if(future.isFinished())
+    {
+        update();
+    }
 }
 
 template<class T, class R>
@@ -319,16 +331,19 @@ void AttributeFutureWatcher<T,R>::on_attributeAboutToChange()
 template<class T, class R>
 void AttributeFutureWatcher<T,R>::update()
 {
-    if(sender() == m_futureWatcher)
+    if(m_futureWatcher->future().isResultReadyAt(0))
     {
-        T value = m_futureWatcher->future().result();
-        m_attribute->setValue(value);
-        emit valueChanged(QVariant(value).toString());
-    }
-    else
-    {
-        T value = m_attribute->value();
-        emit valueChanged(QVariant(value).toString());
+        if(sender() == m_futureWatcher)
+        {
+            T value = m_futureWatcher->future().result();
+            m_attribute->setValue(value);
+            emit valueChanged(QVariant(value).toString());
+        }
+        else
+        {
+            T value = m_attribute->value();
+            emit valueChanged(QVariant(value).toString());
+        }
     }
 }
 

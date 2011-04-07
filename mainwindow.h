@@ -24,7 +24,10 @@ private slots:
 
     void on_lineEditName_editingFinished();
 
+    void on_pushButton_clicked();
+
 private:
+    void threadTest();
     Ui::MainWindow *ui;
     Database::Drink *m_drink;
 };

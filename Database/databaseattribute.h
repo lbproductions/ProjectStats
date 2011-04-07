@@ -39,6 +39,7 @@ void DatabaseAttribute<T,R>::setValue(T value)
 {
     Attribute<T,R>::setValue(value);
     QtConcurrent::run(Attribute<T,R>::m_row.data(), &Row::set, Attribute<T,R>::m_name, value);
+    //Attribute<T,R>::m_row->set(Attribute<T,R>::m_name, value);
 }
 
 template<class T, class R>
