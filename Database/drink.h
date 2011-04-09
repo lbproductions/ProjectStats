@@ -6,8 +6,8 @@
 #include "attribute.h"
 #include "databaseattribute.h"
 
-START_ROW_DECLARATION(Drink)
-    DECLARE_ROW_CONSTRUCTORS(Drink)
+START_ROW_DECLARATION(Drink, Row)
+    DECLARE_ROW_CONSTRUCTORS(Drink, Drink)
 
     DECLARE_DATABASEATTRIBUTE(QString,Drink,name)
     DECLARE_DATABASEATTRIBUTE(QString,Drink,type)

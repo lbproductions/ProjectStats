@@ -5,6 +5,7 @@
 
 #include "database.h"
 #include "attribute.h"
+#include "row.h"
 
 #include <QPointer>
 #include <QSqlQuery>
@@ -39,6 +40,8 @@ public:
       */
     virtual QSqlQuery query(const QString &queryString) const = 0;
 
+    virtual void registerRowType(Row *row) = 0;
+
 protected:
     friend class Database;
 
@@ -51,6 +54,10 @@ protected:
       Überprueft, ob die Tabelle in der Datenbank existiert und erstellt sie gegebenenfalls (durch initializeTable()). Wird von Database aufgerufen.
       */
     virtual void createTable() = 0;
+
+    /*!
+      */
+    virtual void alterTableToContainAllAttributes() = 0;
 
     /*!
       Befüllt die Liste aller in der Tabelle enthaltenen Rows. Wird von Database nach createTableIfNotExists() aufgerufen.
@@ -114,6 +121,11 @@ public:
       */
     void insertRow(RowType *row);
 
+    /*!
+
+      */
+    void registerRowType(Row *row);
+
 protected:
     /*!
       Erstellt ein Tabellen-Objekt mit Namen \a name, in der Datenbank \a database.
@@ -131,6 +143,7 @@ protected:
 
     QString m_name; //!< Der Name der Tabelle.
     QHash<int, RowType* > m_rows; //!< Alle Rows gecacht
+    static QHash<QString, AttributeInterface*> *registeredAttributes();
 
 private:
     /*!
@@ -143,11 +156,42 @@ private:
       */
     void createTable();
 
+    void alterTableToContainAllAttributes();
+
+    void addColumn(AttributeInterface* attribute);
+
     /*!
       Befüllt die Liste aller in der Tabelle enthaltenen Rows. Wird von Database nach createTableIfNotExists() aufgerufen.
       */
     void initializeCache();
 };
+
+//! Diese Klasse wird vom Macro REGISTER_ASROWTYPE() verwendet um Rows (bzw. deren Attribute) bei einer Tabelle zu registrieren.
+/*!
+  Eine Row kann ihre Attribute also bei einer Tabelle registrieren, indem sie REGISTER_ASROWTYPE(<Klassenname der Oberklasse>, <Klassenname des Rowtyps>) aufruft.
+  */
+class RowRegistrar
+{
+public:
+    /*!
+      Registriert die Row \p row bei der Tabelle \table.
+      */
+    RowRegistrar(TableInterface* table, Row *row);
+};
+
+/*!
+  Mit Hilfe dieses Macros registrieren sich Tabellen bei der Datenbank.<br>
+  Authoren von Tabellen müssen nur noch irgendwo im namespace Database REGISTER_TABLE(<Klassenname der Tabelle>) aufrufen.
+  */
+#define REGISTER_ASROWTYPE(Classname, BaseClassname) \
+    RowRegistrar _register_ ## Classname(BaseClassname ## s::instance(), new Classname());
+
+template<class RowType>
+QHash<QString, AttributeInterface*> *Table<RowType>::registeredAttributes()
+{
+    static QHash<QString, AttributeInterface*> *attributes = new QHash<QString, AttributeInterface*>();
+    return attributes;
+}
 
 template<class RowType>
 Table<RowType>::Table(const QString &name) :
@@ -182,13 +226,11 @@ void Table<RowType>::createTableIfNotExists()
 template<class RowType>
 void Table<RowType>::createTable()
 {
-    RowType row(0,this);
-
-    qDebug() << "Drinks::initializeTable: Creating drinks table.";
+    qDebug() << "Table<RowType>::createTable: Creating table" << m_name;
 
     QString createQuery = "CREATE TABLE "+m_name+" (id INTEGER PRIMARY KEY";
 
-    foreach(AttributeInterface *attribute, row.databaseAttributes())
+    foreach(AttributeInterface *attribute, *registeredAttributes())
     {
         createQuery += ", " + attribute->name() + " " + attribute->sqlType();
     }
@@ -202,9 +244,60 @@ void Table<RowType>::createTable()
     create.finish();
     if(create.lastError().isValid())
     {
-        qWarning() << "Drinks::initializeTable: " << create.lastError();
+        qWarning() << "Table<RowType>::createTable: " << create.lastError();
+    }
+}
+
+template<class RowType>
+void Table<RowType>::alterTableToContainAllAttributes()
+{
+    QSqlQuery pragma(Database::instance()->sqlDatabaseLocked());
+
+    //Prüfe, ob der Name dieser Tabelle in der Datenbank existiert...
+    QString query = "PRAGMA table_info(" + m_name + ")";
+    pragma.exec(query);
+    Database::instance()->releaseDatabaseLock();
+
+    pragma.first();
+
+    if(pragma.lastError().isValid() || !pragma.value(0).isValid())
+    {
+        qDebug() << "Table::Table: Pragma failed for table" << m_name;
     }
 
+    QHash<QString, AttributeInterface*> unknownAttributes = *registeredAttributes();
+
+    while(pragma.next())
+    {
+        unknownAttributes.remove(pragma.value(1).toString());
+    }
+
+    foreach(AttributeInterface * attribute, unknownAttributes.values())
+    {
+        addColumn(attribute);
+    }
+
+    pragma.finish();
+}
+
+template<class RowType>
+void Table<RowType>::addColumn(AttributeInterface * attribute)
+{
+    qDebug() << "Table::addcolumn: Adding new column" << attribute->name() << "to table" << m_name;
+    QSqlQuery alter(Database::instance()->sqlDatabaseLocked());
+
+    QString query = "ALTER TABLE " + m_name + " ADD " + attribute->name() + " " + attribute->sqlType();
+    qDebug() << query;
+    alter.exec(query);
+    Database::instance()->releaseDatabaseLock();
+
+    alter.first();
+
+    if(alter.lastError().isValid())
+    {
+        qDebug() << "Table::addColumn: Alter failed for table" << m_name;
+        qDebug() << "Table::addColumn:" << alter.lastError();
+    }
 }
 
 template<class RowType>
@@ -344,6 +437,16 @@ void Table<RowType>::insertRow(RowType *row)
 //    return game;
 }
 
+template<class RowType>
+void Table<RowType>::registerRowType(Row *row)
+{
+    foreach(AttributeInterface *attribute, row->databaseAttributes())
+    {
+        qDebug() << "Table::registerRowType: Attribute" << attribute->name() << "registered at table" << m_name;
+        registeredAttributes()->insert(attribute->name(), attribute);
+    }
+}
+
 } // namespace Database
 
 #define STRINGIZE(s) # s
@@ -356,16 +459,16 @@ void Table<RowType>::insertRow(RowType *row)
     public: \
     RowClassname ## s(); \
     }; \
-    } // namespace Database)
+    } // namespace Database
 
 #define IMPLEMENT_TABLE( RowClassname ) \
     namespace Database { \
-    REGISTER_TABLE(RowClassname ## s) \
     RowClassname ## s::RowClassname ## s() : \
     Table<RowClassname>(QString(XSTR(RowClassname ## s) "").toLower()), \
         Singleton<RowClassname ## s>() \
     { \
     } \
+    REGISTER_TABLE(RowClassname ## s) \
     } // namespace Database
 
 #endif // DATABASE_TABLE_H

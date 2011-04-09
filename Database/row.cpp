@@ -11,13 +11,20 @@ Row::Row(int id, TableInterface *table) :
     m_table(table),
     m_attributes(QHash<QString, AttributeInterface* >())
 {
-    checkId();
+    if(m_id > 0)
+    {
+        checkId();
+    }
+    else
+    {
+        m_id = 0;
+    }
 }
 
 void Row::checkId()
 {
     if(!get("id").isValid()) {
-        m_id = -1;
+        m_id = 0;
     }
 }
 

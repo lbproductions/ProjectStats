@@ -120,18 +120,18 @@ private:
 
 } // namespace Database
 
-#define START_ROW_DECLARATION( RowClassname ) \
+#define START_ROW_DECLARATION( RowClassname, RowSuperclassname ) \
     namespace Database { \
     template<class RowType> \
     class Table; \
-    class RowClassname : public Row \
+    class RowClassname : public RowSuperclassname \
     {
 
-#define DECLARE_ROW_CONSTRUCTORS( RowClassname ) \
+#define DECLARE_ROW_CONSTRUCTORS( RowClassname, RowBaseclassname ) \
     public: \
         RowClassname(const RowClassname &other); \
         RowClassname(); \
-        RowClassname(int id, Table<RowClassname> *table); \
+        RowClassname(int id, TableInterface *table); \
         void initializeAttributes();
 
 #define END_ROW_DECLARATION( RowClassname ) \
@@ -141,11 +141,12 @@ private:
     Q_DECLARE_METATYPE(Database::RowClassname*) \
     Q_DECLARE_METATYPE(QList<Database::RowClassname*>)
 
-#define START_ROW_IMPLEMENTATION( RowClassname ) \
+#define START_ROW_IMPLEMENTATION( RowClassname, RowBaseclassname, RowSuperclassname  ) \
     namespace Database { \
-    RowClassname::RowClassname() : Row(0,RowClassname ## s::instance()) { initializeAttributes(); }  \
-    RowClassname::RowClassname(const RowClassname &other) : Row(other.m_id, other.m_table) { initializeAttributes(); } \
-    RowClassname::RowClassname(int id, Table<RowClassname> *table) : Row(id,table) { initializeAttributes(); } \
+    REGISTER_ASROWTYPE( RowClassname, RowBaseclassname ) \
+    RowClassname::RowClassname() : RowSuperclassname(0,RowBaseclassname ## s::instance()) { initializeAttributes(); }  \
+    RowClassname::RowClassname(const RowClassname &other) : RowSuperclassname(other.m_id, other.m_table) { initializeAttributes(); } \
+    RowClassname::RowClassname(int id, TableInterface *table) : RowSuperclassname(id,table) { initializeAttributes(); } \
     void RowClassname::initializeAttributes()
 
 #define END_ROW_IMPLEMENTATION() } // namespace Database

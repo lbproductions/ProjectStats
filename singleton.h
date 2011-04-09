@@ -2,6 +2,8 @@
 #define SINGLETON_H
 
 #include <QPointer>
+#include <QDebug>
+#include <QMutex>
 
 //! Mit Hilfe dieser template-Klasse lassen sich andere Klassen extrem leicht in Singletons verwandeln.
 /*!
@@ -34,6 +36,8 @@ private:
 
     static QPointer<Derived> m_instance; //!< Die Instanz des Singletons.
 
+    static QMutex m_lock;
+
     /*!
       Der Guard kümmert sich um die Zerstörung der Instanz beim Beenden des Programms.
       */
@@ -49,6 +53,8 @@ private:
 
 template <class Derived>
 QPointer<Derived> Singleton<Derived>::m_instance(0);
+template <class Derived>
+QMutex Singleton<Derived>::m_lock;
 
 template <class Derived>
 Singleton<Derived>::Singleton()

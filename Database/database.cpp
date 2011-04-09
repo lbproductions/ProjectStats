@@ -49,6 +49,7 @@ void Database::createTables()
         Q_ASSERT(!table.isNull());
 
         table->createTableIfNotExists();
+        table->alterTableToContainAllAttributes();
     }
 
     foreach(QPointer<TableInterface> table, m_tables)

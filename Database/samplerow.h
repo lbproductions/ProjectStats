@@ -8,8 +8,8 @@
 #include "drink.h"
 
 
-START_ROW_DECLARATION(SampleRow)
-DECLARE_ROW_CONSTRUCTORS(SampleRow)
+START_ROW_DECLARATION(SampleRow, Row)
+    DECLARE_ROW_CONSTRUCTORS(SampleRow, SampleRow)
 
     DECLARE_DATABASEATTRIBUTE(QString,SampleRow,name)
     DECLARE_DATABASEATTRIBUTE(QString,SampleRow,type)
