@@ -407,34 +407,39 @@ QPointer<RowType> Table<RowType>::rowById(int id)
 template<class RowType>
 void Table<RowType>::insertRow(RowType *row)
 {
-//    qDebug() << "Table<RowType>::insertRow: Inserting row " << gameName;
+    qDebug() << "Table<RowType>::insertRow: Inserting row";
 
-//    Q_ASSERT(!m_database.isNull());
+    QSqlQuery create = QSqlQuery(Database::instance()->sqlDatabaseLocked());
 
-//    QSqlQuery create(m_database->database());
-//    create.prepare("INSERT INTO games (id  , type, live  , name, date  , length , siteID, comment) "
-//                    "VALUES            (null, ?   , ?     ,  ?  , null  ,  null  , null  ,    null       )");
-//    create.addBindValue(type);
-//    create.addBindValue(live);
-//    create.addBindValue(gameName);
-//    create.exec();
-//    int id = create.lastInsertId().toInt();
-//    create.finish();
+    QString queryString =   "INSERT INTO "+m_name+" (id";
+    foreach(AttributeInterface *attribute, row->databaseAttributes())
+    {
+        queryString += ", "+attribute->name();
+    }
+    queryString += ") VALUES            (null";
+    for(int i = 0; i < row->databaseAttributes().size(); ++i)
+    {
+        queryString += ", ?";
+    }
+    queryString += ")";
 
-//    if(create.lastError().isValid())
-//    {
-//        qWarning() << "Games::createGame: " << create.lastError();
-//        return 0;
-//    }
+    create.prepare(queryString);
 
-//    Game* game = createGameInstanceById(id);
-//    if(game->isLive())
-//    {
-//        LiveGame *lg = static_cast<LiveGame*>(game);
-//        lg->createRound();
-//    }
-//    emit rowCreated(game);
-//    return game;
+    foreach(AttributeInterface *attribute, row->databaseAttributes())
+    {
+        create.addBindValue(attribute->stringValue());
+    }
+
+    create.exec();
+    Database::instance()->releaseDatabaseLock();
+    int id = create.lastInsertId().toInt();
+    row->setId(id);
+    create.finish();
+
+    if(create.lastError().isValid())
+    {
+        qWarning() << "Table::insertRow: " << create.lastError();
+    }
 }
 
 template<class RowType>

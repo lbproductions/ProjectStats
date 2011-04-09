@@ -65,6 +65,8 @@ public:
       */
     virtual QString sqlType() const = 0;
 
+    virtual QString stringValue() = 0;
+
 protected slots:
     /*!
       Berechnet den Wert des Attributs komplett neu.
@@ -140,6 +142,8 @@ public:
       \return der Wert des Attributs.
       */
     virtual T value();
+
+    QString stringValue();
 
     /*!
       Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
@@ -403,6 +407,14 @@ T Attribute<T,R>::value()
 
     m_lock.unlock();
     return m_value;
+}
+
+template<class T, class R>
+QString Attribute<T,R>::stringValue()
+{
+    QVariant v;
+    v.setValue(value());
+    return v.toString();
 }
 
 template<class T, class R>

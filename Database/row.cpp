@@ -33,6 +33,11 @@ int Row::id() const
     return m_id;
 }
 
+void Row::setId(int id)
+{
+    m_id = id;
+}
+
 QSqlQuery Row::query(const QString &queryString) const
 {
     return m_table->query(queryString);
@@ -46,9 +51,14 @@ bool Row::set(const QString &key, const QVariant &value)
 
 bool Row::set(const QString &key, const QVariant &value, const QString &condition)
 {
-    QSqlQuery q = query("UPDATE "+m_table->name()+" SET "+key+" = '"+value.toString()+"' WHERE "+condition+";");
-    q.finish();
-    return q.isValid();
+    if(m_id != 0)
+    {
+        QSqlQuery q = query("UPDATE "+m_table->name()+" SET "+key+" = '"+value.toString()+"' WHERE "+condition+";");
+        q.finish();
+        return q.isValid();
+    }
+
+    return false;
 }
 
 QVariant Row::get(const QString &key) const

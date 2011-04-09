@@ -71,6 +71,8 @@ public:
       */
     AttributeInterface *attribute(const QString &name) const;
 
+    void setId(int id);
+
 protected:
     /*!
       Erstellt ein Row Objekt, welches in der Tabelle \p table  die Daten mit der ID  \p id repräsentiert.

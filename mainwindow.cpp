@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <Database/drink.h>
-#include <Database/samplerow.h>
+#include <Database/samplerowchild.h>
 
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -30,12 +30,24 @@ MainWindow::MainWindow(QWidget *parent) :
     future->connectTo(ui->labelTest2);
     future->connectTo(ui->labelTest2B);
 
-    Database::SampleRow * row = new Database::SampleRow();
+    Database::SampleRow * row1 = Database::SampleRows::instance()->rowById(1);
 
-    foreach(Database::Drink *d, row->drinks->value())
-    {
-        qDebug() << d->name->value();
-    }
+    qDebug() << "row1->name" << row1->name->value();
+    qDebug() << "row1->type" << row1->type->value();
+
+    Database::SampleRow * row = new Database::SampleRow();
+    row->name->setValue("Name");
+    row->type->setValue("Type");
+
+    Database::SampleRows::instance()->insertRow(row);
+
+    Database::SampleRowChild * row2 = new Database::SampleRowChild();
+    row2->name->setValue("Name2");
+    row2->type->setValue("Type2");
+    row2->child_name->setValue("childname");
+    row2->child_type->setValue("childtype");
+
+    Database::SampleRows::instance()->insertRow(row2);
 }
 
 MainWindow::~MainWindow()
