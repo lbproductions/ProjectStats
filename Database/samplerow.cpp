@@ -16,11 +16,13 @@ QPointer<SampleRow> SampleRows::createRowInstance(int id)
     return row;
 }
 
-END_ROW_IMPLEMENTATION()
+END_TABLE_IMPLEMENTATION()
 
-START_ROW_IMPLEMENTATION(SampleRow, SampleRow, Row)
+START_ROW_IMPLEMENTATION(SampleRow /*Name der Row*/,
+                         SampleRow /*Name der Basisklasse der Row (z.B. Game für alle games)*/,
+                         Row /*Name der Superklasse dieser Row*/ )
 {
-    IMPLEMENT_DATABASEATTRIBUTE(QString,SampleRow,name, "name")
+    IMPLEMENT_DATABASEATTRIBUTE(QString,SampleRow,name /*Name des Attributs*/, "name" /*Displayname zB für Tabellenheader*/)
     IMPLEMENT_DATABASEATTRIBUTE(QString,SampleRow,type, "type")
 
     IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, SampleRow, test, "test")

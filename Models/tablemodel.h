@@ -97,8 +97,6 @@ void TableModel<RowType, Owner>::on_attribute_changed()
         }
     }
 
-    qDebug() << "emit dataChanged(" << i << "," << j << ")";
-
     QModelIndex changedIndex = index(i,j,QModelIndex());
     emit dataChanged(changedIndex, changedIndex);
 }

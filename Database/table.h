@@ -394,14 +394,13 @@ void Table<RowType>::insertRow(RowType *row)
     int id = create.lastInsertId().toInt();
     row->setId(id);
 
-    //qDebug() << "m_model->beginInsertRows(QModelIndex()," << m_rows->value().size()<< "," << m_rows->value().size() << ")";
     m_model->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
     m_rows->value().insert(id,row);
 
-//    foreach(RowType* row, m_rows->value().values())
-//    {
-//        qDebug() << row->name->value();
-//    }
+    foreach(AttributeBase *attribute, row->attributes())
+    {
+        connect(attribute,SIGNAL(changed()),m_model,SLOT(on_attribute_changed()));
+    }
 
     m_model->endInsertRows();
 
@@ -454,7 +453,6 @@ void Table<RowType>::registerRowType(Row *row)
     REGISTER_TABLE(RowClassname ## s)
 
 
-#define END_TABLE_IMPLEMENTATION \
-    } // namespace Database
+#define END_TABLE_IMPLEMENTATION() } // namespace Database
 
 #endif // DATABASE_TABLE_H

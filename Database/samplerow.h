@@ -8,10 +8,10 @@
 #include "drink.h"
 
 
-START_ROW_DECLARATION(SampleRow, Row)
-    DECLARE_ROW_CONSTRUCTORS(SampleRow, SampleRow)
+START_ROW_DECLARATION(SampleRow /*Name der Row*/, Row /*Superklasse der Row*/)
+    DECLARE_ROW_CONSTRUCTORS(SampleRow /*Name der Row*/, SampleRow /*Name der Basisklasse der Row (z.B. Game für alle games)*/)
 
-    DECLARE_DATABASEATTRIBUTE(QString,SampleRow,name)
+    DECLARE_DATABASEATTRIBUTE(QString /*Typ*/,SampleRow /*Name der Row*/,name /*Name des attributs*/)
     DECLARE_DATABASEATTRIBUTE(QString,SampleRow,type)
 
     DECLARE_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, SampleRow, test)
