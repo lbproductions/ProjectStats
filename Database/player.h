@@ -17,8 +17,6 @@ START_ROW_DECLARATION(Player, Row)
     DECLARE_DATABASEATTRIBUTE(QPixmap,Player,avatar)
     DECLARE_DATABASEATTRIBUTE(int,Player,residence)
 
-    DECLARE_ATTRIBUTE(QList<Player*>, Player, players)
-
 END_ROW_DECLARATION(Player)
 
 START_TABLE_DECLARATION(Player)

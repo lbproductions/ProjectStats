@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     Database/samplerowchild.cpp \
     Models/tablemodel.cpp \
     Gui/Misc/rowlist.cpp \
-    Database/player.cpp
+    Database/player.cpp \
+    Database/place.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -37,6 +38,7 @@ HEADERS  += mainwindow.h \
     Database/samplerowchild.h \
     Models/tablemodel.h \
     Gui/Misc/rowlist.h \
-    Database/player.h
+    Database/player.h \
+    Database/place.h
 
 FORMS    += mainwindow.ui

@@ -7,8 +7,6 @@ END_ROW_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Player, Player, Row)
 {
-    IMPLEMENT_ATTRIBUTE(QList<Player*>,Player,players, "players")
-
     IMPLEMENT_DATABASEATTRIBUTE(QString,Player,name,"Name")
     IMPLEMENT_DATABASEATTRIBUTE(QString,Player,gender,"Gender")
     IMPLEMENT_DATABASEATTRIBUTE(int,Player,weight, "Weight")
@@ -21,11 +19,6 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
 QString Player::mimeType() const
 {
     return "application/projectstats.player";
-}
-
-QList<Player*> Player::calculate_players()
-{
-    return Players::instance()->allRows();
 }
 
 END_ROW_IMPLEMENTATION()
