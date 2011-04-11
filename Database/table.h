@@ -74,6 +74,8 @@ public:
       */
     AttributeBase *attribute(const QString &name) const;
 
+    virtual Models::TableModelBase *model() const = 0;
+
 protected:
     friend class Database;
 

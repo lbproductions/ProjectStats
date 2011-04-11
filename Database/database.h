@@ -49,6 +49,8 @@ public:
       */
     ~Database();
 
+    QList<QPointer<TableBase> > tables() const;
+
 private:
     friend class TableRegistrar;
 

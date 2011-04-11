@@ -41,4 +41,4 @@ HEADERS  += mainwindow.h \
     Database/player.h \
     Database/place.h
 
-FORMS    += mainwindow.ui
+FORMS    +=

@@ -131,6 +131,7 @@ QString DatabaseAttribute<T,R>::sqlType() const
         return "INTEGER";
         break;
     case QVariant::String:
+    case QVariant::Pixmap:
         return "TEXT";
         break;
     case QVariant::Invalid:
@@ -159,7 +160,6 @@ QString DatabaseAttribute<T,R>::sqlType() const
     case QVariant::Matrix4x4:
     case QVariant::Palette:
     case QVariant::Pen:
-    case QVariant::Pixmap:
     case QVariant::Point:
     case QVariant::PointF:
     case QVariant::Polygon:

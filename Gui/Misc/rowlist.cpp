@@ -31,6 +31,8 @@ RowList::RowList(Models::TableModelBase *model, QWidget *parent) :
     setModel(model);
 
     connect(this,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(on_doubleClicked(QModelIndex)));
+
+    setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 RowList::~RowList()
@@ -46,6 +48,11 @@ void RowList::setModel(Models::TableModelBase *model)
     }
     m_proxyModel->setSourceModel(model);
     m_model = model;
+}
+
+Models::TableModelBase *RowList::model() const
+{
+    return m_model;
 }
 
 void RowList::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)

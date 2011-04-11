@@ -21,6 +21,11 @@ Database::~Database()
     m_sqlDatabase.close();
 }
 
+QList<QPointer<TableBase> > Database::tables() const
+{
+    return m_tables;
+}
+
 void Database::initialize(const QFile &databaseFile)
 {
     qDebug() << "Database::loadFile: Opening database file " << databaseFile.fileName();
