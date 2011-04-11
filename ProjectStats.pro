@@ -37,4 +37,4 @@ HEADERS  += mainwindow.h \
     Models/tablemodel.h \
     Gui/Misc/rowlist.h
 
-FORMS    += mainwindow.ui
+FORMS    +=

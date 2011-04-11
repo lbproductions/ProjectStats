@@ -3,9 +3,7 @@
 
 #include <QMainWindow>
 
-namespace Ui {
-    class MainWindow;
-}
+class QPushButton;
 
 namespace Database {
     class Drink;
@@ -23,16 +21,13 @@ public:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void on_lineEditType_editingFinished();
-
-    void on_lineEditName_editingFinished();
-
-    void on_pushButton_clicked();
+    void on_button_clicked();
 
 private:
-    void threadTest();
-    Ui::MainWindow *ui;
-    Database::Drink *m_drink;
+    QTabWidget *m_tabwidget;
+    QPushButton *m_button;
+
+    QList<QWidget*> m_openWindows;
 };
 
 #endif // MAINWINDOW_H

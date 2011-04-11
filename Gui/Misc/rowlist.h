@@ -47,6 +47,8 @@ public:
       */
     void setModel(Models::TableModelBase *model);
 
+    Models::TableModelBase *model() const;
+
 signals:
     /*!
       Dieses Signal wird gesendet, wenn ein Element doppelt geklickt wurde.
