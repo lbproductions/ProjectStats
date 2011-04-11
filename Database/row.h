@@ -143,7 +143,7 @@ private:
         void initializeAttributes(); \
         QString mimeType() const;
 
-#define comma ,
+#define COMMA ,
 
 #define END_ROW_DECLARATION( RowClassname ) \
     }; \
@@ -151,8 +151,8 @@ private:
     Q_DECLARE_METATYPE(Database::RowClassname) \
     Q_DECLARE_METATYPE(Database::RowClassname*) \
     Q_DECLARE_METATYPE(QList<Database::RowClassname*>) \
-    Q_DECLARE_METATYPE(QHash<int comma Database::RowClassname*>) \
-    Q_DECLARE_METATYPE(QMap<int comma Database::RowClassname*>)
+    Q_DECLARE_METATYPE(QHash<int COMMA Database::RowClassname*>) \
+    Q_DECLARE_METATYPE(QMap<int COMMA Database::RowClassname*>)
 
 #define START_ROW_IMPLEMENTATION( RowClassname, RowBaseclassname, RowSuperclassname  ) \
     namespace Database { \

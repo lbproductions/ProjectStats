@@ -31,8 +31,6 @@ RowList::RowList(Models::TableModelBase *model, QWidget *parent) :
     setModel(model);
 
     connect(this,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(on_doubleClicked(QModelIndex)));
-
-    setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 RowList::~RowList()

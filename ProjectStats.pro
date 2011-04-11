@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     Database/player.cpp \
     Database/place.cpp \
     Database/game.cpp \
-    Database/round.cpp
+    Database/round.cpp \
+    Logger/logger.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -43,6 +44,13 @@ HEADERS  += mainwindow.h \
     Database/player.h \
     Database/place.h \
     Database/game.h \
-    Database/round.h
+    Database/round.h \
+    Logger/logger.h \
 
 FORMS    +=
+
+mac {
+    HEADERS += cocoainitializer.h
+    OBJECTIVE_SOURCES += cocoainitializer.mm
+    LIBS += -framework AppKit
+}

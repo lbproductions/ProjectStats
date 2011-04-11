@@ -4,7 +4,7 @@
 #include <QIcon>
 
 START_TABLE_IMPLEMENTATION(Drink)
-END_ROW_IMPLEMENTATION()
+END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Drink, Drink, Row)
 {
@@ -74,7 +74,7 @@ QString Drink::update_test2_test()
 
 QList<Drink*> Drink::calculate_drinks()
 {
-    return Drinks::instance()->allRows();
+    return QList<Drink*>();//Drinks::instance()->allRows();
 }
 
 END_ROW_IMPLEMENTATION()

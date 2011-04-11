@@ -7,6 +7,8 @@
 
 namespace Database {
 
+IMPLEMENT_SINGLETON(Database)
+
 Database::Database() :
     m_databaseFilename(QString()),
     m_tables(QList<QPointer<TableBase> >()),
