@@ -23,7 +23,7 @@ QString SampleRow::calculate_test()
     return "test_value";
 }
 
-QFuture<QString> SampleRow::updateIfPossible_test(AttributeBase *changedDependency)
+QFuture<QString> SampleRow::updateIfPossible_test(AttributeBase */*changedDependency*/)
 {
     return QFuture<QString>();
 }

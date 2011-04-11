@@ -115,17 +115,70 @@ QString DatabaseAttribute<T,R>::sqlType() const
     v.setValue(t);
     switch(v.type())
     {
-    case QVariant::String:
-        return "TEXT";
-        break;
-    case QVariant::Int:
-        return "INTEGER";
+
+    case QVariant::DateTime:
+    case QVariant::Date:
+        return "DATETIME";
         break;
     case QVariant::Double:
         return "DOUBLE";
         break;
-    case QVariant::DateTime:
-        return "DATETIME";
+    case QVariant::Int:
+        return "INTEGER";
+        break;
+    case QVariant::String:
+        return "TEXT";
+        break;
+    case QVariant::Invalid:
+    case QVariant::BitArray:
+    case QVariant::Bitmap:
+    case QVariant::Bool:
+    case QVariant::Brush:
+    case QVariant::ByteArray:
+    case QVariant::Char:
+    case QVariant::Color:
+    case QVariant::Cursor:
+    case QVariant::EasingCurve:
+    case QVariant::Font:
+    case QVariant::Hash:
+    case QVariant::Icon:
+    case QVariant::Image:
+    case QVariant::KeySequence:
+    case QVariant::Line:
+    case QVariant::LineF:
+    case QVariant::List:
+    case QVariant::Locale:
+    case QVariant::LongLong:
+    case QVariant::Map:
+    case QVariant::Matrix:
+    case QVariant::Transform:
+    case QVariant::Matrix4x4:
+    case QVariant::Palette:
+    case QVariant::Pen:
+    case QVariant::Pixmap:
+    case QVariant::Point:
+    case QVariant::PointF:
+    case QVariant::Polygon:
+    case QVariant::Quaternion:
+    case QVariant::Rect:
+    case QVariant::RectF:
+    case QVariant::RegExp:
+    case QVariant::Region:
+    case QVariant::Size:
+    case QVariant::SizeF:
+    case QVariant::SizePolicy:
+    case QVariant::StringList:
+    case QVariant::TextFormat:
+    case QVariant::TextLength:
+    case QVariant::Time:
+    case QVariant::UInt:
+    case QVariant::ULongLong:
+    case QVariant::Url:
+    case QVariant::Vector2D:
+    case QVariant::Vector3D:
+    case QVariant::Vector4D:
+    case QVariant::UserType:
+    default:
         break;
     }
 
