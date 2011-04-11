@@ -24,7 +24,9 @@ SOURCES += main.cpp\
     Models/tablemodel.cpp \
     Gui/Misc/rowlist.cpp \
     Database/player.cpp \
-    Database/place.cpp
+    Database/place.cpp \
+    Database/game.cpp \
+    Database/round.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -39,6 +41,8 @@ HEADERS  += mainwindow.h \
     Models/tablemodel.h \
     Gui/Misc/rowlist.h \
     Database/player.h \
-    Database/place.h
+    Database/place.h \
+    Database/game.h \
+    Database/round.h
 
 FORMS    +=
