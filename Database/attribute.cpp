@@ -14,18 +14,35 @@ AttributeOwner::AttributeOwner(QObject *parent) :
 
 AttributeBase::AttributeBase() :
     QObject(),
-    m_owner(0)
+    m_owner(0),
+    m_role(Qt::DisplayRole)
 {
 }
 
 AttributeBase::AttributeBase(const QString &name, AttributeOwner *row) :
     QObject(row),
     m_owner(row),
-    m_name(name)
+    m_name(name),
+    m_role(Qt::DisplayRole)
 {
 }
 
+int AttributeBase::role() const
+{
+    return m_role;
+}
+
+void AttributeBase::setRole(int role)
+{
+    m_role = role;
+}
+
 QString AttributeBase::name() const
+{
+    return m_name;
+}
+
+QString AttributeBase::displayName() const
 {
     return m_name;
 }

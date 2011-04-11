@@ -7,11 +7,14 @@
 #include "attribute.h"
 #include "row.h"
 
+#include <Models/tablemodel.h>
+
 #include <QPointer>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
 #include <QVariant>
+#include <QMap>
 
 namespace Database {
 
@@ -123,6 +126,12 @@ public:
       */
     void registerRowType(Row *row);
 
+    Models::TableModel<RowType, Table<RowType> > *model() const;
+
+    Attribute<QHash<int, RowType* >, Table<RowType> > *rows() const;
+
+    static QMap<QString, AttributeBase*> *registeredAttributes();
+
 protected:
     /*!
       Erstellt ein Tabellen-Objekt mit Namen \a name, in der Datenbank \a database.
@@ -138,8 +147,9 @@ protected:
       */
     virtual QPointer<RowType> createRowInstance(int id);
 
-    Attribute<QHash<int, RowType* >, Table<RowType> > m_rows; //!< Alle Rows gecacht
-    static QHash<QString, AttributeBase*> *registeredAttributes();
+    Attribute<QHash<int, RowType* >, Table<RowType> > *m_rows; //!< Alle Rows gecacht
+    Models::TableModel<RowType, Table<RowType> > *m_model;
+    static QHash<QString, AttributeBase*> *registeredDatabaseAttributes();
 
 private:
     /*!
@@ -176,17 +186,37 @@ public:
     RowRegistrar _register_ ## Classname(BaseClassname ## s::instance(), new Classname());
 
 template<class RowType>
-QHash<QString, AttributeBase*> *Table<RowType>::registeredAttributes()
+QHash<QString, AttributeBase*> *Table<RowType>::registeredDatabaseAttributes()
 {
     static QHash<QString, AttributeBase*> *attributes = new QHash<QString, AttributeBase*>();
     return attributes;
 }
 
 template<class RowType>
+QMap<QString, AttributeBase*> *Table<RowType>::registeredAttributes()
+{
+    static QMap<QString, AttributeBase*> *attributes = new QMap<QString, AttributeBase*>();
+    return attributes;
+}
+
+template<class RowType>
 Table<RowType>::Table(const QString &name) :
     TableBase(name),
-    m_rows("rows", this)
+    m_rows(new Attribute<QHash<int, RowType* >, Table<RowType> >("rows", this)),
+    m_model(new Models::TableModel<RowType, Table<RowType> >(this))
 {
+}
+
+template<class RowType>
+Models::TableModel<RowType, Table<RowType> > *Table<RowType>::model() const
+{
+    return m_model;
+}
+
+template<class RowType>
+Attribute<QHash<int, RowType* >, Table<RowType> > *Table<RowType>::rows() const
+{
+    return m_rows;
 }
 
 template<class RowType>
@@ -196,7 +226,7 @@ void Table<RowType>::createTable()
 
     QString createQuery = "CREATE TABLE "+m_name+" (id INTEGER PRIMARY KEY";
 
-    foreach(AttributeBase *attribute, *registeredAttributes())
+    foreach(AttributeBase *attribute, *registeredDatabaseAttributes())
     {
         createQuery += ", " + attribute->name() + " " + attribute->sqlType();
     }
@@ -231,7 +261,7 @@ void Table<RowType>::alterTableToContainAllAttributes()
         qDebug() << "Table::Table: Pragma failed for table" << m_name;
     }
 
-    QHash<QString, AttributeBase*> unknownAttributes = *registeredAttributes();
+    QHash<QString, AttributeBase*> unknownAttributes = *registeredDatabaseAttributes();
 
     while(pragma.next())
     {
@@ -266,7 +296,7 @@ void Table<RowType>::initializeCache()
     while(select.next())
     {
         id = select.value(0).toInt();
-        m_rows.value().insert(id, createRowInstance(id));
+        m_rows->value().insert(id, createRowInstance(id));
     }
     select.finish();
 }
@@ -281,7 +311,7 @@ QPointer<RowType> Table<RowType>::createRowInstance(int id)
 template<class RowType>
 QList<RowType*> Table<RowType>::allRows()
 {
-    return m_rows.value().values();
+    return m_rows->value().values();
 }
 
 template<class RowType>
@@ -314,7 +344,7 @@ QList<RowType*> Table<RowType>::rowsBySqlCondition(const QString &condition)
 template<class RowType>
 QPointer<RowType> Table<RowType>::rowById(int id)
 {
-    return m_rows.value().value(id,0);
+    return m_rows->value().value(id,0);
 }
 
 template<class RowType>
@@ -340,7 +370,7 @@ void Table<RowType>::insertRow(RowType *row)
 
     foreach(AttributeBase *attribute, row->databaseAttributes())
     {
-        create.addBindValue(attribute->stringValue());
+        create.addBindValue(attribute->toString());
     }
 
     create.exec();
@@ -358,10 +388,15 @@ void Table<RowType>::insertRow(RowType *row)
 template<class RowType>
 void Table<RowType>::registerRowType(Row *row)
 {
-    foreach(AttributeBase *attribute, row->databaseAttributes())
+    foreach(AttributeBase *attribute, row->attributes())
     {
         qDebug() << "Table::registerRowType: Attribute" << attribute->name() << "registered at table" << m_name;
         registeredAttributes()->insert(attribute->name(), attribute);
+    }
+    foreach(AttributeBase *attribute, row->databaseAttributes())
+    {
+        qDebug() << "Table::registerRowType: Databaseattribute" << attribute->name() << "registered at table" << m_name;
+        registeredDatabaseAttributes()->insert(attribute->name(), attribute);
     }
 }
 
@@ -370,23 +405,28 @@ void Table<RowType>::registerRowType(Row *row)
 #define STRINGIZE(s) # s
 #define XSTR(s) STRINGIZE(s)
 
-#define DECLARE_TABLE( RowClassname ) \
+#define START_TABLE_DECLARATION( RowClassname ) \
     namespace Database { \
     class RowClassname ## s : public Table<RowClassname>, public Singleton<RowClassname ## s> \
     { \
     public: \
-    RowClassname ## s(); \
+    RowClassname ## s();
+
+#define END_TABLE_DECLARATION() \
     }; \
     } // namespace Database
 
-#define IMPLEMENT_TABLE( RowClassname ) \
+#define START_TABLE_IMPLEMENTATION( RowClassname ) \
     namespace Database { \
     RowClassname ## s::RowClassname ## s() : \
     Table<RowClassname>(QString(XSTR(RowClassname ## s) "").toLower()), \
         Singleton<RowClassname ## s>() \
     { \
     } \
-    REGISTER_TABLE(RowClassname ## s) \
+    REGISTER_TABLE(RowClassname ## s)
+
+
+#define END_TABLE_IMPLEMENTATION \
     } // namespace Database
 
 #endif // DATABASE_TABLE_H

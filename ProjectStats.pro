@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     Database/attribute.cpp \
     Database/databaseattribute.cpp \
     Database/samplerow.cpp \
-    Database/samplerowchild.cpp
+    Database/samplerowchild.cpp \
+    Models/tablemodel.cpp \
+    Gui/Misc/rowlist.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -31,6 +33,8 @@ HEADERS  += mainwindow.h \
     Database/attribute.h \
     Database/databaseattribute.h \
     Database/samplerow.h \
-    Database/samplerowchild.h
+    Database/samplerowchild.h \
+    Models/tablemodel.h \
+    Gui/Misc/rowlist.h
 
 FORMS    += mainwindow.ui

@@ -63,6 +63,12 @@ public:
       */
     QString name() const;
 
+    QString displayName() const;
+
+    int role() const;
+
+    void setRole(int role);
+
     /*!
       Gibt den SQL-Typen dieses Attributs zurück. (z.B. QString -> TEXT, int -> Int).
 
@@ -70,7 +76,8 @@ public:
       */
     virtual QString sqlType() const = 0;
 
-    virtual QString stringValue() = 0;
+    virtual QString toString() = 0;
+    virtual QVariant toVariant() = 0;
 
 protected slots:
     /*!
@@ -101,6 +108,7 @@ signals:
 protected:
     AttributeOwner *m_owner; //!< Die Row, zu dem das Attribut gehört.
     QString m_name;
+    int m_role;
 };
 
 template<class T, class R>
@@ -142,7 +150,9 @@ public:
       */
     virtual T& value();
 
-    QString stringValue();
+    QString toString();
+
+    QVariant toVariant();
 
     /*!
       Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
@@ -394,11 +404,17 @@ T& Attribute<T,R>::value()
 }
 
 template<class T, class R>
-QString Attribute<T,R>::stringValue()
+QVariant Attribute<T,R>::toVariant()
 {
     QVariant v;
     v.setValue(value());
-    return v.toString();
+    return v;
+}
+
+template<class T, class R>
+QString Attribute<T,R>::toString()
+{
+    return toVariant().toString();
 }
 
 template<class T, class R>

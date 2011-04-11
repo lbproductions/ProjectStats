@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <Gui/Misc/rowlist.h>
+
 #include <Database/drink.h>
 #include <Database/samplerowchild.h>
 
@@ -39,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     row->name->setValue("Name");
     row->type->setValue("Type");
 
-    Database::SampleRows::instance()->insertRow(row);
+    //Database::SampleRows::instance()->insertRow(row);
 
     Database::SampleRowChild * row2 = new Database::SampleRowChild();
     row2->name->setValue("Name2");
@@ -47,7 +49,10 @@ MainWindow::MainWindow(QWidget *parent) :
     row2->child_name->setValue("childname");
     row2->child_type->setValue("childtype");
 
-    Database::SampleRows::instance()->insertRow(row2);
+    //Database::SampleRows::instance()->insertRow(row2);
+
+    Gui::Misc::RowList *rowList = new Gui::Misc::RowList(Database::SampleRows::instance()->model(), this);
+    setCentralWidget(rowList);
 }
 
 MainWindow::~MainWindow()

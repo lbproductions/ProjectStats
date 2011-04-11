@@ -2,7 +2,8 @@
 
 #include <QWaitCondition>
 
-IMPLEMENT_TABLE(Drink)
+START_TABLE_IMPLEMENTATION(Drink)
+END_ROW_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Drink, Drink, Row)
 {
@@ -18,6 +19,11 @@ START_ROW_IMPLEMENTATION(Drink, Drink, Row)
     test->addDependingAttribute(test2);
     type->addDependingAttribute(test2);
     test2->setUpdateFunction(test, &Drink::update_test2_test);
+}
+
+QString Drink::mimeType() const
+{
+    return "application/projectstats.drink";
 }
 
 QString Drink::calculate_test()

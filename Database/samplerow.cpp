@@ -1,6 +1,22 @@
 #include "samplerow.h"
 
-IMPLEMENT_TABLE(SampleRow)
+#include "samplerowchild.h"
+
+START_TABLE_IMPLEMENTATION(SampleRow)
+
+QPointer<SampleRow> SampleRows::createRowInstance(int id)
+{
+    SampleRow *row = new SampleRow(id,this);
+
+    if(row->type->value() == "child")
+    {
+        return new SampleRowChild(id,this);
+    }
+
+    return row;
+}
+
+END_ROW_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(SampleRow, SampleRow, Row)
 {
@@ -16,6 +32,11 @@ START_ROW_IMPLEMENTATION(SampleRow, SampleRow, Row)
 
     name->addDependingAttribute(test);
     type->addDependingAttribute(test);
+}
+
+QString SampleRow::mimeType() const
+{
+    return "application/projectstats.samplerow";
 }
 
 QString SampleRow::calculate_test()

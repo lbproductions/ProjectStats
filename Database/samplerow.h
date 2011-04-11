@@ -23,6 +23,8 @@ START_ROW_DECLARATION(SampleRow, Row)
 
 END_ROW_DECLARATION(SampleRow)
 
-DECLARE_TABLE(SampleRow)
+START_TABLE_DECLARATION(SampleRow)
+    QPointer<SampleRow> createRowInstance(int id);
+END_TABLE_DECLARATION()
 
 #endif // DATABASE_SAMPLEROW_H

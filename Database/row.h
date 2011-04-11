@@ -77,6 +77,8 @@ public:
 
     void setId(int id);
 
+    virtual QString mimeType() const = 0;
+
 protected:
     /*!
       Erstellt ein Row Objekt, welches in der Tabelle \p table  die Daten mit der ID  \p id repräsentiert.
@@ -138,7 +140,8 @@ private:
         RowClassname(const RowClassname &other); \
         RowClassname(); \
         RowClassname(int id, TableBase *table); \
-        void initializeAttributes();
+        void initializeAttributes(); \
+        QString mimeType() const;
 
 #define comma ,
 
