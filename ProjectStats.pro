@@ -27,7 +27,9 @@ SOURCES += main.cpp\
     Database/place.cpp \
     Database/game.cpp \
     Database/round.cpp \
-    Logger/logger.cpp
+    Logger/logger.cpp \
+    Database/livegame.cpp \
+    Database/offlinegame.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -46,6 +48,8 @@ HEADERS  += mainwindow.h \
     Database/game.h \
     Database/round.h \
     Logger/logger.h \
+    Database/livegame.h \
+    Database/offlinegame.h
 
 FORMS    +=
 
