@@ -2,19 +2,19 @@
 
 namespace Database {
 
-TableInterface::TableInterface(const QString &name) :
+TableBase::TableBase(const QString &name) :
     AttributeOwner(),
     m_name(name)
 {
 
 }
 
-QString TableInterface::name() const
+QString TableBase::name() const
 {
     return m_name;
 }
 
-int TableInterface::rowCount() const
+int TableBase::rowCount() const
 {
     QSqlQuery q = query("SELECT COUNT(id) FROM "+m_name);
     q.first();
@@ -23,7 +23,7 @@ int TableInterface::rowCount() const
     return count;
 }
 
-QSqlQuery TableInterface::query(const QString &queryString) const
+QSqlQuery TableBase::query(const QString &queryString) const
 {
     QSqlQuery query(Database::instance()->sqlDatabaseLocked());
     query.exec(queryString);
@@ -40,7 +40,7 @@ QSqlQuery TableInterface::query(const QString &queryString) const
     return query;
 }
 
-void TableInterface::createTableIfNotExists()
+void TableBase::createTableIfNotExists()
 {
     QSqlQuery select(Database::instance()->sqlDatabaseLocked());
 
@@ -60,7 +60,7 @@ void TableInterface::createTableIfNotExists()
     select.finish();
 }
 
-void TableInterface::addColumn(AttributeInterface * attribute)
+void TableBase::addColumn(AttributeBase * attribute)
 {
     qDebug() << "TableInterface::addcolumn: Adding new column" << attribute->name() << "to table" << m_name;
     QSqlQuery alter(Database::instance()->sqlDatabaseLocked());
@@ -79,7 +79,7 @@ void TableInterface::addColumn(AttributeInterface * attribute)
     }
 }
 
-RowRegistrar::RowRegistrar(TableInterface* table, Row *row)
+RowRegistrar::RowRegistrar(TableBase* table, Row *row)
 {
     table->registerRowType(row);
 }

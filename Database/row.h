@@ -13,8 +13,8 @@
 
 namespace Database {
 
-class TableInterface;
-class AttributeInterface;
+class TableBase;
+class AttributeBase;
 
 //! Repräsentiert eine Row einer Tabelle.
 /*!
@@ -59,21 +59,21 @@ public:
 
       \return Alle Attribute dieser Row
       */
-    QList<AttributeInterface*> attributes() const;
+    QList<AttributeBase*> attributes() const;
 
     /*!
       Gibt alle Datenbankattribute dieser Row zurück.
 
       \return Alle Datenbankattribute dieser Row
       */
-    QList<AttributeInterface*> databaseAttributes() const;
+    QList<AttributeBase*> databaseAttributes() const;
 
     /*!
       Gibt das Attribut mit dem Namen \p name oder 0 zurück, falls es dieses nicht gibt.
 
       \return das Attribut mit dem Namen \p name oder 0, falls es dieses nicht gibt.
       */
-    AttributeInterface *attribute(const QString &name) const;
+    AttributeBase *attribute(const QString &name) const;
 
     void setId(int id);
 
@@ -81,7 +81,7 @@ protected:
     /*!
       Erstellt ein Row Objekt, welches in der Tabelle \p table  die Daten mit der ID  \p id repräsentiert.
       */
-    explicit Row(int id, TableInterface *table);
+    explicit Row(int id, TableBase *table);
 
     /*!
       Setzt den Wert \p key  dieser Reihe auf \p value  für die Reihe, für die die SQL-Conditon \p condition ilt. Diese Methode wird nur von set(const QString &key, const QVariant &value) verwendet.
@@ -108,12 +108,12 @@ protected:
 
       \param attribute Das Attribut, das hinzugefügt werden soll.
       */
-    void registerAttribute(AttributeInterface *attribute);
+    void registerAttribute(AttributeBase *attribute);
 
     int m_id; //!< Die ID dieser Row
-    QPointer<TableInterface> m_table; //!< Die Tabelle, in die diese Row liegt
-    QHash<QString, AttributeInterface* > m_attributes; //!< Alle Attribute der Row. Muss von Kindklassen befüllt werden.
-    QList<AttributeInterface*> m_databaseAttributes; //!< Alle Datenbankattribute
+    QPointer<TableBase> m_table; //!< Die Tabelle, in die diese Row liegt
+    QHash<QString, AttributeBase* > m_attributes; //!< Alle Attribute der Row. Muss von Kindklassen befüllt werden.
+    QList<AttributeBase*> m_databaseAttributes; //!< Alle Datenbankattribute
 
 private:
     /*!
@@ -137,7 +137,7 @@ private:
     public: \
         RowClassname(const RowClassname &other); \
         RowClassname(); \
-        RowClassname(int id, TableInterface *table); \
+        RowClassname(int id, TableBase *table); \
         void initializeAttributes();
 
 #define comma ,
@@ -155,7 +155,7 @@ private:
     REGISTER_ASROWTYPE( RowClassname, RowBaseclassname ) \
     RowClassname::RowClassname() : RowSuperclassname(0,RowBaseclassname ## s::instance()) { initializeAttributes(); }  \
     RowClassname::RowClassname(const RowClassname &other) : RowSuperclassname(other.m_id, other.m_table) { initializeAttributes(); } \
-    RowClassname::RowClassname(int id, TableInterface *table) : RowSuperclassname(id,table) { initializeAttributes(); } \
+    RowClassname::RowClassname(int id, TableBase *table) : RowSuperclassname(id,table) { initializeAttributes(); } \
     void RowClassname::initializeAttributes()
 
 #define END_ROW_IMPLEMENTATION() } // namespace Database

@@ -28,7 +28,7 @@ QString Drink::calculate_test()
     return "Name: " + name->value() + "; Type: " + type->value();
 }
 
-QFuture<QString> Drink::updateIfPossible_test(AttributeInterface *changedDependency)
+QFuture<QString> Drink::updateIfPossible_test(AttributeBase *changedDependency)
 {
     if(changedDependency->name() == "name")
     {
@@ -38,7 +38,7 @@ QFuture<QString> Drink::updateIfPossible_test(AttributeInterface *changedDepende
     return QFuture<QString>();
 }
 
-QString Drink::update_test(AttributeInterface *changedDependency)
+QString Drink::update_test(AttributeBase *changedDependency)
 {
     if(changedDependency->name() == "name")
     {

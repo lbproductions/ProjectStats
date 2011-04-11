@@ -21,7 +21,7 @@ class Database;
 /*!
   In Qt ist es nicht möglich dass template-Klassen QObjects sind oder mit Hilfe des Q_OBJECT Macros über signals und slots verfügen. Aus diesem Grund haben wir diese Elternklasse, von der Table erben kann, die diese Funktionalitäten enthält und damit auch für seine Kindklasse bereitstellt.
   */
-class TableInterface : public AttributeOwner
+class TableBase : public AttributeOwner
 {
     Q_OBJECT
 public:
@@ -31,7 +31,7 @@ public:
       \param name Der Name dieser Tabelle in der Datenbank.
       \param database Die Datenbank, die diese Tabelle enthält.
       */
-    TableInterface(const QString &name);
+    TableBase(const QString &name);
 
     /*!
       \return Die Anzahl der Reihen in der Tabelle.
@@ -55,7 +55,7 @@ public:
 
     virtual void registerRowType(Row *row) = 0;
 
-    void addColumn(AttributeInterface * attribute);
+    void addColumn(AttributeBase * attribute);
 
 protected:
     friend class Database;
@@ -87,7 +87,7 @@ protected:
   Von dieser Klasse erben alle anderen Tabellen. Nur die Klasse Database selber kann Tabellen erstellen und verwalten.
   */
 template <class RowType>
-class Table : public TableInterface
+class Table : public TableBase
 {
 public:
     /*!
@@ -139,7 +139,7 @@ protected:
     virtual QPointer<RowType> createRowInstance(int id);
 
     Attribute<QHash<int, RowType* >, Table<RowType> > m_rows; //!< Alle Rows gecacht
-    static QHash<QString, AttributeInterface*> *registeredAttributes();
+    static QHash<QString, AttributeBase*> *registeredAttributes();
 
 private:
     /*!
@@ -165,7 +165,7 @@ public:
     /*!
       Registriert die Row \p row bei der Tabelle \table.
       */
-    RowRegistrar(TableInterface* table, Row *row);
+    RowRegistrar(TableBase* table, Row *row);
 };
 
 /*!
@@ -176,15 +176,15 @@ public:
     RowRegistrar _register_ ## Classname(BaseClassname ## s::instance(), new Classname());
 
 template<class RowType>
-QHash<QString, AttributeInterface*> *Table<RowType>::registeredAttributes()
+QHash<QString, AttributeBase*> *Table<RowType>::registeredAttributes()
 {
-    static QHash<QString, AttributeInterface*> *attributes = new QHash<QString, AttributeInterface*>();
+    static QHash<QString, AttributeBase*> *attributes = new QHash<QString, AttributeBase*>();
     return attributes;
 }
 
 template<class RowType>
 Table<RowType>::Table(const QString &name) :
-    TableInterface(name),
+    TableBase(name),
     m_rows("rows", this)
 {
 }
@@ -196,7 +196,7 @@ void Table<RowType>::createTable()
 
     QString createQuery = "CREATE TABLE "+m_name+" (id INTEGER PRIMARY KEY";
 
-    foreach(AttributeInterface *attribute, *registeredAttributes())
+    foreach(AttributeBase *attribute, *registeredAttributes())
     {
         createQuery += ", " + attribute->name() + " " + attribute->sqlType();
     }
@@ -231,14 +231,14 @@ void Table<RowType>::alterTableToContainAllAttributes()
         qDebug() << "Table::Table: Pragma failed for table" << m_name;
     }
 
-    QHash<QString, AttributeInterface*> unknownAttributes = *registeredAttributes();
+    QHash<QString, AttributeBase*> unknownAttributes = *registeredAttributes();
 
     while(pragma.next())
     {
         unknownAttributes.remove(pragma.value(1).toString());
     }
 
-    foreach(AttributeInterface * attribute, unknownAttributes.values())
+    foreach(AttributeBase * attribute, unknownAttributes.values())
     {
         addColumn(attribute);
     }
@@ -325,7 +325,7 @@ void Table<RowType>::insertRow(RowType *row)
     QSqlQuery create = QSqlQuery(Database::instance()->sqlDatabaseLocked());
 
     QString queryString =   "INSERT INTO "+m_name+" (id";
-    foreach(AttributeInterface *attribute, row->databaseAttributes())
+    foreach(AttributeBase *attribute, row->databaseAttributes())
     {
         queryString += ", "+attribute->name();
     }
@@ -338,7 +338,7 @@ void Table<RowType>::insertRow(RowType *row)
 
     create.prepare(queryString);
 
-    foreach(AttributeInterface *attribute, row->databaseAttributes())
+    foreach(AttributeBase *attribute, row->databaseAttributes())
     {
         create.addBindValue(attribute->stringValue());
     }
@@ -358,7 +358,7 @@ void Table<RowType>::insertRow(RowType *row)
 template<class RowType>
 void Table<RowType>::registerRowType(Row *row)
 {
-    foreach(AttributeInterface *attribute, row->databaseAttributes())
+    foreach(AttributeBase *attribute, row->databaseAttributes())
     {
         qDebug() << "Table::registerRowType: Attribute" << attribute->name() << "registered at table" << m_name;
         registeredAttributes()->insert(attribute->name(), attribute);

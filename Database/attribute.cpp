@@ -12,40 +12,40 @@ AttributeOwner::AttributeOwner(QObject *parent) :
 {
 }
 
-AttributeInterface::AttributeInterface() :
+AttributeBase::AttributeBase() :
     QObject(),
     m_owner(0)
 {
 }
 
-AttributeInterface::AttributeInterface(const QString &name, AttributeOwner *row) :
+AttributeBase::AttributeBase(const QString &name, AttributeOwner *row) :
     QObject(row),
     m_owner(row),
     m_name(name)
 {
 }
 
-QString AttributeInterface::name() const
+QString AttributeBase::name() const
 {
     return m_name;
 }
 
-bool AttributeInterface::isDatabaseAttribute() const
+bool AttributeBase::isDatabaseAttribute() const
 {
     return false;
 }
 
-AttributeFutureWatcherInterface::AttributeFutureWatcherInterface(AttributeInterface* parent) :
+AttributeFutureWatcherBase::AttributeFutureWatcherBase(AttributeBase* parent) :
     QObject(parent)
 {
 }
 
-void AttributeFutureWatcherInterface::on_attributeAboutToChange()
+void AttributeFutureWatcherBase::on_attributeAboutToChange()
 {
     emit valueChanged("Loading...");
 }
 
-void AttributeFutureWatcherInterface::connectTo(QLabel *label)
+void AttributeFutureWatcherBase::connectTo(QLabel *label)
 {
     if(isRunning())
     {
@@ -59,7 +59,7 @@ void AttributeFutureWatcherInterface::connectTo(QLabel *label)
     connect(this,SIGNAL(valueChanged(QString)),label,SLOT(setText(QString)));
 }
 
-void AttributeFutureWatcherInterface::connectTo(QLineEdit *lineEdit)
+void AttributeFutureWatcherBase::connectTo(QLineEdit *lineEdit)
 {
     if(isRunning())
     {

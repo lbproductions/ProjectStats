@@ -9,7 +9,7 @@ namespace Database {
 
 Database::Database() :
     m_databaseFilename(QString()),
-    m_tables(QList<QPointer<TableInterface> >()),
+    m_tables(QList<QPointer<TableBase> >()),
     m_sqlDatabase(QSqlDatabase()),
     m_databaseLock(QMutex::Recursive)
 {
@@ -44,7 +44,7 @@ void Database::initialize(const QFile &databaseFile)
 
 void Database::createTables()
 {
-    foreach(QPointer<TableInterface> table, m_tables)
+    foreach(QPointer<TableBase> table, m_tables)
     {
         Q_ASSERT(!table.isNull());
 
@@ -52,7 +52,7 @@ void Database::createTables()
         table->alterTableToContainAllAttributes();
     }
 
-    foreach(QPointer<TableInterface> table, m_tables)
+    foreach(QPointer<TableBase> table, m_tables)
     {
         Q_ASSERT(!table.isNull());
 
@@ -62,7 +62,7 @@ void Database::createTables()
     }
 }
 
-void Database::registerTable(TableInterface *table)
+void Database::registerTable(TableBase *table)
 {
     m_tables.append(table);
     qDebug() << "Database::registerTable: Table " << table->name() << " registered";
@@ -79,7 +79,7 @@ void Database::releaseDatabaseLock()
     m_databaseLock.unlock();
 }
 
-TableRegistrar::TableRegistrar(TableInterface *table)
+TableRegistrar::TableRegistrar(TableBase *table)
 {
     Database::instance()->registerTable(table);
 }

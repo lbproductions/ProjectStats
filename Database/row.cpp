@@ -5,11 +5,11 @@
 
 namespace Database {
 
-Row::Row(int id, TableInterface *table) :
+Row::Row(int id, TableBase *table) :
     AttributeOwner(table),
     m_id(id),
     m_table(table),
-    m_attributes(QHash<QString, AttributeInterface* >())
+    m_attributes(QHash<QString, AttributeBase* >())
 {
     if(m_id > 0)
     {
@@ -67,22 +67,22 @@ QVariant Row::get(const QString &key) const
     return value;
 }
 
-QList<AttributeInterface*> Row::attributes() const
+QList<AttributeBase*> Row::attributes() const
 {
     return m_attributes.values();
 }
 
-QList<AttributeInterface*> Row::databaseAttributes() const
+QList<AttributeBase*> Row::databaseAttributes() const
 {
     return m_databaseAttributes;
 }
 
-AttributeInterface *Row::attribute(const QString &name) const
+AttributeBase *Row::attribute(const QString &name) const
 {
     return m_attributes.value(name);
 }
 
-void Row::registerAttribute(AttributeInterface *attribute)
+void Row::registerAttribute(AttributeBase *attribute)
 {
     m_attributes.insert(attribute->name(), attribute);
 

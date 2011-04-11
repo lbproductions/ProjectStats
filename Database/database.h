@@ -11,7 +11,7 @@
 
 namespace Database {
 
-class TableInterface;
+class TableBase;
 
 //! Repräsentiert eine komplette Datenbank.
 /*!
@@ -55,7 +55,7 @@ private:
     /*!
       Registriert die Tabelle \p table bei der Datenbank. Keine Tabelle muss diese Methode per Hand aufrufen, sondern stattdessen das Macro REGISTER_TABLE(Tabelle) verwenden.
       */
-    void registerTable(TableInterface *table);
+    void registerTable(TableBase *table);
 
     /*!
       Erstellt alle Tabellen neu, falls sie nicht existieren und initialisiert ihre caches.
@@ -63,7 +63,7 @@ private:
     void createTables();
 
     QString m_databaseFilename; //!< Die Datenbankdatei
-    QList<QPointer<TableInterface> > m_tables; //!< Alle registrierten Tabellen
+    QList<QPointer<TableBase> > m_tables; //!< Alle registrierten Tabellen
     QSqlDatabase m_sqlDatabase; //!< Die eigentliche Datenbank
     QMutex m_databaseLock; //!< Wird gesperrt, wenn jemand die Datenbank exklusiv haben will.
 };
@@ -78,7 +78,7 @@ public:
     /*!
       Registriert die Tabelle \p table bei der Datenbank.
       */
-    TableRegistrar(TableInterface *table);
+    TableRegistrar(TableBase *table);
 };
 
 /*!

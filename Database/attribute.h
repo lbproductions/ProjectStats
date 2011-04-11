@@ -34,19 +34,19 @@ public:
 /*!
   In Qt ist es nicht möglich dass template-Klassen QObjects sind oder mit Hilfe des Q_OBJECT Macros über signals und slots verfügen. Aus diesem Grund haben wir diese Elternklasse, von der Attribute erben kann, die diese Funktionalitäten enthält und damit auch für seine Kindklasse bereitstellt.
   */
-class AttributeInterface : public QObject
+class AttributeBase : public QObject
 {
     Q_OBJECT
 public:
     /*!
       Wird benutzt um Rows als MetaType registrieren zu können. Niemals benutzen!
       */
-    AttributeInterface();
+    AttributeBase();
 
     /*!
       Erstellt ein Attribut für die Row \p row.
       */
-    explicit AttributeInterface(const QString &name, AttributeOwner *row);
+    explicit AttributeBase(const QString &name, AttributeOwner *row);
 
     /*!
       Gibt true zurück, falls das Attribut ein Datenbankattribut ist.<br>
@@ -118,11 +118,11 @@ class AttributeFutureWatcher;
   Die Klasse sollte außerdem so weit es mir möglich war Threadsicher sein.
   */
 template<class T, class R>
-class Attribute : public AttributeInterface
+class Attribute : public AttributeBase
 {
 public:
     typedef T (R::*CalculateFunction)(); //!< Die Signatur der Calculatefunction
-    typedef QFuture<T> (R::*UpdateFunction)(AttributeInterface *changedDependency); //!< Die Signatur der Updatefunction
+    typedef QFuture<T> (R::*UpdateFunction)(AttributeBase *changedDependency); //!< Die Signatur der Updatefunction
     typedef T (R::*AttributeSpecificUpdateFunction)();
     /*!
       Wird benutzt um Rows als MetaType registrieren zu können. Niemals benutzen!
@@ -180,7 +180,7 @@ public:
       Fügt eine Updatefunction \p updateFunction zu diesem Attribut hinzu.<br>
       Diese wird dann aufgerufen, wenn sich das Attribut \p attribute geändert hat.<br>
       */
-    void setUpdateFunction(AttributeInterface* attribute, AttributeSpecificUpdateFunction updateFunction);
+    void setUpdateFunction(AttributeBase* attribute, AttributeSpecificUpdateFunction updateFunction);
 
     /*!
       Geschrieben um den Zugriff auf Attribute zu erleichern.<br>
@@ -202,7 +202,7 @@ public:
       Fügt diesem Attribut ein von ihm abhängiges Attribut hinzu.<br>
       Ändert sich anschließend dieses Attribut wird das \p dependingAttribute sich automatisch aktualisieren.
       */
-    void addDependingAttribute(AttributeInterface *dependingAttribute);
+    void addDependingAttribute(AttributeBase *dependingAttribute);
 
 protected:
     friend class AttributeFutureWatcher<T,R>;
@@ -240,11 +240,11 @@ protected:
   In Qt ist es nicht möglich dass template-Klassen QObjects sind oder mit Hilfe des Q_OBJECT Macros über signals und slots verfügen. Aus diesem Grund haben wir diese Elternklasse, von der AttributeFutureWatcher erben kann, die diese Funktionalitäten enthält und damit auch für seine Kindklasse bereitstellt.<br>
   Das "Interface" kümmert sich zudem um das Verbinden dieses FutureWatchers mit GUI Elementen.
   */
-class AttributeFutureWatcherInterface : public QObject
+class AttributeFutureWatcherBase : public QObject
 {
     Q_OBJECT
 public:
-    explicit AttributeFutureWatcherInterface(AttributeInterface* parent);
+    explicit AttributeFutureWatcherBase(AttributeBase* parent);
 
     /*!
       Verbindet diesen FutureWatcher mit dem Label \p label.<br>
@@ -299,7 +299,7 @@ private:
   Außerdem können sich GUI-Elemente mit dem FutureWatcher verbinden und so über zukünftige Änderungen informiert werden.
   */
 template<class T, class R>
-class AttributeFutureWatcher : public AttributeFutureWatcherInterface
+class AttributeFutureWatcher : public AttributeFutureWatcherBase
 {
 public:
     /*!
@@ -346,7 +346,7 @@ private:
 
 template<class T, class R>
 Attribute<T,R>::Attribute() :
-    AttributeInterface(),
+    AttributeBase(),
     m_cacheInitialized(false),
     m_calculateFunction(0),
     m_updateFunction(0),
@@ -357,7 +357,7 @@ Attribute<T,R>::Attribute() :
 
 template<class T, class R>
 Attribute<T,R>::Attribute(const QString &name, AttributeOwner *owner) :
-    AttributeInterface(name, owner),
+    AttributeBase(name, owner),
     m_cacheInitialized(false),
     m_calculateFunction(0),
     m_updateFunction(0),
@@ -461,7 +461,7 @@ void Attribute<T,R>::setUpdateFunction(UpdateFunction updateFunction)
 }
 
 template<class T, class R>
-void Attribute<T,R>::setUpdateFunction(AttributeInterface *attribute, AttributeSpecificUpdateFunction updateFunction)
+void Attribute<T,R>::setUpdateFunction(AttributeBase *attribute, AttributeSpecificUpdateFunction updateFunction)
 {
     m_lock.lockForWrite();
     m_updateFunctions.insert(attribute->name(), updateFunction);
@@ -491,7 +491,7 @@ void Attribute<T,R>::update()
     }
 
     m_lock.lockForWrite();
-    AttributeInterface *dependentAttribute = static_cast<AttributeInterface*>(sender());
+    AttributeBase *dependentAttribute = static_cast<AttributeBase*>(sender());
     AttributeSpecificUpdateFunction updateFunction = m_updateFunctions.value(dependentAttribute->name(), 0);
     QFuture<T> future;
 
@@ -531,14 +531,14 @@ void Attribute<T,R>::recalculate()
 }
 
 template<class T, class R>
-void Attribute<T,R>::addDependingAttribute(AttributeInterface *dependingAttribute)
+void Attribute<T,R>::addDependingAttribute(AttributeBase *dependingAttribute)
 {
     connect(this,SIGNAL(changed()),dependingAttribute,SLOT(update()));
 }
 
 template<class T, class R>
 AttributeFutureWatcher<T,R>::AttributeFutureWatcher(Attribute<T,R> *parent) :
-    AttributeFutureWatcherInterface(parent),
+    AttributeFutureWatcherBase(parent),
     m_attribute(parent),
     m_futureWatcher(new QFutureWatcher<T>())
 {
@@ -612,8 +612,8 @@ Type calculate_ ## Name();
 #define DECLARE_ATTRIBUTE_WITH_UPDATEFUNCTION(Type, RowClassname, Name) \
     Attribute<Type, RowClassname> *Name; \
     Type calculate_ ## Name(); \
-    QFuture<Type>  updateIfPossible_ ## Name(AttributeInterface *changedDependency); \
-    Type update_ ## Name(AttributeInterface *changedDependency);
+    QFuture<Type>  updateIfPossible_ ## Name(AttributeBase *changedDependency); \
+    Type update_ ## Name(AttributeBase *changedDependency);
 
 #define IMPLEMENT_ATTRIBUTE(Type, RowClassname, Name) \
     Name = new Attribute<Type,RowClassname>(QString(XSTR(Name) "").toLower(),this); \
