@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     Models/tablemodel.cpp \
     Gui/Misc/rowlist.cpp \
     Database/player.cpp \
-    Database/place.cpp
+    Database/place.cpp \
+    Logger/logger.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -39,6 +40,7 @@ HEADERS  += mainwindow.h \
     Models/tablemodel.h \
     Gui/Misc/rowlist.h \
     Database/player.h \
-    Database/place.h
+    Database/place.h \
+    Logger/logger.h
 
 FORMS    +=

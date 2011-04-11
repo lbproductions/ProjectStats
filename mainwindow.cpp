@@ -8,6 +8,7 @@
 #include <QCloseEvent>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QThread>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,10 +34,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    foreach(QWidget *w , m_openWindows)
-    {
-        w->deleteLater();
-    }
 }
 
 void MainWindow::on_button_clicked()

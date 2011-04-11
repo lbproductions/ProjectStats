@@ -3,11 +3,16 @@
 
 #include <Database/database.h>
 
+#include <Logger/logger.h>
+
 #include <QDebug>
 #include <QElapsedTimer>
+#include <QThread>
 
 int main(int argc, char *argv[])
 {
+    Logger::init();
+
     QApplication a(argc, argv);
 
     Database::Database *database = Database::Database::instance();

@@ -19,9 +19,11 @@ class TableBase;
   Dabei geht es vor allem um das Erstellen der jeweiligen Table-Objekte und Aufrufen der zugehörigen Methoden Table::initializeTableIfNotExists() und Table::initializeData().<br>
   Anschließend wird durch diese Klasse nur noch einfacher Zugriff auf die Tabellen geboten.
   */
-class Database : public QObject, public Singleton<Database>
+class Database : public QObject
 {
     Q_OBJECT
+
+    DECLARE_SINGLETON(Database)
 public:
     explicit Database();
 

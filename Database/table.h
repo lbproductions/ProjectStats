@@ -270,15 +270,9 @@ void Table<RowType>::alterTableToContainAllAttributes()
     pragma.exec(query);
     Database::instance()->releaseDatabaseLock();
 
-    pragma.first();
-
-    if(pragma.lastError().isValid() || !pragma.value(0).isValid())
-    {
-        qDebug() << "Table::Table: Pragma failed for table" << m_name;
-    }
-
     QHash<QString, AttributeBase*> unknownAttributes = *registeredDatabaseAttributes();
 
+    pragma.first();
     while(pragma.next())
     {
         unknownAttributes.remove(pragma.value(1).toString());
@@ -287,6 +281,11 @@ void Table<RowType>::alterTableToContainAllAttributes()
     foreach(AttributeBase * attribute, unknownAttributes.values())
     {
         addColumn(attribute);
+    }
+
+    if(pragma.lastError().isValid() || !pragma.value(0).isValid())
+    {
+        qDebug() << "Table::Table: Pragma failed for table" << m_name;
     }
 
     pragma.finish();
@@ -352,7 +351,7 @@ QList<RowType*> Table<RowType>::rowsBySqlCondition(const QString &condition)
 
     while(select.next())
     {
-        list.insert(list.size(), createRowInstance(select.value(0).toInt()));
+        list.insert(list.size(), rowById(select.value(0).toInt()));
     }
     select.finish();
 
@@ -436,8 +435,9 @@ void Table<RowType>::registerRowType(Row *row)
 
 #define START_TABLE_DECLARATION( RowClassname ) \
     namespace Database { \
-    class RowClassname ## s : public Table<RowClassname>, public Singleton<RowClassname ## s> \
+    class RowClassname ## s : public Table<RowClassname> \
     { \
+    DECLARE_SINGLETON( RowClassname ## s ) \
     public: \
     RowClassname ## s();
 
@@ -447,9 +447,9 @@ void Table<RowType>::registerRowType(Row *row)
 
 #define START_TABLE_IMPLEMENTATION( RowClassname ) \
     namespace Database { \
+    IMPLEMENT_SINGLETON( RowClassname ## s ) \
     RowClassname ## s::RowClassname ## s() : \
-    Table<RowClassname>(QString(XSTR(RowClassname ## s) "").toLower()), \
-        Singleton<RowClassname ## s>() \
+    Table<RowClassname>(QString(XSTR(RowClassname ## s) "").toLower()) \
     { \
     } \
     REGISTER_TABLE(RowClassname ## s)
