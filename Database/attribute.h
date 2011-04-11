@@ -23,11 +23,27 @@ class QLineEdit;
 
 namespace Database {
 
+class AttributeBase;
+
 class AttributeOwner : public QObject
 {
     Q_OBJECT
 public:
     explicit AttributeOwner(QObject *parent = 0);
+
+    /*!
+      Gibt alle Attribute dieser Row zurück.
+
+      \return Alle Attribute dieser Row
+      */
+    virtual QList<AttributeBase*> attributes() const = 0;
+
+    /*!
+      Gibt das Attribut mit dem Namen \p name oder 0 zurück, falls es dieses nicht gibt.
+
+      \return das Attribut mit dem Namen \p name oder 0, falls es dieses nicht gibt.
+      */
+    virtual AttributeBase *attribute(const QString &name) const = 0;
 };
 
 //! Dieses Interface dient dazu, der template-Klasse Attribute signals und slots, sowie ein Dasein als QObject zu ermöglichen.
@@ -69,6 +85,8 @@ public:
 
     void setRole(int role);
 
+    AttributeOwner *owner() const;
+
     /*!
       Gibt den SQL-Typen dieses Attributs zurück. (z.B. QString -> TEXT, int -> Int).
 
@@ -78,6 +96,11 @@ public:
 
     virtual QString toString() = 0;
     virtual QVariant toVariant() = 0;
+    virtual void setValue(QVariant value) = 0;
+
+    virtual void startCalculateASync() = 0;
+
+    virtual bool isCalculating() = 0;
 
 protected slots:
     /*!
@@ -161,6 +184,11 @@ public:
     virtual void setValue(T value);
 
     /*!
+      Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
+      */
+    virtual void setValue(QVariant value);
+
+    /*!
       Startet im Hintergrund eine Neuberechnung des Attributs und
       gibt den AttributeFutureWatcher dieses Attributs zurück.
 
@@ -214,6 +242,10 @@ public:
       Ändert sich anschließend dieses Attribut wird das \p dependingAttribute sich automatisch aktualisieren.
       */
     void addDependingAttribute(AttributeBase *dependingAttribute);
+
+    void startCalculateASync();
+
+    bool isCalculating();
 
 protected:
     friend class AttributeFutureWatcher<T,R>;
@@ -291,11 +323,12 @@ private slots:
       */
     void on_attributeAboutToChange();
 
-private:
     /*!
       \return true falls die aktuelle QFuture gerade rechnet.
       */
     virtual bool isRunning() = 0;
+
+private:
 
     /*!
       Der Wert des Attributs.
@@ -321,6 +354,11 @@ public:
       */
     QFutureWatcher<T> *futureWatcher() const;
 
+    /*!
+      \return true falls die aktuelle QFuture gerade rechnet. (Wird vom AttributeFutureWatcherInterface verwendet)
+      */
+    bool isRunning();
+
 private:
     friend class Attribute<T,R>;
 
@@ -340,11 +378,6 @@ private:
       Im zweiten Fall wird der Wert des Attributs aktualisiert und die Änderung anschließend bekannt gegeben.
       */
     void update();
-
-    /*!
-      \return true falls die aktuelle QFuture gerade rechnet. (Wird vom AttributeFutureWatcherInterface verwendet)
-      */
-    bool isRunning();
 
     /*!
       Der Wert des Attributs. (Wird vom AttributeFutureWatcherInterface verwendet)
@@ -375,6 +408,18 @@ Attribute<T,R>::Attribute(const QString &name, const QString &displayName, Attri
     m_lock(QReadWriteLock::Recursive),
     m_futureWatcher(new AttributeFutureWatcher<T,R>(this))
 {
+}
+
+template<class T, class R>
+void Attribute<T,R>::startCalculateASync()
+{
+    calculateASync();
+}
+
+template<class T, class R>
+bool Attribute<T,R>::isCalculating()
+{
+    return m_futureWatcher->isRunning();
 }
 
 template<class T, class R>
@@ -422,7 +467,11 @@ template<class T, class R>
 void Attribute<T,R>::setValue(T value)
 {
     m_lock.lockForWrite();
-    bool change = m_value != value;
+    QVariant v1;
+    v1.setValue(m_value);
+    QVariant v2;
+    v2.setValue(value);
+    bool change = v1 != v2;
     m_cacheInitialized = true;
     if(change)
     {
@@ -431,6 +480,12 @@ void Attribute<T,R>::setValue(T value)
         emit changed();
     }
     m_lock.unlock();
+}
+
+template<class T, class R>
+void Attribute<T,R>::setValue(QVariant value)
+{
+    setValue(value.value<T>());
 }
 
 template<class T, class R>

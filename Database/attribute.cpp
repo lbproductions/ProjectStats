@@ -28,6 +28,11 @@ AttributeBase::AttributeBase(const QString &name, const QString &displayName, At
 {
 }
 
+AttributeOwner *AttributeBase::owner() const
+{
+    return m_owner;
+}
+
 int AttributeBase::role() const
 {
     return m_role;

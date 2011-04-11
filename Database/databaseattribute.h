@@ -79,7 +79,11 @@ DatabaseAttribute<T,R>::DatabaseAttribute(const QString &name, const QString &di
 template<class T, class R>
 void DatabaseAttribute<T,R>::setValue(T value)
 {
-    bool change = value != Attribute<T,R>::m_value;
+    QVariant v1;
+    v1.setValue(Attribute<T,R>::m_value);
+    QVariant v2;
+    v2.setValue(value);
+    bool change = v1 != v2;
     Attribute<T,R>::setValue(value);
 
     if(change)

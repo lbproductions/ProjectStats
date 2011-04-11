@@ -32,11 +32,6 @@ MainWindow::MainWindow(QWidget *parent) :
     future->connectTo(ui->labelTest2);
     future->connectTo(ui->labelTest2B);
 
-    Database::SampleRow * row1 = Database::SampleRows::instance()->rowById(1);
-
-    qDebug() << "row1->name" << row1->name->value();
-    qDebug() << "row1->type" << row1->type->value();
-
     Database::SampleRow * row = new Database::SampleRow();
     row->name->setValue("Name");
     row->type->setValue("Type");
@@ -51,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Database::SampleRows::instance()->insertRow(row2);
 
-    Gui::Misc::RowList *rowList = new Gui::Misc::RowList(Database::SampleRows::instance()->model(), this);
+    Gui::Misc::RowList *rowList = new Gui::Misc::RowList(Database::Drinks::instance()->model(), this);
     setCentralWidget(rowList);
 }
 

@@ -11,16 +11,23 @@
 namespace Database {
     template<class T, class R>
     class Attribute;
+
+    template<class T>
+    class Table;
 }
 
 namespace Models {
 
 class TableModelBase : public QAbstractTableModel
 {
+    Q_OBJECT
 public:
     TableModelBase(QObject *parent);
 
     virtual Database::Row *row(const QModelIndex &index) = 0;
+
+private slots:
+    virtual void on_attribute_changed() = 0;
 };
 
 template<class RowType, class Owner>
@@ -35,15 +42,17 @@ public:
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
+    bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-
     RowType *value(const QModelIndex &index);
     Database::Row *row(const QModelIndex &index);
 
 private:
-    void updateCache(::Database::Row *row);
+    friend class Database::Table<RowType>;
 
-    Database::Attribute<QHash<int, RowType*>, Owner> *m_data;
+    void on_attribute_changed();
+
+    Database::Attribute<QMap<int, RowType*>, Owner> *m_data;
     Owner *m_owner;
 };
 
@@ -54,34 +63,44 @@ TableModel<RowType, Owner>::TableModel(Owner *parent) :
     m_owner(parent)
 {
     this->setSupportedDragActions(Qt::CopyAction);
+
+    foreach(Database::AttributeOwner *owner, m_data->value().values())
+    {
+        foreach(Database::AttributeBase *attribute, owner->attributes())
+        {
+            connect(attribute,SIGNAL(changed()),this,SLOT(on_attribute_changed()));
+        }
+    }
 }
 
 template<class RowType, class Owner>
-void TableModel<RowType, Owner>::updateCache(::Database::Row *row)
+void TableModel<RowType, Owner>::on_attribute_changed()
 {
-//    Database::Player *player = qobject_cast<Database::Player*>(row);
-//    if(player != 0 && !m_players.contains(player))
-//    {
-//        beginInsertRows(QModelIndex(),m_players.size(),m_players.size());
-//        m_players.append(player);
-//        endInsertRows();
-//    }
-//    else
-//    {
-//        for(int i = 0; i < m_players.size(); i++)
-//        {
-//            QPointer<Database::Player> p = m_players.at(i);
-//            if(p.isNull() || p == row)
-//            {
+    Database::AttributeBase *attribute = static_cast<Database::AttributeBase*>(sender());
+    Database::Row *row = static_cast<Database::Row*>(attribute->owner());
 
-//                beginRemoveRows(QModelIndex(),i,i);
-//                m_players.removeAt(i);
-//                endRemoveRows();
-//                --i;
+    int i = 0;
+    for(; i < m_data->value().size(); ++i)
+    {
+        if(m_data->value().values().at(i)->id() == row->id())
+        {
+            break;
+        }
+    }
 
-//            }
-//        }
-//    }
+    int j = 0;
+    for(; j < m_owner->registeredAttributes()->size(); ++j)
+    {
+        if(m_owner->registeredAttributes()->values().at(j)->name() == attribute->name())
+        {
+            break;
+        }
+    }
+
+    qDebug() << "emit dataChanged(" << i << "," << j << ")";
+
+    QModelIndex changedIndex = index(i,j,QModelIndex());
+    emit dataChanged(changedIndex, changedIndex);
 }
 
 template<class RowType, class Owner>
@@ -123,6 +142,14 @@ Qt::ItemFlags TableModel<RowType, Owner>::flags(const QModelIndex &index) const
 
     //sonst: default flags
     Qt::ItemFlags defaultFlags = QAbstractTableModel::flags(index);
+
+    RowType *row = m_data->value().values().at(index.row());
+    QString name = m_owner->registeredAttributes()->values().at(index.column())->name();
+    if(row->attribute(name) != 0 && row->attribute(name)->isDatabaseAttribute())
+    {
+        defaultFlags |= Qt::ItemIsEditable;
+    }
+
     return defaultFlags | Qt::ItemIsDragEnabled;
 }
 
@@ -170,16 +197,45 @@ QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) co
         return QVariant();
     }
 
-    if(role == Qt::DisplayRole && attribute->role() == Qt::DisplayRole )
+    attribute->startCalculateASync();
+
+    QVariant value;
+    if(!attribute->isCalculating())
     {
-        return attribute->toVariant();
+        value = attribute->toVariant();
+    }
+    else
+    {
+        value = "Loading...";
+    }
+
+    if(role == Qt::DisplayRole && attribute->role() == Qt::DisplayRole || role == Qt::EditRole)
+    {
+        return value;
     }
     if(role == Qt::DecorationRole &&  attribute->role() == Qt::DecorationRole)
     {
-        return attribute->toVariant();
+        return value;
     }
 
     return QVariant();
+}
+
+template<class RowType, class Owner>
+bool TableModel<RowType, Owner>::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (index.isValid() && role == Qt::EditRole)
+    {
+        RowType *row = m_data->value().values().at(index.row());
+        QString name = m_owner->registeredAttributes()->values().at(index.column())->name();
+        Database::AttributeBase *attribute = row->attribute(name);
+
+        attribute->setValue(value);
+
+        emit dataChanged(index, index);
+        return true;
+    }
+    return false;
 }
 
 template<class RowType, class Owner>

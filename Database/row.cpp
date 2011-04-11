@@ -79,12 +79,6 @@ QList<AttributeBase*> Row::databaseAttributes() const
 
 AttributeBase *Row::attribute(const QString &name) const
 {
-    qDebug() << "------------";
-    foreach(AttributeBase *attribute, m_attributes)
-    {
-        qDebug() << attribute->name();
-    }
-
     return m_attributes.value(name);
 }
 

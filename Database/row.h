@@ -151,7 +151,8 @@ private:
     Q_DECLARE_METATYPE(Database::RowClassname) \
     Q_DECLARE_METATYPE(Database::RowClassname*) \
     Q_DECLARE_METATYPE(QList<Database::RowClassname*>) \
-    Q_DECLARE_METATYPE(QHash<int comma Database::RowClassname*>)
+    Q_DECLARE_METATYPE(QHash<int comma Database::RowClassname*>) \
+    Q_DECLARE_METATYPE(QMap<int comma Database::RowClassname*>)
 
 #define START_ROW_IMPLEMENTATION( RowClassname, RowBaseclassname, RowSuperclassname  ) \
     namespace Database { \

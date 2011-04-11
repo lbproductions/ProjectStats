@@ -23,6 +23,17 @@ int TableBase::rowCount() const
     return count;
 }
 
+QList<AttributeBase*> TableBase::attributes() const
+{
+    return QList<AttributeBase*>();
+}
+
+
+AttributeBase *TableBase::attribute(const QString &/*name*/) const
+{
+    return 0;
+}
+
 QSqlQuery TableBase::query(const QString &queryString) const
 {
     QSqlQuery query(Database::instance()->sqlDatabaseLocked());

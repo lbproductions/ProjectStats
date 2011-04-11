@@ -60,6 +60,20 @@ public:
 
     void addColumn(AttributeBase * attribute);
 
+    /*!
+      Gibt alle Attribute dieser Row zurück.
+
+      \return Alle Attribute dieser Row
+      */
+    QList<AttributeBase*> attributes() const;
+
+    /*!
+      Gibt das Attribut mit dem Namen \p name oder 0 zurück, falls es dieses nicht gibt.
+
+      \return das Attribut mit dem Namen \p name oder 0, falls es dieses nicht gibt.
+      */
+    AttributeBase *attribute(const QString &name) const;
+
 protected:
     friend class Database;
 
@@ -128,7 +142,7 @@ public:
 
     Models::TableModel<RowType, Table<RowType> > *model() const;
 
-    Attribute<QHash<int, RowType* >, Table<RowType> > *rows() const;
+    Attribute<QMap<int, RowType* >, Table<RowType> > *rows() const;
 
     static QMap<QString, AttributeBase*> *registeredAttributes();
 
@@ -147,7 +161,7 @@ protected:
       */
     virtual QPointer<RowType> createRowInstance(int id);
 
-    Attribute<QHash<int, RowType* >, Table<RowType> > *m_rows; //!< Alle Rows gecacht
+    Attribute<QMap<int, RowType* >, Table<RowType> > *m_rows; //!< Alle Rows gecacht
     Models::TableModel<RowType, Table<RowType> > *m_model;
     static QHash<QString, AttributeBase*> *registeredDatabaseAttributes();
 
@@ -202,8 +216,8 @@ QMap<QString, AttributeBase*> *Table<RowType>::registeredAttributes()
 template<class RowType>
 Table<RowType>::Table(const QString &name) :
     TableBase(name),
-    m_rows(new Attribute<QHash<int, RowType* >, Table<RowType> >("rows", "rows", this)),
-    m_model(new Models::TableModel<RowType, Table<RowType> >(this))
+    m_rows(new Attribute<QMap<int, RowType* >, Table<RowType> >("rows", "rows", this)),
+    m_model(0)
 {
 }
 
@@ -214,7 +228,7 @@ Models::TableModel<RowType, Table<RowType> > *Table<RowType>::model() const
 }
 
 template<class RowType>
-Attribute<QHash<int, RowType* >, Table<RowType> > *Table<RowType>::rows() const
+Attribute<QMap<int, RowType* >, Table<RowType> > *Table<RowType>::rows() const
 {
     return m_rows;
 }
@@ -299,6 +313,8 @@ void Table<RowType>::initializeCache()
         m_rows->value().insert(id, createRowInstance(id));
     }
     select.finish();
+
+    m_model = new Models::TableModel<RowType, Table<RowType> >(this);
 }
 
 template<class RowType>
@@ -377,6 +393,18 @@ void Table<RowType>::insertRow(RowType *row)
     Database::instance()->releaseDatabaseLock();
     int id = create.lastInsertId().toInt();
     row->setId(id);
+
+    //qDebug() << "m_model->beginInsertRows(QModelIndex()," << m_rows->value().size()<< "," << m_rows->value().size() << ")";
+    m_model->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
+    m_rows->value().insert(id,row);
+
+//    foreach(RowType* row, m_rows->value().values())
+//    {
+//        qDebug() << row->name->value();
+//    }
+
+    m_model->endInsertRows();
+
     create.finish();
 
     if(create.lastError().isValid())

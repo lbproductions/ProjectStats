@@ -1,6 +1,7 @@
 #include "drink.h"
 
 #include <QWaitCondition>
+#include <QIcon>
 
 START_TABLE_IMPLEMENTATION(Drink)
 END_ROW_IMPLEMENTATION()
@@ -10,8 +11,12 @@ START_ROW_IMPLEMENTATION(Drink, Drink, Row)
     IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, Drink, test, "test")
     IMPLEMENT_ATTRIBUTE(QString,Drink,test2, "test2")
     IMPLEMENT_ATTRIBUTE(QList<Drink*>,Drink,drinks, "drinks")
-    IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, type, "type")
-    IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, name, "name")
+    IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, type, "Type")
+    IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, name, "Name")
+    IMPLEMENT_DATABASEATTRIBUTE(double,Drink,size,"Size")
+    IMPLEMENT_DATABASEATTRIBUTE(QIcon,Drink,icon,"Icon")
+    icon->setRole(Qt::DecorationRole);
+    IMPLEMENT_DATABASEATTRIBUTE(double,Drink,alc,"Vol%")
 
     name->addDependingAttribute(test);
     type->addDependingAttribute(test);
