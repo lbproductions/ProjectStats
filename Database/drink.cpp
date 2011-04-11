@@ -7,11 +7,11 @@ END_ROW_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Drink, Drink, Row)
 {
-    IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, Drink, test)
-    IMPLEMENT_ATTRIBUTE(QString,Drink,test2)
-    IMPLEMENT_ATTRIBUTE(QList<Drink*>,Drink,drinks)
-    IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, type)
-    IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, name)
+    IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, Drink, test, "test")
+    IMPLEMENT_ATTRIBUTE(QString,Drink,test2, "test2")
+    IMPLEMENT_ATTRIBUTE(QList<Drink*>,Drink,drinks, "drinks")
+    IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, type, "type")
+    IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, name, "name")
 
     name->addDependingAttribute(test);
     type->addDependingAttribute(test);

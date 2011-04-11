@@ -31,7 +31,7 @@ public:
     /*!
       Erstellt ein Datenbankattribut mit dem Namen \p name, das zur Row \p row gehört.
       */
-    DatabaseAttribute(const QString &name, Row *row);
+    DatabaseAttribute(const QString &name, const QString &displayName, Row *row);
 
     /*!
       Setzt den Wert des Attributs auf \p value. Der Wert wird außerdem von einem neu gestarteten Thread in die Datenbank geschrieben.
@@ -71,8 +71,8 @@ DatabaseAttribute<T,R>::DatabaseAttribute() :
 }
 
 template<class T, class R>
-DatabaseAttribute<T,R>::DatabaseAttribute(const QString &name, Row *row) :
-    Attribute<T,R>(name,row)
+DatabaseAttribute<T,R>::DatabaseAttribute(const QString &name, const QString &displayName, Row *row) :
+    Attribute<T,R>(name,displayName, row)
 {
 }
 
@@ -194,8 +194,8 @@ QString DatabaseAttribute<T,R>::sqlType() const
 #define DECLARE_DATABASEATTRIBUTE(Type, RowClassname, Name) \
     DatabaseAttribute<Type,RowClassname> *Name;
 
-#define IMPLEMENT_DATABASEATTRIBUTE(Type, RowClassname, Name) \
-    Name = new DatabaseAttribute<Type,RowClassname>(XSTR(Name) "",this); \
+#define IMPLEMENT_DATABASEATTRIBUTE(Type, RowClassname, Name, DisplayName) \
+    Name = new DatabaseAttribute<Type,RowClassname>(XSTR(Name) "",DisplayName, this); \
     registerAttribute(Name);
 
 #endif // DATABASE_DATABASEATTRIBUTE_H

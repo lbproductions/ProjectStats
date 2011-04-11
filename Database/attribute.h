@@ -46,7 +46,7 @@ public:
     /*!
       Erstellt ein Attribut für die Row \p row.
       */
-    explicit AttributeBase(const QString &name, AttributeOwner *row);
+    explicit AttributeBase(const QString &name, const QString &displayName, AttributeOwner *row);
 
     /*!
       Gibt true zurück, falls das Attribut ein Datenbankattribut ist.<br>
@@ -108,6 +108,7 @@ signals:
 protected:
     AttributeOwner *m_owner; //!< Die Row, zu dem das Attribut gehört.
     QString m_name;
+    QString m_displayName;
     int m_role;
 };
 
@@ -140,7 +141,7 @@ public:
     /*!
       Erstellt ein Attribut für die Row \p row.
       */
-    Attribute(const QString &name, AttributeOwner *owner);
+    Attribute(const QString &name, const QString &displayName, AttributeOwner *owner);
 
     /*!
       Gibt den Wert des Attributs zurück.<br>
@@ -366,8 +367,8 @@ Attribute<T,R>::Attribute() :
 }
 
 template<class T, class R>
-Attribute<T,R>::Attribute(const QString &name, AttributeOwner *owner) :
-    AttributeBase(name, owner),
+Attribute<T,R>::Attribute(const QString &name, const QString &displayName, AttributeOwner *owner) :
+    AttributeBase(name, displayName, owner),
     m_cacheInitialized(false),
     m_calculateFunction(0),
     m_updateFunction(0),
@@ -631,13 +632,13 @@ Type calculate_ ## Name();
     QFuture<Type>  updateIfPossible_ ## Name(AttributeBase *changedDependency); \
     Type update_ ## Name(AttributeBase *changedDependency);
 
-#define IMPLEMENT_ATTRIBUTE(Type, RowClassname, Name) \
-    Name = new Attribute<Type,RowClassname>(QString(XSTR(Name) "").toLower(),this); \
+#define IMPLEMENT_ATTRIBUTE(Type, RowClassname, Name, DisplayName) \
+    Name = new Attribute<Type,RowClassname>(QString(XSTR(Name) "").toLower(),DisplayName,this); \
     Name->setCalculationFunction(& RowClassname::calculate_ ## Name); \
     registerAttribute(Name);
 
-#define IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(Type, RowClassname, Name) \
-    Name = new Attribute<Type,RowClassname>(QString(XSTR(Name) "").toLower(),this); \
+#define IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(Type, RowClassname, Name, DisplayName) \
+    Name = new Attribute<Type,RowClassname>(QString(XSTR(Name) "").toLower(),DisplayName,this); \
     Name->setCalculationFunction(& RowClassname::calculate_ ## Name); \
     Name->setUpdateFunction(& RowClassname::updateIfPossible_ ## Name); \
     registerAttribute(Name);

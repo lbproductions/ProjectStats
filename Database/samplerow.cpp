@@ -20,15 +20,15 @@ END_ROW_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(SampleRow, SampleRow, Row)
 {
-    IMPLEMENT_DATABASEATTRIBUTE(QString,SampleRow,name)
-    IMPLEMENT_DATABASEATTRIBUTE(QString,SampleRow,type)
+    IMPLEMENT_DATABASEATTRIBUTE(QString,SampleRow,name, "name")
+    IMPLEMENT_DATABASEATTRIBUTE(QString,SampleRow,type, "type")
 
-    IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, SampleRow, test)
+    IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, SampleRow, test, "test")
 
-    IMPLEMENT_ATTRIBUTE(QString, SampleRow, test2)
+    IMPLEMENT_ATTRIBUTE(QString, SampleRow, test2, "test2")
     test2->setUpdateFunction(test, &SampleRow::update_test2_test);
 
-    IMPLEMENT_ATTRIBUTE(QList<Drink*>, SampleRow, drinks)
+    IMPLEMENT_ATTRIBUTE(QList<Drink*>, SampleRow, drinks, "drinks")
 
     name->addDependingAttribute(test);
     type->addDependingAttribute(test);

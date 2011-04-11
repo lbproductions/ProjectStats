@@ -202,7 +202,7 @@ QMap<QString, AttributeBase*> *Table<RowType>::registeredAttributes()
 template<class RowType>
 Table<RowType>::Table(const QString &name) :
     TableBase(name),
-    m_rows(new Attribute<QHash<int, RowType* >, Table<RowType> >("rows", this)),
+    m_rows(new Attribute<QHash<int, RowType* >, Table<RowType> >("rows", "rows", this)),
     m_model(new Models::TableModel<RowType, Table<RowType> >(this))
 {
 }

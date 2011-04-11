@@ -19,10 +19,11 @@ AttributeBase::AttributeBase() :
 {
 }
 
-AttributeBase::AttributeBase(const QString &name, AttributeOwner *row) :
+AttributeBase::AttributeBase(const QString &name, const QString &displayName, AttributeOwner *row) :
     QObject(row),
     m_owner(row),
     m_name(name),
+    m_displayName(displayName),
     m_role(Qt::DisplayRole)
 {
 }
@@ -44,7 +45,7 @@ QString AttributeBase::name() const
 
 QString AttributeBase::displayName() const
 {
-    return m_name;
+    return m_displayName;
 }
 
 bool AttributeBase::isDatabaseAttribute() const
