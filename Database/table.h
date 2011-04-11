@@ -272,7 +272,6 @@ void Table<RowType>::alterTableToContainAllAttributes()
 
     QHash<QString, AttributeBase*> unknownAttributes = *registeredDatabaseAttributes();
 
-    pragma.first();
     while(pragma.next())
     {
         unknownAttributes.remove(pragma.value(1).toString());
@@ -283,7 +282,7 @@ void Table<RowType>::alterTableToContainAllAttributes()
         addColumn(attribute);
     }
 
-    if(pragma.lastError().isValid() || !pragma.value(0).isValid())
+    if(pragma.lastError().isValid())
     {
         qDebug() << "Table::Table: Pragma failed for table" << m_name;
     }

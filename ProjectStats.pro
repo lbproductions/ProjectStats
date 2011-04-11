@@ -41,6 +41,13 @@ HEADERS  += mainwindow.h \
     Gui/Misc/rowlist.h \
     Database/player.h \
     Database/place.h \
-    Logger/logger.h
+    Logger/logger.h \
+    cocoainitializer.h
 
 FORMS    +=
+
+mac {
+    HEADERS += cocoainitializer.h
+    OBJECTIVE_SOURCES += cocoainitializer.mm
+    LIBS += -framework AppKit
+}

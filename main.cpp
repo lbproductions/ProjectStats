@@ -4,6 +4,7 @@
 #include <Database/database.h>
 
 #include <Logger/logger.h>
+#include <cocoainitializer.h>
 
 #include <QDebug>
 #include <QElapsedTimer>
@@ -12,6 +13,11 @@
 int main(int argc, char *argv[])
 {
     Logger::init();
+
+#ifdef Q_WS_MAC
+    CocoaInitializer cocoaInitializer;
+    (void) cocoaInitializer; //supress unused variable warning
+#endif
 
     QApplication a(argc, argv);
 
