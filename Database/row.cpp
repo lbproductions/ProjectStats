@@ -6,7 +6,7 @@
 namespace Database {
 
 Row::Row(int id, TableInterface *table) :
-    QObject(table),
+    AttributeOwner(table),
     m_id(id),
     m_table(table),
     m_attributes(QHash<QString, AttributeInterface* >())

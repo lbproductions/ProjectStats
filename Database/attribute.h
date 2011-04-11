@@ -23,7 +23,12 @@ class QLineEdit;
 
 namespace Database {
 
-class Row;
+class AttributeOwner : public QObject
+{
+    Q_OBJECT
+public:
+    explicit AttributeOwner(QObject *parent = 0);
+};
 
 //! Dieses Interface dient dazu, der template-Klasse Attribute signals und slots, sowie ein Dasein als QObject zu ermöglichen.
 /*!
@@ -41,7 +46,7 @@ public:
     /*!
       Erstellt ein Attribut für die Row \p row.
       */
-    explicit AttributeInterface(Row *row);
+    explicit AttributeInterface(const QString &name, AttributeOwner *row);
 
     /*!
       Gibt true zurück, falls das Attribut ein Datenbankattribut ist.<br>
@@ -56,7 +61,7 @@ public:
 
       \return Der Name des Attributs.
       */
-    virtual QString name() const = 0;
+    QString name() const;
 
     /*!
       Gibt den SQL-Typen dieses Attributs zurück. (z.B. QString -> TEXT, int -> Int).
@@ -94,7 +99,8 @@ signals:
     void aboutToChange();
 
 protected:
-    QPointer<Row> m_row; //!< Die Row, zu dem das Attribut gehört.
+    AttributeOwner *m_owner; //!< Die Row, zu dem das Attribut gehört.
+    QString m_name;
 };
 
 template<class T, class R>
@@ -126,14 +132,7 @@ public:
     /*!
       Erstellt ein Attribut für die Row \p row.
       */
-    Attribute(const QString &name, Row *row);
-
-    /*!
-      Gibt den Namen des Attributs zurück.
-
-      \return Der Name des Attributs.
-      */
-    QString name() const;
+    Attribute(const QString &name, AttributeOwner *owner);
 
     /*!
       Gibt den Wert des Attributs zurück.<br>
@@ -141,7 +140,7 @@ public:
 
       \return der Wert des Attributs.
       */
-    virtual T value();
+    virtual T& value();
 
     QString stringValue();
 
@@ -229,7 +228,6 @@ protected:
 
     bool m_cacheInitialized; //!< true, wenn der Cache den korrekten Wert enthält.
     T m_value; //!< Der Cache für den Wert des Attributs.
-    QString m_name; //!< Der Name des Attributs
     CalculateFunction m_calculateFunction; //!< Die Funktion zum (neu-)berechnen des Werts.
     UpdateFunction m_updateFunction; //!< Die Funktion zum Updaten des Attributs.
     QReadWriteLock m_lock; //!< Ein Mutex um die Klasse Threadsicher zu machen.
@@ -280,7 +278,7 @@ private slots:
       Wird aufgerufen, wenn das Attribute signalisiert, dass es sich bald ändern wird.<br>
       Setzt alle verbundenen GUI-Elemente auf "Loading..."
       */
-    virtual void on_attributeAboutToChange() = 0;
+    void on_attributeAboutToChange();
 
 private:
     /*!
@@ -333,12 +331,6 @@ private:
     void update();
 
     /*!
-      Wird aufgerufen, wenn das Attribute signalisiert, dass es sich bald ändern wird.<br>
-      Setzt alle verbundenen GUI-Elemente auf "Loading..."
-      */
-    void on_attributeAboutToChange();
-
-    /*!
       \return true falls die aktuelle QFuture gerade rechnet. (Wird vom AttributeFutureWatcherInterface verwendet)
       */
     bool isRunning();
@@ -356,7 +348,6 @@ template<class T, class R>
 Attribute<T,R>::Attribute() :
     AttributeInterface(),
     m_cacheInitialized(false),
-    m_name(QString()),
     m_calculateFunction(0),
     m_updateFunction(0),
     m_lock(QReadWriteLock::Recursive),
@@ -365,21 +356,14 @@ Attribute<T,R>::Attribute() :
 }
 
 template<class T, class R>
-Attribute<T,R>::Attribute(const QString &name, Row *row) :
-    AttributeInterface(row),
+Attribute<T,R>::Attribute(const QString &name, AttributeOwner *owner) :
+    AttributeInterface(name, owner),
     m_cacheInitialized(false),
-    m_name(name),
     m_calculateFunction(0),
     m_updateFunction(0),
     m_lock(QReadWriteLock::Recursive),
     m_futureWatcher(new AttributeFutureWatcher<T,R>(this))
 {
-}
-
-template<class T, class R>
-QString Attribute<T,R>::name() const
-{
-    return m_name;
 }
 
 template<class T, class R>
@@ -389,7 +373,7 @@ T Attribute<T,R>::operator()()
 }
 
 template<class T, class R>
-T Attribute<T,R>::value()
+T& Attribute<T,R>::value()
 {
     m_lock.lockForWrite();
     if(!m_cacheInitialized)
@@ -492,7 +476,7 @@ T Attribute<T,R>::calculate() const
         return T();
     }
 
-    T newValue = CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_calculateFunction)();
+    T newValue = CALL_MEMBER_FN(static_cast<R*>(m_owner),m_calculateFunction)();
 
     return newValue;
 }
@@ -513,7 +497,7 @@ void Attribute<T,R>::update()
 
     if(updateFunction != 0)
     {
-        future = QtConcurrent::run(static_cast<R*>(m_row.data()), updateFunction);
+        future = QtConcurrent::run(static_cast<R*>(m_owner), updateFunction);
     }
     else
     {
@@ -524,7 +508,7 @@ void Attribute<T,R>::update()
             return;
         }
 
-        future = CALL_MEMBER_FN(static_cast<R*>(m_row.data()),m_updateFunction)(dependentAttribute);
+        future = CALL_MEMBER_FN(static_cast<R*>(m_owner),m_updateFunction)(dependentAttribute);
     }
 
     if(future.isRunning() || future.isResultReadyAt(0))
@@ -576,13 +560,7 @@ void AttributeFutureWatcher<T,R>::setFuture(QFuture<T> future)
 template<class T, class R>
 QFutureWatcher<T> *AttributeFutureWatcher<T,R>::futureWatcher() const
 {
-    return m_futureWatcher();
-}
-
-template<class T, class R>
-void AttributeFutureWatcher<T,R>::on_attributeAboutToChange()
-{
-    emit valueChanged("Loading...");
+    return m_futureWatcher;
 }
 
 template<class T, class R>

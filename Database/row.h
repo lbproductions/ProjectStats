@@ -1,7 +1,11 @@
 #ifndef DATABASE_ROW_H
 #define DATABASE_ROW_H
 
+
 #include <QObject>
+#include "attribute.h"
+
+#include "database.h"
 
 #include <QPointer>
 #include <QSqlQuery>
@@ -16,12 +20,12 @@ class AttributeInterface;
 /*!
   Alle Reihen wie z.B. Player oder Game erben von dieser Klasse. Sie bietet ihnen durch set() und get() eine einfache Schnittstelle zu ihren Daten.
   */
-class Row : public QObject
+class Row : public AttributeOwner
 {
     Q_OBJECT
 public:
-    Row() : QObject() {}
-    Row(const Row &other) : QObject(other.parent()) {}
+    Row() : AttributeOwner(Database::instance()) {}
+    Row(const Row &other) : AttributeOwner(other.parent()) {}
 
     /*!
       \return Die ID der Reihe.
@@ -136,12 +140,15 @@ private:
         RowClassname(int id, TableInterface *table); \
         void initializeAttributes();
 
+#define comma ,
+
 #define END_ROW_DECLARATION( RowClassname ) \
     }; \
     } \
     Q_DECLARE_METATYPE(Database::RowClassname) \
     Q_DECLARE_METATYPE(Database::RowClassname*) \
-    Q_DECLARE_METATYPE(QList<Database::RowClassname*>)
+    Q_DECLARE_METATYPE(QList<Database::RowClassname*>) \
+    Q_DECLARE_METATYPE(QHash<int comma Database::RowClassname*>)
 
 #define START_ROW_IMPLEMENTATION( RowClassname, RowBaseclassname, RowSuperclassname  ) \
     namespace Database { \

@@ -7,16 +7,32 @@
 
 namespace Database {
 
-AttributeInterface::AttributeInterface() :
-    QObject(),
-    m_row(0)
+AttributeOwner::AttributeOwner(QObject *parent) :
+    QObject(parent)
 {
 }
 
-AttributeInterface::AttributeInterface(Row *row) :
-    QObject(row),
-    m_row(row)
+AttributeInterface::AttributeInterface() :
+    QObject(),
+    m_owner(0)
 {
+}
+
+AttributeInterface::AttributeInterface(const QString &name, AttributeOwner *row) :
+    QObject(row),
+    m_owner(row),
+    m_name(name)
+{
+}
+
+QString AttributeInterface::name() const
+{
+    return m_name;
+}
+
+bool AttributeInterface::isDatabaseAttribute() const
+{
+    return false;
 }
 
 AttributeFutureWatcherInterface::AttributeFutureWatcherInterface(AttributeInterface* parent) :
@@ -24,9 +40,9 @@ AttributeFutureWatcherInterface::AttributeFutureWatcherInterface(AttributeInterf
 {
 }
 
-bool AttributeInterface::isDatabaseAttribute() const
+void AttributeFutureWatcherInterface::on_attributeAboutToChange()
 {
-    return false;
+    emit valueChanged("Loading...");
 }
 
 void AttributeFutureWatcherInterface::connectTo(QLabel *label)

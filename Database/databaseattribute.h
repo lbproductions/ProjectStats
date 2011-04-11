@@ -84,7 +84,7 @@ void DatabaseAttribute<T,R>::setValue(T value)
 
     if(change)
     {
-        QtConcurrent::run(Attribute<T,R>::m_row.data(), &Row::set, Attribute<T,R>::m_name, value);
+        QtConcurrent::run(static_cast<Row*>(Attribute<T,R>::m_owner), &Row::set, Attribute<T,R>::m_name, value);
     }
     //Attribute<T,R>::m_row->set(Attribute<T,R>::m_name, value);
 }
@@ -98,7 +98,7 @@ void DatabaseAttribute<T,R>::setCalculationFunction(CalculateFunction /*calculat
 template<class T, class R>
 T DatabaseAttribute<T,R>::calculate() const
 {
-    return QVariant(Attribute<T,R>::m_row->get(Attribute<T,R>::m_name)).value<T>();
+    return QVariant(static_cast<Row*>(Attribute<T,R>::m_owner)->get(Attribute<T,R>::m_name)).value<T>();
 }
 
 template<class T, class R>

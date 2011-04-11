@@ -21,58 +21,18 @@ class Database;
 /*!
   In Qt ist es nicht möglich dass template-Klassen QObjects sind oder mit Hilfe des Q_OBJECT Macros über signals und slots verfügen. Aus diesem Grund haben wir diese Elternklasse, von der Table erben kann, die diese Funktionalitäten enthält und damit auch für seine Kindklasse bereitstellt.
   */
-class TableInterface : public QObject
+class TableInterface : public AttributeOwner
 {
     Q_OBJECT
 public:
     /*!
-     \return Den Namen der Tabelle.
+      Erstellt ein Tabellen-Objekt mit Namen \a name, in der Datenbank \a database.
+
+      \param name Der Name dieser Tabelle in der Datenbank.
+      \param database Die Datenbank, die diese Tabelle enthält.
       */
-    virtual QString name() const = 0;
+    TableInterface(const QString &name);
 
-    /*!
-      Diese Methode übernimmt lästige Überprüfungen beim Ausführen eines Queries in der Tabelle, wie das Checken, ob die Datenbank null ist.<br>
-      Anschließen wird ein QSqlQuery Objekt zurückgegeben, welches zuvor schon mit exec() ausgeführt wurde.<br>
-      Dieses Objekt sollte in jedem Fall nach Benutzung mit finish() beendet werden.
-
-      \param queryString Der Query, der ausgeführt werden soll.
-      \return Ein QSqlQuery Objekt, welches den gegebenen Query repräsentiert.
-      */
-    virtual QSqlQuery query(const QString &queryString) const = 0;
-
-    virtual void registerRowType(Row *row) = 0;
-
-protected:
-    friend class Database;
-
-    /*!
-      Erstellt die Tabelle in der Datenbank.
-      */
-    virtual void createTableIfNotExists() = 0;
-
-    /*!
-      Überprueft, ob die Tabelle in der Datenbank existiert und erstellt sie gegebenenfalls (durch initializeTable()). Wird von Database aufgerufen.
-      */
-    virtual void createTable() = 0;
-
-    /*!
-      */
-    virtual void alterTableToContainAllAttributes() = 0;
-
-    /*!
-      Befüllt die Liste aller in der Tabelle enthaltenen Rows. Wird von Database nach createTableIfNotExists() aufgerufen.
-      */
-    virtual void initializeCache() = 0;
-};
-
-//! Repräsentiert eine Tabelle in der Datenbank.
-/*!
-  Von dieser Klasse erben alle anderen Tabellen. Nur die Klasse Database selber kann Tabellen erstellen und verwalten.
-  */
-template <class RowType>
-class Table : public TableInterface
-{
-public:
     /*!
       \return Die Anzahl der Reihen in der Tabelle.
       */
@@ -93,6 +53,43 @@ public:
       */
     QSqlQuery query(const QString &queryString) const;
 
+    virtual void registerRowType(Row *row) = 0;
+
+    void addColumn(AttributeInterface * attribute);
+
+protected:
+    friend class Database;
+
+    /*!
+      Erstellt die Tabelle in der Datenbank.
+      */
+    void createTableIfNotExists();
+
+    /*!
+      Überprueft, ob die Tabelle in der Datenbank existiert und erstellt sie gegebenenfalls (durch initializeTable()). Wird von Database aufgerufen.
+      */
+    virtual void createTable() = 0;
+
+    /*!
+      */
+    virtual void alterTableToContainAllAttributes() = 0;
+
+    /*!
+      Befüllt die Liste aller in der Tabelle enthaltenen Rows. Wird von Database nach createTableIfNotExists() aufgerufen.
+      */
+    virtual void initializeCache() = 0;
+
+    QString m_name; //!< Der Name der Tabelle.
+};
+
+//! Repräsentiert eine Tabelle in der Datenbank.
+/*!
+  Von dieser Klasse erben alle anderen Tabellen. Nur die Klasse Database selber kann Tabellen erstellen und verwalten.
+  */
+template <class RowType>
+class Table : public TableInterface
+{
+public:
     /*!
       Gibt alle Elemente dieser Tabelle zurück.
       \see getAll(const QString &condition)
@@ -141,24 +138,16 @@ protected:
       */
     virtual QPointer<RowType> createRowInstance(int id);
 
-    QString m_name; //!< Der Name der Tabelle.
-    QHash<int, RowType* > m_rows; //!< Alle Rows gecacht
+    Attribute<QHash<int, RowType* >, Table<RowType> > m_rows; //!< Alle Rows gecacht
     static QHash<QString, AttributeInterface*> *registeredAttributes();
 
 private:
-    /*!
-      Überprueft, ob die Tabelle in der Datenbank existiert und erstellt sie gegebenenfalls (durch initializeTable()). Wird von Database aufgerufen.
-      */
-    void createTableIfNotExists();
-
     /*!
       Erstellt die Tabelle in der Datenbank.
       */
     void createTable();
 
     void alterTableToContainAllAttributes();
-
-    void addColumn(AttributeInterface* attribute);
 
     /*!
       Befüllt die Liste aller in der Tabelle enthaltenen Rows. Wird von Database nach createTableIfNotExists() aufgerufen.
@@ -195,33 +184,10 @@ QHash<QString, AttributeInterface*> *Table<RowType>::registeredAttributes()
 
 template<class RowType>
 Table<RowType>::Table(const QString &name) :
-    TableInterface(),
-    m_name(name),
-    m_rows(QHash<int, RowType* >())
+    TableInterface(name),
+    m_rows("rows", this)
 {
 }
-
-template<class RowType>
-void Table<RowType>::createTableIfNotExists()
-{
-    QSqlQuery select(Database::instance()->sqlDatabaseLocked());
-
-    //Prüfe, ob der Name dieser Tabelle in der Datenbank existiert...
-    QString query = "SELECT name FROM sqlite_master WHERE name='" + m_name + "';";
-    select.exec(query);
-    Database::instance()->releaseDatabaseLock();
-
-    select.first();
-
-    //... falls nicht muss die Tabelle initialisiert werden.
-    if(select.lastError().isValid() || !select.value(0).isValid())
-    {
-        qDebug() << "Table::Table: Table does not exist: " << m_name;
-        createTable();
-    }
-    select.finish();
-}
-
 
 template<class RowType>
 void Table<RowType>::createTable()
@@ -281,26 +247,6 @@ void Table<RowType>::alterTableToContainAllAttributes()
 }
 
 template<class RowType>
-void Table<RowType>::addColumn(AttributeInterface * attribute)
-{
-    qDebug() << "Table::addcolumn: Adding new column" << attribute->name() << "to table" << m_name;
-    QSqlQuery alter(Database::instance()->sqlDatabaseLocked());
-
-    QString query = "ALTER TABLE " + m_name + " ADD " + attribute->name() + " " + attribute->sqlType();
-    qDebug() << query;
-    alter.exec(query);
-    Database::instance()->releaseDatabaseLock();
-
-    alter.first();
-
-    if(alter.lastError().isValid())
-    {
-        qDebug() << "Table::addColumn: Alter failed for table" << m_name;
-        qDebug() << "Table::addColumn:" << alter.lastError();
-    }
-}
-
-template<class RowType>
 void Table<RowType>::initializeCache()
 {
     QSqlQuery select = QSqlQuery(Database::instance()->sqlDatabaseLocked());
@@ -320,7 +266,7 @@ void Table<RowType>::initializeCache()
     while(select.next())
     {
         id = select.value(0).toInt();
-        m_rows.insert(id, createRowInstance(id));
+        m_rows.value().insert(id, createRowInstance(id));
     }
     select.finish();
 }
@@ -331,44 +277,11 @@ QPointer<RowType> Table<RowType>::createRowInstance(int id)
     return new RowType(id,this);
 }
 
-template<class RowType>
-QString Table<RowType>::name() const
-{
-    return m_name;
-}
-
-template<class RowType>
-int Table<RowType>::rowCount() const
-{
-    QSqlQuery q = query("SELECT COUNT(id) FROM "+m_name);
-    q.first();
-    int count = q.value(0).toInt();
-    q.finish();
-    return count;
-}
-
-template<class RowType>
-QSqlQuery Table<RowType>::query(const QString &queryString) const
-{
-    QSqlQuery query(Database::instance()->sqlDatabaseLocked());
-    query.exec(queryString);
-    Database::instance()->releaseDatabaseLock();
-
-    if(query.lastError().isValid())
-    {
-        qWarning() << "Table::query: Could not run query.";
-        qWarning() << "Table::query: " << query.lastError();
-        qWarning() << "Table::query: " << queryString;
-        return QSqlQuery();
-    }
-
-    return query;
-}
 
 template<class RowType>
 QList<RowType*> Table<RowType>::allRows()
 {
-    return m_rows.values();
+    return m_rows.value().values();
 }
 
 template<class RowType>
@@ -401,7 +314,7 @@ QList<RowType*> Table<RowType>::rowsBySqlCondition(const QString &condition)
 template<class RowType>
 QPointer<RowType> Table<RowType>::rowById(int id)
 {
-    return m_rows.value(id,0);
+    return m_rows.value().value(id,0);
 }
 
 template<class RowType>
