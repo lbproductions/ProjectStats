@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     Database/livegamedrink.cpp \
     Database/Doppelkopf/schmeisserei.cpp \
     Database/Doppelkopf/dokoofflinegamebuddy.cpp \
-    Database/categorie.cpp
+    Database/categorie.cpp \
+    Database/categorieassignment.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -75,7 +76,8 @@ HEADERS  += mainwindow.h \
     Database/livegamedrink.h \
     Database/Doppelkopf/schmeisserei.h \
     Database/Doppelkopf/dokoofflinegamebuddy.h \
-    Database/categorie.h
+    Database/categorie.h \
+    Database/categorieassignment.h
 
 FORMS    +=
 
