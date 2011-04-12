@@ -10,12 +10,12 @@
 START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_ROW_CONSTRUCTORS(DokoLiveGame, Game)
 
-    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,mitHochzeit)
-    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,mitSolo)
-    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,mitTrumpfabgabe)
-    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,mitSchweinerei)
-    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,mitSchmeisserei)
-    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,mitPflichtsolo)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitHochzeit)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSolo)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfabgabe)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSchweinerei)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSchmeisserei)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitPflichtsolo)
 
 END_ROW_DECLARATION(DokoLiveGame)
 

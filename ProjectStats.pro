@@ -31,7 +31,9 @@ SOURCES += main.cpp\
     Database/livegame.cpp \
     Database/offlinegame.cpp \
     Database/Doppelkopf/dokolivegame.cpp \
-    Database/Skat/skatlivegame.cpp
+    Database/Skat/skatlivegame.cpp \
+    Database/Doppelkopf/dokoround.cpp \
+    Database/Skat/skatround.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -53,7 +55,9 @@ HEADERS  += mainwindow.h \
     Database/livegame.h \
     Database/offlinegame.h \
     Database/Doppelkopf/dokolivegame.h \
-    Database/Skat/skatlivegame.h
+    Database/Skat/skatlivegame.h \
+    Database/Doppelkopf/dokoround.h \
+    Database/Skat/skatround.h
 
 FORMS    +=
 

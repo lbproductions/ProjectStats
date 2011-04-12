@@ -2,12 +2,12 @@
 
 START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
 {
-    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,mitHochzeit,tr("Mit Hochzeit"))
-    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,mitSolo,tr("Mit Solo"))
-    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,mitTrumpfabgabe,tr("Mit Trumpfabgabe"))
-    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,mitSchweinerei,tr("Mit Schweinerei"))
-    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,mitSchmeisserei,tr("Mit Schmeisserei"))
-    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,mitPflichtsolo,tr("Mit Pflichtsolo"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitHochzeit,tr("Doko_MitHochzeit"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSolo,tr("Doko_MitSolo"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfabgabe,tr("Doko_MitTrumpfabgabe"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSchweinerei,tr("Doko_MitSchweinerei"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSchmeisserei,tr("Doko_MitSchmeisserei"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitPflichtsolo,tr("Doko_MitPflichtsolo"))
 }
 
 QString DokoLiveGame::mimeType() const
