@@ -38,7 +38,10 @@ SOURCES += main.cpp\
     Database/position.cpp \
     Database/Doppelkopf/dokoofflinegame.cpp \
     Database/offlinegameinformation.cpp \
-    Database/Doppelkopf/dokoofflinegameinformation.cpp
+    Database/Doppelkopf/dokoofflinegameinformation.cpp \
+    Database/livegamedrink.cpp \
+    Database/Doppelkopf/schmeisserei.cpp \
+    Database/Doppelkopf/dokoofflinegamebuddy.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -67,7 +70,10 @@ HEADERS  += mainwindow.h \
     Database/position.h \
     Database/Doppelkopf/dokoofflinegame.h \
     Database/offlinegameinformation.h \
-    Database/Doppelkopf/dokoofflinegameinformation.h
+    Database/Doppelkopf/dokoofflinegameinformation.h \
+    Database/livegamedrink.h \
+    Database/Doppelkopf/schmeisserei.h \
+    Database/Doppelkopf/dokoofflinegamebuddy.h
 
 FORMS    +=
 
