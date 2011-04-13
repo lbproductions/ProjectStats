@@ -26,8 +26,10 @@ public:
 
     virtual Database::Row *row(const QModelIndex &index) = 0;
 
+    virtual void updateData() = 0;
 private slots:
     virtual void on_attribute_changed() = 0;
+
 };
 
 template<class RowType, class Owner>
@@ -47,24 +49,26 @@ public:
     RowType *value(const QModelIndex &index);
     Database::Row *row(const QModelIndex &index);
 
+    void updateData();
+
 private:
     friend class Database::Table<RowType>;
 
     void on_attribute_changed();
 
-    Database::Attribute<QMap<int, RowType*>, Owner> *m_data;
+    QList<RowType*> m_data;
     Owner *m_owner;
 };
 
 template<class RowType, class Owner>
 TableModel<RowType, Owner>::TableModel(Owner *parent) :
     TableModelBase(parent),
-    m_data(parent->rows()),
+    m_data(parent->rows()->value().values()),
     m_owner(parent)
 {
     this->setSupportedDragActions(Qt::CopyAction);
 
-    foreach(Database::AttributeOwner *owner, m_data->value().values())
+    foreach(Database::AttributeOwner *owner, parent->rows()->value())
     {
         foreach(Database::AttributeBase *attribute, owner->attributes())
         {
@@ -74,24 +78,34 @@ TableModel<RowType, Owner>::TableModel(Owner *parent) :
 }
 
 template<class RowType, class Owner>
+void TableModel<RowType, Owner>::updateData()
+{
+    m_data = m_owner->rows()->value().values();
+}
+
+template<class RowType, class Owner>
 void TableModel<RowType, Owner>::on_attribute_changed()
 {
     Database::AttributeBase *attribute = static_cast<Database::AttributeBase*>(sender());
     Database::Row *row = static_cast<Database::Row*>(attribute->owner());
 
+    int size = m_data.size();
     int i = 0;
-    for(; i < m_data->value().size(); ++i)
+    for(; i < size; ++i)
     {
-        if(m_data->value().values().at(i)->id() == row->id())
+        if(m_data.at(i)->id() == row->id())
         {
             break;
         }
     }
 
+    QList<Database::AttributeBase*> list2 = m_owner->registeredAttributes()->values();
+    size = list2.size();
+
     int j = 0;
-    for(; j < m_owner->registeredAttributes()->size(); ++j)
+    for(; j < size; ++j)
     {
-        if(m_owner->registeredAttributes()->values().at(j)->name() == attribute->name())
+        if(list2.at(j)->name() == attribute->name())
         {
             break;
         }
@@ -120,7 +134,7 @@ QMimeData *TableModel<RowType, Owner>::mimeData(const QModelIndexList &indexes) 
     {
         if (index.isValid())
         {
-            RowType* row = m_data->value().value(index.row(),0);
+            RowType* row = m_data.value(index.row(),0);
             stream << row->id();
         }
     }
@@ -141,7 +155,7 @@ Qt::ItemFlags TableModel<RowType, Owner>::flags(const QModelIndex &index) const
     //sonst: default flags
     Qt::ItemFlags defaultFlags = QAbstractTableModel::flags(index);
 
-    RowType *row = m_data->value().values().at(index.row());
+    RowType *row = m_data.at(index.row());
     QString name = m_owner->registeredAttributes()->values().at(index.column())->name();
     if(row->attribute(name) != 0 && row->attribute(name)->isDatabaseAttribute())
     {
@@ -159,7 +173,7 @@ int TableModel<RowType, Owner>::rowCount(const QModelIndex &parent) const
         return 0;
     }
 
-    return m_data->value().size();
+    return m_data.size();
 }
 
 template<class RowType, class Owner>
@@ -176,12 +190,12 @@ int TableModel<RowType, Owner>::columnCount(const QModelIndex &parent) const
 template<class RowType, class Owner>
 QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) const
 {
-    if(!index.isValid() || index.row() >=  m_data->value().size())
+    if(!index.isValid() || index.row() >=  m_data.size())
     {
         return QVariant();
     }
 
-    RowType *row = m_data->value().values().at(index.row());
+    RowType *row = m_data.at(index.row());
     if(row == 0)
     {
         return QVariant();
@@ -224,7 +238,7 @@ bool TableModel<RowType, Owner>::setData(const QModelIndex &index, const QVarian
 {
     if (index.isValid() && role == Qt::EditRole)
     {
-        RowType *row = m_data->value().values().at(index.row());
+        RowType *row = m_data.at(index.row());
         QString name = m_owner->registeredAttributes()->values().at(index.column())->name();
         Database::AttributeBase *attribute = row->attribute(name);
 
@@ -278,12 +292,12 @@ Database::Row *TableModel<RowType, Owner>::row(const QModelIndex &index)
         return 0;
     }
     int row = index.row();
-    if(row >= m_data->value().size() || row < 0)
+    if(row >= m_data.size() || row < 0)
     {
         return 0;
     }
 
-    return m_data->value().value(index.row(),0);
+    return m_data.at(index.row());
 }
 
 }

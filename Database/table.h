@@ -443,6 +443,8 @@ void Table<RowType>::insertRow(RowType *row)
     m_model->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
     m_rows->value().insert(id,row);
 
+    m_model->updateData();
+
     foreach(AttributeBase *attribute, row->attributes())
     {
         connect(attribute,SIGNAL(changed()),m_model,SLOT(on_attribute_changed()));
