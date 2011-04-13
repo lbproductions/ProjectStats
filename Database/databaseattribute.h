@@ -10,6 +10,9 @@
 
 namespace Database {
 
+template<class R>
+class Table;
+
 //! Ein DatabaseAttribute ist ein Attribut, das "physikalisch" in der Datenbank liegt.
 /*!
   Die Klasse implementiert setValue() und calculate() so neu, dass alle Zugriffe an die Datenbank weitergeleitet werden.<br>
@@ -56,6 +59,10 @@ public:
     QString sqlType() const;
 
 protected:
+    friend class Table<R>;
+
+    void setValue(QVariant value, bool updateDatabase);
+
     /*!
       Liest den Wert aus der Datenbank aus.<br>
 
@@ -79,14 +86,22 @@ DatabaseAttribute<T,R>::DatabaseAttribute(const QString &name, const QString &di
 template<class T, class R>
 void DatabaseAttribute<T,R>::setValue(T value)
 {
-    QVariant v1;
-    v1.setValue(Attribute<T,R>::m_value);
-    QVariant v2;
-    v2.setValue(value);
-    bool change = v1 != v2;
-    Attribute<T,R>::setValue(value);
+    setValue(value, true);
+}
 
-    if(change)
+template<class T, class R>
+void DatabaseAttribute<T,R>::setValue(QVariant value, bool updateDatabase)
+{
+    QVariant v;
+    v.setValue(Attribute<T,R>::m_value);
+
+    Attribute<T,R>::setValue(value.value<T>());
+
+    if(updateDatabase)
+    {
+        updateDatabase = value != v;
+    }
+    if(updateDatabase)
     {
         QtConcurrent::run(static_cast<Row*>(Attribute<T,R>::m_owner), &Row::set, Attribute<T,R>::m_name, value);
     }

@@ -97,6 +97,7 @@ public:
     virtual QString toString() = 0;
     virtual QVariant toVariant() = 0;
     virtual void setValue(QVariant value) = 0;
+    virtual void setValue(QVariant value, bool updateDatabase);
 
     virtual void startCalculateASync() = 0;
 
@@ -129,6 +130,7 @@ signals:
     void aboutToChange();
 
 protected:
+
     AttributeOwner *m_owner; //!< Die Row, zu dem das Attribut gehört.
     QString m_name;
     QString m_displayName;

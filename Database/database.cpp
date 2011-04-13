@@ -4,6 +4,7 @@
 
 #include <QDebug>
 #include <QSqlError>
+#include <QElapsedTimer>
 
 namespace Database {
 
@@ -32,6 +33,9 @@ void Database::initialize(const QFile &databaseFile)
 {
     qDebug() << "Database::loadFile: Opening database file " << databaseFile.fileName();
 
+    QElapsedTimer timer;
+    timer.start();
+
     m_databaseFilename = databaseFile.fileName();
 
     //Erstelle die Datenbank
@@ -47,6 +51,8 @@ void Database::initialize(const QFile &databaseFile)
     }
 
     createTables();
+
+    qDebug() << "Database::loadFile: Opening database file took" << timer.elapsed() << "ms";
 }
 
 void Database::createTables()
@@ -59,14 +65,17 @@ void Database::createTables()
         table->alterTableToContainAllAttributes();
     }
 
+    QElapsedTimer timer;
+    timer.start();
     foreach(QPointer<TableBase> table, m_tables)
     {
         Q_ASSERT(!table.isNull());
 
-        qDebug() << "Database::createTables: Initializing cache for table " << table->name();
-
         table->initializeCache();
+
+        qDebug() << "Database::createTables: Initializing caches for" <<  table->name() << "took" << timer.restart() << "ms";
     }
+
 }
 
 void Database::registerTable(TableBase *table)

@@ -15,6 +15,7 @@
 #include <QDebug>
 #include <QVariant>
 #include <QMap>
+#include <QElapsedTimer>
 
 namespace Database {
 
@@ -165,7 +166,7 @@ protected:
 
     Attribute<QMap<int, RowType* >, Table<RowType> > *m_rows; //!< Alle Rows gecacht
     Models::TableModel<RowType, Table<RowType> > *m_model;
-    static QHash<QString, AttributeBase*> *registeredDatabaseAttributes();
+    static QMap<QString, AttributeBase*> *registeredDatabaseAttributes();
 
 private:
     /*!
@@ -179,6 +180,8 @@ private:
       Befüllt die Liste aller in der Tabelle enthaltenen Rows. Wird von Database nach createTableIfNotExists() aufgerufen.
       */
     void initializeCache();
+
+    void initializeRowCaches();
 };
 
 //! Diese Klasse wird vom Macro REGISTER_ASROWTYPE() verwendet um Rows (bzw. deren Attribute) bei einer Tabelle zu registrieren.
@@ -202,9 +205,9 @@ public:
     RowRegistrar _register_ ## Classname(BaseClassname ## s::instance(), new Classname());
 
 template<class RowType>
-QHash<QString, AttributeBase*> *Table<RowType>::registeredDatabaseAttributes()
+QMap<QString, AttributeBase*> *Table<RowType>::registeredDatabaseAttributes()
 {
-    static QHash<QString, AttributeBase*> *attributes = new QHash<QString, AttributeBase*>();
+    static QMap<QString, AttributeBase*> *attributes = new QMap<QString, AttributeBase*>();
     return attributes;
 }
 
@@ -270,7 +273,7 @@ void Table<RowType>::alterTableToContainAllAttributes()
     pragma.exec(query);
     Database::instance()->releaseDatabaseLock();
 
-    QHash<QString, AttributeBase*> unknownAttributes = *registeredDatabaseAttributes();
+    QMap<QString, AttributeBase*> unknownAttributes = *registeredDatabaseAttributes();
 
     while(pragma.next())
     {
@@ -314,7 +317,50 @@ void Table<RowType>::initializeCache()
     }
     select.finish();
 
+    initializeRowCaches();
+
     m_model = new Models::TableModel<RowType, Table<RowType> >(this);
+}
+
+template<class RowType>
+void Table<RowType>::initializeRowCaches()
+{
+    QString queryString("SELECT id");
+
+    foreach(AttributeBase *attribute, *registeredDatabaseAttributes())
+    {
+        queryString += ", "+attribute->name();
+    }
+
+    queryString += " FROM "+m_name;
+
+    QSqlQuery select = QSqlQuery(Database::instance()->sqlDatabaseLocked());
+    select.exec(queryString);
+    Database::instance()->releaseDatabaseLock();
+
+    if(select.lastError().isValid())
+    {
+        qWarning() << "Table::initializeRowCaches: Could not read the whole table "<< m_name <<".";
+        qWarning() << "Table::initializeRowCaches: " << select.lastError();
+        qWarning() << "Table::initializeRowCaches: " << select.lastQuery();
+    }
+
+    while(select.next())
+    {
+        QList<AttributeBase*> databaseAttributes = registeredDatabaseAttributes()->values();
+        for(int i = 0; i < databaseAttributes.size(); ++i)
+        {
+            AttributeBase *attribute = databaseAttributes.at(i);
+            Row *row = m_rows->value().value(select.value(0).toInt());
+
+            QString name = attribute->name();
+            AttributeBase *rowAttribute = row->attribute(name);
+            if(rowAttribute != 0)
+            {
+                rowAttribute->setValue(select.value(i+1),false);
+            }
+        }
+    }
 }
 
 template<class RowType>

@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     Database::Database *database = Database::Database::instance();
-    QFile file("/Users/niclasraabe/Dropbox/Public/projectstats.db");
+    QFile file("/Users/niklas/Dropbox/Public/ProjectStats/projectstats.db");
     database->initialize(file);
 
     MainWindow w;
