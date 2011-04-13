@@ -397,7 +397,7 @@ Attribute<T,R>::Attribute() :
     m_calculateFunction(0),
     m_updateFunction(0),
     m_lock(QReadWriteLock::Recursive),
-    m_futureWatcher(new AttributeFutureWatcher<T,R>(this))
+    m_futureWatcher(0)
 {
 }
 
@@ -408,8 +408,18 @@ Attribute<T,R>::Attribute(const QString &name, const QString &displayName, Attri
     m_calculateFunction(0),
     m_updateFunction(0),
     m_lock(QReadWriteLock::Recursive),
-    m_futureWatcher(new AttributeFutureWatcher<T,R>(this))
+    m_futureWatcher(0)
 {
+}
+
+template<class T, class R>
+AttributeFutureWatcher<T,R> *Attribute<T,R>::futureWatcher()
+{
+    if(m_futureWatcher == 0)
+    {
+        m_futureWatcher = new AttributeFutureWatcher<T,R>(this);
+    }
+    return m_futureWatcher;
 }
 
 template<class T, class R>
@@ -421,7 +431,7 @@ void Attribute<T,R>::startCalculateASync()
 template<class T, class R>
 bool Attribute<T,R>::isCalculating()
 {
-    return m_futureWatcher->isRunning();
+    return futureWatcher()->isRunning();
 }
 
 template<class T, class R>
@@ -436,13 +446,13 @@ T& Attribute<T,R>::value()
     m_lock.lockForWrite();
     if(!m_cacheInitialized)
     {
-        if(!m_futureWatcher->isRunning())
+        if(!futureWatcher()->isRunning())
         {
             m_value = calculate();
         }
         else
         {
-            m_futureWatcher->m_futureWatcher->waitForFinished();
+            futureWatcher()->m_futureWatcher->waitForFinished();
         }
         m_cacheInitialized = true;
     }
@@ -491,24 +501,18 @@ void Attribute<T,R>::setValue(QVariant value)
 }
 
 template<class T, class R>
-AttributeFutureWatcher<T,R> *Attribute<T,R>::futureWatcher()
-{
-    return m_futureWatcher;
-}
-
-template<class T, class R>
 AttributeFutureWatcher<T,R> *Attribute<T,R>::calculateASync()
 {
-    if(!m_cacheInitialized && !m_futureWatcher->isRunning())
+    if(!m_cacheInitialized && !futureWatcher()->isRunning())
     {
         m_lock.lockForWrite();
         emit aboutToChange();
         QFuture<T> future = QtConcurrent::run(this, &Attribute<T,R>::calculate);
-        m_futureWatcher->setFuture(future);
+        futureWatcher()->setFuture(future);
         m_lock.unlock();
     }
 
-    return m_futureWatcher;
+    return futureWatcher();
 }
 
 template<class T, class R>
@@ -587,7 +591,7 @@ void Attribute<T,R>::update()
 
     if(future.isRunning() || future.isResultReadyAt(0))
     {
-        m_futureWatcher->setFuture(future);
+        futureWatcher()->setFuture(future);
     }
     else
     {

@@ -11,14 +11,6 @@ Row::Row(int id, TableBase *table) :
     m_table(table),
     m_attributes(QHash<QString, AttributeBase* >())
 {
-    if(m_id > 0)
-    {
-        checkId();
-    }
-    else
-    {
-        m_id = 0;
-    }
 }
 
 void Row::checkId()
