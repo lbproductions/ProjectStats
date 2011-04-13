@@ -6,6 +6,8 @@
 #include "attribute.h"
 #include "databaseattribute.h"
 
+#include "game.h"
+
 START_ROW_DECLARATION(Round, Row)
     DECLARE_ROW_CONSTRUCTORS(Round, Round)
 
@@ -16,9 +18,13 @@ START_ROW_DECLARATION(Round, Row)
     DECLARE_DATABASEATTRIBUTE(int,Round,state)
     DECLARE_DATABASEATTRIBUTE(QString,Round,comment)
 
+    DECLARE_ATTRIBUTE(QPointer<Game>,Round,game)
+
 END_ROW_DECLARATION(Round)
 
 START_TABLE_DECLARATION(Round)
 END_TABLE_DECLARATION()
+
+Q_DECLARE_METATYPE(QPointer<Database::Game>)
 
 #endif // DATABASE_ROUND_H

@@ -6,6 +6,8 @@
 #include "attribute.h"
 #include "databaseattribute.h"
 
+#include <QDebug>
+
 START_ROW_DECLARATION(Player, Row)
     DECLARE_ROW_CONSTRUCTORS(Player, Player)
 
@@ -14,8 +16,10 @@ START_ROW_DECLARATION(Player, Row)
     DECLARE_DATABASEATTRIBUTE(int,Player,weight)
     DECLARE_DATABASEATTRIBUTE(int,Player,size)
     DECLARE_DATABASEATTRIBUTE(QColor,Player,color)
-    DECLARE_DATABASEATTRIBUTE(QString,Player,avatar)
+    DECLARE_DATABASEATTRIBUTE(QString,Player,avatarPath)
     DECLARE_DATABASEATTRIBUTE(int,Player,residenceId)
+
+    DECLARE_ATTRIBUTE(QImage,Player,avatar)
 
 END_ROW_DECLARATION(Player)
 

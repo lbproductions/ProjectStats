@@ -1,7 +1,7 @@
 #include "drink.h"
 
 #include <QWaitCondition>
-#include <QIcon>
+#include <QImage>
 
 START_TABLE_IMPLEMENTATION(Drink)
 END_TABLE_IMPLEMENTATION()
@@ -14,8 +14,7 @@ START_ROW_IMPLEMENTATION(Drink, Drink, Row)
     IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, type, "Type")
     IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, name, "Name")
     IMPLEMENT_DATABASEATTRIBUTE(double,Drink,size,"Size")
-    IMPLEMENT_DATABASEATTRIBUTE(QIcon,Drink,icon,"Icon")
-    icon->setRole(Qt::DecorationRole);
+    IMPLEMENT_DATABASEATTRIBUTE(QString,Drink,iconPath,"IconPath")
     IMPLEMENT_DATABASEATTRIBUTE(double,Drink,alc,"Vol%")
 
     name->addDependingAttribute(test);
@@ -24,6 +23,10 @@ START_ROW_IMPLEMENTATION(Drink, Drink, Row)
     test->addDependingAttribute(test2);
     type->addDependingAttribute(test2);
     test2->setUpdateFunction(test, &Drink::update_test2_test);
+
+    IMPLEMENT_ATTRIBUTE(QImage,Drink,icon,tr("Icon"))
+    iconPath->addDependingAttribute(icon);
+    icon->setRole(Qt::DecorationRole);
 }
 
 QString Drink::mimeType() const
@@ -75,6 +78,10 @@ QString Drink::update_test2_test()
 QList<Drink*> Drink::calculate_drinks()
 {
     return QList<Drink*>();//Drinks::instance()->allRows();
+}
+
+QImage Drink::calculate_icon(){
+    return QImage(iconPath->value());
 }
 
 END_ROW_IMPLEMENTATION()

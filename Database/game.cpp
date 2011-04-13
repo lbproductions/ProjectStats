@@ -13,12 +13,19 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
     IMPLEMENT_DATABASEATTRIBUTE(QDateTime,Game,date,"Date")
     IMPLEMENT_DATABASEATTRIBUTE(QTime,Game,length,"Length")
     IMPLEMENT_DATABASEATTRIBUTE(QString,Game,comment,"Comment")
-    IMPLEMENT_DATABASEATTRIBUTE(int,Game,siteId,"Site")
+    IMPLEMENT_DATABASEATTRIBUTE(int,Game,siteId,"SiteId")
+
+    IMPLEMENT_ATTRIBUTE(QPointer<Place>,Game,site,"Site")
+    siteId->addDependingAttribute(site);
 }
 
 QString Game::mimeType() const
 {
     return "application/projectstats.game";
+}
+
+QPointer<Place> Game::calculate_site(){
+    return Places::instance()->rowById(this->siteId->value());
 }
 
 END_ROW_IMPLEMENTATION()
