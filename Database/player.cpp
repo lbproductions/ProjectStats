@@ -8,14 +8,13 @@ END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Player, Player, Row)
 {
-    IMPLEMENT_DATABASEATTRIBUTE(QString,Player,name,"Name")
-    IMPLEMENT_DATABASEATTRIBUTE(QString,Player,gender,"Gender")
-    IMPLEMENT_DATABASEATTRIBUTE(int,Player,weight, "Weight")
-    IMPLEMENT_DATABASEATTRIBUTE(int,Player,size, "Size")
-    IMPLEMENT_DATABASEATTRIBUTE(QColor,Player,color, "Color")
+    IMPLEMENT_DATABASEATTRIBUTE(QString,Player,name,tr("Name"))
+    IMPLEMENT_DATABASEATTRIBUTE(QString,Player,gender,tr("Gender"))
+    IMPLEMENT_DATABASEATTRIBUTE(int,Player,weight, tr("Weight"))
+    IMPLEMENT_DATABASEATTRIBUTE(int,Player,size, tr("Size"))
+    IMPLEMENT_DATABASEATTRIBUTE(QColor,Player,color, tr("Color"))
     color->setRole(Qt::DecorationRole);
-    IMPLEMENT_DATABASEATTRIBUTE(QString,Player,avatarPath, "AvatarPath")
-    IMPLEMENT_DATABASEATTRIBUTE(int,Player,residenceId, "Residence")
+    IMPLEMENT_DATABASEATTRIBUTE(QString,Player,avatarPath, tr("AvatarPath"))
 
     IMPLEMENT_ATTRIBUTE(QImage,Player,avatar,tr("Avatar"))
     avatarPath->addDependingAttribute(avatar);

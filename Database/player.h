@@ -17,7 +17,6 @@ START_ROW_DECLARATION(Player, Row)
     DECLARE_DATABASEATTRIBUTE(int,Player,size)
     DECLARE_DATABASEATTRIBUTE(QColor,Player,color)
     DECLARE_DATABASEATTRIBUTE(QString,Player,avatarPath)
-    DECLARE_DATABASEATTRIBUTE(int,Player,residenceId)
 
     DECLARE_ATTRIBUTE(QImage,Player,avatar)
 
