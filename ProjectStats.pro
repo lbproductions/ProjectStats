@@ -43,7 +43,13 @@ SOURCES += main.cpp\
     Database/Doppelkopf/schmeisserei.cpp \
     Database/Doppelkopf/dokoofflinegamebuddy.cpp \
     Database/categorie.cpp \
-    Database/categorieassignment.cpp
+    Database/categorieassignment.cpp \
+    Database/Filters/ruledisjunction.cpp \
+    Database/Filters/ruleconnective.cpp \
+    Database/Filters/ruleconjunction.cpp \
+    Database/Filters/rule.cpp \
+    Database/Filters/atomicrule.cpp \
+    Database/Filters/constraints.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -77,7 +83,13 @@ HEADERS  += mainwindow.h \
     Database/Doppelkopf/schmeisserei.h \
     Database/Doppelkopf/dokoofflinegamebuddy.h \
     Database/categorie.h \
-    Database/categorieassignment.h
+    Database/categorieassignment.h \
+    Database/Filters/ruledisjunction.h \
+    Database/Filters/ruleconnective.h \
+    Database/Filters/ruleconjunction.h \
+    Database/Filters/rule.h \
+    Database/Filters/atomicrule.h \
+    Database/Filters/constraints.h
 
 FORMS    +=
 

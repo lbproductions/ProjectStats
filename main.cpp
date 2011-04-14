@@ -1,6 +1,9 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
 
+#include <Database/Filters/atomicrule.h>
+#include <Database/Filters/ruleconjunction.h>
+#include <Database/Filters/ruledisjunction.h>
 #include <Database/database.h>
 
 #include <Logger/logger.h>
@@ -22,7 +25,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     Database::Database *database = Database::Database::instance();
-    QFile file("/Users/niclasraabe/Dropbox/Public/projectstats.db");
+    QFile file("/Users/niklas/Dropbox/Public/ProjectStats/projectstats.db");
     database->initialize(file);
 
     MainWindow w;
