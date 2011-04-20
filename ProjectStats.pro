@@ -43,7 +43,12 @@ SOURCES += main.cpp\
     Database/Doppelkopf/schmeisserei.cpp \
     Database/Doppelkopf/dokoofflinegamebuddy.cpp \
     Database/categorie.cpp \
-    Database/categorieassignment.cpp
+    Database/categorieassignment.cpp \
+    Database/Calculator/playercalculator.cpp \
+    Database/Calculator/placecalculator.cpp \
+    Database/Calculator/gamecalculator.cpp \
+    Database/Calculator/drinkcalculator.cpp \
+    Database/Calculator/livegamecalculator.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -77,7 +82,12 @@ HEADERS  += mainwindow.h \
     Database/Doppelkopf/schmeisserei.h \
     Database/Doppelkopf/dokoofflinegamebuddy.h \
     Database/categorie.h \
-    Database/categorieassignment.h
+    Database/categorieassignment.h \
+    Database/Calculator/playercalculator.h \
+    Database/Calculator/placecalculator.h \
+    Database/Calculator/gamecalculator.h \
+    Database/Calculator/drinkcalculator.h \
+    Database/Calculator/livegamecalculator.h
 
 FORMS    +=
 

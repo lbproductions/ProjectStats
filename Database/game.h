@@ -8,6 +8,13 @@
 
 #include "place.h"
 
+#include <Database/Calculator/gamecalculator.h>
+
+namespace Database{
+    class Player;
+    class Games;
+}
+
 START_ROW_DECLARATION(Game, Row)
     DECLARE_ROW_CONSTRUCTORS(Game, Game)
 
@@ -20,6 +27,7 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_DATABASEATTRIBUTE(int,Game,siteId)
 
     DECLARE_ATTRIBUTE(QPointer<Place>,Game,site)
+    DECLARE_ATTRIBUTE_IN_CALC(QList<Player*>,Game,GameCalculator,players)
 
 
 END_ROW_DECLARATION(Game)

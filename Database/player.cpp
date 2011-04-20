@@ -3,11 +3,17 @@
 #include <QImage>
 #include <QColor>
 
+#include "game.h"
+#include "place.h"
+
 START_TABLE_IMPLEMENTATION(Player)
 END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Player, Player, Row)
 {
+
+    PlayerCalculator* calc = new PlayerCalculator(this,this);
+
     IMPLEMENT_DATABASEATTRIBUTE(QString,Player,name,tr("Name"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Player,gender,tr("Gender"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Player,weight, tr("Weight"))
@@ -19,6 +25,12 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     IMPLEMENT_ATTRIBUTE(QImage,Player,avatar,tr("Avatar"))
     avatarPath->addDependingAttribute(avatar);
     avatar->setRole(Qt::DecorationRole);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,calc,games,"Games")
+    Games::instance()->rows()->addDependingAttribute(games);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(QList<Place*>,Player,PlayerCalculator,calc,places,"Places")
+    Places::instance()->rows()->addDependingAttribute(places);
 }
 
 QString Player::mimeType() const

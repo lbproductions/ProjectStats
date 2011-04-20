@@ -6,6 +6,8 @@
 #include "attribute.h"
 #include "databaseattribute.h"
 
+#include <Database/Calculator/drinkcalculator.h>
+
 START_ROW_DECLARATION(Drink, Row)
     DECLARE_ROW_CONSTRUCTORS(Drink, Drink)
 
@@ -23,6 +25,8 @@ START_ROW_DECLARATION(Drink, Row)
     DECLARE_ATTRIBUTE(QImage,Drink,icon)
 
     DECLARE_ATTRIBUTE(QList<Drink*>, Drink, drinks)
+
+    DECLARE_ATTRIBUTE_IN_CALC(int,Drink,DrinkCalculator,drinkCount)
 
 END_ROW_DECLARATION(Drink)
 

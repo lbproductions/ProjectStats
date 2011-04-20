@@ -143,9 +143,11 @@ public:
       */
     void registerRowType(Row *row);
 
+    void addDependingAttributeToRows(AttributeBase* parent, AttributeBase* child);
+
     Models::TableModel<RowType, Table<RowType> > *model() const;
 
-    Attribute<QMap<int, RowType* >, Table<RowType> > *rows() const;
+    Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> > *rows() const;
 
     static QMap<QString, AttributeBase*> *registeredAttributes();
 
@@ -164,7 +166,7 @@ protected:
       */
     virtual QPointer<RowType> createRowInstance(int id);
 
-    Attribute<QMap<int, RowType* >, Table<RowType> > *m_rows; //!< Alle Rows gecacht
+    Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> > *m_rows; //!< Alle Rows gecacht
     Models::TableModel<RowType, Table<RowType> > *m_model;
     static QMap<QString, AttributeBase*> *registeredDatabaseAttributes();
 
@@ -221,7 +223,7 @@ QMap<QString, AttributeBase*> *Table<RowType>::registeredAttributes()
 template<class RowType>
 Table<RowType>::Table(const QString &name) :
     TableBase(name),
-    m_rows(new Attribute<QMap<int, RowType* >, Table<RowType> >("rows", "rows", this)),
+    m_rows(new Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> >("rows", "rows", this)),
     m_model(0)
 {
 }
@@ -233,7 +235,7 @@ Models::TableModel<RowType, Table<RowType> > *Table<RowType>::model() const
 }
 
 template<class RowType>
-Attribute<QMap<int, RowType* >, Table<RowType> > *Table<RowType>::rows() const
+Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> > *Table<RowType>::rows() const
 {
     return m_rows;
 }
@@ -472,6 +474,14 @@ void Table<RowType>::registerRowType(Row *row)
     {
         qDebug() << "Table::registerRowType: Databaseattribute" << attribute->name() << "registered at table" << m_name;
         registeredDatabaseAttributes()->insert(attribute->name(), attribute);
+    }
+}
+
+template<class RowType>
+void Table<RowType>::addDependingAttributeToRows(AttributeBase* parent, AttributeBase* child)
+{
+    foreach(RowType* type,this->allRows()){
+        //type->parent->addDependingAttribute(child);
     }
 }
 

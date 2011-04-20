@@ -9,7 +9,7 @@
 #include <QMimeData>
 
 namespace Database {
-    template<class T, class R>
+    template<class T, class R, class C>
     class Attribute;
 
     template<class T>
