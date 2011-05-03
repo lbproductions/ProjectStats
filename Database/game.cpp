@@ -42,8 +42,14 @@ QPointer<Place> Game::calculate_site(){
     return Places::instance()->rowById(this->siteId->value());
 }
 
-AttributeHash<Player*,int> Game::calculate_placement(){
-
+AttributeHash<Player*,int>* Game::calculate_placement(){
+    AttributeHash<Player*,int>* hash = new AttributeHash<Player*,int>();
+    int count = 0;
+    foreach(Player* p, players->value()){
+        hash->insert(p,count);
+        count++;
+    }
+    return hash;
 }
 
 END_ROW_IMPLEMENTATION()

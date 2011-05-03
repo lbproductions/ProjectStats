@@ -3,8 +3,9 @@
 using namespace Database;
 
 template<class Key, class V>
-AttributeHash<Key,V>::AttributeHash(QObject *parent) :
-    QHash<Key,V>(parent)
+AttributeHash<Key,V>::AttributeHash() :
+    QHash<Key,V>(parent),
+    AttributeHashBase()
 {
 }
 
@@ -17,8 +18,13 @@ Q_INLINE_TEMPLATE typename QHash<Key, V>::iterator AttributeHash<Key,V>::insert 
 template<class Key, class V>
 QString AttributeHash<Key,V>::toString(){
     QString string = "";
-    foreach(V v,this->values()){
-        string += ", " + v;
+    foreach(Key k, this->keys()){
+        string += k + ":" + this->value(k) + ", ";
     }
     return string;
+}
+
+
+AttributeHashBase::AttributeHashBase()
+{
 }

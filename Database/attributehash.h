@@ -2,24 +2,30 @@
 #define ATTRIBUTEHASH_H
 
 #include <QHash>
+#include <QObject>
 
 namespace Database{
 
-template<class Key, class V>
-class AttributeHash : public QHash<Key,V>
+class AttributeHashBase : public QObject
 {
+    Q_OBJECT
 public:
-    explicit AttributeHash(QObject *parent = 0);
-
-    Q_INLINE_TEMPLATE typename QHash<Key, V>::iterator insert ( const Key & key, const V & value );
-
-    QString toString();
+    explicit AttributeHashBase();
 
 signals:
 
     void changed();
+};
 
-public slots:
+template<class Key, class V>
+class AttributeHash : public QHash<Key,V>, public AttributeHashBase
+{
+public:
+    explicit AttributeHash();
+
+    Q_INLINE_TEMPLATE typename QHash<Key, V>::iterator insert ( const Key & key, const V & value );
+
+    QString toString();
 
 };
 

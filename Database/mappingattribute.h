@@ -8,7 +8,7 @@
 namespace Database {
 
 template<class K, class V, class R, class C>
-class MappingAttribute : public Attribute<AttributeHash<K,V>,R,C>
+class MappingAttribute : public Attribute<AttributeHash<K,V>*,R,C>
 {
 public:
     /*!
@@ -28,12 +28,6 @@ public:
 
 
     /*!
-    Darf nicht verwendet werden!
-    */
-    //V& value();
-
-
-    /*!
     Gibt für \p key den richtigen Wert zurück.
     */
     V& value(K key);
@@ -41,9 +35,9 @@ public:
 
 template<class K, class V, class R, class C>
 MappingAttribute<K,V,R,C>::MappingAttribute(const QString &name, const QString &displayName, Row *row):
-    Attribute<AttributeHash<K,V> ,R,C>(name,displayName,row)
+    Attribute<AttributeHash<K,V>* ,R,C>(name,displayName,row)
 {
-    //connect(Attribute<AttributeHash<K,V>,R,C>::m_value,SIGNAL(changed()),this,SIGNAL(changed()));
+    connect(Attribute<AttributeHash<K,V>*,R,C>::m_value,SIGNAL(changed()),this,SIGNAL(changed()));
 }
 
 template<class K, class V, class R, class C>
@@ -53,28 +47,21 @@ void MappingAttribute<K,V,R,C>::setValue(V value){
 
 template<class K, class V, class R, class C>
 void MappingAttribute<K,V,R,C>::setValue(K key, V value){
-    Attribute<AttributeHash<K,V>,R,C>::m_lock.lockForWrite();
+    Attribute<AttributeHash<K,V>*,R,C>::m_lock.lockForWrite();
     QVariant v1;
-    v1.setValue(Attribute<AttributeHash<K,V>,R,C>::m_value.value(key));
+    v1.setValue(Attribute<AttributeHash<K,V>*,R,C>::m_value.value(key));
     QVariant v2;
     v2.setValue(value);
     bool change = v1 != v2;
-    Attribute<AttributeHash<K,V>,R,C>::m_cacheInitialized = true;
+    Attribute<AttributeHash<K,V>*,R,C>::m_cacheInitialized = true;
     if(change)
     {
-        Attribute<AttributeHash<K,V>,R,C>::m_value.insert(key,value);
+        Attribute<AttributeHash<K,V>*,R,C>::m_value.insert(key,value);
 
-        emit Attribute<AttributeHash<K,V>,R,C>::changed();
+        emit Attribute<AttributeHash<K,V>*,R,C>::changed();
     }
-    Attribute<AttributeHash<K,V>,R,C>::m_lock.unlock();
+    Attribute<AttributeHash<K,V>*,R,C>::m_lock.unlock();
 }
-
-/*
-template<class K, class V, class R, class C>
-V& MappingAttribute<K,V,R,C>::value(){
-    qWarning() << "MappingAttribute<T>::value(): You may not invoke this method on a MappingAttribute!";
-}
-*/
 
 template<class K, class V, class R, class C>
 V& MappingAttribute<K,V,R,C>::value(K key){
@@ -88,7 +75,7 @@ V& MappingAttribute<K,V,R,C>::value(K key){
 
 #define DECLARE_MAPPINGATTRIBUTE(Key, Value, RowClassname, Name) \
     MappingAttribute<Key,Value,RowClassname, RowClassname> *Name; \
-    AttributeHash<Key,Value> calculate_ ## Name();
+    AttributeHash<Key,Value>* calculate_ ## Name();
 
 #define DECLARE_MAPPINGATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, Name) \
     MappingAttribute<Key,Value,RowClassname, CalcClassname> *Name;
