@@ -5,6 +5,8 @@
 #include "table.h"
 #include "attribute.h"
 #include "databaseattribute.h"
+#include "mappingattribute.h"
+#include "attributehash.h"
 
 #include "place.h"
 
@@ -29,12 +31,17 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_ATTRIBUTE(QPointer<Place>,Game,site)
     DECLARE_ATTRIBUTE_IN_CALC(QList<Player*>,Game,GameCalculator,players)
 
+    DECLARE_MAPPINGATTRIBUTE(Player*,int,Game,placement)
+
 
 END_ROW_DECLARATION(Game)
 
 START_TABLE_DECLARATION(Game)
 END_TABLE_DECLARATION()
 
+#define COMMA ,
+
 Q_DECLARE_METATYPE(QPointer<Database::Place>)
+Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA int>)
 
 #endif // DATABASE_GAME_H

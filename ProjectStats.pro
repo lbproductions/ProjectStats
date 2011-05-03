@@ -48,7 +48,9 @@ SOURCES += main.cpp\
     Database/Calculator/placecalculator.cpp \
     Database/Calculator/gamecalculator.cpp \
     Database/Calculator/drinkcalculator.cpp \
-    Database/Calculator/livegamecalculator.cpp
+    Database/Calculator/livegamecalculator.cpp \
+    Database/mappingattribute.cpp \
+    Database/attributehash.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -87,7 +89,9 @@ HEADERS  += mainwindow.h \
     Database/Calculator/placecalculator.h \
     Database/Calculator/gamecalculator.h \
     Database/Calculator/drinkcalculator.h \
-    Database/Calculator/livegamecalculator.h
+    Database/Calculator/livegamecalculator.h \
+    Database/mappingattribute.h \
+    Database/attributehash.h
 
 FORMS    +=
 

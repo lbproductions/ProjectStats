@@ -3,6 +3,8 @@
 #include <Database/drink.h>
 #include <Database/livegame.h>
 
+#include <QDebug>
+
 namespace Database {
 
 DrinkCalculator::DrinkCalculator(Drink* drink, QObject *parent) :
@@ -12,6 +14,7 @@ DrinkCalculator::DrinkCalculator(Drink* drink, QObject *parent) :
 }
 
 int DrinkCalculator::calculate_drinkCount(){
+    qDebug() << "calculate_drinkCount wird ausgeführt";
     int count = 0;
     foreach(Game* g, Games::instance()->allRows()){
         if(g->live->value()){
@@ -21,10 +24,11 @@ int DrinkCalculator::calculate_drinkCount(){
                     if(d->id() == m_drink->id()){
                         count++;
                     }
-                }
+                }   
             }
         }
     }
+    qDebug() << "DrinkCount:" + QString::number(count);
     return count;
 }
 
