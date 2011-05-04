@@ -1,11 +1,18 @@
 #ifndef DATABASE_MAPPINGATTRIBUTE_H
 #define DATABASE_MAPPINGATTRIBUTE_H
 
-#include "attribute.h"
-#include "row.h"
 #include "attributehash.h"
 
+#include <QDebug>
+#include <QVariant>
+
 namespace Database {
+
+class Row;
+
+template<class T, class R, class C>
+class Attribute;
+
 
 template<class K, class V, class R, class C>
 class MappingAttribute : public Attribute<AttributeHash<K,V>*,R,C>
@@ -37,7 +44,6 @@ template<class K, class V, class R, class C>
 MappingAttribute<K,V,R,C>::MappingAttribute(const QString &name, const QString &displayName, Row *row):
     Attribute<AttributeHash<K,V>* ,R,C>(name,displayName,row)
 {
-    connect(Attribute<AttributeHash<K,V>*,R,C>::m_value,SIGNAL(changed()),this,SIGNAL(changed()));
 }
 
 template<class K, class V, class R, class C>

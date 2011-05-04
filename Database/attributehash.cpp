@@ -1,3 +1,10 @@
 #include "attributehash.h"
 
-using namespace Database;
+namespace Database {
+
+AttributeHashBase::AttributeHashBase(QObject *parent):
+    QObject(parent)
+{
+}
+
+}

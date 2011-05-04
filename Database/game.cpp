@@ -28,7 +28,7 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
     Positions::instance()->rows()->addDependingAttribute(players);
     OfflineGameInformations::instance()->rows()->addDependingAttribute(players);
 
-    IMPLEMENT_MAPPINGATTRIBUTE(Player*,int,Game,placement,"Placement")
+    IMPLEMENT_MAPPINGATTRIBUTE(QString,int,Game,placement,"Placement")
 
 
 }
@@ -42,14 +42,17 @@ QPointer<Place> Game::calculate_site(){
     return Places::instance()->rowById(this->siteId->value());
 }
 
-AttributeHash<Player*,int>* Game::calculate_placement(){
-    AttributeHash<Player*,int>* hash = new AttributeHash<Player*,int>();
+
+AttributeHash<QString,int>* Game::calculate_placement(){
+    AttributeHash<QString,int>* hash = new AttributeHash<QString,int>();
     int count = 0;
     foreach(Player* p, players->value()){
-        hash->insert(p,count);
+        hash->insert(p->name->value(),count);
         count++;
     }
-    return hash;
+    connect(hash,SIGNAL(changed()),placement,SIGNAL(changed()));
+    return hash;    
 }
+
 
 END_ROW_IMPLEMENTATION()

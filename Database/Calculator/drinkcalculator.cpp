@@ -14,6 +14,7 @@ DrinkCalculator::DrinkCalculator(Drink* drink, QObject *parent) :
 }
 
 int DrinkCalculator::calculate_drinkCount(){
+    /*
     qDebug() << "calculate_drinkCount wird ausgeführt";
     int count = 0;
     foreach(Game* g, Games::instance()->allRows()){
@@ -30,6 +31,7 @@ int DrinkCalculator::calculate_drinkCount(){
     }
     qDebug() << "DrinkCount:" + QString::number(count);
     return count;
+    */
 }
 
 } // namespace Database

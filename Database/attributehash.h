@@ -9,8 +9,8 @@ namespace Database{
 class AttributeHashBase : public QObject
 {
     Q_OBJECT
-public:
-    explicit AttributeHashBase();
+protected:
+    explicit AttributeHashBase(QObject *parent = 0);
 
 signals:
 
@@ -21,7 +21,7 @@ template<class Key, class V>
 class AttributeHash : public QHash<Key,V>, public AttributeHashBase
 {
 public:
-    explicit AttributeHash();
+    explicit AttributeHash(QObject *parent = 0);
 
     typename QHash<Key, V>::iterator insert ( const Key & key, const V & value );
 
@@ -29,14 +29,10 @@ public:
 
 };
 
-
-AttributeHashBase::AttributeHashBase()
-{
-}
-
 template<class Key, class V>
-AttributeHash<Key,V>::AttributeHash() :
-    QHash<Key,V>()
+AttributeHash<Key,V>::AttributeHash(QObject *parent) :
+    QHash<Key,V>(),
+    AttributeHashBase(parent)
 {
 }
 
@@ -48,7 +44,7 @@ typename QHash<Key, V>::iterator AttributeHash<Key,V>::insert ( const Key & key,
 
 template<class Key, class V>
 QString AttributeHash<Key,V>::toString(){
-    QString string = "";
+    QString string = "asdf";
     foreach(Key k, this->keys()){
         string += k + ":" + this->value(k) + ", ";
     }
