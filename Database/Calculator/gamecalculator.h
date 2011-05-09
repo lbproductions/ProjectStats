@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QPointer>
 
+#include <Database/attributehash.h>
+
 namespace Database {
 
 class Game;
@@ -16,6 +18,8 @@ public:
     explicit GameCalculator(Game* game, QObject *parent = 0);
 
     QList<Player*> calculate_players();
+
+    AttributeHash<Player*,int>* calculate_placement();
 
 signals:
 

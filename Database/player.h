@@ -26,8 +26,10 @@ START_ROW_DECLARATION(Player, Row)
 
     DECLARE_ATTRIBUTE(QImage,Player,avatar)
 
-    DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,games)
+    DECLARE_ATTRIBUTE_IN_CALC(QList<Game*>,Player,PlayerCalculator,games)
     DECLARE_ATTRIBUTE_IN_CALC(QList<Place*>,Player,PlayerCalculator,places)
+
+    DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,points)
 
 END_ROW_DECLARATION(Player)
 

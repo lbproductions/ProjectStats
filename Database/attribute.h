@@ -10,9 +10,6 @@
 #include <QVariant>
 #include <QFutureWatcher>
 
-
-
-
 /*!
   Ruft auf dem Objekt \p object die Funktion \p ptrToMember auf.<br>
   \p object muss ein Pointer auf eine Klasse sein, und \p ptrToMember ein Pointer zu einer Funktion dieser Klasse.<br>

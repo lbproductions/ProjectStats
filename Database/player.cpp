@@ -26,11 +26,13 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     avatarPath->addDependingAttribute(avatar);
     avatar->setRole(Qt::DecorationRole);
 
-    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,calc,games,"Games")
+    IMPLEMENT_ATTRIBUTE_IN_CALC(QList<Game*>,Player,PlayerCalculator,calc,games,"Games")
     Games::instance()->rows()->addDependingAttribute(games);
 
     IMPLEMENT_ATTRIBUTE_IN_CALC(QList<Place*>,Player,PlayerCalculator,calc,places,"Places")
     Places::instance()->rows()->addDependingAttribute(places);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,calc,points,"Points")
 }
 
 QString Player::mimeType() const

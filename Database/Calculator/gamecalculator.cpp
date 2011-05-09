@@ -38,4 +38,19 @@ QList<Player*> GameCalculator::calculate_players(){
     return list;
 }
 
+AttributeHash<Player*,int>* GameCalculator::calculate_placement(){
+    qDebug() << "calculate_placement wird ausgeführt";
+    AttributeHash<Player*,int>* hash = new AttributeHash<Player*,int>();
+    int count = 1;
+    foreach(Player* p, m_game->players->value()){
+        hash->insert(p,count);
+        count++;
+    }
+    connect(hash,SIGNAL(changed()),m_game->placement,SIGNAL(changed()));
+    foreach(Player* p, hash->keys()){
+        qDebug() << p->name->value() << ":" << hash->value(p);
+    }
+    return hash;
+}
+
 } // namespace Database

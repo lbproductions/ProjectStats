@@ -8,6 +8,7 @@ namespace Database {
 
 class Player;
 class Place;
+class Game;
 
 class PlayerCalculator : public QObject
 {
@@ -15,7 +16,9 @@ class PlayerCalculator : public QObject
 public:
     PlayerCalculator(QPointer<Player> player, QObject *parent = 0);
 
-    int calculate_games();
+    QList<Game*> calculate_games();
+
+    int calculate_points();
 
     QList<Place*> calculate_places();
 

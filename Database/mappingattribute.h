@@ -37,7 +37,12 @@ public:
     /*!
     Gibt für \p key den richtigen Wert zurück.
     */
-    V& value(K key);
+    const V value(K key);
+
+    /*!
+    Gibt den String für dieses Attribut zurück.
+    */
+    QString toString();
 };
 
 template<class K, class V, class R, class C>
@@ -70,8 +75,19 @@ void MappingAttribute<K,V,R,C>::setValue(K key, V value){
 }
 
 template<class K, class V, class R, class C>
-V& MappingAttribute<K,V,R,C>::value(K key){
-    return value().value(key);
+const V MappingAttribute<K,V,R,C>::value(K key){
+    return Attribute<AttributeHash<K,V>*,R,C>::value()->value(key);
+}
+
+template<class K, class V, class R, class C>
+QString MappingAttribute<K,V,R,C>::toString(){
+    /*
+    QString string = "asdf";
+    foreach(K k, this->keys()){
+        string += k + ":" + this->value(k) + ", ";
+    }
+    */
+    return "asdf";
 }
 
 } // namespace Database
@@ -84,7 +100,7 @@ V& MappingAttribute<K,V,R,C>::value(K key){
     AttributeHash<Key,Value>* calculate_ ## Name();
 
 #define DECLARE_MAPPINGATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, Name) \
-    MappingAttribute<Key,Value,RowClassname, CalcClassname> *Name;
+    MappingAttribute<Key,Value,RowClassname, CalcClassName> *Name;
 
 #define IMPLEMENT_MAPPINGATTRIBUTE(Key, Value, RowClassname, Name, DisplayName) \
     Name = new MappingAttribute<Key,Value,RowClassname, RowClassname>(XSTR(Name) "",DisplayName, this); \
@@ -92,7 +108,7 @@ V& MappingAttribute<K,V,R,C>::value(K key){
     registerAttribute(Name);
 
 #define IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, CalcClassInstanceName, Name, DisplayName) \
-    Name = new MappingAttribute<Key,Value,RowClassname, CalcClassname>(XSTR(Name) "",DisplayName, this); \
+    Name = new MappingAttribute<Key,Value,RowClassname, CalcClassName>(XSTR(Name) "",DisplayName, this); \
     Name->setCalculationFunction(CalcClassInstanceName, & CalcClassName::calculate_ ## Name); \
     registerAttribute(Name);
 

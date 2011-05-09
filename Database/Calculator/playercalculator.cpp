@@ -15,15 +15,15 @@ PlayerCalculator::PlayerCalculator(QPointer<Player> player,QObject *parent):
 
 }
 
-int PlayerCalculator::calculate_games(){
-    int count = 0;
+QList<Game*> PlayerCalculator::calculate_games(){
+    QList<Game*> list;
     foreach(Game* g, Games::instance()->allRows()){
         if(g->players->value().contains(m_player)){
-            count++;
+            list.append(g);
         }
     }
 
-    return count;
+    return list;
 }
 
 QList<Place*> PlayerCalculator::calculate_places(){
@@ -34,6 +34,16 @@ QList<Place*> PlayerCalculator::calculate_places(){
         }
     }
     return list;
+}
+
+int PlayerCalculator::calculate_points(){
+    int points = 0;
+    foreach(Game* g, m_player->games->value()){
+        double zaehler = (double)(g->players->value().size() - g->placement->value(m_player));
+        double nenner = (double)g->players->value().size()-1;
+        points = points + 100* (zaehler / nenner);
+    }
+    return points;
 }
 
 } // namespace Database
