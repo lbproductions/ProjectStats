@@ -5,6 +5,7 @@
 #include <QPointer>
 
 #include <Database/attributehash.h>
+#include <Database/attributelist.h>
 
 namespace Database {
 
@@ -17,7 +18,7 @@ class GameCalculator : public QObject
 public:
     explicit GameCalculator(Game* game, QObject *parent = 0);
 
-    QList<Player*> calculate_players();
+    AttributeList<Player*>* calculate_players();
 
     AttributeHash<Player*,int>* calculate_placement();
 

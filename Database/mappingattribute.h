@@ -38,11 +38,6 @@ public:
     Gibt für \p key den richtigen Wert zurück.
     */
     const V value(K key);
-
-    /*!
-    Gibt den String für dieses Attribut zurück.
-    */
-    QString toString();
 };
 
 template<class K, class V, class R, class C>
@@ -77,17 +72,6 @@ void MappingAttribute<K,V,R,C>::setValue(K key, V value){
 template<class K, class V, class R, class C>
 const V MappingAttribute<K,V,R,C>::value(K key){
     return Attribute<AttributeHash<K,V>*,R,C>::value()->value(key);
-}
-
-template<class K, class V, class R, class C>
-QString MappingAttribute<K,V,R,C>::toString(){
-    /*
-    QString string = "asdf";
-    foreach(K k, this->keys()){
-        string += k + ":" + this->value(k) + ", ";
-    }
-    */
-    return "asdf";
 }
 
 } // namespace Database

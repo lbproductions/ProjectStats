@@ -7,6 +7,7 @@
 #include "databaseattribute.h"
 #include "mappingattribute.h"
 #include "attributehash.h"
+#include "listattribute.h"
 
 #include "place.h"
 
@@ -29,7 +30,7 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_DATABASEATTRIBUTE(int,Game,siteId)
 
     DECLARE_ATTRIBUTE(QPointer<Place>,Game,site)
-    DECLARE_ATTRIBUTE_IN_CALC(QList<Player*>,Game,GameCalculator,players)
+    DECLARE_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,players)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement)
 

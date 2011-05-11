@@ -24,6 +24,7 @@
 
 #include <Database/attribute.h>
 #include <Database/attributehash.h>
+#include <Database/attributelist.h>
 #include <Database/player.h>
 #include <Database/drink.h>
 #include <Database/place.h>
@@ -194,9 +195,9 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
     if(var.userType() != 263 && var.userType() != 259 && var.userType() != 260 && var.userType() != 264 &&
             var.userType() != 265 && var.userType() != 266 && var.userType() != 261 && var.userType() != 262 &&
             var.userType() > 127){
-        qDebug() << var.typeName();
-        qDebug() << var.userType();
     }
+    qDebug() << var.typeName();
+    qDebug() << var.userType();
 
     if(QString(var.typeName()) == "QList<Database::Drink*>"){
         QList<Database::Drink*> list = base->toVariant().value<QList<Database::Drink*> >();
@@ -266,6 +267,17 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
         if (!game.isNull()){
             variant.setValue(game->name->value());
         }
+    }
+    else if(QString(var.typeName()) == "Database::AttributeList<Database::Player*>*"){
+        Database::AttributeList<Database::Player*>* list = base->toVariant().value<Database::AttributeList<Database::Player*>* >();
+        QString string = "";
+        for (int i = 0; i<list->size();i++){
+            string += list->at(i)->name->value();
+            if (i < list->size()-1){
+                string += ", ";
+            }
+        }
+        variant.setValue(string);
     }
 
 

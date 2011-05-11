@@ -24,7 +24,7 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
     IMPLEMENT_ATTRIBUTE(QPointer<Place>,Game,site,tr("Site"))
     siteId->addDependingAttribute(site);
 
-    IMPLEMENT_ATTRIBUTE_IN_CALC(QList<Player*>,Game,GameCalculator,calc,players,"Players")
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,calc,players,"Players")
     Positions::instance()->rows()->addDependingAttribute(players);
     OfflineGameInformations::instance()->rows()->addDependingAttribute(players);
 

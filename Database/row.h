@@ -9,7 +9,9 @@
 
 #include <QPointer>
 #include <QSqlQuery>
-#include <QHash>
+
+#include <Database/attributelist.h>
+#include <Database/attributehash.h>
 
 namespace Database {
 
@@ -150,8 +152,9 @@ private:
     } \
     Q_DECLARE_METATYPE(Database::RowClassname) \
     Q_DECLARE_METATYPE(Database::RowClassname*) \
+    Q_DECLARE_METATYPE(Database::AttributeList<Database::RowClassname*>*) \
+    Q_DECLARE_METATYPE(Database::AttributeHash<Database::RowClassname* COMMA int>*) \
     Q_DECLARE_METATYPE(QList<Database::RowClassname*>) \
-    Q_DECLARE_METATYPE(QHash<int COMMA Database::RowClassname*>) \
     Q_DECLARE_METATYPE(QMap<int COMMA Database::RowClassname*>)
 
 #define START_ROW_IMPLEMENTATION( RowClassname, RowBaseclassname, RowSuperclassname  ) \

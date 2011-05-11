@@ -1,7 +1,7 @@
 #ifndef ATTRIBUTEHASH_H
 #define ATTRIBUTEHASH_H
 
-#include <QHash>
+#include <QMap>
 #include <QObject>
 
 namespace Database{
@@ -18,37 +18,26 @@ signals:
 };
 
 template<class Key, class V>
-class AttributeHash : public QHash<Key,V>, public AttributeHashBase
+class AttributeHash : public QMap<Key,V>, public AttributeHashBase
 {
 public:
     explicit AttributeHash(QObject *parent = 0);
 
-    typename QHash<Key, V>::iterator insert ( const Key & key, const V & value );
-
-    QString toString();
+    typename QMap<Key, V>::iterator insert ( const Key & key, const V & value );
 
 };
 
 template<class Key, class V>
 AttributeHash<Key,V>::AttributeHash(QObject *parent) :
-    QHash<Key,V>(),
+    QMap<Key,V>(),
     AttributeHashBase(parent)
 {
 }
 
 template<class Key, class V>
-typename QHash<Key, V>::iterator AttributeHash<Key,V>::insert ( const Key & key, const V & value ){
-    QHash<Key,V>::insert(key,value);
+typename QMap<Key, V>::iterator AttributeHash<Key,V>::insert ( const Key & key, const V & value ){
+    QMap<Key,V>::insert(key,value);
     emit AttributeHash<Key,V>::changed();
-}
-
-template<class Key, class V>
-QString AttributeHash<Key,V>::toString(){
-    QString string = "asdf";
-    foreach(Key k, this->keys()){
-        string += k + ":" + this->value(k) + ", ";
-    }
-    return string;
 }
 
 }

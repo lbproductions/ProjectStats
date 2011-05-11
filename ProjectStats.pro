@@ -52,7 +52,9 @@ SOURCES += main.cpp\
     Database/mappingattribute.cpp \
     Database/attributehash.cpp \
     handler.cpp \
-    messagesystem.cpp
+    messagesystem.cpp \
+    Database/attributelist.cpp \
+    Database/listattribute.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -95,7 +97,9 @@ HEADERS  += mainwindow.h \
     Database/mappingattribute.h \
     Database/attributehash.h \
     handler.h \
-    messagesystem.h
+    messagesystem.h \
+    Database/attributelist.h \
+    Database/listattribute.h
 
 FORMS    +=
 

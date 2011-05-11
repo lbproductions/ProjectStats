@@ -27,14 +27,10 @@ int main(int argc, char *argv[])
     QFile file("/Users/niclasraabe/Dropbox/Public/projectstats.db");
     database->initialize(file);
 
-    MainWindow w;
-    w.show();
-
     //handler.installTranslator(&translator);
 
     if(handler.showMainWindow())
     {
-        //Adapter* adapter = new Adapter("/dortmund2.bin");
         return handler.exec();
     }
     return 0;
