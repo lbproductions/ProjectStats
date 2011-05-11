@@ -10,6 +10,10 @@
 #include <QVariant>
 #include <QFutureWatcher>
 
+#include <QDebug>
+
+#include <handler.h>
+
 /*!
   Ruft auf dem Objekt \p object die Funktion \p ptrToMember auf.<br>
   \p object muss ein Pointer auf eine Klasse sein, und \p ptrToMember ein Pointer zu einer Funktion dieser Klasse.<br>
@@ -22,6 +26,8 @@ class QLabel;
 class QLineEdit;
 
 namespace Database {
+
+class Player;
 
 class AttributeBase;
 
@@ -96,6 +102,7 @@ public:
 
     virtual QString toString() = 0;
     virtual QVariant toVariant() = 0;
+    virtual QVariant displayVariant() = 0;
     virtual void setValue(QVariant value) = 0;
     virtual void setValue(QVariant value, bool updateDatabase);
 
@@ -180,6 +187,8 @@ public:
     QString toString();
 
     QVariant toVariant();
+
+    QVariant displayVariant();
 
     /*!
       Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
@@ -469,6 +478,18 @@ QVariant Attribute<T,R,C>::toVariant()
     QVariant v;
     v.setValue(value());
     return v;
+}
+
+template<class T, class R, class C>
+QVariant Attribute<T,R,C>::displayVariant()
+{
+    QVariant display = Handler::getInstance()->convert(this,toVariant());
+    if (!display.isNull()){
+        return display;
+    }
+    else{
+        return toVariant();
+    }
 }
 
 template<class T, class R, class C>

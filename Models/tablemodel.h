@@ -214,7 +214,7 @@ QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) co
     QVariant value;
     if(!attribute->isCalculating())
     {
-        value = attribute->toVariant();
+        value = attribute->displayVariant();
     }
     else
     {

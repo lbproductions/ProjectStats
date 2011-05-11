@@ -39,9 +39,6 @@ END_ROW_DECLARATION(Game)
 START_TABLE_DECLARATION(Game)
 END_TABLE_DECLARATION()
 
-#define COMMA ,
-
 Q_DECLARE_METATYPE(QPointer<Database::Place>)
-Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA int>*)
 
 #endif // DATABASE_GAME_H

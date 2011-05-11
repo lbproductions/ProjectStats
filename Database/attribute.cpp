@@ -5,6 +5,8 @@
 #include <QLabel>
 #include <QLineEdit>
 
+#include <Database/player.h>
+
 namespace Database {
 
 AttributeOwner::AttributeOwner(QObject *parent) :

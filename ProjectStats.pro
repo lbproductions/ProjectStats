@@ -50,7 +50,9 @@ SOURCES += main.cpp\
     Database/Calculator/drinkcalculator.cpp \
     Database/Calculator/livegamecalculator.cpp \
     Database/mappingattribute.cpp \
-    Database/attributehash.cpp
+    Database/attributehash.cpp \
+    handler.cpp \
+    messagesystem.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -91,7 +93,9 @@ HEADERS  += mainwindow.h \
     Database/Calculator/drinkcalculator.h \
     Database/Calculator/livegamecalculator.h \
     Database/mappingattribute.h \
-    Database/attributehash.h
+    Database/attributehash.h \
+    handler.h \
+    messagesystem.h
 
 FORMS    +=
 
