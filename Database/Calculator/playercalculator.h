@@ -3,6 +3,7 @@
 
 #include <QPointer>
 #include <Database/attribute.h>
+#include <Database/attributelist.h>
 
 namespace Database {
 
@@ -16,11 +17,11 @@ class PlayerCalculator : public QObject
 public:
     PlayerCalculator(QPointer<Player> player, QObject *parent = 0);
 
-    QList<Game*> calculate_games();
+    AttributeList<Game*>* calculate_games();
 
     int calculate_points();
 
-    QList<Place*> calculate_places();
+    AttributeList<Place*>* calculate_places();
 
 private:
 

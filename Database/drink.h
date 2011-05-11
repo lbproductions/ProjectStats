@@ -5,6 +5,7 @@
 #include "table.h"
 #include "attribute.h"
 #include "databaseattribute.h"
+#include "listattribute.h"
 
 #include <Database/Calculator/drinkcalculator.h>
 
@@ -23,8 +24,6 @@ START_ROW_DECLARATION(Drink, Row)
     QString update_test2_test();
 
     DECLARE_ATTRIBUTE(QImage,Drink,icon)
-
-    DECLARE_ATTRIBUTE(QList<Drink*>, Drink, drinks)
 
     DECLARE_ATTRIBUTE_IN_CALC(int,Drink,DrinkCalculator,drinkCount)
 

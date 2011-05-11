@@ -5,6 +5,7 @@
 #include "table.h"
 #include "attribute.h"
 #include "databaseattribute.h"
+#include "listattribute.h"
 
 #include <Database/Calculator/playercalculator.h>
 
@@ -26,8 +27,8 @@ START_ROW_DECLARATION(Player, Row)
 
     DECLARE_ATTRIBUTE(QImage,Player,avatar)
 
-    DECLARE_ATTRIBUTE_IN_CALC(QList<Game*>,Player,PlayerCalculator,games)
-    DECLARE_ATTRIBUTE_IN_CALC(QList<Place*>,Player,PlayerCalculator,places)
+    DECLARE_LISTATTRIBUTE_IN_CALC(Game*,Player,PlayerCalculator,games)
+    DECLARE_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,places)
 
     DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,points)
 

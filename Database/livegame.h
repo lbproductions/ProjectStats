@@ -6,6 +6,7 @@
 #include "row.h"
 #include "table.h"
 #include "databaseattribute.h"
+#include "listattribute.h"
 
 #include <Database/Calculator/livegamecalculator.h>
 
@@ -17,8 +18,8 @@ namespace Database{
 START_ROW_DECLARATION(LiveGame, Game)
     DECLARE_ROW_CONSTRUCTORS(LiveGame, Game)
 
-    DECLARE_ATTRIBUTE_IN_CALC(QList<Drink*>,LiveGame,LiveGameCalculator,drinks)
-    DECLARE_ATTRIBUTE_IN_CALC(QList<Round*>,LiveGame,LiveGameCalculator,rounds)
+    DECLARE_LISTATTRIBUTE_IN_CALC(Drink*,LiveGame,LiveGameCalculator,drinks)
+    DECLARE_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,rounds)
 
 END_ROW_DECLARATION(LiveGame)
 
