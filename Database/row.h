@@ -9,7 +9,9 @@
 
 #include <QPointer>
 #include <QSqlQuery>
-#include <QHash>
+
+#include <Database/attributelist.h>
+#include <Database/attributehash.h>
 
 namespace Database {
 
@@ -79,6 +81,8 @@ public:
 
     virtual QString mimeType() const = 0;
 
+    QList<Row*> childRows() const;
+
 protected:
     /*!
       Erstellt ein Row Objekt, welches in der Tabelle \p table  die Daten mit der ID  \p id repräsentiert.
@@ -112,12 +116,19 @@ protected:
       */
     void registerAttribute(AttributeBase *attribute);
 
+    void addChildRow(Row *row);
+
+    void addChildRows(QList<Row *> rows);
+
     int m_id; //!< Die ID dieser Row
     QPointer<TableBase> m_table; //!< Die Tabelle, in die diese Row liegt
     QHash<QString, AttributeBase* > m_attributes; //!< Alle Attribute der Row. Muss von Kindklassen befüllt werden.
     QList<AttributeBase*> m_databaseAttributes; //!< Alle Datenbankattribute
+    QList<Row*> m_childRows; //!< Alle Rows, die logisch zu dieser Row gehören (z.B. Round gehört zu Game)
 
 private:
+    friend class TableBase;
+
     /*!
       Überprueft, ob die eine Row mit dieser ID tatsächlich existiert.
       Ist das nicht der Fall wird ID auf -1 gesetzt und die Row damit invalid.
@@ -137,11 +148,11 @@ private:
 
 #define DECLARE_ROW_CONSTRUCTORS( RowClassname, RowBaseclassname ) \
     public: \
-        RowClassname(const RowClassname &other); \
-        RowClassname(); \
-        RowClassname(int id, TableBase *table); \
-        void initializeAttributes(); \
-        QString mimeType() const;
+	RowClassname(const RowClassname &other); \
+	RowClassname(); \
+	RowClassname(int id, TableBase *table); \
+	void initializeAttributes(); \
+	QString mimeType() const;
 
 #define COMMA ,
 
@@ -150,8 +161,9 @@ private:
     } \
     Q_DECLARE_METATYPE(Database::RowClassname) \
     Q_DECLARE_METATYPE(Database::RowClassname*) \
+    Q_DECLARE_METATYPE(Database::AttributeList<Database::RowClassname*>*) \
+    Q_DECLARE_METATYPE(Database::AttributeHash<Database::RowClassname* COMMA int>*) \
     Q_DECLARE_METATYPE(QList<Database::RowClassname*>) \
-    Q_DECLARE_METATYPE(QHash<int COMMA Database::RowClassname*>) \
     Q_DECLARE_METATYPE(QMap<int COMMA Database::RowClassname*>)
 
 #define START_ROW_IMPLEMENTATION( RowClassname, RowBaseclassname, RowSuperclassname  ) \

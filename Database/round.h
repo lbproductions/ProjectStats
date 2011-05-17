@@ -11,6 +11,12 @@
 START_ROW_DECLARATION(Round, Row)
     DECLARE_ROW_CONSTRUCTORS(Round, Round)
 
+    enum RoundState {
+        RunningState, //!< Die Runde läuft gerade
+        PausedState, //!< Die Runde ist Pausiert
+        FinishedState //!< Die Runde wurde beendet
+    };
+
     DECLARE_DATABASEATTRIBUTE(int,Round,gameId)
     DECLARE_DATABASEATTRIBUTE(int,Round,number)
     DECLARE_DATABASEATTRIBUTE(QDateTime,Round,startTime)
@@ -24,7 +30,5 @@ END_ROW_DECLARATION(Round)
 
 START_TABLE_DECLARATION(Round)
 END_TABLE_DECLARATION()
-
-Q_DECLARE_METATYPE(QPointer<Database::Game>)
 
 #endif // DATABASE_ROUND_H

@@ -5,8 +5,15 @@
 #include "table.h"
 #include "attribute.h"
 #include "databaseattribute.h"
+#include "listattribute.h"
+
+#include <Database/Calculator/playercalculator.h>
 
 #include <QDebug>
+
+namespace Database{
+    class Place;
+}
 
 START_ROW_DECLARATION(Player, Row)
     DECLARE_ROW_CONSTRUCTORS(Player, Player)
@@ -19,6 +26,11 @@ START_ROW_DECLARATION(Player, Row)
     DECLARE_DATABASEATTRIBUTE(QString,Player,avatarPath)
 
     DECLARE_ATTRIBUTE(QImage,Player,avatar)
+
+    DECLARE_LISTATTRIBUTE_IN_CALC(Game*,Player,PlayerCalculator,games)
+    DECLARE_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,places)
+
+    DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,points)
 
 END_ROW_DECLARATION(Player)
 

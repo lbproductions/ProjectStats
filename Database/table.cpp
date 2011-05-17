@@ -42,10 +42,10 @@ QSqlQuery TableBase::query(const QString &queryString) const
 
     if(query.lastError().isValid())
     {
-        qWarning() << "Table::query: Could not run query.";
-        qWarning() << "Table::query: " << query.lastError();
-        qWarning() << "Table::query: " << queryString;
-        return QSqlQuery();
+	qWarning() << "Table::query: Could not run query.";
+	qWarning() << "Table::query: " << query.lastError();
+	qWarning() << "Table::query: " << queryString;
+	return QSqlQuery();
     }
 
     return query;
@@ -65,8 +65,8 @@ void TableBase::createTableIfNotExists()
     //... falls nicht muss die Tabelle initialisiert werden.
     if(select.lastError().isValid() || !select.value(0).isValid())
     {
-        qDebug() << "TableInterface::createTableIfNotExists: Table does not exist: " << m_name;
-        createTable();
+	qDebug() << "TableInterface::createTableIfNotExists: Table does not exist: " << m_name;
+	createTable();
     }
     select.finish();
 }
@@ -85,9 +85,28 @@ void TableBase::addColumn(AttributeBase * attribute)
 
     if(alter.lastError().isValid())
     {
-        qDebug() << "TableInterface::addColumn: Alter failed for table" << m_name;
-        qDebug() << "TableInterface::addColumn:" << alter.lastError();
+	qDebug() << "TableInterface::addColumn: Alter failed for table" << m_name;
+	qDebug() << "TableInterface::addColumn:" << alter.lastError();
     }
+}
+
+void TableBase::deleteRow(Row *row)
+{
+    foreach(Row* row, row->childRows())
+    {
+	deleteRow(row);
+    }
+
+    qDebug() << "Deleting row id "+QString::number(row->id())+" from "+m_name+".";
+    QSqlQuery deletion = query(QString("DELETE FROM %1 WHERE id = %2").arg(m_name).arg(row->id()));
+
+    if(deletion.lastError().isValid())
+    {
+	qWarning() << "Deletion failed: " << deletion.lastError();
+    }
+
+    deletion.finish();
+    row->m_id = -1;
 }
 
 RowRegistrar::RowRegistrar(TableBase* table, Row *row)

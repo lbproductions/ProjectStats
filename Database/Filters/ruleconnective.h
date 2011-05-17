@@ -8,7 +8,7 @@ START_ROW_DECLARATION(RuleConnective, Rule)
 
     void addRule(Rule *rule);
 
-private:
+protected:
     DECLARE_ATTRIBUTE(QList<Rule*>, RuleConnective, rules)
 
 END_ROW_DECLARATION(RuleConnective)

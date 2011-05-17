@@ -11,7 +11,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+	mainwindow.cpp \
     Database/table.cpp \
     Database/database.cpp \
     singleton.cpp \
@@ -49,7 +49,18 @@ SOURCES += main.cpp\
     Database/Filters/ruleconjunction.cpp \
     Database/Filters/rule.cpp \
     Database/Filters/atomicrule.cpp \
-    Database/Filters/constraints.cpp
+    Database/Filters/constraints.cpp \
+    Database/Calculator/playercalculator.cpp \
+    Database/Calculator/placecalculator.cpp \
+    Database/Calculator/gamecalculator.cpp \
+    Database/Calculator/drinkcalculator.cpp \
+    Database/Calculator/livegamecalculator.cpp \
+    Database/mappingattribute.cpp \
+    Database/attributehash.cpp \
+    handler.cpp \
+    messagesystem.cpp \
+    Database/attributelist.cpp \
+    Database/listattribute.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -89,7 +100,18 @@ HEADERS  += mainwindow.h \
     Database/Filters/ruleconjunction.h \
     Database/Filters/rule.h \
     Database/Filters/atomicrule.h \
-    Database/Filters/constraints.h
+    Database/Filters/constraints.h \
+    Database/Calculator/playercalculator.h \
+    Database/Calculator/placecalculator.h \
+    Database/Calculator/gamecalculator.h \
+    Database/Calculator/drinkcalculator.h \
+    Database/Calculator/livegamecalculator.h \
+    Database/mappingattribute.h \
+    Database/attributehash.h \
+    handler.h \
+    messagesystem.h \
+    Database/attributelist.h \
+    Database/listattribute.h
 
 FORMS    +=
 

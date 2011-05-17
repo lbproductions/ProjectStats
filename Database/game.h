@@ -5,8 +5,18 @@
 #include "table.h"
 #include "attribute.h"
 #include "databaseattribute.h"
+#include "mappingattribute.h"
+#include "attributehash.h"
+#include "listattribute.h"
 
 #include "place.h"
+
+#include <Database/Calculator/gamecalculator.h>
+
+namespace Database{
+    class Player;
+    class Games;
+}
 
 START_ROW_DECLARATION(Game, Row)
     DECLARE_ROW_CONSTRUCTORS(Game, Game)
@@ -20,6 +30,9 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_DATABASEATTRIBUTE(int,Game,siteId)
 
     DECLARE_ATTRIBUTE(QPointer<Place>,Game,site)
+    DECLARE_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,players)
+
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement)
 
 
 END_ROW_DECLARATION(Game)

@@ -3,14 +3,18 @@
 #include <QWaitCondition>
 #include <QImage>
 
+#include <Database/Calculator/drinkcalculator.h>
+#include <Database/livegame.h>
+
 START_TABLE_IMPLEMENTATION(Drink)
 END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Drink, Drink, Row)
 {
+    DrinkCalculator* calc = new DrinkCalculator(this,this);
+
     IMPLEMENT_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, Drink, test, tr("test"))
     IMPLEMENT_ATTRIBUTE(QString,Drink,test2, tr("test2"))
-    IMPLEMENT_ATTRIBUTE(QList<Drink*>,Drink,drinks, tr("drinks"))
     IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, type, tr("Type"))
     IMPLEMENT_DATABASEATTRIBUTE(QString, Drink, name, tr("Name"))
     IMPLEMENT_DATABASEATTRIBUTE(double,Drink,size,tr("Size"))
@@ -27,6 +31,14 @@ START_ROW_IMPLEMENTATION(Drink, Drink, Row)
     IMPLEMENT_ATTRIBUTE(QImage,Drink,icon,tr("Icon"))
     iconPath->addDependingAttribute(icon);
     icon->setRole(Qt::DecorationRole);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Drink,DrinkCalculator,calc,drinkCount,"DrinkCount")
+    foreach(Game* g, Games::instance()->allRows()){
+        if(g->live->value()){
+            LiveGame* l = static_cast<LiveGame*>(g);
+            l->drinks->addDependingAttribute(drinkCount);
+        }
+    }
 }
 
 QString Drink::mimeType() const
@@ -73,11 +85,6 @@ QString Drink::calculate_test2()
 QString Drink::update_test2_test()
 {
     return "Name: " + test->value() + "; Type: " + type->value();
-}
-
-QList<Drink*> Drink::calculate_drinks()
-{
-    return QList<Drink*>();//Drinks::instance()->allRows();
 }
 
 QImage Drink::calculate_icon(){

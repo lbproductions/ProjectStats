@@ -9,7 +9,7 @@
 #include <QMimeData>
 
 namespace Database {
-    template<class T, class R>
+    template<class T, class R, class C>
     class Attribute;
 
     template<class T>
@@ -214,7 +214,7 @@ QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) co
     QVariant value;
     if(!attribute->isCalculating())
     {
-        value = attribute->toVariant();
+        value = attribute->displayVariant();
     }
     else
     {

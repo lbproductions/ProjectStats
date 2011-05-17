@@ -1,5 +1,9 @@
 #include "game.h"
 
+#include <Database/player.h>
+#include <Database/position.h>
+#include <Database/offlinegameinformation.h>
+
 #include <QDateTime>
 
 START_TABLE_IMPLEMENTATION(Game)
@@ -7,6 +11,8 @@ END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Game, Game, Row)
 {
+    GameCalculator* calc = new GameCalculator(this,this);
+
     IMPLEMENT_DATABASEATTRIBUTE(QString,Game,name,tr("Name"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Game,type,tr("Type"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,Game,live,tr("Live"))
@@ -17,6 +23,15 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
 
     IMPLEMENT_ATTRIBUTE(QPointer<Place>,Game,site,tr("Site"))
     siteId->addDependingAttribute(site);
+
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,calc,players,"Players")
+    Positions::instance()->rows()->addDependingAttribute(players);
+    OfflineGameInformations::instance()->rows()->addDependingAttribute(players);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,calc,placement,"Placement")
+    players->addDependingAttribute(placement);
+
+
 }
 
 QString Game::mimeType() const
@@ -27,5 +42,6 @@ QString Game::mimeType() const
 QPointer<Place> Game::calculate_site(){
     return Places::instance()->rowById(this->siteId->value());
 }
+
 
 END_ROW_IMPLEMENTATION()

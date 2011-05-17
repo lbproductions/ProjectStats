@@ -10,6 +10,8 @@
 
 #include "player.h"
 
+#include <Database/Calculator/placecalculator.h>
+
 START_ROW_DECLARATION(Place, Row)
     DECLARE_ROW_CONSTRUCTORS(Place, Place)
 
@@ -24,12 +26,14 @@ START_ROW_DECLARATION(Place, Row)
     DECLARE_ATTRIBUTE(QPointer<Player>, Place, player)
     DECLARE_ATTRIBUTE(QImage,Place,icon)
 
+    DECLARE_ATTRIBUTE_IN_CALC(int,Place,PlaceCalculator,gameCount)
+
+    DECLARE_ATTRIBUTE(QString,Place,displayString)
+
 
 END_ROW_DECLARATION(Place)
 
 START_TABLE_DECLARATION(Place)
 END_TABLE_DECLARATION()
-
-Q_DECLARE_METATYPE(QPointer<Database::Player>)
 
 #endif // PLACE_H

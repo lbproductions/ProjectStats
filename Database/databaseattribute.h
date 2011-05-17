@@ -20,8 +20,8 @@ class Table;
   <br>
   Außerdem sei angemerkt, dass alle schreibenden Zugriffe auf die Datenbank in einem eigenen Thread gestartet werden.
   */
-template<class T, class R>
-class DatabaseAttribute : public Attribute<T,R>
+template<class T, class R, class C>
+class DatabaseAttribute : public Attribute<T,R,C>
 {
 public:
     typedef T (Row::*CalculateFunction)();
@@ -71,31 +71,31 @@ protected:
     T calculate() const;
 };
 
-template<class T, class R>
-DatabaseAttribute<T,R>::DatabaseAttribute() :
-    Attribute<T,R>()
+template<class T, class R, class C>
+DatabaseAttribute<T,R,C>::DatabaseAttribute() :
+    Attribute<T,R,C>()
 {
 }
 
-template<class T, class R>
-DatabaseAttribute<T,R>::DatabaseAttribute(const QString &name, const QString &displayName, Row *row) :
-    Attribute<T,R>(name,displayName, row)
+template<class T, class R, class C>
+DatabaseAttribute<T,R,C>::DatabaseAttribute(const QString &name, const QString &displayName, Row *row) :
+    Attribute<T,R,C>(name,displayName, row)
 {
 }
 
-template<class T, class R>
-void DatabaseAttribute<T,R>::setValue(T value)
+template<class T, class R, class C>
+void DatabaseAttribute<T,R,C>::setValue(T value)
 {
     setValue(value, true);
 }
 
-template<class T, class R>
-void DatabaseAttribute<T,R>::setValue(QVariant value, bool updateDatabase)
+template<class T, class R, class C>
+void DatabaseAttribute<T,R,C>::setValue(QVariant value, bool updateDatabase)
 {
     QVariant v;
-    v.setValue(Attribute<T,R>::m_value);
+    v.setValue(Attribute<T,R,C>::m_value);
 
-    Attribute<T,R>::setValue(value.value<T>());
+    Attribute<T,R,C>::setValue(value.value<T>());
 
     if(updateDatabase)
     {
@@ -103,31 +103,31 @@ void DatabaseAttribute<T,R>::setValue(QVariant value, bool updateDatabase)
     }
     if(updateDatabase)
     {
-        QtConcurrent::run(static_cast<Row*>(Attribute<T,R>::m_owner), &Row::set, Attribute<T,R>::m_name, value);
+        QtConcurrent::run(static_cast<Row*>(Attribute<T,R,C>::m_owner), &Row::set, Attribute<T,R,C>::m_name, value);
     }
     //Attribute<T,R>::m_row->set(Attribute<T,R>::m_name, value);
 }
 
-template<class T, class R>
-void DatabaseAttribute<T,R>::setCalculationFunction(CalculateFunction /*calculateFuntion*/)
+template<class T, class R, class C>
+void DatabaseAttribute<T,R,C>::setCalculationFunction(CalculateFunction /*calculateFuntion*/)
 {
     qWarning() << "DatabaseAttribute<T>::setCalculationFunction: You may not invoke this method on a DatabaseAttribute!";
 }
 
-template<class T, class R>
-T DatabaseAttribute<T,R>::calculate() const
+template<class T, class R, class C>
+T DatabaseAttribute<T,R,C>::calculate() const
 {
-    return QVariant(static_cast<Row*>(Attribute<T,R>::m_owner)->get(Attribute<T,R>::m_name)).value<T>();
+    return QVariant(static_cast<Row*>(Attribute<T,R,C>::m_owner)->get(Attribute<T,R,C>::m_name)).value<T>();
 }
 
-template<class T, class R>
-bool DatabaseAttribute<T,R>::isDatabaseAttribute() const
+template<class T, class R, class C>
+bool DatabaseAttribute<T,R,C>::isDatabaseAttribute() const
 {
     return true;
 }
 
-template<class T, class R>
-QString DatabaseAttribute<T,R>::sqlType() const
+template<class T, class R, class C>
+QString DatabaseAttribute<T,R,C>::sqlType() const
 {
     T t;
     QVariant v;
@@ -211,10 +211,10 @@ QString DatabaseAttribute<T,R>::sqlType() const
 #define XSTR(s) STRINGIZE(s)
 
 #define DECLARE_DATABASEATTRIBUTE(Type, RowClassname, Name) \
-    DatabaseAttribute<Type,RowClassname> *Name;
+    DatabaseAttribute<Type,RowClassname, RowClassname> *Name;
 
 #define IMPLEMENT_DATABASEATTRIBUTE(Type, RowClassname, Name, DisplayName) \
-    Name = new DatabaseAttribute<Type,RowClassname>(XSTR(Name) "",DisplayName, this); \
+    Name = new DatabaseAttribute<Type,RowClassname,RowClassname>(XSTR(Name) "",DisplayName, this); \
     registerAttribute(Name);
 
 #endif // DATABASE_DATABASEATTRIBUTE_H

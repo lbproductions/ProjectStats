@@ -13,6 +13,8 @@
 #include <QElapsedTimer>
 #include <QThread>
 
+#include <handler.h>
+
 int main(int argc, char *argv[])
 {
     Logger::init();
@@ -22,14 +24,17 @@ int main(int argc, char *argv[])
     (void) cocoaInitializer; //supress unused variable warning
 #endif
 
-    QApplication a(argc, argv);
+    Handler handler(argc, argv);
 
     Database::Database *database = Database::Database::instance();
-    QFile file("/Users/niklas/Dropbox/Public/ProjectStats/projectstats.db");
+    QFile file("/Users/niklaswulf/Dropbox/Public/ProjectStats/projectstats.db");
     database->initialize(file);
 
-    MainWindow w;
-    w.show();
+    //handler.installTranslator(&translator);
 
-    return a.exec();
+    if(handler.showMainWindow())
+    {
+	return handler.exec();
+    }
+    return 0;
 }

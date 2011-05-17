@@ -5,6 +5,8 @@
 #include <QLabel>
 #include <QLineEdit>
 
+#include <Database/player.h>
+
 namespace Database {
 
 AttributeOwner::AttributeOwner(QObject *parent) :
@@ -77,11 +79,11 @@ void AttributeFutureWatcherBase::connectTo(QLabel *label)
 {
     if(isRunning())
     {
-        label->setText("Loading...");
+	label->setText("Loading...");
     }
     else
     {
-        label->setText(toString());
+	label->setText(toString());
     }
 
     connect(this,SIGNAL(valueChanged(QString)),label,SLOT(setText(QString)));
@@ -91,14 +93,19 @@ void AttributeFutureWatcherBase::connectTo(QLineEdit *lineEdit)
 {
     if(isRunning())
     {
-        lineEdit->setText("Loading...");
+	lineEdit->setText("Loading...");
     }
     else
     {
-        lineEdit->setText(toString());
+	lineEdit->setText(toString());
     }
 
     connect(this,SIGNAL(valueChanged(QString)),lineEdit,SLOT(setText(QString)));
+}
+
+void AttributeBase::emitChanged()
+{
+    emit changed();
 }
 
 } // namespace Database

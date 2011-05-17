@@ -16,7 +16,7 @@ Row::Row(int id, TableBase *table) :
 void Row::checkId()
 {
     if(!get("id").isValid()) {
-        m_id = 0;
+	m_id = 0;
     }
 }
 
@@ -45,9 +45,9 @@ bool Row::set(const QString &key, const QVariant &value, const QString &conditio
 {
     if(m_id != 0)
     {
-        QSqlQuery q = query("UPDATE "+m_table->name()+" SET "+key+" = '"+value.toString()+"' WHERE "+condition+";");
-        q.finish();
-        return q.isValid();
+	QSqlQuery q = query("UPDATE "+m_table->name()+" SET "+key+" = '"+value.toString()+"' WHERE "+condition+";");
+	q.finish();
+	return q.isValid();
     }
 
     return false;
@@ -80,7 +80,7 @@ void Row::registerAttribute(AttributeBase *attribute)
 
     if(attribute->isDatabaseAttribute())
     {
-        m_databaseAttributes.append(attribute);
+	m_databaseAttributes.append(attribute);
     }
 }
 
@@ -91,29 +91,30 @@ QVariant Row::get(const QString &key, const QString &condition) const
     select.first();
     if(select.isValid())
     {
-        QVariant result = select.value(0);
-        select.finish();
-        return result;
+	QVariant result = select.value(0);
+	select.finish();
+	return result;
     }
     else
     {
-        select.finish();
-        return QVariant();
+	select.finish();
+	return QVariant();
     }
 }
 
-void Row::deleteFromDatabase()
+QList<Row*> Row::childRows() const
 {
-    qDebug() << "Deleting row id "+QString::number(m_id)+" from "+m_table->name()+".";
-    QSqlQuery deletion = query(QString("DELETE FROM %1 WHERE id = %2").arg(m_table->name()).arg(m_id));
+    return m_childRows;
+}
 
-    if(deletion.lastError().isValid())
-    {
-        qWarning() << "Deletion failed: " << deletion.lastError();
-    }
+void Row::addChildRow(Row *row)
+{
+    m_childRows.append(row);
+}
 
-    deletion.finish();
-    m_id = -1;
+void Row::addChildRows(QList<Row *> rows)
+{
+    m_childRows.append(rows);
 }
 
 } // namespace Database

@@ -77,6 +77,8 @@ public:
 
     virtual Models::TableModelBase *model() const = 0;
 
+    void deleteRow(Row *row);
+
 protected:
     friend class Database;
 
@@ -138,14 +140,13 @@ public:
       */
     void insertRow(RowType *row);
 
-    /*!
-
-      */
     void registerRowType(Row *row);
+
+    void addDependingAttributeToRows(AttributeBase* parent, AttributeBase* child);
 
     Models::TableModel<RowType, Table<RowType> > *model() const;
 
-    Attribute<QMap<int, RowType* >, Table<RowType> > *rows() const;
+    Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> > *rows() const;
 
     static QMap<QString, AttributeBase*> *registeredAttributes();
 
@@ -164,7 +165,7 @@ protected:
       */
     virtual QPointer<RowType> createRowInstance(int id);
 
-    Attribute<QMap<int, RowType* >, Table<RowType> > *m_rows; //!< Alle Rows gecacht
+    Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> > *m_rows; //!< Alle Rows gecacht
     Models::TableModel<RowType, Table<RowType> > *m_model;
     static QMap<QString, AttributeBase*> *registeredDatabaseAttributes();
 
@@ -221,7 +222,7 @@ QMap<QString, AttributeBase*> *Table<RowType>::registeredAttributes()
 template<class RowType>
 Table<RowType>::Table(const QString &name) :
     TableBase(name),
-    m_rows(new Attribute<QMap<int, RowType* >, Table<RowType> >("rows", "rows", this)),
+    m_rows(new Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> >("rows", "rows", this)),
     m_model(0)
 {
 }
@@ -233,7 +234,7 @@ Models::TableModel<RowType, Table<RowType> > *Table<RowType>::model() const
 }
 
 template<class RowType>
-Attribute<QMap<int, RowType* >, Table<RowType> > *Table<RowType>::rows() const
+Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> > *Table<RowType>::rows() const
 {
     return m_rows;
 }
@@ -247,7 +248,7 @@ void Table<RowType>::createTable()
 
     foreach(AttributeBase *attribute, *registeredDatabaseAttributes())
     {
-        createQuery += ", " + attribute->name() + " " + attribute->sqlType();
+	createQuery += ", " + attribute->name() + " " + attribute->sqlType();
     }
 
     createQuery += ")";
@@ -259,7 +260,7 @@ void Table<RowType>::createTable()
     create.finish();
     if(create.lastError().isValid())
     {
-        qWarning() << "Table<RowType>::createTable: " << create.lastError();
+	qWarning() << "Table<RowType>::createTable: " << create.lastError();
     }
 }
 
@@ -277,17 +278,17 @@ void Table<RowType>::alterTableToContainAllAttributes()
 
     while(pragma.next())
     {
-        unknownAttributes.remove(pragma.value(1).toString());
+	unknownAttributes.remove(pragma.value(1).toString());
     }
 
     foreach(AttributeBase * attribute, unknownAttributes.values())
     {
-        addColumn(attribute);
+	addColumn(attribute);
     }
 
     if(pragma.lastError().isValid())
     {
-        qDebug() << "Table::Table: Pragma failed for table" << m_name;
+	qDebug() << "Table::Table: Pragma failed for table" << m_name;
     }
 
     pragma.finish();
@@ -304,16 +305,16 @@ void Table<RowType>::initializeCache()
 
     if(select.lastError().isValid())
     {
-        qWarning() << "Table::initializeCache: Could not read the whole table "<< m_name <<".";
-        qWarning() << "Table::initializeCache: " << select.lastError();
-        qWarning() << "Table::initializeCache: " << select.lastQuery();
+	qWarning() << "Table::initializeCache: Could not read the whole table "<< m_name <<".";
+	qWarning() << "Table::initializeCache: " << select.lastError();
+	qWarning() << "Table::initializeCache: " << select.lastQuery();
     }
 
     int id = 0;
     while(select.next())
     {
-        id = select.value(0).toInt();
-        m_rows->value().insert(id, createRowInstance(id));
+	id = select.value(0).toInt();
+	m_rows->value().insert(id, createRowInstance(id));
     }
     select.finish();
 
@@ -329,7 +330,7 @@ void Table<RowType>::initializeRowCaches()
 
     foreach(AttributeBase *attribute, *registeredDatabaseAttributes())
     {
-        queryString += ", "+attribute->name();
+	queryString += ", "+attribute->name();
     }
 
     queryString += " FROM "+m_name;
@@ -340,26 +341,26 @@ void Table<RowType>::initializeRowCaches()
 
     if(select.lastError().isValid())
     {
-        qWarning() << "Table::initializeRowCaches: Could not read the whole table "<< m_name <<".";
-        qWarning() << "Table::initializeRowCaches: " << select.lastError();
-        qWarning() << "Table::initializeRowCaches: " << select.lastQuery();
+	qWarning() << "Table::initializeRowCaches: Could not read the whole table "<< m_name <<".";
+	qWarning() << "Table::initializeRowCaches: " << select.lastError();
+	qWarning() << "Table::initializeRowCaches: " << select.lastQuery();
     }
 
     while(select.next())
     {
-        QList<AttributeBase*> databaseAttributes = registeredDatabaseAttributes()->values();
-        for(int i = 0; i < databaseAttributes.size(); ++i)
-        {
-            AttributeBase *attribute = databaseAttributes.at(i);
-            Row *row = m_rows->value().value(select.value(0).toInt());
+	QList<AttributeBase*> databaseAttributes = registeredDatabaseAttributes()->values();
+	for(int i = 0; i < databaseAttributes.size(); ++i)
+	{
+	    AttributeBase *attribute = databaseAttributes.at(i);
+	    Row *row = m_rows->value().value(select.value(0).toInt());
 
-            QString name = attribute->name();
-            AttributeBase *rowAttribute = row->attribute(name);
-            if(rowAttribute != 0)
-            {
-                rowAttribute->setValue(select.value(i+1),false);
-            }
-        }
+	    QString name = attribute->name();
+	    AttributeBase *rowAttribute = row->attribute(name);
+	    if(rowAttribute != 0)
+	    {
+		rowAttribute->setValue(select.value(i+1),false);
+	    }
+	}
     }
 }
 
@@ -388,15 +389,15 @@ QList<RowType*> Table<RowType>::rowsBySqlCondition(const QString &condition)
 
     if(select.lastError().isValid())
     {
-        qWarning() << "Table::getAll: Could not read the whole table "<< m_name <<".";
-        qWarning() << "Table::getAll: " << select.lastError();
-        qWarning() << "Table::getAll: " << select.lastQuery();
-        return list;
+	qWarning() << "Table::getAll: Could not read the whole table "<< m_name <<".";
+	qWarning() << "Table::getAll: " << select.lastError();
+	qWarning() << "Table::getAll: " << select.lastQuery();
+	return list;
     }
 
     while(select.next())
     {
-        list.insert(list.size(), rowById(select.value(0).toInt()));
+	list.insert(list.size(), rowById(select.value(0).toInt()));
     }
     select.finish();
 
@@ -419,12 +420,12 @@ void Table<RowType>::insertRow(RowType *row)
     QString queryString =   "INSERT INTO "+m_name+" (id";
     foreach(AttributeBase *attribute, row->databaseAttributes())
     {
-        queryString += ", "+attribute->name();
+	queryString += ", "+attribute->name();
     }
     queryString += ") VALUES            (null";
     for(int i = 0; i < row->databaseAttributes().size(); ++i)
     {
-        queryString += ", ?";
+	queryString += ", ?";
     }
     queryString += ")";
 
@@ -432,7 +433,7 @@ void Table<RowType>::insertRow(RowType *row)
 
     foreach(AttributeBase *attribute, row->databaseAttributes())
     {
-        create.addBindValue(attribute->toString());
+	create.addBindValue(attribute->toString());
     }
 
     create.exec();
@@ -442,12 +443,13 @@ void Table<RowType>::insertRow(RowType *row)
 
     m_model->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
     m_rows->value().insert(id,row);
+    m_rows->emitChanged();
 
     m_model->updateData();
 
     foreach(AttributeBase *attribute, row->attributes())
     {
-        connect(attribute,SIGNAL(changed()),m_model,SLOT(on_attribute_changed()));
+	connect(attribute,SIGNAL(changed()),m_model,SLOT(on_attribute_changed()));
     }
 
     m_model->endInsertRows();
@@ -456,7 +458,7 @@ void Table<RowType>::insertRow(RowType *row)
 
     if(create.lastError().isValid())
     {
-        qWarning() << "Table::insertRow: " << create.lastError();
+	qWarning() << "Table::insertRow: " << create.lastError();
     }
 }
 
@@ -465,13 +467,21 @@ void Table<RowType>::registerRowType(Row *row)
 {
     foreach(AttributeBase *attribute, row->attributes())
     {
-        qDebug() << "Table::registerRowType: Attribute" << attribute->name() << "registered at table" << m_name;
-        registeredAttributes()->insert(attribute->name(), attribute);
+	qDebug() << "Table::registerRowType: Attribute" << attribute->name() << "registered at table" << m_name;
+	registeredAttributes()->insert(attribute->name(), attribute);
     }
     foreach(AttributeBase *attribute, row->databaseAttributes())
     {
-        qDebug() << "Table::registerRowType: Databaseattribute" << attribute->name() << "registered at table" << m_name;
-        registeredDatabaseAttributes()->insert(attribute->name(), attribute);
+	qDebug() << "Table::registerRowType: Databaseattribute" << attribute->name() << "registered at table" << m_name;
+	registeredDatabaseAttributes()->insert(attribute->name(), attribute);
+    }
+}
+
+template<class RowType>
+void Table<RowType>::addDependingAttributeToRows(AttributeBase* parent, AttributeBase* child)
+{
+    foreach(RowType* type,this->allRows()){
+	//type->parent->addDependingAttribute(child);
     }
 }
 
