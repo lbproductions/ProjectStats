@@ -42,7 +42,7 @@ QString Player::mimeType() const
 }
 
 QImage Player::calculate_avatar(){
-    return QImage(avatarPath->value());
+    return QImage(avatarPath->value()).scaledToHeight(40);
 }
 
 END_ROW_IMPLEMENTATION()

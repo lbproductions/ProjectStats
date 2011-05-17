@@ -39,7 +39,6 @@ AttributeList<Player*>* GameCalculator::calculate_players(){
 }
 
 AttributeHash<Player*,int>* GameCalculator::calculate_placement(){
-    qDebug() << "calculate_placement wird ausgeführt";
     AttributeHash<Player*,int>* hash = new AttributeHash<Player*,int>();
     for (int i = 0; i<m_game->players->value()->size();i++){
         hash->insert(m_game->players->value(i),i+1);

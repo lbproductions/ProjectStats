@@ -1,0 +1,119 @@
+<RCC>
+    <qresource prefix="/graphics/drinks">
+        <file alias="default">graphics/drinks/beer_default.png</file>
+        <file alias="erdinger">graphics/drinks/erdinger.png</file>
+        <file alias="kromweizen">graphics/drinks/krombacher_weizen.png</file>
+        <file alias="paulaner">graphics/drinks/paulaner.png</file>
+        <file alias="vcola">graphics/drinks/v+cola.png</file>
+        <file alias="veltins033">graphics/drinks/veltins_033.png</file>
+        <file alias="warsteinercola">graphics/drinks/warsteiner_cola_033.png</file>
+        <file alias="brinkhoffs05">graphics/drinks/brinkhoffs_05.png</file>
+        <file alias="bitburger05">graphics/drinks/bitburger_05.png</file>
+        <file alias="brinkhoffs033">graphics/drinks/brinkhoffs_033.png</file>
+        <file alias="wikingerblut">graphics/drinks/wickingerblut.png</file>
+        <file alias="wickueler033">graphics/drinks/wickueler_033.png</file>
+        <file alias="gose">graphics/drinks/gose.png</file>
+        <file alias="veltins05">graphics/drinks/veltins_05.png</file>
+    </qresource>
+    <qresource prefix="/graphics/places">
+        <file alias="wappen_default">graphics/places/wappen_default.png</file>
+        <file alias="wappen_dorsten">graphics/places/wappen_dorsten.png</file>
+        <file alias="wappen_dortmund">graphics/places/wappen_dortmund.png</file>
+        <file alias="wappen_essen">graphics/places/wappen_essen.png</file>
+        <file alias="wappen_marl">graphics/places/wappen_marl.png</file>
+    </qresource>
+    <qresource prefix="/graphics/images">
+        <file alias="player">graphics/images/player.png</file>
+    </qresource>
+    <qresource prefix="/graphics/styles/mac/sidebar">
+        <file alias="sidebar_options_addbutton_pressed">graphics/styles/mac/sidebar/sidebar_options_addbutton_pressed.png</file>
+        <file alias="sidebar_options_addbutton">graphics/styles/mac/sidebar/sidebar_options_addbutton.png</file>
+        <file alias="sidebar_options_background">graphics/styles/mac/sidebar/sidebar_options_background.png</file>
+        <file alias="sidebar_options_drag">graphics/styles/mac/sidebar/sidebar_options_drag.png</file>
+        <file alias="sidebar_options_optionsbutton_pressed">graphics/styles/mac/sidebar/sidebar_options_optionsbutton_pressed.png</file>
+        <file alias="sidebar_options_optionsbutton">graphics/styles/mac/sidebar/sidebar_options_optionsbutton.png</file>
+        <file alias="treeview-item-closed-osx">graphics/styles/mac/sidebar/treeview-item-closed-osx.png</file>
+        <file alias="treeview-item-expanded-osx">graphics/styles/mac/sidebar/treeview-item-expanded-osx.png</file>
+        <file alias="drag">graphics/styles/mac/sidebar/drag.png</file>
+        <file alias="optionsbutton">graphics/styles/mac/sidebar/optionsbutton.png</file>
+        <file alias="optionsbutton_pressed">graphics/styles/mac/sidebar/optionsbutton_pressed.png</file>
+    </qresource>
+    <qresource prefix="/graphics/icons/mac/gamewidget">
+        <file alias="gamestate_default">graphics/icons/mac/gamewidget/gamestate_default.png</file>
+        <file alias="gamestate_finished">graphics/icons/mac/gamewidget/gamestate_finished.png</file>
+        <file alias="gamestate_paused">graphics/icons/mac/gamewidget/gamestate_paused.png</file>
+        <file alias="gamestate_running">graphics/icons/mac/gamewidget/gamestate_running.png</file>
+    </qresource>
+    <qresource prefix="/graphics/icons/mac/livegame">
+        <file alias="adddrink">graphics/icons/mac/livegame/bierbutton.png</file>
+        <file alias="closegame">graphics/icons/mac/livegame/closegame.png</file>
+        <file alias="fullscreen">graphics/icons/mac/livegame/fullscreen.png</file>
+        <file alias="newround">graphics/icons/mac/livegame/newround.png</file>
+        <file alias="normal">graphics/icons/mac/livegame/normalmode.png</file>
+        <file alias="pause">graphics/icons/mac/livegame/pause.png</file>
+        <file alias="play">graphics/icons/mac/livegame/play.png</file>
+        <file alias="schmeisserei">graphics/icons/mac/livegame/schmeisserei.png</file>
+        <file alias="settings">graphics/icons/mac/livegame/settings.png</file>
+    </qresource>
+    <qresource prefix="/graphics/icons/mac/mainwindow">
+        <file alias="newdrink">graphics/icons/mac/mainwindow/newdrink.png</file>
+        <file alias="newgame">graphics/icons/mac/mainwindow/newgame.png</file>
+        <file alias="newplace">graphics/icons/mac/mainwindow/newplace.png</file>
+        <file alias="newplayer">graphics/icons/mac/mainwindow/newplayer.png</file>
+    </qresource>
+    <qresource prefix="/graphics/icons/mac/sidebar">
+        <file alias="sidebar_genericfolder">graphics/icons/mac/sidebar/GenericFolderIcon.ico</file>
+        <file alias="sidebar_drinks">graphics/icons/mac/sidebar/sidebar_drinks.png</file>
+        <file alias="sidebar_folder_games">graphics/icons/mac/sidebar/sidebar_folder_games.png</file>
+        <file alias="sidebar_folder_players">graphics/icons/mac/sidebar/sidebar_folder_players.png</file>
+        <file alias="sidebar_games">graphics/icons/mac/sidebar/sidebar_games.png</file>
+        <file alias="sidebar_places">graphics/icons/mac/sidebar/sidebar_places.png</file>
+        <file alias="sidebar_players">graphics/icons/mac/sidebar/sidebar_players.ico</file>
+    </qresource>
+    <qresource prefix="/graphics/icons/general">
+        <file alias="pslogo">graphics/icons/general/projectstats.icns</file>
+        <file alias="pslogo_png">graphics/icons/general/ProjectStats_logo.png</file>
+    </qresource>
+    <qresource prefix="/stylesheets/livegame">
+        <file alias="graph_fullscreen">stylesheets/livegame/graph_fullscreen.qss</file>
+        <file alias="roundtable_fullscreen">stylesheets/livegame/livegameroundtable_fullscreen.qss</file>
+        <file alias="newroundwidget_normal">stylesheets/livegame/newroundwidget_normal.qss</file>
+        <file alias="qspinner_thin">stylesheets/livegame/qspinner_thin.qss</file>
+        <file alias="beerwidget_fullscreen">stylesheets/livegame/beerwidget_fullscreen.qss</file>
+        <file alias="livegame_normal">stylesheets/livegame/groupboxLiveGame_normal.qss</file>
+        <file alias="beerwidget_normal">stylesheets/livegame/beerwidget_normal.qss</file>
+        <file alias="newroundwidget_fullscreen">stylesheets/livegame/newroundwidget_fullscreen.qss</file>
+        <file alias="livegame_fullscreen_1280x800">stylesheets/livegame/groupboxLiveGame_fullscreen_1280x800.qss</file>
+        <file alias="livegame_fullscreen">stylesheets/livegame/groupboxLiveGame_fullscreen.qss</file>
+    </qresource>
+    <qresource prefix="/graphics/styles/mac/statusbar">
+        <file alias="background">graphics/styles/mac/statusbar/background.png</file>
+        <file alias="button_background_clicked">graphics/styles/mac/statusbar/button_background_clicked.png</file>
+        <file alias="button_background_checked">graphics/styles/mac/statusbar/button_background_checked.png</file>
+    </qresource>
+    <qresource prefix="/html">
+        <file alias="index.html">html/index.html</file>
+    </qresource>
+    <qresource prefix="/graphics/styles/mac/splitter">
+        <file alias="handle">graphics/styles/mac/splitter/handle.png</file>
+    </qresource>
+    <qresource prefix="/graphics/icons/general/playerstate">
+        <file alias="placestay">graphics/icons/general/PlayerState/placestay.png</file>
+        <file alias="placedown">graphics/icons/general/PlayerState/placedown.png</file>
+        <file alias="placeup">graphics/icons/general/PlayerState/placeup.png</file>
+        <file alias="blackarrow">graphics/icons/general/PlayerState/blackarrow.png</file>
+    </qresource>
+    <qresource prefix="/graphics/icons/general/medals">
+        <file alias="broncemedal">graphics/icons/general/Medals/broncemedal.png</file>
+        <file alias="goldmedal">graphics/icons/general/Medals/goldmedal.png</file>
+        <file alias="silvermedal">graphics/icons/general/Medals/silvermedal.png</file>
+    </qresource>
+    <qresource prefix="/graphics/styles/mac/toolbar/fullscreen">
+        <file alias="toolbar_background_fullscreen">graphics/styles/mac/toolbar/fullscreen/fullscreen_toolbar_background.png</file>
+        <file alias="sidebar_background_fullscreen">graphics/styles/mac/toolbar/fullscreen/fullscreen_side_background.png</file>
+    </qresource>
+    <qresource prefix="/graphics/styles/mac/scrollbar/fullscreen">
+        <file alias="scrollbar_arrowdown_fullscreen">graphics/styles/mac/scrollbar/fullscreen/scrollbar_fullscreen_arrow_down.png</file>
+        <file alias="scrollbar_arrowup_fullscreen">graphics/styles/mac/scrollbar/fullscreen/scrollbar_fullscreen_arrow_up.png</file>
+    </qresource>
+</RCC>

@@ -1,27 +1,23 @@
 #include "handler.h"
 
 /*
-
-#include <Database/database.h>
 #include <Gui/MainWindow/mainwindow.h>
 #include <Database/Doppelkopf/dokolivegame.h>
-#include <Updater/sparkleupdater.h>
-#include <Updater/updater.h>
-#include <Stats/stats.h>
-
-#include <QDebug>
-#include <QSettings>
-#include <QFileDialog>
-#include <QDesktopWidget>
 
 */
 
 #include <QDebug>
 #include <QPointer>
+#include <QDesktopWidget>
+#include <QSettings>
+#include <QFileDialog>
 
 #include <mainwindow.h>
 #include <messagesystem.h>
+#include <Updater/sparkleupdater.h>
+#include <Updater/updater.h>
 
+#include <Database/database.h>
 #include <Database/attribute.h>
 #include <Database/attributehash.h>
 #include <Database/attributelist.h>
@@ -31,8 +27,8 @@
 #include <Database/game.h>
 
 Handler::Handler(int argc, char *argv[])
-    : QApplication(argc,argv)
-    //m_updater(0)
+    : QApplication(argc,argv),
+    m_updater(0)
 {
     setOrganizationName("LB Productions");
     setApplicationName("ProjectStats");
@@ -41,26 +37,19 @@ Handler::Handler(int argc, char *argv[])
 
     m_messagesystem = new MessageSystem();
 
-    /*
-
     this->setWindowIcon(QIcon(":/icons/pslogo"));
 
 #ifdef Q_WS_MAC
-    m_updater = new SparkleUpdater("http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast.xml");
+    //m_updater = new SparkleUpdater("http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast.xml");
 #endif
 
     if (m_updater) {
       m_updater->checkForUpdatesInBackground();
     }
-
-    m_stats = new Stats::Stats();
-
-    */
 }
 
 Handler::~Handler()
 {
-    /*
     if(!m_database.isNull())
     {
  m_database->deleteLater();
@@ -76,14 +65,12 @@ Handler::~Handler()
     if (m_messagesystem){
         delete m_messagesystem;
     }
-    */
 }
 
 Handler* const Handler::getInstance(){
     return qobject_cast<Handler*>(QApplication::instance());
 }
 
-/*
 
 void Handler::checkForUpdates()
 {
@@ -92,10 +79,9 @@ void Handler::checkForUpdates()
     }
 }
 
-*/
 bool Handler::showMainWindow(){
 
-    /*
+
     QSettings settings;
     QFile databaseFile(settings.value("handler/databaseFile").toString());
 
@@ -107,21 +93,26 @@ bool Handler::showMainWindow(){
  {
      return false;
  }
- m_database = new Database::Database(chosenDatabaseFile,this);
+ m_database = Database::Database::instance();
+ m_database->initialize(chosenDatabaseFile);
     }
     else
     {
- m_database = new Database::Database(databaseFile,this);
+ m_database = Database::Database::instance();
+ m_database->initialize(databaseFile);
     }
 
-    */
+
     m_mainwindow = new MainWindow();
 
     m_mainwindow->show();
     return true;
 }
 
-/*
+Database::Database* Handler::database(){
+    return m_database;
+}
+
 bool Handler::closeMainWindow()
 {
     if(!m_mainwindow.isNull())
@@ -142,11 +133,7 @@ bool Handler::closeMainWindow()
     return true;
 }
 
-Database::Database* Handler::database(){
-    return m_database;
-}
-
-Gui::MainWindow::MainWindow *Handler::mainWindow() const
+MainWindow *Handler::mainWindow() const
 {
     return m_mainwindow;
 }
@@ -172,10 +159,6 @@ QString Handler::getDatabaseFileName()
     }
 }
 
-Stats::Stats* Handler::stats(){
-    return m_stats;
-}
-
 int Handler::getDesktopWidth(){
     return QApplication::desktop()->width();
 }
@@ -184,8 +167,6 @@ int Handler::getDesktopHeight(){
     return QApplication::desktop()->height();
 }
 
-*/
-
 MessageSystem* Handler::messageSystem(){
     return m_messagesystem;
 }
@@ -193,22 +174,24 @@ MessageSystem* Handler::messageSystem(){
 QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
     QVariant variant;
 
-    if(QString(var.typeName()) == "QList<Database::Drink*>"){
-        QList<Database::Drink*> list = base->toVariant().value<QList<Database::Drink*> >();
-        QString string = "";
-        for (int i = 0; i<list.size();i++){
-            string += list.at(i)->name->value();
-            if (i < list.size()-1){
-                string += ", ";
-            }
-        }
-        variant.setValue(string);
-    }
-
-    else if(QString(var.typeName()) == "QPointer<Database::Player>"){
+    if(QString(var.typeName()) == "QPointer<Database::Player>"){
         QPointer<Database::Player> player = base->toVariant().value<QPointer<Database::Player> >();
         if (!player.isNull()){
             variant.setValue(player->name->value());
+        }
+    }
+
+    else if(QString(var.typeName()) == "QPointer<Database::Place>"){
+        QPointer<Database::Place> place = base->toVariant().value<QPointer<Database::Place> >();
+        if (!place.isNull()){
+            variant.setValue(place->strasse->value() + place->nummer->value() + ", " + place->ort->value());
+        }
+    }
+
+    else if(QString(var.typeName()) == "QPointer<Database::Game>"){
+        QPointer<Database::Game> game = base->toVariant().value<QPointer<Database::Game> >();
+        if (!game.isNull()){
+            variant.setValue(game->name->value());
         }
     }
 
@@ -229,19 +212,12 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
         variant.setValue(list->size());
     }
 
-    else if(QString(var.typeName()) == "QPointer<Database::Place>"){
-        QPointer<Database::Place> place = base->toVariant().value<QPointer<Database::Place> >();
-        if (!place.isNull()){
-            variant.setValue(place->strasse->value() + place->nummer->value() + ", " + place->ort->value());
-        }
-    }
-
-    else if(QString(var.typeName()) == "QList<Database::Player*>"){
-        QList<Database::Player*> list = base->toVariant().value<QList<Database::Player*> >();
+    else if(QString(var.typeName()) == "Database::AttributeList<Database::Player*>*"){
+        Database::AttributeList<Database::Player*>* list = base->toVariant().value<Database::AttributeList<Database::Player*>* >();
         QString string = "";
-        for (int i = 0; i<list.size();i++){
-            string += list.at(i)->name->value();
-            if (i < list.size()-1){
+        for (int i = 0; i<list->size();i++){
+            string += list->at(i)->name->value();
+            if (i < list->size()-1){
                 string += ", ";
             }
         }
@@ -253,24 +229,6 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
         Database::AttributeHash<Database::Player*,int>* hash = base->toVariant().value<Database::AttributeHash<Database::Player*,int>* >();
         foreach(Database::Player* p, hash->keys()){
             string += p->name->value() + ":" + QString::number(hash->value(p)) + ", ";
-        }
-        variant.setValue(string);
-    }
-
-    else if(QString(var.typeName()) == "QPointer<Database::Game>"){
-        QPointer<Database::Game> game = base->toVariant().value<QPointer<Database::Game> >();
-        if (!game.isNull()){
-            variant.setValue(game->name->value());
-        }
-    }
-    else if(QString(var.typeName()) == "Database::AttributeList<Database::Player*>*"){
-        Database::AttributeList<Database::Player*>* list = base->toVariant().value<Database::AttributeList<Database::Player*>* >();
-        QString string = "";
-        for (int i = 0; i<list->size();i++){
-            string += list->at(i)->name->value();
-            if (i < list->size()-1){
-                string += ", ";
-            }
         }
         variant.setValue(string);
     }
