@@ -38,19 +38,15 @@ AttributeList<Place*> PlayerCalculator::calculate_places(){
 }
 
 int PlayerCalculator::calculate_points(){
-    /*
     int points = 0;
-    AttributeList<Game*>* list = m_player->games->value();
-    for(int i = 0; i<list->size();i++){
-	Game* g = list->at(i);
-	double zaehler = (double)(g->players->value()->size() - g->placement->value(m_player));
-	double nenner = (double)g->players->value()->size()-1;
+    AttributeList<Game*> list = m_player->games->value();
+    for(int i = 0; i<list.size();i++){
+        Game* g = list.at(i);
+        double zaehler = (double)(g->players->value().size() - g->placement->value(m_player));
+        double nenner = (double)g->players->value().size()-1;
 	points = points + 100* (zaehler / nenner);
     }
     return points;
-    */
-
-    return 0;
 }
 
 } // namespace Database

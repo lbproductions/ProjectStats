@@ -71,7 +71,7 @@ void MappingAttribute<K,V,R,C>::setValue(K key, V value){
 
 template<class K, class V, class R, class C>
 const V MappingAttribute<K,V,R,C>::value(K key){
-    return Attribute<AttributeHash<K,V>,R,C>::value()->value(key);
+    return Attribute<AttributeHash<K,V>,R,C>::value().value(key);
 }
 
 } // namespace Database
