@@ -161,8 +161,8 @@ private:
     } \
     Q_DECLARE_METATYPE(Database::RowClassname) \
     Q_DECLARE_METATYPE(Database::RowClassname*) \
-    Q_DECLARE_METATYPE(Database::AttributeList<Database::RowClassname*>*) \
-    Q_DECLARE_METATYPE(Database::AttributeHash<Database::RowClassname* COMMA int>*) \
+    Q_DECLARE_METATYPE(Database::AttributeList<Database::RowClassname*>) \
+    Q_DECLARE_METATYPE(Database::AttributeHash<Database::RowClassname* COMMA int>) \
     Q_DECLARE_METATYPE(QList<Database::RowClassname*>) \
     Q_DECLARE_METATYPE(QMap<int COMMA Database::RowClassname*>)
 

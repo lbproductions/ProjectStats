@@ -16,23 +16,23 @@ PlayerCalculator::PlayerCalculator(QPointer<Player> player,QObject *parent):
 {
 }
 
-AttributeList<Game*>* PlayerCalculator::calculate_games(){
-    AttributeList<Game*>* list = new AttributeList<Game*>(this);
+AttributeList<Game*> PlayerCalculator::calculate_games(){
+    AttributeList<Game*> list;
     foreach(Game* g, Games::instance()->allRows()){
-        if(g->players->value()->contains(m_player)){
-            list->append(g);
-        }
+	if(g->players->value().contains(m_player)){
+	    list.append(g);
+	}
     }
 
     return list;
 }
 
-AttributeList<Place*>* PlayerCalculator::calculate_places(){
-    AttributeList<Place*>* list = new AttributeList<Place*>(this);
+AttributeList<Place*> PlayerCalculator::calculate_places(){
+    AttributeList<Place*> list;
     foreach(Place* p, Places::instance()->allRows()){
-        if(p->player->value() == m_player){
-            list->append(p);
-        }
+	if(p->player->value() == m_player){
+	    list.append(p);
+	}
     }
     return list;
 }
@@ -42,13 +42,15 @@ int PlayerCalculator::calculate_points(){
     int points = 0;
     AttributeList<Game*>* list = m_player->games->value();
     for(int i = 0; i<list->size();i++){
-        Game* g = list->at(i);
-        double zaehler = (double)(g->players->value()->size() - g->placement->value(m_player));
-        double nenner = (double)g->players->value()->size()-1;
-        points = points + 100* (zaehler / nenner);
+	Game* g = list->at(i);
+	double zaehler = (double)(g->players->value()->size() - g->placement->value(m_player));
+	double nenner = (double)g->players->value()->size()-1;
+	points = points + 100* (zaehler / nenner);
     }
     return points;
     */
+
+    return 0;
 }
 
 } // namespace Database

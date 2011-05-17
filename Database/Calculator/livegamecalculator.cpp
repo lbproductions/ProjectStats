@@ -15,22 +15,22 @@ LiveGameCalculator::LiveGameCalculator(LiveGame* livegame, QObject *parent) :
 {
 }
 
-AttributeList<Drink*>* LiveGameCalculator::calculate_drinks(){
-    AttributeList<Drink*>* list = new AttributeList<Drink*>(this);
+AttributeList<Drink*> LiveGameCalculator::calculate_drinks(){
+    AttributeList<Drink*> list;
     foreach(LiveGameDrink* d, LiveGameDrinks::instance()->allRows()){
-        if (Rounds::instance()->rowById(d->roundId->value())->game->value()->id() == m_livegame->id()){
-            list->append(Drinks::instance()->rowById(d->drinkId->value()));
-        }
+	if (Rounds::instance()->rowById(d->roundId->value())->game->value()->id() == m_livegame->id()){
+	    list.append(Drinks::instance()->rowById(d->drinkId->value()));
+	}
     }
     return list;
 }
 
-AttributeList<Round*>* LiveGameCalculator::calculate_rounds(){
-    AttributeList<Round*>* list = new AttributeList<Round*>(this);
+AttributeList<Round*> LiveGameCalculator::calculate_rounds(){
+    AttributeList<Round*> list;
     foreach(Round* r, Rounds::instance()->allRows()){
-        if(r->gameId->value() == m_livegame->id()){
-            list->append(r);
-        }
+	if(r->gameId->value() == m_livegame->id()){
+	    list.append(r);
+	}
     }
     return list;
 }

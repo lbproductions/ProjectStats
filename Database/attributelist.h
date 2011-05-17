@@ -11,6 +11,9 @@ class AttributeListBase : public QObject
     Q_OBJECT
 protected:
     explicit AttributeListBase(QObject *parent = 0);
+    AttributeListBase(const AttributeListBase& other);
+
+    AttributeListBase& operator=(const AttributeListBase& other);
 
 signals:
 

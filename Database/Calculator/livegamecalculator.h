@@ -18,9 +18,9 @@ class LiveGameCalculator : public QObject
 public:
     explicit LiveGameCalculator(LiveGame* livegame, QObject *parent = 0);
 
-    AttributeList<Drink*>* calculate_drinks();
+    AttributeList<Drink*> calculate_drinks();
 
-    AttributeList<Round*>* calculate_rounds();
+    AttributeList<Round*> calculate_rounds();
 
 signals:
 

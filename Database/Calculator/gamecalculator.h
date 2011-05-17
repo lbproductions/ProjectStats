@@ -13,14 +13,14 @@ class Game;
 class Player;
 
 class GameCalculator : public QObject
-{    
+{
     Q_OBJECT
 public:
     explicit GameCalculator(Game* game, QObject *parent = 0);
 
-    AttributeList<Player*>* calculate_players();
+    AttributeList<Player*> calculate_players();
 
-    AttributeHash<Player*,int>* calculate_placement();
+    AttributeHash<Player*,int> calculate_placement();
 
 signals:
 

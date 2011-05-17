@@ -11,6 +11,9 @@ class AttributeHashBase : public QObject
     Q_OBJECT
 protected:
     explicit AttributeHashBase(QObject *parent = 0);
+    AttributeHashBase(const AttributeHashBase& other);
+
+    AttributeHashBase& operator=(const AttributeHashBase& other);
 
 signals:
 

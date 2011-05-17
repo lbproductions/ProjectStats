@@ -17,11 +17,11 @@ class PlayerCalculator : public QObject
 public:
     PlayerCalculator(QPointer<Player> player, QObject *parent = 0);
 
-    AttributeList<Game*>* calculate_games();
+    AttributeList<Game*> calculate_games();
 
     int calculate_points();
 
-    AttributeList<Place*>* calculate_places();
+    AttributeList<Place*> calculate_places();
 
 private:
 
