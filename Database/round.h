@@ -5,8 +5,11 @@
 #include "table.h"
 #include "attribute.h"
 #include "databaseattribute.h"
+#include "mappingattribute.h"
 
 #include "game.h"
+
+#include <Database/Calculator/roundcalculator.h>
 
 START_ROW_DECLARATION(Round, Row)
     DECLARE_ROW_CONSTRUCTORS(Round, Round)
@@ -25,6 +28,8 @@ START_ROW_DECLARATION(Round, Row)
     DECLARE_DATABASEATTRIBUTE(QString,Round,comment)
 
     DECLARE_ATTRIBUTE(QPointer<Game>,Round,game)
+
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,points)
 
 END_ROW_DECLARATION(Round)
 

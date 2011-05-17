@@ -42,10 +42,10 @@ AttributeList<Round*> LiveGameCalculator::calculate_rounds(){
 
 AttributeHash<Player*,int> LiveGameCalculator::calculate_points(){
     AttributeHash<Player*,int> hash;
-    foreach(Point* p,Points::instance()->allRows()){
-        if(m_livegame->rounds->value().contains(Rounds::instance()->rowById(p->roundId->value()))){
-            hash.insert(Players::instance()->rowById(p->playerId->value()),
-                        hash.value(Players::instance()->rowById(p->playerId->value())) + p->points->value());
+    for(int i = 0; i<m_livegame->rounds->value().size();i++){
+        for(int j = 0; j<m_livegame->players->value().size();j++){
+            hash.insert(m_livegame->players->value(j),
+                        hash.value(m_livegame->players->value(j)) + m_livegame->rounds->value(i)->points->value(m_livegame->players->value(j)));
         }
     }
     return hash;

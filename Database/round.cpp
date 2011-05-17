@@ -7,6 +7,8 @@ END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Round, Round, Row)
 {
+    RoundCalculator* calc = new RoundCalculator(this);
+
     IMPLEMENT_DATABASEATTRIBUTE(int,Round,gameId,tr("GameId"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Round,number,tr("Number"))
     IMPLEMENT_DATABASEATTRIBUTE(QDateTime,Round,startTime,tr("Start-Time"))
@@ -16,6 +18,8 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
 
     IMPLEMENT_ATTRIBUTE(QPointer<Game>,Round,game,tr("Game"))
     gameId->addDependingAttribute(game);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,calc,points,tr("Points"))
 }
 
 QString Round::mimeType() const

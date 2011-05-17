@@ -61,7 +61,8 @@ SOURCES += main.cpp\
     messagesystem.cpp \
     Database/attributelist.cpp \
     Database/listattribute.cpp \
-    global.cpp
+    global.cpp \
+    Database/Calculator/roundcalculator.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -115,7 +116,8 @@ HEADERS  += mainwindow.h \
     Database/listattribute.h \
     Updater/Updater.h \
     Updater/sparkleupdater.h \
-    global.h
+    global.h \
+    Database/Calculator/roundcalculator.h
 
 FORMS    +=
 
