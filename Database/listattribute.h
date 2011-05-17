@@ -23,7 +23,7 @@ public:
     */
     const V value(int pos);
 
-    using Attribute<AttributeList<V>,R,C>::value;
+    AttributeList<V>& value();
 };
 
 template<class V, class R, class C>
@@ -41,6 +41,16 @@ template<class V, class R, class C>
 const V ListAttribute<V,R,C>::value(int pos){
     return Attribute<AttributeList<V>,R,C>::m_value.at(pos);
 }
+
+
+template<class V, class R, class C>
+AttributeList<V>& ListAttribute<V,R,C>::value(){
+    Attribute<AttributeList<V>,R,C>::value();
+    connect(Attribute<AttributeList<V>,R,C>::m_value,SIGNAL(changed()),this,SIGNAL(changed()));
+    return Attribute<AttributeList<V>,R,C>::m_value;
+}
+
+
 
 } // namespace Database
 
