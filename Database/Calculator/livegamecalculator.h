@@ -7,6 +7,8 @@
 #include <Database/attributelist.h>
 #include <Database/attributehash.h>
 
+class QTime;
+
 namespace Database {
 
 class LiveGame;
@@ -25,6 +27,8 @@ public:
     AttributeList<Round*> calculate_rounds();
 
     AttributeHash<Player*,int> calculate_points();
+
+    QTime calculate_length();
 
 
 signals:

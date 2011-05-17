@@ -15,6 +15,8 @@ namespace Database{
     class Round;
 }
 
+class QTime;
+
 START_ROW_DECLARATION(LiveGame, Game)
     DECLARE_ROW_CONSTRUCTORS(LiveGame, Game)
 
@@ -22,6 +24,8 @@ START_ROW_DECLARATION(LiveGame, Game)
     DECLARE_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,rounds)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,LiveGame,LiveGameCalculator,points)
+
+    DECLARE_ATTRIBUTE_IN_CALC(QTime,LiveGame,LiveGameCalculator,length)
 
 END_ROW_DECLARATION(LiveGame)
 

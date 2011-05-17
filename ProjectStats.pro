@@ -60,7 +60,8 @@ SOURCES += main.cpp\
     handler.cpp \
     messagesystem.cpp \
     Database/attributelist.cpp \
-    Database/listattribute.cpp
+    Database/listattribute.cpp \
+    global.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -113,7 +114,8 @@ HEADERS  += mainwindow.h \
     Database/attributelist.h \
     Database/listattribute.h \
     Updater/Updater.h \
-    Updater/sparkleupdater.h
+    Updater/sparkleupdater.h \
+    global.h
 
 FORMS    +=
 

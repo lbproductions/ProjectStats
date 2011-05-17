@@ -7,7 +7,10 @@
 #include <Database/point.h>
 #include <Database/player.h>
 
+#include <global.h>
+
 #include <QDebug>
+#include <QTime>
 
 namespace Database {
 
@@ -46,6 +49,14 @@ AttributeHash<Player*,int> LiveGameCalculator::calculate_points(){
         }
     }
     return hash;
+}
+
+QTime LiveGameCalculator::calculate_length(){
+   QTime time;
+   for(int i = 0; i<m_livegame->rounds->value().size();i++){
+        time = time + m_livegame->rounds->value(i)->length->value();
+   }
+   return time;
 }
 
 } // namespace Database
