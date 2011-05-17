@@ -41,8 +41,6 @@ AttributeList<Player*> GameCalculator::calculate_players(){
 AttributeHash<Player*,int> GameCalculator::calculate_placement(){
     AttributeHash<Player*,int> hash;
 
-    qDebug() << m_game->id();
-
     for (int i = 0; i<m_game->players->value().size();i++){
 	hash.insert(m_game->players->value(i),i+1);
     }
@@ -50,9 +48,6 @@ AttributeHash<Player*,int> GameCalculator::calculate_placement(){
     //das hier wird nicht klappen ;-)
     connect(&hash,SIGNAL(changed()),m_game->placement,SIGNAL(changed()));
 
-    foreach(Player* p, hash.keys()){
-	qDebug() << p->name->value() << ":" << hash.value(p);
-    }
     return hash;
 }
 

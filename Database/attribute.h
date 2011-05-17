@@ -302,7 +302,7 @@ class AttributeFutureWatcherBase : public QObject
 {
     Q_OBJECT
 public:
-    explicit AttributeFutureWatcherBase(AttributeBase* parent);
+    explicit AttributeFutureWatcherBase();
 
     /*!
       Verbindet diesen FutureWatcher mit dem Label \p label.<br>
@@ -431,6 +431,8 @@ AttributeFutureWatcher<T,R,C> *Attribute<T,R,C>::futureWatcher()
     if(m_futureWatcher == 0)
     {
 	m_futureWatcher = new AttributeFutureWatcher<T,R,C>(this);
+	m_futureWatcher->moveToThread(this->thread());
+	m_futureWatcher->setParent(this);
     }
     return m_futureWatcher;
 }
@@ -644,7 +646,7 @@ void Attribute<T,R,C>::addDependingAttribute(AttributeBase *dependingAttribute)
 
 template<class T, class R, class C>
 AttributeFutureWatcher<T,R,C>::AttributeFutureWatcher(Attribute<T,R,C> *parent) :
-    AttributeFutureWatcherBase(parent),
+    AttributeFutureWatcherBase(),
     m_attribute(parent),
     m_futureWatcher(new QFutureWatcher<T>())
 {

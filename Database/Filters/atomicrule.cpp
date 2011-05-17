@@ -5,7 +5,7 @@
 START_ROW_IMPLEMENTATION(AtomicRule, Rule, Rule)
 {
     IMPLEMENT_DATABASEATTRIBUTE(QString,AtomicRule,attributeName, tr("Attribute Name"))
-    IMPLEMENT_DATABASEATTRIBUTE(int,AtomicRule,constraint, tr("Constraint"))
+    IMPLEMENT_DATABASEATTRIBUTE(int,AtomicRule,constraintId, tr("Constraint"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,AtomicRule,parameter, tr("Parameter"))
 }
 
@@ -18,7 +18,7 @@ bool AtomicRule::appliesTo(::Database::Row* row)
 {
     QVariant value = row->attribute(attributeName->value())->toVariant();
     QVariant para = QVariant(parameter->value());
-    Constraints::Constraint cons = (Constraints::Constraint) constraint->value();
+    Constraints::Constraint cons = (Constraints::Constraint) constraintId->value();
     return Constraints::appliesTo(value,cons,para);
 }
 
