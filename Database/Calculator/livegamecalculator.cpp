@@ -4,6 +4,8 @@
 #include <Database/livegame.h>
 #include <Database/livegamedrink.h>
 #include <Database/round.h>
+#include <Database/point.h>
+#include <Database/player.h>
 
 #include <QDebug>
 
@@ -33,6 +35,17 @@ AttributeList<Round*> LiveGameCalculator::calculate_rounds(){
 	}
     }
     return list;
+}
+
+AttributeHash<Player*,int> LiveGameCalculator::calculate_points(){
+    AttributeHash<Player*,int> hash;
+    foreach(Point* p,Points::instance()->allRows()){
+        if(m_livegame->rounds->value().contains(Rounds::instance()->rowById(p->roundId->value()))){
+            hash.insert(Players::instance()->rowById(p->playerId->value()),
+                        hash.value(Players::instance()->rowById(p->playerId->value())) + p->points->value());
+        }
+    }
+    return hash;
 }
 
 } // namespace Database

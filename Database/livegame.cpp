@@ -14,6 +14,8 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,calc,rounds,"Rounds")
     Rounds::instance()->rows()->addDependingAttribute(rounds);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,LiveGame,LiveGameCalculator,calc,points,"Points")
 }
 
 QString LiveGame::mimeType() const

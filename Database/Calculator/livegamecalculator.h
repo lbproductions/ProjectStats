@@ -5,12 +5,14 @@
 #include <QPointer>
 
 #include <Database/attributelist.h>
+#include <Database/attributehash.h>
 
 namespace Database {
 
 class LiveGame;
 class Drink;
 class Round;
+class Player;
 
 class LiveGameCalculator : public QObject
 {
@@ -21,6 +23,9 @@ public:
     AttributeList<Drink*> calculate_drinks();
 
     AttributeList<Round*> calculate_rounds();
+
+    AttributeHash<Player*,int> calculate_points();
+
 
 signals:
 

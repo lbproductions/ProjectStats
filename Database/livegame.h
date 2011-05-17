@@ -21,6 +21,8 @@ START_ROW_DECLARATION(LiveGame, Game)
     DECLARE_LISTATTRIBUTE_IN_CALC(Drink*,LiveGame,LiveGameCalculator,drinks)
     DECLARE_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,rounds)
 
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,LiveGame,LiveGameCalculator,points)
+
 END_ROW_DECLARATION(LiveGame)
 
 #endif // DATABASE_LIVEGAME_H
