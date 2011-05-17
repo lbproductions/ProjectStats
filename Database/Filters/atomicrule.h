@@ -9,7 +9,7 @@ START_ROW_DECLARATION(AtomicRule, Rule)
     DECLARE_ROW_CONSTRUCTORS(AtomicRule, Rule)
 
     DECLARE_DATABASEATTRIBUTE(QString, AtomicRule, attributeName)
-    DECLARE_DATABASEATTRIBUTE(int, AtomicRule, constraint)
+    DECLARE_DATABASEATTRIBUTE(int, AtomicRule, constraintId)
     DECLARE_DATABASEATTRIBUTE(QString, AtomicRule, parameter)
 
     bool appliesTo(::Database::Row* row);

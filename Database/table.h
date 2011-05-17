@@ -261,6 +261,7 @@ void Table<RowType>::createTable()
     if(create.lastError().isValid())
     {
 	qWarning() << "Table<RowType>::createTable: " << create.lastError();
+	qWarning() << "Table<RowType>::createTable: " << createQuery;
     }
 }
 
@@ -467,12 +468,12 @@ void Table<RowType>::registerRowType(Row *row)
 {
     foreach(AttributeBase *attribute, row->attributes())
     {
-	qDebug() << "Table::registerRowType: Attribute" << attribute->name() << "registered at table" << m_name;
+	//qDebug() << "Table::registerRowType: Attribute" << attribute->name() << "registered at table" << m_name;
 	registeredAttributes()->insert(attribute->name(), attribute);
     }
     foreach(AttributeBase *attribute, row->databaseAttributes())
     {
-	qDebug() << "Table::registerRowType: Databaseattribute" << attribute->name() << "registered at table" << m_name;
+	//qDebug() << "Table::registerRowType: Databaseattribute" << attribute->name() << "registered at table" << m_name;
 	registeredDatabaseAttributes()->insert(attribute->name(), attribute);
     }
 }

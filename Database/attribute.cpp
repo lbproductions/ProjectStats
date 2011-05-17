@@ -65,8 +65,8 @@ void AttributeBase::setValue(QVariant value, bool /*updateDatabase*/)
     setValue(value);
 }
 
-AttributeFutureWatcherBase::AttributeFutureWatcherBase(AttributeBase* parent) :
-    QObject(parent)
+AttributeFutureWatcherBase::AttributeFutureWatcherBase() :
+    QObject()
 {
 }
 
