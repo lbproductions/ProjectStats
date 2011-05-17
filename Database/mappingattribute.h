@@ -38,6 +38,8 @@ public:
     Gibt für \p key den richtigen Wert zurück.
     */
     const V value(K key);
+
+    AttributeHash<K,V>& value();
 };
 
 template<class K, class V, class R, class C>
@@ -72,6 +74,14 @@ void MappingAttribute<K,V,R,C>::setValue(K key, V value){
 template<class K, class V, class R, class C>
 const V MappingAttribute<K,V,R,C>::value(K key){
     return Attribute<AttributeHash<K,V>,R,C>::value().value(key);
+}
+
+template<class K, class V, class R, class C>
+AttributeHash<K,V>& MappingAttribute<K,V,R,C>::value(){
+    disconnect(&this->m_value);
+     Attribute<AttributeHash<K,V>,R,C>::value();
+     connect(&this->m_value,SIGNAL(changed()),this,SIGNAL(changed()));
+     return Attribute<AttributeHash<K,V>,R,C>::m_value;
 }
 
 } // namespace Database

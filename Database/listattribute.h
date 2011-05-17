@@ -45,9 +45,10 @@ const V ListAttribute<V,R,C>::value(int pos){
 
 template<class V, class R, class C>
 AttributeList<V>& ListAttribute<V,R,C>::value(){
-    Attribute<AttributeList<V>,R,C>::value();
-    connect(Attribute<AttributeList<V>,R,C>::m_value,SIGNAL(changed()),this,SIGNAL(changed()));
-    return Attribute<AttributeList<V>,R,C>::m_value;
+    disconnect(&this->m_value);
+     Attribute<AttributeList<V>,R,C>::value();
+     connect(&this->m_value,SIGNAL(changed()),this,SIGNAL(changed()));
+     return Attribute<AttributeList<V>,R,C>::m_value;
 }
 
 
