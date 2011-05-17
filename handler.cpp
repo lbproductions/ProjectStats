@@ -195,7 +195,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
 	}
     }
 
-    else if(QString(var.typeName()) == "Database::AttributeList<Database::Place*>*"){
+    else if(QString(var.typeName()) == "Database::AttributeList<Database::Place*>"){
 	Database::AttributeList<Database::Place*> list = base->toVariant().value<Database::AttributeList<Database::Place*> >();
 	QString string = "";
 	for (int i = 0; i<list.size();i++){
@@ -207,12 +207,12 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
 	variant.setValue(string);
     }
 
-    else if(QString(var.typeName()) == "Database::AttributeList<Database::Game*>*"){
+    else if(QString(var.typeName()) == "Database::AttributeList<Database::Game*>"){
 	Database::AttributeList<Database::Game*> list = base->toVariant().value<Database::AttributeList<Database::Game*> >();
 	variant.setValue(list.size());
     }
 
-    else if(QString(var.typeName()) == "Database::AttributeList<Database::Player*>*"){
+    else if(QString(var.typeName()) == "Database::AttributeList<Database::Player*>"){
 	Database::AttributeList<Database::Player*> list = base->toVariant().value<Database::AttributeList<Database::Player*> >();
 	QString string = "";
 	for (int i = 0; i<list.size();i++){
@@ -224,7 +224,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
 	variant.setValue(string);
     }
 
-    else if(QString(var.typeName()) == "Database::AttributeHash<Database::Player*COMMA int>*"){
+    else if(QString(var.typeName()) == "Database::AttributeHash<Database::Player*COMMA int>"){
 	QString string = "";
 	Database::AttributeHash<Database::Player*,int> hash = base->toVariant().value<Database::AttributeHash<Database::Player*,int> >();
 	foreach(Database::Player* p, hash.keys()){

@@ -15,7 +15,6 @@ DrinkCalculator::DrinkCalculator(Drink* drink, QObject *parent) :
 
 int DrinkCalculator::calculate_drinkCount(){
     int count = 0;
-    /*
     foreach(Game* g, Games::instance()->allRows()){
         if(g->live->value()){
             LiveGame* l = static_cast<LiveGame*>(g);
@@ -28,7 +27,6 @@ int DrinkCalculator::calculate_drinkCount(){
             }
         }
     }
-    */
     return count;
 }
 
