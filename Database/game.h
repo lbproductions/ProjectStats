@@ -38,6 +38,7 @@ START_ROW_DECLARATION(Game, Row)
 END_ROW_DECLARATION(Game)
 
 START_TABLE_DECLARATION(Game)
+QPointer<Game> createRowInstance(int id);
 END_TABLE_DECLARATION()
 
 Q_DECLARE_METATYPE(QPointer<Database::Place>)

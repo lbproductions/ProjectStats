@@ -4,9 +4,38 @@
 #include <Database/position.h>
 #include <Database/offlinegameinformation.h>
 
+#include "Doppelkopf/dokolivegame.h"
+#include "Skat/skatlivegame.h"
+
 #include <QDateTime>
 
 START_TABLE_IMPLEMENTATION(Game)
+
+QPointer<Game> Games::createRowInstance(int id)
+{
+    Game *row = new Game(id,this);
+    Game *row2 = 0;
+
+    if(row->live->value())
+    {
+	if(row->type->value() == "Doppelkopf")
+	{
+	    row2 = new DokoLiveGame(id,this);
+	}
+	else if(row->type->value() == "Skat")
+	{
+	    row2 = new SkatLiveGame(id,this);
+	}
+    }
+
+    if(row2 != 0)
+    {
+	return row2;
+    }
+
+    return row;
+}
+
 END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Game, Game, Row)
@@ -39,7 +68,8 @@ QString Game::mimeType() const
     return "application/projectstats.game";
 }
 
-QPointer<Place> Game::calculate_site(){
+QPointer<Place> Game::calculate_site()
+{
     return Places::instance()->rowById(this->siteId->value());
 }
 
