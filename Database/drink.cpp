@@ -88,7 +88,7 @@ QString Drink::update_test2_test()
 }
 
 QImage Drink::calculate_icon(){
-    return QImage(iconPath->value());
+    return QImage(iconPath->value()).scaledToHeight(40);
 }
 
 END_ROW_IMPLEMENTATION()

@@ -111,7 +111,9 @@ HEADERS  += mainwindow.h \
     handler.h \
     messagesystem.h \
     Database/attributelist.h \
-    Database/listattribute.h
+    Database/listattribute.h \
+    Updater/Updater.h \
+    Updater/sparkleupdater.h
 
 FORMS    +=
 
@@ -120,3 +122,14 @@ mac {
     OBJECTIVE_SOURCES += cocoainitializer.mm
     LIBS += -framework AppKit
 }
+
+OTHER_FILES += \
+    Updater/sparkleupdater.mm \
+    Updater/sign_update.rb \
+    Updater/rnotes.html \
+    Updater/rnotes.css \
+    Updater/ProjectStatsAppCast.xml \
+    Updater/dsa_pub.pem
+
+RESOURCES += \
+    Ressources/Ressources.qrc

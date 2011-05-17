@@ -16,6 +16,8 @@ START_ROW_DECLARATION(SampleRowChild, SampleRow)
     DECLARE_DATABASEATTRIBUTE(QString,SampleRowChild,child_name)
     DECLARE_DATABASEATTRIBUTE(QString,SampleRowChild,child_type)
 
+    DECLARE_ATTRIBUTE(QString,SampleRowChild,string)
+
 END_ROW_DECLARATION(SampleRowChild)
 
 #endif // DATABASE_SAMPLEROWCHILD_H

@@ -26,9 +26,11 @@ int main(int argc, char *argv[])
 
     Handler handler(argc, argv);
 
+    /*
     Database::Database *database = Database::Database::instance();
     QFile file("/Users/niklaswulf/Dropbox/Public/ProjectStats/projectstats.db");
     database->initialize(file);
+    */
 
     //handler.installTranslator(&translator);
 

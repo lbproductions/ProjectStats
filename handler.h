@@ -19,9 +19,9 @@ namespace Database
     class Game;
 }
 
-/*
-
 class Updater;
+
+/*
 
 namespace Gui
 {
@@ -82,34 +82,38 @@ public:
     /*!
       Gibt die Datenbank zurück, mit der aktuell gearbeitet wird.
       */
-    /*
     Database::Database* database();
 
-    void checkForUpdates();
-
-    Gui::MainWindow::MainWindow *mainWindow() const;
-
-    Stats::Stats* stats();
-
+    /*!
+      \return Die Auflösungs-Breite des Desktops, auf dem das Programm läuft.
+      */
     int getDesktopWidth();
 
+    /*!
+      \return Die Auflösungs-Höhe des Desktops, auf dem das Programm läuft.
+      */
     int getDesktopHeight();
+
+    /*!
+      Checkt im Updater, ob Updates verfügbar sind.
+      */
+    void checkForUpdates();
+
+
+    MainWindow *mainWindow() const;
+
+
 private:
     /*!
       Fragt den Benutzer nach einer Datenbank, die geöffnet werden soll.
       Hier wird die zuletzt geöffnete Datenbank gespeichert.
       */
-    /*)
     QString getDatabaseFileName();
 
     QPointer<Database::Database> m_database; //!< Die Datenbank mit der aktuell gearbeitet wird.
-    */
     QPointer<MainWindow> m_mainwindow; //!< Das aktuelle MainWindow
     MessageSystem* m_messagesystem; //! Das MessageSystem-Objekt
-    /*
     Updater *m_updater;
-    Stats::Stats* m_stats;
-    */
 
 
 

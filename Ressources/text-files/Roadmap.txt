@@ -1,0 +1,29 @@
+Struktur
+    - Stats-Methoden aus den Row-Klassen in eigene Klassen auslagern
+    - Funktionalität aus den Games in die Tabellen verlagern: https://bugs.launchpad.net/projectstats/+bug/684025
+    - Attributes etc. einführen
+
+Optik
+    - Design für Fullscreen und Normal-Mode im LiveGame entwickeln
+
+Feature
+    - Ligensystem ausdenken und implementieren
+        - LigaView in TabWidget umwandeln und StatsWidget und GraphWidget implementieren
+        - Graph für den Verlauf der Tabellenposition im Verlaufe der Saison
+    - Ein eigenes Datenbankbundle erstellen, in dem Icons und Bilder mitgespeichert werden können?
+    - Rückgängig-/Ändern-Funktion
+
+    - Möglichkeit haben bei laufendem LiveGame die Farben der Spieler zu ändern und der Graph daraufhin aktualisiert wird
+    - Ansichten-Menü einbauen u.A. mit Option verschiedener Graphansichten, Möglichkeit Spiele aus ListView auszublenden
+    - LiveGameSummaryWidget und spezielles SummaryWidget für Doko und Skat entwickeln
+    - StatsLibrary mit Statistiken zu Games etc im Vergleich
+    - InfoBox in LiveGameWidget erweitern (PlayerStats vllt dort anzeigen lassen etc)
+
+Betriebssysteme:
+    - Für Windows anpassen
+        - Installer für Windows: http://www.qtwiki.de/wiki/Vom_Qt-Programm_zum_Windows_Installer
+        - Updater für Windows: http://winsparkle.org/
+    - Für Linux anpassen
+        - Linux Paket erstellen: http://www.qtwiki.de/wiki/Der_Weg_vom_fertigen_QT_-_Programm_zum_Debian_Paket
+
+
