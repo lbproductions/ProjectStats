@@ -5,6 +5,8 @@
 #include <Database/attribute.h>
 #include <Database/attributelist.h>
 
+class QDateTime;
+
 namespace Database {
 
 class Player;
@@ -22,6 +24,16 @@ public:
     int calculate_points();
 
     AttributeList<Place*> calculate_places();
+
+    double calculate_average();
+
+    int calculate_wins();
+
+    int calculate_losses();
+
+    QDateTime calculate_lastGame();
+
+    QDateTime calculate_lastWin();
 
 private:
 

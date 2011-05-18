@@ -7,6 +7,7 @@
 #include <Database/attributelist.h>
 
 #include <QDebug>
+#include <QDateTime>
 
 namespace Database {
 
@@ -47,6 +48,55 @@ int PlayerCalculator::calculate_points(){
 	points = points + 100* (zaehler / nenner);
     }
     return points;
+}
+
+double PlayerCalculator::calculate_average(){
+    if(m_player->games->value().size() > 0){
+        return (double)m_player->points->value() / (double)m_player->games->value().size();
+    }
+    else{
+    return 0.0;
+    }
+}
+
+int PlayerCalculator::calculate_wins(){
+    int count = 0;
+    for(int i = 0; i<m_player->games->value().size();i++){
+        if(m_player->games->value(i)->placement->value(m_player) == 1){
+            count++;
+        }
+    }
+    return count;
+}
+
+int PlayerCalculator::calculate_losses(){
+    int count = 0;
+    for(int i = 0; i<m_player->games->value().size();i++){
+        if(m_player->games->value(i)->placement->value(m_player) == m_player->games->value(i)->players->value().size()){
+            count++;
+        }
+    }
+    return count;
+}
+
+QDateTime PlayerCalculator::calculate_lastGame(){
+    QDateTime time(QDate(1960,1,1));
+    for(int i = 0; i<m_player->games->value().size();i++){
+        if(m_player->games->value(i)->date->value() > time){
+            time = m_player->games->value(i)->date->value();
+        }
+    }
+    return time;
+}
+
+QDateTime PlayerCalculator::calculate_lastWin(){
+    QDateTime time(QDate(1960,1,1));
+    for(int i = 0; i<m_player->games->value().size();i++){
+        if(m_player->games->value(i)->date->value() > time && m_player->games->value(i)->placement->value(m_player) == 1){
+            time = m_player->games->value(i)->date->value();
+        }
+    }
+    return time;
 }
 
 } // namespace Database

@@ -2,6 +2,7 @@
 
 #include <QImage>
 #include <QColor>
+#include <QDateTime>
 
 #include "game.h"
 #include "place.h"
@@ -26,14 +27,31 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     avatarPath->addDependingAttribute(avatar);
     avatar->setRole(Qt::DecorationRole);
 
-    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Game*,Player,PlayerCalculator,calc,games,"Games")
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Game*,Player,PlayerCalculator,calc,games,tr("Games"))
     Games::instance()->rows()->addDependingAttribute(games);
 
-    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,calc,places,"Places")
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,calc,places,tr("Places"))
     Places::instance()->rows()->addDependingAttribute(places);
 
-    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,calc,points,"Points")
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,calc,points,tr("Points"))
     games->addDependingAttribute(points);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(double,Player,PlayerCalculator,calc,average,tr("Average"))
+    games->addDependingAttribute(average);
+    points->addDependingAttribute(average);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,calc,wins,tr("Wins"))
+    games->addDependingAttribute(wins);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,calc,losses,tr("Losses"))
+    games->addDependingAttribute(losses);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,calc,lastGame,tr("LastGame"))
+    games->addDependingAttribute(lastGame);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,calc,lastWin,tr("LastWin"))
+    games->addDependingAttribute(lastWin);
+    wins->addDependingAttribute(lastWin);
 }
 
 QString Player::mimeType() const
@@ -42,7 +60,7 @@ QString Player::mimeType() const
 }
 
 QImage Player::calculate_avatar(){
-    return QImage(avatarPath->value()).scaledToHeight(40);
+    return QImage(avatarPath->value()).scaledToHeight(30);
 }
 
 END_ROW_IMPLEMENTATION()

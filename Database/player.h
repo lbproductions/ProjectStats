@@ -15,6 +15,8 @@ namespace Database{
     class Place;
 }
 
+class QDateTime;
+
 START_ROW_DECLARATION(Player, Row)
     DECLARE_ROW_CONSTRUCTORS(Player, Player)
 
@@ -31,6 +33,13 @@ START_ROW_DECLARATION(Player, Row)
     DECLARE_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,places)
 
     DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,points)
+    DECLARE_ATTRIBUTE_IN_CALC(double,Player,PlayerCalculator,average)
+    DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,wins)
+    DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,losses)
+
+    DECLARE_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,lastGame)
+    DECLARE_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,lastWin)
+
 
 END_ROW_DECLARATION(Player)
 
