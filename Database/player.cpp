@@ -52,6 +52,9 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     IMPLEMENT_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,calc,lastWin,tr("LastWin"))
     games->addDependingAttribute(lastWin);
     wins->addDependingAttribute(lastWin);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(LiveGame*,double,Player,PlayerCalculator,calc,alcPegel,tr("AlcPegel"))
+
 }
 
 QString Player::mimeType() const

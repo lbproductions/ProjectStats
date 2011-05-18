@@ -26,6 +26,7 @@
 #include <Database/place.h>
 #include <Database/game.h>
 #include <Database/round.h>
+#include <Database/livegame.h>
 
 Handler::Handler(int argc, char *argv[])
     : QApplication(argc,argv),
@@ -253,6 +254,15 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
 	    string += p->name->value() + ":" + QString::number(hash.value(p)) + ", ";
 	}
 	variant.setValue(string);
+    }
+
+    else if(QString(var.typeName()) == "Database::AttributeHash<Database::LiveGame*COMMA double>"){
+        QString string = "";
+        Database::AttributeHash<Database::LiveGame*,double> hash = base->toVariant().value<Database::AttributeHash<Database::LiveGame*,double> >();
+        foreach(Database::LiveGame* p, hash.keys()){
+            string += p->name->value() + ":" + QString::number(hash.value(p)) + ", ";
+        }
+        variant.setValue(string);
     }
 
 

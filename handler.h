@@ -17,6 +17,7 @@ namespace Database
     class AttributeBase;
     class Player;
     class Game;
+    class LiveGame;
 }
 
 class Updater;
@@ -123,6 +124,7 @@ private:
 
 Q_DECLARE_METATYPE(QPointer<Database::Player>)
 Q_DECLARE_METATYPE(QPointer<Database::Game>)
+Q_DECLARE_METATYPE(Database::AttributeHash<Database::LiveGame* COMMA double>)
 
 
 #endif // HANDLER_H

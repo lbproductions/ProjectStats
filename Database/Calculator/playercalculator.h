@@ -4,6 +4,7 @@
 #include <QPointer>
 #include <Database/attribute.h>
 #include <Database/attributelist.h>
+#include <Database/attributehash.h>
 
 class QDateTime;
 
@@ -12,6 +13,7 @@ namespace Database {
 class Player;
 class Place;
 class Game;
+class LiveGame;
 
 class PlayerCalculator : public QObject
 {
@@ -34,6 +36,8 @@ public:
     QDateTime calculate_lastGame();
 
     QDateTime calculate_lastWin();
+
+    AttributeHash<LiveGame*,double> calculate_alcPegel();
 
 private:
 

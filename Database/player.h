@@ -6,6 +6,7 @@
 #include "attribute.h"
 #include "databaseattribute.h"
 #include "listattribute.h"
+#include "mappingattribute.h"
 
 #include <Database/Calculator/playercalculator.h>
 
@@ -39,6 +40,8 @@ START_ROW_DECLARATION(Player, Row)
 
     DECLARE_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,lastGame)
     DECLARE_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,lastWin)
+
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(LiveGame*,double,Player,PlayerCalculator,alcPegel)
 
 
 END_ROW_DECLARATION(Player)
