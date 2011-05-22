@@ -20,13 +20,13 @@ public:
 
     AttributeList<Player*> calculate_players();
 
-    AttributeHash<Player*,int> calculate_placement();
+    virtual AttributeHash<Player*,int> calculate_placement();
 
 signals:
 
 public slots:
 
-private:
+protected:
     QPointer<Game> m_game;
 
 };

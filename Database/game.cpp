@@ -6,6 +6,7 @@
 
 #include "Doppelkopf/dokolivegame.h"
 #include "Skat/skatlivegame.h"
+#include "offlinegame.h"
 
 #include <QDateTime>
 
@@ -27,6 +28,9 @@ QPointer<Game> Games::createRowInstance(int id)
 	    row2 = new SkatLiveGame(id,this);
 	}
     }
+    else{
+        row2 = new OfflineGame(id,this);
+    }
 
     if(row2 != 0)
     {
@@ -40,7 +44,7 @@ END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Game, Game, Row)
 {
-    GameCalculator* calc = new GameCalculator(this,this);
+    m_calc = new GameCalculator(this,this);
 
     IMPLEMENT_DATABASEATTRIBUTE(QString,Game,name,tr("Name"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Game,type,tr("Type"))
@@ -53,11 +57,11 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
     IMPLEMENT_ATTRIBUTE(QPointer<Place>,Game,site,tr("Site"))
     siteId->addDependingAttribute(site);
 
-    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,calc,players,"Players")
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,m_calc,players,tr("Players"))
     Positions::instance()->rows()->addDependingAttribute(players);
     OfflineGameInformations::instance()->rows()->addDependingAttribute(players);
 
-    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,calc,placement,"Placement")
+    IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement,tr("Placement"))
     players->addDependingAttribute(placement);
 
 

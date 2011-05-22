@@ -21,6 +21,8 @@ namespace Database{
 START_ROW_DECLARATION(Game, Row)
     DECLARE_ROW_CONSTRUCTORS(Game, Game)
 
+    GameCalculator* m_calc;
+
     DECLARE_DATABASEATTRIBUTE(QString,Game,name)
     DECLARE_DATABASEATTRIBUTE(QString,Game,type)
     DECLARE_DATABASEATTRIBUTE(bool,Game,live)
@@ -32,7 +34,7 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_ATTRIBUTE(QPointer<Place>,Game,site)
     DECLARE_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,players)
 
-    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement)
+    DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement)
 
 
 END_ROW_DECLARATION(Game)

@@ -39,13 +39,8 @@ AttributeList<Player*> GameCalculator::calculate_players(){
 }
 
 AttributeHash<Player*,int> GameCalculator::calculate_placement(){
-    AttributeHash<Player*,int> hash;
-
-    for (int i = 0; i<m_game->players->value().size();i++){
-	hash.insert(m_game->players->value(i),i+1);
-    }
-
-    return hash;
+    //qWarning() << "GameCalculator::calculate_placement() should not be executed";
+    return AttributeHash<Player*,int>();
 }
 
 } // namespace Database

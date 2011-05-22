@@ -720,11 +720,25 @@ Type calculate_ ## Name();
 #define DECLARE_ATTRIBUTE_IN_CALC(Type, RowClassname, CalcClassName, Name) \
 Attribute<Type, RowClassname, CalcClassName> *Name;
 
+#define DECLARE_ATTRIBUTE_IN_CALC(Type, RowClassname, CalcClassName, Name) \
+Attribute<Type, RowClassname, CalcClassName> *Name;
+
+#define DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(Type, RowClassname, CalcClassName, Name) \
+Attribute<Type, RowClassname, CalcClassName> *Name; \
+Type call_calculate_ ## Name(){ \
+    return m_calc->calculate_ ## Name(); \
+}
+
 #define DECLARE_ATTRIBUTE_WITH_UPDATEFUNCTION(Type, RowClassname, Name) \
     Attribute<Type, RowClassname, RowClassname> *Name; \
     Type calculate_ ## Name(); \
     QFuture<Type>  updateIfPossible_ ## Name(AttributeBase *changedDependency); \
     Type update_ ## Name(AttributeBase *changedDependency);
+
+#define IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, Name, DisplayName) \
+    Name = new Attribute<Type,RowClassname, CalcClassName>(QString(XSTR(Name) "").toLower(),DisplayName,this); \
+    Name->setCalculationFunction(this, & RowClassname::call_calculate_ ## Name); \
+    registerAttribute(Name);
 
 #define IMPLEMENT_ATTRIBUTE(Type, RowClassname, Name, DisplayName) \
     Name = new Attribute<Type,RowClassname, RowClassname>(QString(XSTR(Name) "").toLower(),DisplayName,this); \

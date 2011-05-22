@@ -11,6 +11,7 @@
 START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
 {
     LiveGameCalculator* calc = new LiveGameCalculator(this,this);
+    m_calc = calc;
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Drink*,LiveGame,LiveGameCalculator,calc,drinks,tr("Drinks"))
     LiveGameDrinks::instance()->rows()->addDependingAttribute(drinks);

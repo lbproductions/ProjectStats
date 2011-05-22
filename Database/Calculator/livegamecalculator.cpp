@@ -15,7 +15,7 @@
 namespace Database {
 
 LiveGameCalculator::LiveGameCalculator(LiveGame* livegame, QObject *parent) :
-    QObject(parent),
+    GameCalculator(livegame,parent),
     m_livegame(livegame)
 {
 }
@@ -57,6 +57,28 @@ QTime LiveGameCalculator::calculate_length(){
         time = time + m_livegame->rounds->value(i)->length->value();
    }
    return time;
+}
+
+AttributeHash<Player*,int> LiveGameCalculator::calculate_placement(){
+    AttributeHash<Player*,int> hash;
+
+    for (int i = 0; i<m_game->players->value().size();i++){
+        Player* p = m_game->players->value(i);
+        int points = m_livegame->points->value(p);
+        int placement = 1;
+        for (int j = 0; j<m_game->players->value().size();j++){
+            if(i!=j){
+                Player* pl = m_game->players->value(j);
+                int pointsPl = m_livegame->points->value(pl);
+                if(points < pointsPl){
+                    placement++;
+                }
+            }
+        }
+        hash.insert(m_game->players->value(i),placement);
+    }
+
+    return hash;
 }
 
 } // namespace Database

@@ -7,6 +7,8 @@
 #include <Database/attributelist.h>
 #include <Database/attributehash.h>
 
+#include <Database/Calculator/gamecalculator.h>
+
 class QTime;
 
 namespace Database {
@@ -16,7 +18,7 @@ class Drink;
 class Round;
 class Player;
 
-class LiveGameCalculator : public QObject
+class LiveGameCalculator : public GameCalculator
 {
     Q_OBJECT
 public:
@@ -29,6 +31,8 @@ public:
     AttributeHash<Player*,int> calculate_points();
 
     QTime calculate_length();
+
+    AttributeHash<Player*,int> calculate_placement();
 
 
 signals:

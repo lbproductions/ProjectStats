@@ -62,7 +62,8 @@ SOURCES += main.cpp\
     Database/attributelist.cpp \
     Database/listattribute.cpp \
     global.cpp \
-    Database/Calculator/roundcalculator.cpp
+    Database/Calculator/roundcalculator.cpp \
+    Database/Calculator/offlinegamecalculator.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -117,7 +118,8 @@ HEADERS  += mainwindow.h \
     Updater/Updater.h \
     Updater/sparkleupdater.h \
     global.h \
-    Database/Calculator/roundcalculator.h
+    Database/Calculator/roundcalculator.h \
+    Database/Calculator/offlinegamecalculator.h
 
 FORMS    +=
 

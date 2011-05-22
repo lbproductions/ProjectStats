@@ -7,6 +7,8 @@
 #include "table.h"
 #include "databaseattribute.h"
 
+#include <Database/Calculator/offlinegamecalculator.h>
+
 START_ROW_DECLARATION(OfflineGame, Game)
     DECLARE_ROW_CONSTRUCTORS(OfflineGame, Game)
 

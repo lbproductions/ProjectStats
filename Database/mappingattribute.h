@@ -91,10 +91,21 @@ AttributeHash<K,V>& MappingAttribute<K,V,R,C>::value(){
 
 #define DECLARE_MAPPINGATTRIBUTE(Key, Value, RowClassname, Name) \
     MappingAttribute<Key,Value,RowClassname, RowClassname> *Name; \
-    AttributeHash<Key,Value>* calculate_ ## Name();
+    AttributeHash<Key,Value> calculate_ ## Name();
 
 #define DECLARE_MAPPINGATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, Name) \
     MappingAttribute<Key,Value,RowClassname, CalcClassName> *Name;
+
+#define DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, Name) \
+    MappingAttribute<Key,Value,RowClassname, RowClassname> *Name; \
+    AttributeHash<Key,Value> call_calculate_ ## Name(){ \
+        return m_calc->calculate_ ## Name(); \
+    }
+
+#define IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, Name, DisplayName) \
+    Name = new MappingAttribute<Key,Value,RowClassname, RowClassname>(XSTR(Name) "",DisplayName, this); \
+    Name->setCalculationFunction(this, & RowClassname::call_calculate_ ## Name); \
+    registerAttribute(Name);
 
 #define IMPLEMENT_MAPPINGATTRIBUTE(Key, Value, RowClassname, Name, DisplayName) \
     Name = new MappingAttribute<Key,Value,RowClassname, RowClassname>(XSTR(Name) "",DisplayName, this); \
