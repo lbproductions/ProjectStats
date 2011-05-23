@@ -27,14 +27,17 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_DATABASEATTRIBUTE(QString,Game,type)
     DECLARE_DATABASEATTRIBUTE(bool,Game,live)
     DECLARE_DATABASEATTRIBUTE(QDateTime,Game,date)
-    DECLARE_DATABASEATTRIBUTE(QTime,Game,length)
     DECLARE_DATABASEATTRIBUTE(QString,Game,comment)
     DECLARE_DATABASEATTRIBUTE(int,Game,siteId)
 
     DECLARE_ATTRIBUTE(QPointer<Place>,Game,site)
-    DECLARE_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,players)
 
+    DECLARE_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,players)
+    DECLARE_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,playersSortedByPosition)
+
+    DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(QTime,Game,GameCalculator,length)
     DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement)
+    DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,points)
 
 
 END_ROW_DECLARATION(Game)

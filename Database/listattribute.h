@@ -66,13 +66,13 @@ AttributeList<V>& ListAttribute<V,R,C>::value(){
     ListAttribute<Value,RowClassname, CalcClassName> *Name;
 
 #define DECLARE_VIRTUAL_LISTATTRIBUTE_IN_CALC(Value, RowClassname, CalcClassName, Name) \
-ListAttribute<Value,RowClassname, CalcClassName> *Name; \
+ListAttribute<Value,RowClassname, RowClassname> *Name; \
 AttributeList<Value> call_calculate_ ## Name(){ \
     return m_calc->calculate_ ## Name(); \
 }
 
-#define IMPLEMENT_VIRTUAL_LISTATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, Name, DisplayName) \
-    Name = new ListAttribute<Value,RowClassname, CalcClassName>(XSTR(Name) "",DisplayName, this); \
+#define IMPLEMENT_VIRTUAL_LISTATTRIBUTE_IN_CALC(Value, RowClassname, CalcClassName, Name, DisplayName) \
+    Name = new ListAttribute<Value,RowClassname, RowClassname>(XSTR(Name) "",DisplayName, this); \
     Name->setCalculationFunction(this, & RowClassname::call_calculate_ ## Name); \
     registerAttribute(Name);
 

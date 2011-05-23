@@ -2,6 +2,7 @@
 
 #include <Database/player.h>
 #include <Database/position.h>
+#include <Database/point.h>
 #include <Database/offlinegameinformation.h>
 
 #include "Doppelkopf/dokolivegame.h"
@@ -50,7 +51,6 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
     IMPLEMENT_DATABASEATTRIBUTE(QString,Game,type,tr("Type"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,Game,live,tr("Live"))
     IMPLEMENT_DATABASEATTRIBUTE(QDateTime,Game,date,tr("Date"))
-    IMPLEMENT_DATABASEATTRIBUTE(QTime,Game,length,tr("Length"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Game,comment,tr("Comment"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Game,siteId,tr("SiteId"))
 
@@ -63,6 +63,15 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
 
     IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement,tr("Placement"))
     players->addDependingAttribute(placement);
+
+    IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,points,tr("Points"))
+    Points::instance()->rows()->addDependingAttribute(points);
+    OfflineGameInformations::instance()->rows()->addDependingAttribute(points);
+
+    IMPLEMENT_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,playersSortedByPosition,tr("PlayersSortedByPosition"))
+    players->addDependingAttribute(playersSortedByPosition);
+
+    IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(QTime,Game,GameCalculator,length,tr("Length"))
 
 
 }

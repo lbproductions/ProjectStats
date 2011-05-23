@@ -12,6 +12,8 @@
 START_ROW_DECLARATION(OfflineGame, Game)
     DECLARE_ROW_CONSTRUCTORS(OfflineGame, Game)
 
+    DECLARE_DATABASEATTRIBUTE(QTime,OfflineGame,offline_length)
+
 END_ROW_DECLARATION(OfflineGame)
 
 #endif // DATABASE_OFFLINEGAME_H

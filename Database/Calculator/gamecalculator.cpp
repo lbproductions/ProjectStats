@@ -43,4 +43,17 @@ AttributeHash<Player*,int> GameCalculator::calculate_placement(){
     return AttributeHash<Player*,int>();
 }
 
+AttributeHash<Player*,int> GameCalculator::calculate_points(){
+    //qWarning() << "GameCalculator::calculate_points() should not be executed";
+    return AttributeHash<Player*,int>();
+}
+
+AttributeList<Player*> GameCalculator::calculate_playersSortedByPosition(){
+    return m_game->players->value();
+}
+
+QTime GameCalculator::calculate_length(){
+    return QTime();
+}
+
 } // namespace Database

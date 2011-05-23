@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QPointer>
+#include <QTime>
 
 #include <Database/attributehash.h>
 #include <Database/attributelist.h>
@@ -20,7 +21,13 @@ public:
 
     AttributeList<Player*> calculate_players();
 
+    virtual QTime calculate_length();
+
+    virtual AttributeList<Player*> calculate_playersSortedByPosition();
+
     virtual AttributeHash<Player*,int> calculate_placement();
+
+    virtual AttributeHash<Player*,int> calculate_points();
 
 signals:
 

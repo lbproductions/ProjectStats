@@ -19,11 +19,10 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,calc,rounds,tr("Rounds"))
     Rounds::instance()->rows()->addDependingAttribute(rounds);
 
-    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,LiveGame,LiveGameCalculator,calc,points,tr("Points"))
-    Points::instance()->rows()->addDependingAttribute(points);
-
-    IMPLEMENT_ATTRIBUTE_IN_CALC(QTime,LiveGame,LiveGameCalculator,calc,length,tr("Length"))
     rounds->addDependingAttribute(length);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,calc,percComplete,tr("CompleteState"))
+    rounds->addDependingAttribute(percComplete);
 }
 
 QString LiveGame::mimeType() const

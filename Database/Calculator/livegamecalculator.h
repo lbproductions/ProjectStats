@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QPointer>
+#include <QPair>
 
 #include <Database/attributelist.h>
 #include <Database/attributehash.h>
@@ -24,6 +25,8 @@ class LiveGameCalculator : public GameCalculator
 public:
     explicit LiveGameCalculator(LiveGame* livegame, QObject *parent = 0);
 
+    AttributeList<Player*> calculate_playersSortedByPosition();
+
     AttributeList<Drink*> calculate_drinks();
 
     AttributeList<Round*> calculate_rounds();
@@ -33,6 +36,8 @@ public:
     QTime calculate_length();
 
     AttributeHash<Player*,int> calculate_placement();
+
+    int calculate_percComplete();
 
 
 signals:
@@ -45,5 +50,7 @@ private:
 };
 
 } // namespace Database
+
+bool sortPlayersByPosition(QPair<Database::Player*,Database::Game*> pair1, QPair<Database::Player*,Database::Game*> pair2);
 
 #endif // DATABASE_LIVEGAMECALCULATOR_H

@@ -6,6 +6,7 @@
 #include <Database/round.h>
 #include <Database/point.h>
 #include <Database/player.h>
+#include <Database/position.h>
 
 #include <global.h>
 
@@ -79,6 +80,44 @@ AttributeHash<Player*,int> LiveGameCalculator::calculate_placement(){
     }
 
     return hash;
+}
+
+int LiveGameCalculator::calculate_percComplete(){
+    if(m_livegame->players->value().size() > 0){
+        return (m_livegame->rounds->value().size() * 100) / (m_livegame->players->value().size() * 6);
+    }
+    return 0;
+}
+
+bool sortPlayersByPosition(QPair<Player*,Game*> pair1, QPair<Player*,Game*> pair2){
+    foreach(Position* p, Positions::instance()->allRows()){
+        foreach(Position* o, Positions::instance()->allRows()){
+            if(o->id() != p->id()){
+                if (p->gameId->value() == pair1.second->id() && o->gameId->value() == pair2.second->id()){
+                    if(p->playerId->value() == pair1.first->id() && o->playerId->value() == pair2.first->id()){
+                        return p->position->value() < o->position->value();
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByPosition(){
+    AttributeList<Player*> alist;
+    QList<QPair<Player*,Game*> > list;
+    for (int i = 0; i<m_game->players->value().size();i++){
+        QPair<Player*,Game*> pair;
+        pair.first = m_game->players->value(i);
+        pair.second = m_game;
+       list.append(pair);
+    }
+    qSort(list.begin(),list.end(),sortPlayersByPosition);
+    for(int i = 0; i<list.size();i++){
+      alist.append(list.at(i).first);
+    }
+    return alist;
 }
 
 } // namespace Database

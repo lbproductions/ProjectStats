@@ -17,6 +17,10 @@ public:
 
     AttributeHash<Player*,int> calculate_placement();
 
+    AttributeHash<Player*,int> calculate_points();
+
+    QTime calculate_length();
+
 private:
     QPointer<OfflineGame> m_offlinegame;
 };
