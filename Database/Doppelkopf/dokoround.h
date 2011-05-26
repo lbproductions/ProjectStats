@@ -7,6 +7,9 @@
 #include "../table.h"
 #include "../databaseattribute.h"
 
+#include <Database/Calculator/dokoroundcalculator.h>
+
+
 START_ROW_DECLARATION(DokoRound, Round)
     DECLARE_ROW_CONSTRUCTORS(DokoRound, Round)
 

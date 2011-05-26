@@ -18,6 +18,7 @@ namespace Database
     class Player;
     class Game;
     class LiveGame;
+    class Round;
 }
 
 class Updater;

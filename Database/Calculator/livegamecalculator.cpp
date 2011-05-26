@@ -53,11 +53,11 @@ AttributeHash<Player*,int> LiveGameCalculator::calculate_points(){
 }
 
 QTime LiveGameCalculator::calculate_length(){
-   QTime time;
-   for(int i = 0; i<m_livegame->rounds->value().size();i++){
+    QTime time;
+    for(int i = 0; i<m_livegame->rounds->value().size();i++){
         time = time + m_livegame->rounds->value(i)->length->value();
-   }
-   return time;
+    }
+    return time;
 }
 
 AttributeHash<Player*,int> LiveGameCalculator::calculate_placement(){
@@ -111,13 +111,55 @@ AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByPosition(){
         QPair<Player*,Game*> pair;
         pair.first = m_game->players->value(i);
         pair.second = m_game;
-       list.append(pair);
+        list.append(pair);
     }
     qSort(list.begin(),list.end(),sortPlayersByPosition);
     for(int i = 0; i<list.size();i++){
-      alist.append(list.at(i).first);
+        alist.append(list.at(i).first);
     }
     return alist;
+}
+
+AttributeList<Player*> LiveGameCalculator::calculate_currentPlayingPlayers(){
+    return m_livegame->currentRound->value()->currentPlayingPlayers->value();
+}
+
+Round* LiveGameCalculator::calculate_lastRound(){
+    for(int i = m_livegame->rounds->value().size() - 1; i >= 0; --i)
+    {
+        Round *r = m_livegame->rounds->value(i);
+        if(r != 0 && r->state->value() == Round::FinishedState)
+        {
+            return r;
+        }
+    }
+
+    return 0;
+}
+
+Round* LiveGameCalculator::calculate_currentRound(){
+    if(m_livegame->rounds->value().isEmpty())
+    {
+        return 0;
+    }
+
+    return m_livegame->rounds->value().last();
+}
+
+Round::RoundState LiveGameCalculator::calculate_state(){
+    return m_livegame->currentRound->value()->state->value();
+}
+
+Player* LiveGameCalculator::calculate_cardmixer(){
+    if(m_livegame->playersSortedByPosition->value().isEmpty())
+    {
+        return 0;
+    }
+    return m_livegame->playersSortedByPosition->value(m_livegame->currentRound->value()->cardmixerPosition->value());
+}
+
+int LiveGameCalculator::calculate_totalPoints(){
+    return 0;
 }
 
 } // namespace Database

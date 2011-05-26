@@ -21,8 +21,26 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
 
     rounds->addDependingAttribute(length);
 
-    IMPLEMENT_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,calc,percComplete,tr("CompleteState"))
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,calc,percComplete,tr("%Complete"))
     rounds->addDependingAttribute(percComplete);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,calc,lastRound,tr("LastRound"))
+    rounds->addDependingAttribute(lastRound);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,calc,currentRound,tr("CurrentRound"))
+    rounds->addDependingAttribute(currentRound);
+
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,calc,currentPlayingPlayers,tr("CurrentPlayingPlayers"))
+    currentRound->addDependingAttribute(currentPlayingPlayers);
+
+    DECLARE_ATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,cardmixer)
+    currentRound->addDependingAttribute(cardmixer);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(Round::RoundState,LiveGame,LiveGameCalculator,calc,state,tr("State"))
+    currentRound->addDependingAttribute(state);
+
+    IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,totalPoints,tr("TotalPoints"))
+    rounds->addDependingAttribute(totalPoints);
 }
 
 QString LiveGame::mimeType() const

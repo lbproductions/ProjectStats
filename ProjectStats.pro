@@ -63,7 +63,10 @@ SOURCES += main.cpp\
     Database/listattribute.cpp \
     global.cpp \
     Database/Calculator/roundcalculator.cpp \
-    Database/Calculator/offlinegamecalculator.cpp
+    Database/Calculator/offlinegamecalculator.cpp \
+    Database/Calculator/skatlivegamecalculator.cpp \
+    Database/Calculator/dokolivegamecalculator.cpp \
+    Database/Calculator/dokoroundcalculator.cpp
 
 HEADERS  += mainwindow.h \
     Database/table.h \
@@ -119,7 +122,10 @@ HEADERS  += mainwindow.h \
     Updater/sparkleupdater.h \
     global.h \
     Database/Calculator/roundcalculator.h \
-    Database/Calculator/offlinegamecalculator.h
+    Database/Calculator/offlinegamecalculator.h \
+    Database/Calculator/skatlivegamecalculator.h \
+    Database/Calculator/dokolivegamecalculator.h \
+    Database/Calculator/dokoroundcalculator.h
 
 FORMS    +=
 

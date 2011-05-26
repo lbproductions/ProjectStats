@@ -7,6 +7,7 @@
 
 #include <Database/attributelist.h>
 #include <Database/attributehash.h>
+#include <Database/round.h>
 
 #include <Database/Calculator/gamecalculator.h>
 
@@ -16,7 +17,6 @@ namespace Database {
 
 class LiveGame;
 class Drink;
-class Round;
 class Player;
 
 class LiveGameCalculator : public GameCalculator
@@ -27,24 +27,36 @@ public:
 
     AttributeList<Player*> calculate_playersSortedByPosition();
 
+    AttributeList<Player*> calculate_currentPlayingPlayers();
+
     AttributeList<Drink*> calculate_drinks();
 
     AttributeList<Round*> calculate_rounds();
 
     AttributeHash<Player*,int> calculate_points();
 
-    QTime calculate_length();
-
     AttributeHash<Player*,int> calculate_placement();
 
+    Round* calculate_lastRound();
+
+    Round* calculate_currentRound();
+
+    Round::RoundState calculate_state();
+
+    Player* calculate_cardmixer();
+
+    QTime calculate_length();
+
     int calculate_percComplete();
+
+    virtual int calculate_totalPoints();
 
 
 signals:
 
 public slots:
 
-private:
+protected:
     QPointer<LiveGame> m_livegame;
 
 };

@@ -6,6 +6,7 @@
 #include "attribute.h"
 #include "databaseattribute.h"
 #include "mappingattribute.h"
+#include "listattribute.h"
 
 #include "game.h"
 
@@ -20,20 +21,29 @@ START_ROW_DECLARATION(Round, Row)
         FinishedState //!< Die Runde wurde beendet
     };
 
+    RoundCalculator* m_calc;
+
     DECLARE_DATABASEATTRIBUTE(int,Round,gameId)
     DECLARE_DATABASEATTRIBUTE(int,Round,number)
     DECLARE_DATABASEATTRIBUTE(QDateTime,Round,startTime)
     DECLARE_DATABASEATTRIBUTE(QTime,Round,length)
-    DECLARE_DATABASEATTRIBUTE(int,Round,state)
+    DECLARE_DATABASEATTRIBUTE(int,Round,db_state)
     DECLARE_DATABASEATTRIBUTE(QString,Round,comment)
 
     DECLARE_ATTRIBUTE(QPointer<Game>,Round,game)
+    DECLARE_ATTRIBUTE(RoundState,Round,state)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,points)
+
+    DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,cardmixerPosition)
+    DECLARE_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Round,RoundCalculator,currentPlayingPlayers)
+    DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,roundPoints)
 
 END_ROW_DECLARATION(Round)
 
 START_TABLE_DECLARATION(Round)
 END_TABLE_DECLARATION()
+
+Q_DECLARE_METATYPE(Database::Round::RoundState)
 
 #endif // DATABASE_ROUND_H

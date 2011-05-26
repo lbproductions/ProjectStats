@@ -4,6 +4,7 @@
 #include <QPointer>
 
 #include <Database/attributehash.h>
+#include <Database/attributelist.h>
 
 namespace Database {
 
@@ -18,8 +19,13 @@ public:
 
     AttributeHash<Player*,int> calculate_points();
 
-private:
+    virtual int calculate_cardmixerPosition();
 
+    virtual int calculate_roundPoints();
+
+    virtual AttributeList<Player*> calculate_currentPlayingPlayers();
+
+protected:
     QPointer<Round> m_round;
 };
 

@@ -29,6 +29,8 @@ public:
 
     virtual AttributeHash<Player*,int> calculate_points();
 
+    virtual int calculate_totalPoints();
+
 signals:
 
 public slots:

@@ -2,6 +2,8 @@
 
 START_ROW_IMPLEMENTATION(DokoRound, Round, Round)
 {
+    DokoRoundCalculator* calc = new DokoRoundCalculator(this);
+    m_calc = calc;
 
     IMPLEMENT_DATABASEATTRIBUTE(int,DokoRound,doko_hochzeitPlayerId,tr("Doko_HochzeitPlayerId"))
     IMPLEMENT_DATABASEATTRIBUTE(int,DokoRound,doko_trumpfabgabePlayerId,tr("Doko_TrumpfabgabePlayerId"))

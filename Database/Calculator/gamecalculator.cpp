@@ -56,4 +56,8 @@ QTime GameCalculator::calculate_length(){
     return QTime();
 }
 
+int GameCalculator::calculate_totalPoints(){
+    return 0;
+}
+
 } // namespace Database
