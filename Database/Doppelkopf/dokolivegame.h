@@ -22,6 +22,21 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_re)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_reWins)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_contra)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_contraWins)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_hochzeit)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_solo)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_trumpfabgabe)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_schweinerei)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_schmeisserei)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,bool,DokoLiveGame,DokoLiveGameCalculator,doko_hasPflichtSolo)
+
+    DECLARE_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,doko_hochzeitCount)
+    DECLARE_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,doko_soloCount)
+    DECLARE_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,doko_pflichtSoloCount)
+    DECLARE_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,doko_trumpfabgabeCount)
+    DECLARE_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,doko_schweinereiCount)
+    DECLARE_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,doko_schmeissereiCount)
 
 END_ROW_DECLARATION(DokoLiveGame)
 

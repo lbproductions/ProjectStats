@@ -126,6 +126,7 @@ private:
 Q_DECLARE_METATYPE(QPointer<Database::Player>)
 Q_DECLARE_METATYPE(QPointer<Database::Game>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::LiveGame* COMMA double>)
+Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA bool>)
 
 
 #endif // HANDLER_H

@@ -18,6 +18,34 @@ public:
 
     AttributeHash<Player*,int> calculate_doko_reWins();
 
+    AttributeHash<Player*,int> calculate_doko_contra();
+
+    AttributeHash<Player*,int> calculate_doko_contraWins();
+
+    AttributeHash<Player*,int> calculate_doko_hochzeit();
+
+    AttributeHash<Player*,int> calculate_doko_solo();
+
+    AttributeHash<Player*,int> calculate_doko_trumpfabgabe();
+
+    AttributeHash<Player*,int> calculate_doko_schweinerei();
+
+    AttributeHash<Player*,int> calculate_doko_schmeisserei();
+
+    AttributeHash<Player*,bool> calculate_doko_hasPflichtSolo();
+
+    int calculate_doko_hochzeitCount();
+
+    int calculate_doko_soloCount();
+
+    int calculate_doko_pflichtSoloCount();
+
+    int calculate_doko_trumpfabgabeCount();
+
+    int calculate_doko_schweinereiCount();
+
+    int calculate_doko_schmeissereiCount();
+
     int calculate_totalPoints();
 
 private:
