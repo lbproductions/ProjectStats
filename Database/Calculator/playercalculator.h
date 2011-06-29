@@ -23,7 +23,7 @@ public:
 
     AttributeList<Game*> calculate_games();
 
-    int calculate_points();
+    AttributeHash<QString,int> calculate_points();
 
     AttributeList<Place*> calculate_places();
 

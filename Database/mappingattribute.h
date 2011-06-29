@@ -108,12 +108,12 @@ AttributeHash<K,V>& MappingAttribute<K,V,R,C>::value(){
     registerAttribute(Name);
 
 #define IMPLEMENT_MAPPINGATTRIBUTE(Key, Value, RowClassname, Name, DisplayName) \
-    Name = new MappingAttribute<Key,Value,RowClassname, RowClassname>(XSTR(Name) "",DisplayName, this); \
+    Name = new MappingAttribute<Key ,Value,RowClassname, RowClassname>(XSTR(Name) "",DisplayName, this); \
     Name->setCalculationFunction(this, & RowClassname::calculate_ ## Name); \
     registerAttribute(Name);
 
 #define IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, CalcClassInstanceName, Name, DisplayName) \
-    Name = new MappingAttribute<Key,Value,RowClassname, CalcClassName>(XSTR(Name) "",DisplayName, this); \
+    Name = new MappingAttribute<Key ,Value,RowClassname, CalcClassName>(XSTR(Name) "",DisplayName, this); \
     Name->setCalculationFunction(CalcClassInstanceName, & CalcClassName::calculate_ ## Name); \
     registerAttribute(Name);
 

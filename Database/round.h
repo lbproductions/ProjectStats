@@ -8,9 +8,11 @@
 #include "mappingattribute.h"
 #include "listattribute.h"
 
-#include "game.h"
-
 #include <Database/Calculator/roundcalculator.h>
+
+namespace Database{
+    class Game;
+}
 
 START_ROW_DECLARATION(Round, Row)
     DECLARE_ROW_CONSTRUCTORS(Round, Round)
@@ -42,6 +44,7 @@ START_ROW_DECLARATION(Round, Row)
 END_ROW_DECLARATION(Round)
 
 START_TABLE_DECLARATION(Round)
+QPointer<Round> createRowInstance(int id);
 END_TABLE_DECLARATION()
 
 Q_DECLARE_METATYPE(Database::Round::RoundState)

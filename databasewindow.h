@@ -9,13 +9,13 @@ namespace Database {
     class Drink;
 }
 
-class MainWindow : public QMainWindow
+class DatabaseWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit DatabaseWindow(QWidget *parent = 0);
+    ~DatabaseWindow();
 
 
     void closeEvent(QCloseEvent *event);

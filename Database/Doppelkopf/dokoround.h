@@ -6,9 +6,13 @@
 #include "../row.h"
 #include "../table.h"
 #include "../databaseattribute.h"
+#include "../listattribute.h"
 
 #include <Database/Calculator/dokoroundcalculator.h>
 
+namespace Database{
+    class Schmeisserei;
+}
 
 START_ROW_DECLARATION(DokoRound, Round)
     DECLARE_ROW_CONSTRUCTORS(DokoRound, Round)
@@ -21,6 +25,9 @@ START_ROW_DECLARATION(DokoRound, Round)
     DECLARE_DATABASEATTRIBUTE(int,DokoRound,doko_re2PlayerId)
     DECLARE_DATABASEATTRIBUTE(QString,DokoRound,doko_soloType)
     DECLARE_DATABASEATTRIBUTE(bool,DokoRound,doko_soloPflicht)
+
+    DECLARE_LISTATTRIBUTE_IN_CALC(Schmeisserei*,DokoRound,DokoRoundCalculator,doko_schmeissereien)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,bool,DokoRound,DokoRoundCalculator,doko_re)
 
 END_ROW_DECLARATION(DokoRound)
 

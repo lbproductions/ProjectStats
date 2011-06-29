@@ -121,7 +121,18 @@ AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByPosition(){
 }
 
 AttributeList<Player*> LiveGameCalculator::calculate_currentPlayingPlayers(){
-    return m_livegame->currentRound->value()->currentPlayingPlayers->value();
+    /*
+    if(m_livegame->currentRound->value() != 0){
+        return m_livegame->currentRound->value()->currentPlayingPlayers->value();
+     }
+    else{
+        qDebug() << "currentRound = 0 in LiveGameCalculator::calculate_currentPlayingPlayers() from Game: " + m_livegame->name->value();
+        return AttributeList<Player*>();
+    }
+    */
+    return m_livegame->rounds->value().last()->currentPlayingPlayers->value();
+    //qDebug() << m_livegame->currentRound->value()->comment->value();
+    //return m_livegame->currentRound->value()->currentPlayingPlayers->value();
 }
 
 Round* LiveGameCalculator::calculate_lastRound(){
@@ -142,12 +153,14 @@ Round* LiveGameCalculator::calculate_currentRound(){
     {
         return 0;
     }
-
     return m_livegame->rounds->value().last();
 }
 
 Round::RoundState LiveGameCalculator::calculate_state(){
-    return m_livegame->currentRound->value()->state->value();
+    if(m_livegame->currentRound->value() != 0){
+        return m_livegame->currentRound->value()->state->value();
+    }
+    return (Round::RoundState)4;
 }
 
 Player* LiveGameCalculator::calculate_cardmixer(){
@@ -155,7 +168,9 @@ Player* LiveGameCalculator::calculate_cardmixer(){
     {
         return 0;
     }
-    return m_livegame->playersSortedByPosition->value(m_livegame->currentRound->value()->cardmixerPosition->value());
+    Round* currentRound = m_livegame->rounds->value().last();
+    int position = currentRound->cardmixerPosition->value();
+    return m_livegame->playersSortedByPosition->value(position);
 }
 
 int LiveGameCalculator::calculate_totalPoints(){

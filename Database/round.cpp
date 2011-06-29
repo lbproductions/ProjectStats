@@ -1,8 +1,37 @@
 #include "round.h"
 
+#include <Database/Doppelkopf/dokoround.h>
+#include <Database/Skat/skatround.h>
+#include "game.h"
+
 #include <QDateTime>
+#include <QDebug>
 
 START_TABLE_IMPLEMENTATION(Round)
+
+QPointer<Round> Rounds::createRowInstance(int id)
+{
+    Round *row = new Round(id,this);
+    Round *row2 = 0;
+
+    if(row->game->value()->type->value() == "Doppelkopf")
+    {
+        row2 = new DokoRound(id,this);
+    }
+    else if(row->game->value()->type->value() == "Skat")
+    {
+        row2 = new SkatRound(id,this);
+    }
+
+
+    if(row2 != 0)
+    {
+        return row2;
+    }
+
+    return row;
+}
+
 END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Round, Round, Row)
@@ -20,6 +49,7 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
     gameId->addDependingAttribute(game);
     IMPLEMENT_ATTRIBUTE(RoundState,Round,state,tr("State"))
     db_state->addDependingAttribute(state);
+    state->setRole(Qt::DecorationRole);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,m_calc,points,tr("Points"))
 
@@ -40,7 +70,7 @@ QPointer<Game> Round::calculate_game(){
 }
 
 Round::RoundState Round::calculate_state(){
-    return (RoundState)this->db_state->value();
+    return (RoundState)db_state->value();
 }
 
 END_ROW_IMPLEMENTATION()

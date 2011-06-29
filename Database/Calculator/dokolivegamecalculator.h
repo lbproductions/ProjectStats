@@ -34,6 +34,28 @@ public:
 
     AttributeHash<Player*,bool> calculate_doko_hasPflichtSolo();
 
+    AttributeHash<int,int> calculate_doko_hochzeitCountAfterRounds();
+
+    AttributeHash<int,int> calculate_doko_soloCountAfterRounds();
+
+    AttributeHash<int,int> calculate_doko_pflichtSoloCountAfterRounds();
+
+    AttributeHash<int,int> calculate_doko_trumpfabgabeCountAfterRounds();
+
+    AttributeHash<int,int> calculate_doko_schweinereiCountAfterRounds();
+
+    AttributeHash<int,int> calculate_doko_schmeissereiCountAfterRounds();
+
+    AttributeHash<QPair<Player*,Player*>,int> calculate_doko_gamesTogether();
+
+    AttributeHash<QPair<Player*,Player*>,int> calculate_doko_winsTogether();
+
+    AttributeHash<Player*,double> calculate_doko_pointAveragePerWin();
+
+    AttributeHash<Player*,int> calculate_doko_rounds();
+
+    AttributeHash<Player*,int> calculate_doko_roundWins();
+
     int calculate_doko_hochzeitCount();
 
     int calculate_doko_soloCount();

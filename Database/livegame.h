@@ -27,7 +27,6 @@ START_ROW_DECLARATION(LiveGame, Game)
     DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,totalPoints)
     DECLARE_ATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,lastRound)
     DECLARE_ATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,currentRound)
-    DECLARE_ATTRIBUTE_IN_CALC(Round::RoundState,LiveGame,LiveGameCalculator,state)
     DECLARE_ATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,cardmixer)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,currentPlayingPlayers)

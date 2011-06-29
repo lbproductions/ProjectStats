@@ -7,12 +7,18 @@
 #include "../attribute.h"
 #include "../databaseattribute.h"
 
+namespace Database{
+    class Player;
+}
+
 START_ROW_DECLARATION(Schmeisserei, Row)
     DECLARE_ROW_CONSTRUCTORS(Schmeisserei, Schmeisserei)
 
     DECLARE_DATABASEATTRIBUTE(int,Schmeisserei,roundId)
     DECLARE_DATABASEATTRIBUTE(int,Schmeisserei,playerId)
     DECLARE_DATABASEATTRIBUTE(QString,Schmeisserei,type)
+
+    DECLARE_ATTRIBUTE(Player*,Schmeisserei,player)
 
 END_ROW_DECLARATION(Schmeisserei)
 

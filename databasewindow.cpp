@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "databasewindow.h"
 
 #include <Gui/Misc/rowlist.h>
 
@@ -10,7 +10,7 @@
 #include <QPushButton>
 #include <QThread>
 
-MainWindow::MainWindow(QWidget *parent) :
+DatabaseWindow::DatabaseWindow(QWidget *parent) :
     QMainWindow(parent),
     m_tabwidget(new QTabWidget(this)),
     m_button(new QPushButton("Open table in new window", this)),
@@ -32,18 +32,18 @@ MainWindow::MainWindow(QWidget *parent) :
     setCentralWidget(w);
 }
 
-MainWindow::~MainWindow()
+DatabaseWindow::~DatabaseWindow()
 {
 }
 
-void MainWindow::on_button_clicked()
+void DatabaseWindow::on_button_clicked()
 {
     Gui::Misc::RowList *rowList1 = static_cast<Gui::Misc::RowList *>(m_tabwidget->currentWidget());
     Gui::Misc::RowList *rowList = new Gui::Misc::RowList(rowList1->model());
     rowList->show();
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
+void DatabaseWindow::closeEvent(QCloseEvent *event)
 {
     int count = QThreadPool::globalInstance()->activeThreadCount();
     if(count > 0)

@@ -60,4 +60,8 @@ int GameCalculator::calculate_totalPoints(){
     return 0;
 }
 
+Round::RoundState GameCalculator::calculate_state(){
+    return (Round::RoundState)4;
+}
+
 } // namespace Database

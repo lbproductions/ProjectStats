@@ -47,6 +47,26 @@ START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
     IMPLEMENT_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_schmeissereiCount,tr("Doko_SchmeissereienCount"))
     doko_schmeisserei->addDependingAttribute(doko_schmeissereiCount);
 
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_hochzeitCountAfterRounds,tr("Doko_HochzeitCountAfterRounds"))
+    doko_hochzeitCount->addDependingAttribute(doko_hochzeitCountAfterRounds);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_soloCountAfterRounds,tr("Doko_SoloCountAfterRounds"))
+    doko_soloCount->addDependingAttribute(doko_soloCountAfterRounds);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_pflichtSoloCountAfterRounds,tr("Doko_PflichtSoloCountAfterRounds"))
+    doko_pflichtSoloCount->addDependingAttribute(doko_pflichtSoloCountAfterRounds);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_trumpfabgabeCountAfterRounds,tr("Doko_TrumpfabgabeCountAfterRounds"))
+    doko_trumpfabgabeCount->addDependingAttribute(doko_trumpfabgabeCountAfterRounds);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_schweinereiCountAfterRounds,tr("Doko_SchweinereiCountAfterRounds"))
+    doko_schweinereiCount->addDependingAttribute(doko_schweinereiCountAfterRounds);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_schmeissereiCountAfterRounds,tr("Doko_SchmeissereiCountAfterRounds"))
+    doko_schmeissereiCount->addDependingAttribute(doko_schmeissereiCountAfterRounds);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QPair<Player* COMMA Player*>,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_gamesTogether,tr("Doko_GamesTogether"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QPair<Player* COMMA Player*>,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_winsTogether,tr("Doko_WinsTogether"))
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,double,DokoLiveGame,DokoLiveGameCalculator,calc,doko_pointAveragePerWin,tr("Doko_PointAveragePerWin"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_rounds,tr("Doko_Rounds"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_roundWins,tr("Doko_RoundWins"))
+
 }
 
 QString DokoLiveGame::mimeType() const

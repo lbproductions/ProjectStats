@@ -1,6 +1,7 @@
 #include "global.h"
 
 #include <QTime>
+#include <Database/player.h>
 
 QTime operator+(const QTime &time1, const QTime &time2)
 {

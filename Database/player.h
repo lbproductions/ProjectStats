@@ -33,7 +33,7 @@ START_ROW_DECLARATION(Player, Row)
     DECLARE_LISTATTRIBUTE_IN_CALC(Game*,Player,PlayerCalculator,games)
     DECLARE_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,places)
 
-    DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,points)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,points)
     DECLARE_ATTRIBUTE_IN_CALC(double,Player,PlayerCalculator,average)
     DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,wins)
     DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,losses)

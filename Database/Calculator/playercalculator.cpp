@@ -40,21 +40,22 @@ AttributeList<Place*> PlayerCalculator::calculate_places(){
     return list;
 }
 
-int PlayerCalculator::calculate_points(){
-    int points = 0;
+AttributeHash<QString,int> PlayerCalculator::calculate_points(){
+    AttributeHash<QString,int> hash;
     AttributeList<Game*> list = m_player->games->value();
     for(int i = 0; i<list.size();i++){
         Game* g = list.at(i);
         double zaehler = (double)(g->players->value().size() - g->placement->value(m_player));
         double nenner = (double)g->players->value().size()-1;
-	points = points + 100* (zaehler / nenner);
+        hash.insert("General",hash.value("General") + (int)(100* (zaehler / nenner)));
+        hash.insert(g->type->value(),hash.value(g->type->value()) + (int)(100* (zaehler / nenner)));
     }
-    return points;
+    return hash;
 }
 
 double PlayerCalculator::calculate_average(){
     if(m_player->games->value().size() > 0){
-        return (double)m_player->points->value() / (double)m_player->games->value().size();
+        return (double)m_player->points->value("General") / (double)m_player->games->value().size();
     }
     else{
         return 0.0;

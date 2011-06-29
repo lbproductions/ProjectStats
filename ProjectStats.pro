@@ -11,7 +11,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-	mainwindow.cpp \
     Database/table.cpp \
     Database/database.cpp \
     singleton.cpp \
@@ -66,9 +65,10 @@ SOURCES += main.cpp\
     Database/Calculator/offlinegamecalculator.cpp \
     Database/Calculator/skatlivegamecalculator.cpp \
     Database/Calculator/dokolivegamecalculator.cpp \
-    Database/Calculator/dokoroundcalculator.cpp
+    Database/Calculator/dokoroundcalculator.cpp \
+    databasewindow.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     Database/table.h \
     Database/database.h \
     singleton.h \
@@ -125,7 +125,8 @@ HEADERS  += mainwindow.h \
     Database/Calculator/offlinegamecalculator.h \
     Database/Calculator/skatlivegamecalculator.h \
     Database/Calculator/dokolivegamecalculator.h \
-    Database/Calculator/dokoroundcalculator.h
+    Database/Calculator/dokoroundcalculator.h \
+    databasewindow.h
 
 FORMS    +=
 

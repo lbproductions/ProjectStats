@@ -5,6 +5,10 @@
 
 class QTime;
 
+namespace Database{
+    class Player;
+}
+
 /*!
   Addiert zwei Zeiten.
   */

@@ -7,6 +7,7 @@
 
 #include <Database/attributehash.h>
 #include <Database/attributelist.h>
+#include <Database/round.h>
 
 namespace Database {
 
@@ -30,6 +31,8 @@ public:
     virtual AttributeHash<Player*,int> calculate_points();
 
     virtual int calculate_totalPoints();
+
+    virtual Round::RoundState calculate_state();
 
 signals:
 

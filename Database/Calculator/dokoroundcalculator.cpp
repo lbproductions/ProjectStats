@@ -3,6 +3,7 @@
 #include <Database/player.h>
 #include <Database/Doppelkopf/dokolivegame.h>
 #include <Database/Doppelkopf/dokoround.h>
+#include <Database/Doppelkopf/schmeisserei.h>
 
 namespace Database {
 
@@ -51,6 +52,31 @@ int DokoRoundCalculator::calculate_roundPoints(){
             }
         }
     }
+    return 0;
+}
+
+AttributeList<Schmeisserei*> DokoRoundCalculator::calculate_doko_schmeissereien(){
+    AttributeList<Schmeisserei*> list;
+    foreach(Schmeisserei* s, Schmeissereis::instance()->allRows()){
+        if(s->roundId->value() == m_dokoround->id()){
+            list.append(s);
+        }
+    }
+    return list;
+}
+
+AttributeHash<Player*,bool> DokoRoundCalculator::calculate_doko_re(){
+    AttributeHash<Player*,bool> hash;
+    for(int i = 0; i<m_dokoround->currentPlayingPlayers->value().size();i++){
+        if(m_dokoround->currentPlayingPlayers->value(i)->id() == m_dokoround->doko_re1PlayerId->value() ||
+                m_dokoround->currentPlayingPlayers->value(i)->id() == m_dokoround->doko_re2PlayerId->value()){
+            hash.insert(m_dokoround->currentPlayingPlayers->value(i),true);
+        }
+        else{
+            hash.insert(m_dokoround->currentPlayingPlayers->value(i),false);
+        }
+    }
+    return hash;
 }
 
 } // namespace Database

@@ -10,6 +10,7 @@
 #include "listattribute.h"
 
 #include "place.h"
+#include "round.h"
 
 #include <Database/Calculator/gamecalculator.h>
 
@@ -31,6 +32,7 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_DATABASEATTRIBUTE(int,Game,siteId)
 
     DECLARE_ATTRIBUTE(QPointer<Place>,Game,site)
+    DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(Round::RoundState,Game,GameCalculator,state)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,players)
     DECLARE_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,playersSortedByPosition)

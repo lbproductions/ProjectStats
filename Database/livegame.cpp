@@ -29,15 +29,13 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
 
     IMPLEMENT_ATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,calc,currentRound,tr("CurrentRound"))
     rounds->addDependingAttribute(currentRound);
+    currentRound->addDependingAttribute(state);
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,calc,currentPlayingPlayers,tr("CurrentPlayingPlayers"))
     currentRound->addDependingAttribute(currentPlayingPlayers);
 
-    DECLARE_ATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,cardmixer)
+    IMPLEMENT_ATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,calc,cardmixer,tr("Cardmixer"))
     currentRound->addDependingAttribute(cardmixer);
-
-    IMPLEMENT_ATTRIBUTE_IN_CALC(Round::RoundState,LiveGame,LiveGameCalculator,calc,state,tr("State"))
-    currentRound->addDependingAttribute(state);
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,totalPoints,tr("TotalPoints"))
     rounds->addDependingAttribute(totalPoints);

@@ -73,6 +73,10 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(QTime,Game,GameCalculator,length,tr("Length"))
 
+    IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(Round::RoundState,Game,GameCalculator,state,tr("State"))
+    state->setRole(Qt::DecorationRole);
+
+
 
 }
 

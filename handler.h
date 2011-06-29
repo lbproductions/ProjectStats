@@ -9,7 +9,7 @@
 
 class MessageSystem;
 
-class MainWindow;
+class DatabaseWindow;
 
 namespace Database
 {
@@ -102,7 +102,7 @@ public:
     void checkForUpdates();
 
 
-    MainWindow *mainWindow() const;
+    DatabaseWindow *mainWindow() const;
 
 
 private:
@@ -113,7 +113,7 @@ private:
     QString getDatabaseFileName();
 
     QPointer<Database::Database> m_database; //!< Die Datenbank mit der aktuell gearbeitet wird.
-    QPointer<MainWindow> m_mainwindow; //!< Das aktuelle MainWindow
+    QPointer<DatabaseWindow> m_mainwindow; //!< Das aktuelle MainWindow
     MessageSystem* m_messagesystem; //! Das MessageSystem-Objekt
     Updater *m_updater;
 
@@ -124,9 +124,14 @@ private:
 #define COMMA ,
 
 Q_DECLARE_METATYPE(QPointer<Database::Player>)
+Q_DECLARE_METATYPE(QPointer<Database::Round>)
 Q_DECLARE_METATYPE(QPointer<Database::Game>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::LiveGame* COMMA double>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA bool>)
+Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA double>)
+Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA int>)
+Q_DECLARE_METATYPE(Database::AttributeHash<QPair<Database::Player* COMMA Database::Player*> COMMA int>)
+Q_DECLARE_METATYPE(Database::AttributeHash<int COMMA int>)
 
 
 #endif // HANDLER_H

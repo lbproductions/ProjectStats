@@ -33,7 +33,7 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,calc,places,tr("Places"))
     Places::instance()->rows()->addDependingAttribute(places);
 
-    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,calc,points,tr("Points"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,points,tr("Points"))
     games->addDependingAttribute(points);
 
     IMPLEMENT_ATTRIBUTE_IN_CALC(double,Player,PlayerCalculator,calc,average,tr("Average"))
