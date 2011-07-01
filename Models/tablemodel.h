@@ -257,21 +257,22 @@ QVariant TableModel<RowType, Owner>::headerData(int section, Qt::Orientation ori
     {
         return QVariant();
     }
+    if(section >= 0){
+        Database::AttributeBase *attribute = m_owner->registeredAttributes()->values().at(section);
 
-    Database::AttributeBase *attribute = m_owner->registeredAttributes()->values().at(section);
-
-    if(role == Qt::DisplayRole && orientation == Qt::Horizontal)
-    {
-        return attribute->displayName();
-    }
-//    QPixmap pixmap;
-    if(role == Qt::DecorationRole && orientation == Qt::Horizontal){
-        switch(section)
+        if(role == Qt::DisplayRole && orientation == Qt::Horizontal)
         {
-//        case PositionChangeColumn:
-//            pixmap.load(":/graphics/icons/general/playerstate/blackarrow");
-//            pixmap.scaled(20,20);
-//            return pixmap;
+            return attribute->displayName();
+        }
+    //    QPixmap pixmap;
+        if(role == Qt::DecorationRole && orientation == Qt::Horizontal){
+            switch(section)
+            {
+    //        case PositionChangeColumn:
+    //            pixmap.load(":/graphics/icons/general/playerstate/blackarrow");
+    //            pixmap.scaled(20,20);
+    //            return pixmap;
+            }
         }
     }
 

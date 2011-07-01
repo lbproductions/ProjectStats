@@ -1,5 +1,4 @@
 #include <QtGui/QApplication>
-#include "mainwindow.h"
 
 #include <Database/Filters/atomicrule.h>
 #include <Database/Filters/ruleconjunction.h>

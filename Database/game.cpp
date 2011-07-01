@@ -71,6 +71,9 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
     IMPLEMENT_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,playersSortedByPosition,tr("PlayersSortedByPosition"))
     players->addDependingAttribute(playersSortedByPosition);
 
+    IMPLEMENT_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,playersSortedByPlacement,tr("PlayersSortedByPlacement"))
+    players->addDependingAttribute(playersSortedByPlacement);
+
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(QTime,Game,GameCalculator,length,tr("Length"))
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(Round::RoundState,Game,GameCalculator,state,tr("State"))

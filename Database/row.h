@@ -13,6 +13,8 @@
 #include <Database/attributelist.h>
 #include <Database/attributehash.h>
 
+#include <Gui/Details/detailswidget.h>
+
 namespace Database {
 
 class TableBase;
@@ -33,6 +35,8 @@ public:
       \return Die ID der Reihe.
       */
     int id() const;
+
+    bool isValid();
 
     /*!
       Löscht diese Row aus der Datenbank. Das Objekt selber wird nicht gelöscht sondern nur mit der ID -1 invalidiert.
@@ -82,6 +86,8 @@ public:
     virtual QString mimeType() const = 0;
 
     QList<Row*> childRows() const;
+
+    virtual Gui::Details::DetailsWidget* detailsWidget();
 
 protected:
     /*!

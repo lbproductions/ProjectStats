@@ -1,9 +1,7 @@
 #include "handler.h"
 
 /*
-#include <Gui/MainWindow/mainwindow.h>
 #include <Database/Doppelkopf/dokolivegame.h>
-
 */
 
 #include <QDebug>
@@ -12,10 +10,12 @@
 #include <QSettings>
 #include <QFileDialog>
 
-#include <databasewindow.h>
+//#include <databasewindow.h>
 #include <messagesystem.h>
 #include <Updater/sparkleupdater.h>
 #include <Updater/updater.h>
+
+#include <Gui/MainWindow/mainwindow.h>
 
 #include <Database/database.h>
 #include <Database/attribute.h>
@@ -28,6 +28,8 @@
 #include <Database/round.h>
 #include <Database/livegame.h>
 #include <Database/Doppelkopf/schmeisserei.h>
+#include <Database/Categories/childcategorie.h>
+#include <Database/Categories/parentcategorie.h>
 
 Handler::Handler(int argc, char *argv[])
     : QApplication(argc,argv),
@@ -107,7 +109,7 @@ bool Handler::showMainWindow(){
     }
 
 
-    m_mainwindow = new DatabaseWindow();
+    m_mainwindow = new Gui::MainWindow::MainWindow();
 
     m_mainwindow->show();
     return true;
@@ -137,7 +139,7 @@ bool Handler::closeMainWindow()
     return true;
 }
 
-DatabaseWindow *Handler::mainWindow() const
+Gui::MainWindow::MainWindow *Handler::mainWindow() const
 {
     return m_mainwindow;
 }

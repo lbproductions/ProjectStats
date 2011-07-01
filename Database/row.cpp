@@ -30,6 +30,10 @@ void Row::setId(int id)
     m_id = id;
 }
 
+bool Row::isValid(){
+    return true;
+}
+
 QSqlQuery Row::query(const QString &queryString) const
 {
     return m_table->query(queryString);
@@ -115,6 +119,11 @@ void Row::addChildRow(Row *row)
 void Row::addChildRows(QList<Row *> rows)
 {
     m_childRows.append(rows);
+}
+
+Gui::Details::DetailsWidget* Row::detailsWidget()
+{
+    return new Gui::Details::DetailsWidget(this);
 }
 
 } // namespace Database

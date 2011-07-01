@@ -355,7 +355,7 @@ void Table<RowType>::initializeRowCaches()
 	    AttributeBase *attribute = databaseAttributes.at(i);
 	    Row *row = m_rows->value().value(select.value(0).toInt());
 
-	    QString name = attribute->name();
+            QString name = attribute->name();
 	    AttributeBase *rowAttribute = row->attribute(name);
 	    if(rowAttribute != 0)
 	    {

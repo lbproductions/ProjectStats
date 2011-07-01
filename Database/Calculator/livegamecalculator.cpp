@@ -120,6 +120,26 @@ AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByPosition(){
     return alist;
 }
 
+bool sortPlayersByPlacement(QPair<Player*,Game*> pair1, QPair<Player*,Game*> pair2){
+    return pair1.second->placement->value(pair1.first) < pair2.second->placement->value(pair2.first);
+}
+
+AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByPlacement(){
+    AttributeList<Player*> alist;
+    QList<QPair<Player*,Game*> > list;
+    for (int i = 0; i<m_game->players->value().size();i++){
+        QPair<Player*,Game*> pair;
+        pair.first = m_game->players->value(i);
+        pair.second = m_game;
+        list.append(pair);
+    }
+    qSort(list.begin(),list.end(),sortPlayersByPlacement);
+    for(int i = 0; i<list.size();i++){
+        alist.append(list.at(i).first);
+    }
+    return alist;
+}
+
 AttributeList<Player*> LiveGameCalculator::calculate_currentPlayingPlayers(){
     /*
     if(m_livegame->currentRound->value() != 0){

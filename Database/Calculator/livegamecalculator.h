@@ -27,6 +27,8 @@ public:
 
     AttributeList<Player*> calculate_playersSortedByPosition();
 
+    AttributeList<Player*> calculate_playersSortedByPlacement();
+
     AttributeList<Player*> calculate_currentPlayingPlayers();
 
     AttributeList<Drink*> calculate_drinks();
@@ -64,5 +66,7 @@ protected:
 } // namespace Database
 
 bool sortPlayersByPosition(QPair<Database::Player*,Database::Game*> pair1, QPair<Database::Player*,Database::Game*> pair2);
+
+bool sortPlayersByPlacement(QPair<Database::Player*,Database::Game*> pair1, QPair<Database::Player*,Database::Game*> pair2);
 
 #endif // DATABASE_LIVEGAMECALCULATOR_H

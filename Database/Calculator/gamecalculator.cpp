@@ -52,6 +52,10 @@ AttributeList<Player*> GameCalculator::calculate_playersSortedByPosition(){
     return m_game->players->value();
 }
 
+AttributeList<Player*> GameCalculator::calculate_playersSortedByPlacement(){
+    return m_game->players->value();
+}
+
 QTime GameCalculator::calculate_length(){
     return QTime();
 }

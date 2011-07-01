@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql webkit network xml
 
 TARGET = ProjectStats
 TEMPLATE = app
@@ -66,7 +66,49 @@ SOURCES += main.cpp\
     Database/Calculator/skatlivegamecalculator.cpp \
     Database/Calculator/dokolivegamecalculator.cpp \
     Database/Calculator/dokoroundcalculator.cpp \
-    databasewindow.cpp
+    databasewindow.cpp \
+    Gui/MainWindow/toolbar.cpp \
+    Gui/MainWindow/statusbarbutton.cpp \
+    Gui/MainWindow/statusbar.cpp \
+    Gui/MainWindow/menubar.cpp \
+    Gui/MainWindow/mainwindow.cpp \
+    Gui/MainWindow/actionsmanager.cpp \
+    Gui/MainWindow/Sidebar/sidebartreeview.cpp \
+    Gui/MainWindow/Sidebar/sidebarstatusbardragbutton.cpp \
+    Gui/MainWindow/Sidebar/sidebarstatusbar.cpp \
+    Gui/MainWindow/Sidebar/sidebaritemdelegate.cpp \
+    Gui/MainWindow/Sidebar/sidebar.cpp \
+    Gui/MainWindow/Views/view.cpp \
+    Gui/MainWindow/Views/ListView/listview.cpp \
+    Gui/Details/PlaceDetails/placedetailswidget.cpp \
+    Gui/Details/PlaceDetails/googlemap.cpp \
+    Gui/Details/GameDetails/gamesummarywidget.cpp \
+    Gui/Details/GameDetails/gamedetailswidget.cpp \
+    Gui/Details/DrinkDetails/DrinkDetailsWidget.cpp \
+    Gui/Details/detailswidget.cpp \
+    Gui/Filter/newleaguedialog.cpp \
+    Gui/Filter/changematchdaybar.cpp \
+    Gui/Misc/valuelabel.cpp \
+    Gui/Misc/splitter.cpp \
+    Gui/Misc/psprogressbar.cpp \
+    Gui/Misc/progressinfoboxwidget.cpp \
+    Gui/Misc/placescombobox.cpp \
+    Gui/Misc/newrowwidget.cpp \
+    Gui/Misc/headerlabel.cpp \
+    Gui/Misc/draggablelabel.cpp \
+    Gui/Misc/clickablelabel.cpp \
+    Database/Categories/playersfoldercategorie.cpp \
+    Database/Categories/playerscategorie.cpp \
+    Database/Categories/placesfoldercategorie.cpp \
+    Database/Categories/placescategorie.cpp \
+    Database/Categories/parentcategorie.cpp \
+    Database/Categories/gamesfoldercategorie.cpp \
+    Database/Categories/gamescategorie.cpp \
+    Database/Categories/foldercategorie.cpp \
+    Database/Categories/drinksfoldercategorie.cpp \
+    Database/Categories/drinkscategorie.cpp \
+    Database/Categories/childcategorie.cpp \
+    Models/categoriesmodel.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -126,9 +168,57 @@ HEADERS  += \
     Database/Calculator/skatlivegamecalculator.h \
     Database/Calculator/dokolivegamecalculator.h \
     Database/Calculator/dokoroundcalculator.h \
-    databasewindow.h
+    databasewindow.h \
+    Gui/MainWindow/toolbar.h \
+    Gui/MainWindow/statusbarbutton.h \
+    Gui/MainWindow/statusbar.h \
+    Gui/MainWindow/menubar.h \
+    Gui/MainWindow/mainwindow.h \
+    Gui/MainWindow/actionsmanager.h \
+    Gui/MainWindow/Sidebar/sidebartreeview.h \
+    Gui/MainWindow/Sidebar/sidebarstatusbardragbutton.h \
+    Gui/MainWindow/Sidebar/sidebarstatusbar.h \
+    Gui/MainWindow/Sidebar/sidebaritemdelegate.h \
+    Gui/MainWindow/Sidebar/sidebar.h \
+    Gui/MainWindow/Views/view.h \
+    Gui/MainWindow/Views/ListView/listview.h \
+    Gui/Details/PlaceDetails/placedetailswidget.h \
+    Gui/Details/PlaceDetails/googlemap.h \
+    Gui/Details/GameDetails/gamesummarywidget.h \
+    Gui/Details/GameDetails/gamedetailswidget.h \
+    Gui/Details/DrinkDetails/DrinkDetailsWidget.h \
+    Gui/Details/detailswidget.h \
+    Gui/Filter/newleaguedialog.h \
+    Gui/Filter/changematchdaybar.h \
+    Gui/Misc/valuelabel.h \
+    Gui/Misc/splitter.h \
+    Gui/Misc/psprogressbar.h \
+    Gui/Misc/progressinfoboxwidget.h \
+    Gui/Misc/placescombobox.h \
+    Gui/Misc/newrowwidget.h \
+    Gui/Misc/headerlabel.h \
+    Gui/Misc/draggablelabel.h \
+    Gui/Misc/clickablelabel.h \
+    Database/Categories/playersfoldercategorie.h \
+    Database/Categories/playerscategorie.h \
+    Database/Categories/placesfoldercategorie.h \
+    Database/Categories/placescategorie.h \
+    Database/Categories/parentcategorie.h \
+    Database/Categories/gamesfoldercategorie.h \
+    Database/Categories/gamescategorie.h \
+    Database/Categories/foldercategorie.h \
+    Database/Categories/drinksfoldercategorie.h \
+    Database/Categories/drinkscategorie.h \
+    Database/Categories/childcategorie.h \
+    Models/categoriesmodel.h
 
-FORMS    +=
+FORMS    += \
+    Gui/Details/PlaceDetails/placedetailswidget.ui \
+    Gui/Details/GameDetails/gamesummarywidget.ui \
+    Gui/Details/GameDetails/gamedetailswidget.ui \
+    Gui/Details/DrinkDetails/DrinkDetailsWidget.ui \
+    Gui/Filter/newleaguedialog.ui \
+    Gui/Misc/newrowwidget.ui
 
 mac {
     HEADERS += cocoainitializer.h

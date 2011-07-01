@@ -6,10 +6,9 @@
 #include <QVariant>
 
 #include <Database/attributehash.h>
+#include <Database/attributelist.h>
 
 class MessageSystem;
-
-class DatabaseWindow;
 
 namespace Database
 {
@@ -19,11 +18,12 @@ namespace Database
     class Game;
     class LiveGame;
     class Round;
+    class ChildCategorie;
+    class ParentCategorie;
 }
 
-class Updater;
 
-/*
+class Updater;
 
 namespace Gui
 {
@@ -32,8 +32,6 @@ namespace Gui
 	class MainWindow;
     }
 }
-
-*/
 
 //! Der Startpunkt dieses Programms.
 /*!
@@ -102,7 +100,7 @@ public:
     void checkForUpdates();
 
 
-    DatabaseWindow *mainWindow() const;
+    Gui::MainWindow::MainWindow *mainWindow() const;
 
 
 private:
@@ -113,7 +111,7 @@ private:
     QString getDatabaseFileName();
 
     QPointer<Database::Database> m_database; //!< Die Datenbank mit der aktuell gearbeitet wird.
-    QPointer<DatabaseWindow> m_mainwindow; //!< Das aktuelle MainWindow
+    QPointer<Gui::MainWindow::MainWindow> m_mainwindow; //!< Das aktuelle MainWindow
     MessageSystem* m_messagesystem; //! Das MessageSystem-Objekt
     Updater *m_updater;
 
@@ -126,12 +124,15 @@ private:
 Q_DECLARE_METATYPE(QPointer<Database::Player>)
 Q_DECLARE_METATYPE(QPointer<Database::Round>)
 Q_DECLARE_METATYPE(QPointer<Database::Game>)
+Q_DECLARE_METATYPE(Database::ParentCategorie*)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::LiveGame* COMMA double>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA bool>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA double>)
 Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA int>)
 Q_DECLARE_METATYPE(Database::AttributeHash<QPair<Database::Player* COMMA Database::Player*> COMMA int>)
 Q_DECLARE_METATYPE(Database::AttributeHash<int COMMA int>)
+Q_DECLARE_METATYPE(Database::AttributeList<int>)
+Q_DECLARE_METATYPE(Database::AttributeList<Database::ChildCategorie*>)
 
 
 #endif // HANDLER_H

@@ -26,6 +26,8 @@ public:
 
     virtual AttributeList<Player*> calculate_playersSortedByPosition();
 
+    virtual AttributeList<Player*> calculate_playersSortedByPlacement();
+
     virtual AttributeHash<Player*,int> calculate_placement();
 
     virtual AttributeHash<Player*,int> calculate_points();

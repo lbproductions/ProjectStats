@@ -1,0 +1,63 @@
+#include "gamesummarywidget.h"
+#include "ui_gamesummarywidget.h"
+
+#include <Database/livegame.h>
+#include <Database/player.h>
+#include <Gui/Details/GameDetails/gamedetailswidget.h>
+
+#include <QGridLayout>
+#include <QLabel>
+#include <QDebug>
+
+using namespace Gui::Details::GameDetails;
+
+GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
+    DetailsWidget(game,parent),
+    ui(new Ui::GameSummaryWidget)
+{
+    ui->setupUi(this);
+
+    m_game = game;
+
+    Gui::Details::GameDetailsWidget* widget = new Gui::Details::GameDetailsWidget(m_game,this);
+    ui->verticalLayoutGameWidget->addWidget(widget);
+
+    QGridLayout* layout = new QGridLayout();
+    for(int i = 0; i<m_game->playersSortedByPlacement->value().size();i++){
+        QLabel* position = new QLabel(QString::number(m_game->placement->value(m_game->playersSortedByPlacement->value().at(i))));
+        position->setAlignment(Qt::AlignCenter);
+        QLabel* name = new QLabel(m_game->playersSortedByPlacement->value().at(i)->name->value());
+        name->setAlignment(Qt::AlignCenter);
+        QFont font = name->font();
+        font.setBold(true);
+        font.setPointSize(14);
+        QPixmap pixmap;
+        switch(m_game->placement->value(m_game->playersSortedByPlacement->value().at(i))){
+        case 1:
+            pixmap.load(":/graphics/icons/general/medals/goldmedal");
+            position->setPixmap(pixmap.scaled(50,50));
+            name->setFont(font);
+            break;
+        case 2:
+            pixmap.load(":/graphics/icons/general/medals/silvermedal");
+            position->setPixmap(pixmap.scaled(50,50));
+            name->setFont(font);
+            break;
+        case 3:
+            pixmap.load(":/graphics/icons/general/medals/broncemedal");
+            position->setPixmap(pixmap.scaled(50,50));
+            name->setFont(font);
+            break;
+        default:
+            break;
+        }
+        layout->addWidget(position,i,0);
+        layout->addWidget(name,i,1);
+    }
+    ui->tab->setLayout(layout);
+}
+
+GameSummaryWidget::~GameSummaryWidget()
+{
+    delete ui;
+}
