@@ -126,4 +126,9 @@ Gui::Details::DetailsWidget* Row::detailsWidget()
     return new Gui::Details::DetailsWidget(this);
 }
 
+TableBase *Row::table() const
+{
+    return m_table;
+}
+
 } // namespace Database

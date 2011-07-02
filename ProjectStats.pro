@@ -210,7 +210,8 @@ HEADERS  += \
     Database/Categories/drinksfoldercategorie.h \
     Database/Categories/drinkscategorie.h \
     Database/Categories/childcategorie.h \
-    Models/categoriesmodel.h
+    Models/categoriesmodel.h \
+    Database/Filters/rules.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \

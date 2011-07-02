@@ -39,8 +39,9 @@ AttributeHash<Key,V>::AttributeHash(QObject *parent) :
 
 template<class Key, class V>
 typename QMap<Key, V>::iterator AttributeHash<Key,V>::insert ( const Key & key, const V & value ){
-    QMap<Key,V>::insert(key,value);
+    typename QMap<Key, V>::iterator it = QMap<Key,V>::insert(key,value);
     emit AttributeHash<Key,V>::changed();
+    return it;
 }
 
 }

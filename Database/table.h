@@ -79,6 +79,8 @@ public:
 
     void deleteRow(Row *row);
 
+    virtual void insertRow(Row *row) = 0;
+
 protected:
     friend class Database;
 
@@ -138,7 +140,7 @@ public:
       Fügt die Row \p row der Datenbank hinzu.<br>
       Diese Row sollte eine nicht valide Row mit ID = 0 sein, mit korrektem Typ und allen entscheidenden Attributen gesetzt.
       */
-    void insertRow(RowType *row);
+    void insertRow(Row *row);
 
     void registerRowType(Row *row);
 
@@ -412,7 +414,7 @@ QPointer<RowType> Table<RowType>::rowById(int id)
 }
 
 template<class RowType>
-void Table<RowType>::insertRow(RowType *row)
+void Table<RowType>::insertRow(Row *row)
 {
     qDebug() << "Table<RowType>::insertRow: Inserting row";
 
@@ -443,8 +445,13 @@ void Table<RowType>::insertRow(RowType *row)
     row->setId(id);
 
     m_model->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
-    m_rows->value().insert(id,row);
+    m_rows->value().insert(id,static_cast<RowType*>(row));
     m_rows->emitChanged();
+
+    foreach(Row *childRow, row->childRows())
+    {
+	childRow->table()->insertRow(childRow);
+    }
 
     m_model->updateData();
 

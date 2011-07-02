@@ -89,6 +89,8 @@ public:
 
     virtual Gui::Details::DetailsWidget* detailsWidget();
 
+    TableBase *table() const;
+
 protected:
     /*!
       Erstellt ein Row Objekt, welches in der Tabelle \p table  die Daten mit der ID  \p id repräsentiert.
