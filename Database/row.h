@@ -13,7 +13,15 @@
 #include <Database/attributelist.h>
 #include <Database/attributehash.h>
 
-#include <Gui/Details/detailswidget.h>
+namespace Gui{
+    namespace Details{
+        class DetailsWidget;
+        class RowWidget;
+        class RowWindow;
+        class StatsWidget;
+        class SummaryWidget;
+    }
+}
 
 namespace Database {
 
@@ -88,6 +96,14 @@ public:
     QList<Row*> childRows() const;
 
     virtual Gui::Details::DetailsWidget* detailsWidget();
+
+    virtual Gui::Details::RowWidget* rowWidget();
+
+    virtual Gui::Details::RowWindow* rowWindow();
+
+    virtual Gui::Details::StatsWidget* statsWidget();
+
+    virtual Gui::Details::SummaryWidget* summaryWidget();
 
 protected:
     /*!

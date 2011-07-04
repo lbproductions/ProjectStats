@@ -161,7 +161,10 @@ void PlaceDetailsWidget::on_comboBoxPlayer_currentIndexChanged(QString /*name*/)
 {
     Q_ASSERT(!m_place.isNull());
     if (ui->comboBoxPlayer->currentText() != ""){
-        m_place->playerId->setValue(Database::Players::instance()->rowsBySqlCondition("WHERE name = " + ui->comboBoxPlayer->currentText()).first()->id());
+        QList<Database::Player*> list = Database::Players::instance()->rowsBySqlCondition("WHERE name = " + ui->comboBoxPlayer->currentText());
+        if(list.size() > 0){
+            m_place->playerId->setValue(list.first()->id());
+        }
     }
 }
 

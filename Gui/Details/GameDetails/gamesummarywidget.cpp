@@ -12,7 +12,7 @@
 using namespace Gui::Details::GameDetails;
 
 GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
-    DetailsWidget(game,parent),
+    SummaryWidget(parent),
     ui(new Ui::GameSummaryWidget)
 {
     ui->setupUi(this);

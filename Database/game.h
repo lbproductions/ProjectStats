@@ -42,6 +42,9 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement)
     DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,points)
 
+    Gui::Details::SummaryWidget* summaryWidget();
+
+    virtual Gui::Details::DetailsWidget* detailsWidget();
 
 END_ROW_DECLARATION(Game)
 

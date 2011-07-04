@@ -9,6 +9,9 @@
 #include "Skat/skatlivegame.h"
 #include "offlinegame.h"
 
+#include <Gui/Details/GameDetails/gamedetailswidget.h>
+#include <Gui/Details/GameDetails/gamesummarywidget.h>
+
 #include <QDateTime>
 
 START_TABLE_IMPLEMENTATION(Game)
@@ -93,5 +96,12 @@ QPointer<Place> Game::calculate_site()
     return Places::instance()->rowById(this->siteId->value());
 }
 
+Gui::Details::SummaryWidget* Game::summaryWidget(){
+    return new Gui::Details::GameDetails::GameSummaryWidget(this);
+}
+
+Gui::Details::DetailsWidget* Game::detailsWidget(){
+    return new Gui::Details::GameDetailsWidget(this);
+}
 
 END_ROW_IMPLEMENTATION()

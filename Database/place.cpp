@@ -5,6 +5,8 @@
 #include <Logger/logger.h>
 #include "game.h"
 
+#include <Gui/Details/PlaceDetails/placedetailswidget.h>
+
 START_TABLE_IMPLEMENTATION(Place)
 END_TABLE_IMPLEMENTATION()
 
@@ -52,6 +54,10 @@ QImage Place::calculate_icon(){
 
 QString Place::calculate_displayString(){
     return strasse->value() + " " + QString::number(nummer->value()) + ", " + ort->value();
+}
+
+Gui::Details::DetailsWidget* Place::detailsWidget(){
+    return new Gui::Details::PlaceDetailsWidget(this);
 }
 
 END_ROW_IMPLEMENTATION()

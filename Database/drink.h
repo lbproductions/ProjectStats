@@ -29,6 +29,8 @@ START_ROW_DECLARATION(Drink, Row)
 
     DECLARE_ATTRIBUTE_IN_CALC(int,Drink,DrinkCalculator,drinkCount)
 
+    Gui::Details::DetailsWidget* detailsWidget();
+
 END_ROW_DECLARATION(Drink)
 
 START_TABLE_DECLARATION(Drink)

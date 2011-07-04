@@ -19,8 +19,8 @@ namespace Gui
 
 namespace Details
 {
-    //class DetailsWidget;
-    //class RowWidget;
+    class DetailsWidget;
+    class RowWidget;
 }
 
 namespace Misc
@@ -75,7 +75,7 @@ private:
     QPointer<Database::ChildCategorie> m_categorie;
 
     QPointer<QScrollArea> m_scrollAreaDetails; //!< In dieser ScrollArea werden die DetailsWidgets angezeigt.
-    //QPointer<Details::RowWidget> m_rowWidget; //!< Speichert das aktuelle RowWidget
+    QPointer<Details::RowWidget> m_rowWidget; //!< Speichert das aktuelle RowWidget
     QPointer<Misc::Splitter> m_horizontalSplitter; //!< Enthält oben die ItemsList und unten ein DetailsWidget.
     QPointer<Misc::RowList> m_rowList;
 

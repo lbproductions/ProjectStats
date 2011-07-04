@@ -30,6 +30,7 @@ START_ROW_DECLARATION(Place, Row)
 
     DECLARE_ATTRIBUTE(QString,Place,displayString)
 
+    Gui::Details::DetailsWidget* detailsWidget();
 
 END_ROW_DECLARATION(Place)
 

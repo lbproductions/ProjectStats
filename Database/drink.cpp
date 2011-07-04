@@ -6,6 +6,8 @@
 #include <Database/Calculator/drinkcalculator.h>
 #include <Database/livegame.h>
 
+#include <Gui/Details/DrinkDetails/DrinkDetailsWidget.h>
+
 START_TABLE_IMPLEMENTATION(Drink)
 END_TABLE_IMPLEMENTATION()
 
@@ -89,6 +91,10 @@ QString Drink::update_test2_test()
 
 QImage Drink::calculate_icon(){
     return QImage(iconPath->value()).scaledToHeight(40);
+}
+
+Gui::Details::DetailsWidget* Drink::detailsWidget(){
+    return new Gui::Details::DrinkDetailsWidget(this);
 }
 
 END_ROW_IMPLEMENTATION()
