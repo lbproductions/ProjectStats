@@ -27,5 +27,7 @@ RowWindow::RowWindow(Database::Row* row, QWidget *parent) :
     QScrollArea *scrollArea = new QScrollArea(this);
     scrollArea->setWidget(m_rowWidget);
     setCentralWidget(scrollArea);
+#ifdef Q_WS_MAC
     setUpFullScreenButton(this);
+#endif
 }
