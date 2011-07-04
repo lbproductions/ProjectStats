@@ -4,6 +4,7 @@
 
 #include <Database/row.h>
 #include <Gui/Details/rowwidget.h>
+#include <Gui/Misc/macwindowcontroller.h>
 
 using namespace Gui::Details;
 
@@ -26,4 +27,5 @@ RowWindow::RowWindow(Database::Row* row, QWidget *parent) :
     QScrollArea *scrollArea = new QScrollArea(this);
     scrollArea->setWidget(m_rowWidget);
     setCentralWidget(scrollArea);
+    setUpFullScreenButton(this);
 }
