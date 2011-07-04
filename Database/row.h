@@ -13,7 +13,15 @@
 #include <Database/attributelist.h>
 #include <Database/attributehash.h>
 
-#include <Gui/Details/detailswidget.h>
+namespace Gui{
+    namespace Details{
+        class DetailsWidget;
+        class RowWidget;
+        class RowWindow;
+        class StatsWidget;
+        class SummaryWidget;
+    }
+}
 
 namespace Database {
 
@@ -90,6 +98,15 @@ public:
     virtual Gui::Details::DetailsWidget* detailsWidget();
 
     TableBase *table() const;
+
+    virtual Gui::Details::RowWidget* rowWidget();
+
+    virtual Gui::Details::RowWindow* rowWindow();
+
+    virtual Gui::Details::StatsWidget* statsWidget();
+
+    virtual Gui::Details::SummaryWidget* summaryWidget();
+
 
 protected:
     /*!

@@ -1,7 +1,8 @@
 #import "macwindowcontroller.h"
 
-
 #ifdef Q_WS_MAC
+
+#include <Cocoa/Cocoa.h>
 
 @interface MacWindowController : NSObject {
     QWidget *m_widget;
@@ -33,6 +34,7 @@
 
 - (IBAction)enterFullScreen: sender
 {
+    (void) sender; //supress unused parameter error
     NSView *view = (NSView*) m_widget->winId();
     NSWindow* window = [view window];
 //    [view enterFullScreenMode: view.window.screen

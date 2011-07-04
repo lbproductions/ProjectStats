@@ -15,7 +15,6 @@
 START_TABLE_IMPLEMENTATION(Categorie)
 QPointer<Categorie> Categories::createRowInstance(int id)
 {
-    qDebug() << "Categories::createRowInstance(int id) wird ausgeführt";
     int categorieId = id;
     Categorie* c = new Categorie(categorieId, this);
 

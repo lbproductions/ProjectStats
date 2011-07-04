@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QPointer>
 
-#include <Gui/Details/detailswidget.h>
+#include <Gui/Details/summarywidget.h>
 
 namespace Ui {
     class GameSummaryWidget;
@@ -25,7 +25,7 @@ namespace Details
 namespace GameDetails
 {
 
-class GameSummaryWidget : public DetailsWidget
+class GameSummaryWidget : public SummaryWidget
 {
     Q_OBJECT
 

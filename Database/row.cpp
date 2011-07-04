@@ -3,6 +3,12 @@
 #include "attribute.h"
 #include "table.h"
 
+#include <Gui/Details/detailswidget.h>
+#include <Gui/Details/rowwidget.h>
+#include <Gui/Details/rowwindow.h>
+#include <Gui/Details/statswidget.h>
+#include <Gui/Details/summarywidget.h>
+
 namespace Database {
 
 Row::Row(int id, TableBase *table) :
@@ -123,7 +129,23 @@ void Row::addChildRows(QList<Row *> rows)
 
 Gui::Details::DetailsWidget* Row::detailsWidget()
 {
-    return new Gui::Details::DetailsWidget(this);
+    return 0;
+}
+
+Gui::Details::RowWidget* Row::rowWidget(){
+    return new Gui::Details::RowWidget(this);
+}
+
+Gui::Details::RowWindow* Row::rowWindow(){
+    return new Gui::Details::RowWindow(this);
+}
+
+Gui::Details::StatsWidget* Row::statsWidget(){
+    return 0;
+}
+
+Gui::Details::SummaryWidget* Row::summaryWidget(){
+    return 0;
 }
 
 TableBase *Row::table() const

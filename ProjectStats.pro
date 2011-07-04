@@ -108,7 +108,11 @@ SOURCES += main.cpp\
     Database/Categories/drinksfoldercategorie.cpp \
     Database/Categories/drinkscategorie.cpp \
     Database/Categories/childcategorie.cpp \
-    Models/categoriesmodel.cpp
+    Models/categoriesmodel.cpp \
+    Gui/Details/statswidget.cpp \
+    Gui/Details/rowwindow.cpp \
+    Gui/Details/rowwidget.cpp \
+    Gui/Details/summarywidget.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -212,7 +216,11 @@ HEADERS  += \
     Database/Categories/childcategorie.h \
     Models/categoriesmodel.h \
     Database/Filters/rules.h \
-    Gui/Misc/macwindowcontroller.h
+    Gui/Misc/macwindowcontroller.h \
+    Gui/Details/statswidget.h \
+    Gui/Details/rowwindow.h \
+    Gui/Details/rowwidget.h \
+    Gui/Details/summarywidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \

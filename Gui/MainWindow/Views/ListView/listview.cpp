@@ -3,9 +3,10 @@
 #include <Database/Categories/childcategorie.h>
 #include <Gui/Misc/rowlist.h>
 #include <Gui/Misc/splitter.h>
-//#include <Gui/Details/rowwidget.h>
-//#include <Gui/Details/rowwindow.h>
+#include <Gui/Details/rowwidget.h>
+#include <Gui/Details/rowwindow.h>
 #include <Gui/Details/detailswidget.h>
+#include <Gui/Details/summarywidget.h>
 #include <Gui/MainWindow/mainwindow.h>
 #include <Gui/MainWindow/statusbar.h>
 #include <handler.h>
@@ -83,19 +84,16 @@ void ListView::restoreSettings()
 }
 
 void ListView::on_rowList_selectionChanged()
-{
-    /*
+{   
     if(!m_rowWidget.isNull())
     {
 	m_rowWidget->setVisible(false);
 	m_rowWidget->deleteLater();
     }
-    */
 }
 
 void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
 {
-    /*
     if(list.isEmpty())
     {
 	return;
@@ -113,38 +111,45 @@ void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
 	m_rowWidget->deleteLater();
     }
 
-    Details::RowWidget* newRowWidget = firstRow->widget();
-    if(newRowWidget == 0)
-    {
-	return;
+    Details::SummaryWidget* summaryWidget = firstRow->summaryWidget();
+
+    if(summaryWidget == 0){
+        Details::RowWidget* newRowWidget = firstRow->rowWidget();
+        if(newRowWidget == 0 || firstRow->detailsWidget() == 0)
+        {
+            return;
+        }
+
+        m_rowWidget = newRowWidget;
+        m_rowWidget->detailsWidget()->setEditable(false);
+
+        if(!m_rowWidget.isNull() && m_rowWidget->detailsWidget() != 0 && !m_editButtonAction.isNull())
+        {
+             m_rowWidget->detailsWidget()->setEditable(m_editButtonAction->isChecked());
+        }
+
+        updateStatusbar();
+
+        m_scrollAreaDetails->setWidget(m_rowWidget);
+    }
+    else{
+        m_scrollAreaDetails->setWidget(summaryWidget);
     }
 
-    m_rowWidget = newRowWidget;
-    m_rowWidget->detailsWidget()->setEditable(false);
 
-    if(!m_rowWidget.isNull() && m_rowWidget->detailsWidget() != 0 && !m_editButtonAction.isNull())
-    {
-	 m_rowWidget->detailsWidget()->setEditable(m_editButtonAction->isChecked());
-    }
-
-    updateStatusbar();
-
-    m_scrollAreaDetails->setWidget(m_rowWidget);
-    */
 }
 
 void ListView::on_rowList_rowDoubleClicked(Database::Row *row)
 {
-    /*
     if(row == 0)
     {
 	return;
     }
 
-    QWidget *newRowWindow = row->window();
+    QWidget *newRowWindow = row->rowWindow();
     if(newRowWindow == 0)
     {
-	newRowWindow = row->widget();
+        newRowWindow = row->rowWidget();
     }
     if(newRowWindow == 0)
     {
@@ -152,12 +157,10 @@ void ListView::on_rowList_rowDoubleClicked(Database::Row *row)
     }
 
     newRowWindow->show();
-    */
 }
 
 void Gui::MainWindow::Views::ListView::updateStatusbar()
 {
-    /*
     if(Handler::getInstance()->mainWindow() != 0 &&
 	    Handler::getInstance()->mainWindow()->statusBar() != 0)
     {
@@ -172,7 +175,6 @@ void Gui::MainWindow::Views::ListView::updateStatusbar()
 	    Handler::getInstance()->mainWindow()->statusBar()->disableLeftButton();
 	}
     }
-    */
 }
 
 QAction * Gui::MainWindow::Views::ListView::editButtonAction()
@@ -189,10 +191,8 @@ QAction * Gui::MainWindow::Views::ListView::editButtonAction()
 
 void Gui::MainWindow::Views::ListView::on_editActionToggled(bool checked)
 {
-    /*
     if(!m_rowWidget.isNull() && m_rowWidget->detailsWidget() != 0)
     {
 	 m_rowWidget->detailsWidget()->setEditable(checked);
     }
-    */
 }
