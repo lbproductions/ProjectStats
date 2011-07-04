@@ -75,7 +75,7 @@ QPointer<Categorie> Categories::createRowInstance(int id)
         cc->deleteLater();
 
     }
-    qDebug() << "Categories::createRowInstance(int id) wird beendet";
+
     return c;
 }
 

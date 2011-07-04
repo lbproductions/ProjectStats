@@ -317,7 +317,12 @@ void Table<RowType>::initializeCache()
     while(select.next())
     {
 	id = select.value(0).toInt();
-	m_rows->value().insert(id, createRowInstance(id));
+        RowType *rowInstance = createRowInstance(id);
+
+        if(rowInstance)
+        {
+            m_rows->value().insert(id, rowInstance);
+        }
     }
     select.finish();
 
@@ -357,12 +362,15 @@ void Table<RowType>::initializeRowCaches()
 	    AttributeBase *attribute = databaseAttributes.at(i);
 	    Row *row = m_rows->value().value(select.value(0).toInt());
 
-            QString name = attribute->name();
-	    AttributeBase *rowAttribute = row->attribute(name);
-	    if(rowAttribute != 0)
-	    {
-		rowAttribute->setValue(select.value(i+1),false);
-	    }
+            if(attribute && row)
+            {
+                QString name = attribute->name();
+                AttributeBase *rowAttribute = row->attribute(name);
+                if(rowAttribute != 0)
+                {
+                    rowAttribute->setValue(select.value(i+1),false);
+                }
+            }
 	}
     }
 }

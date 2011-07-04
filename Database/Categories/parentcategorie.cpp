@@ -16,7 +16,10 @@ AttributeList<ChildCategorie*> ParentCategorie::calculate_childCategories()
     QList<Categorie*> qlist = Categories::instance()->rowsBySqlCondition("WHERE parentId = "+QString::number(m_id)+" ORDER BY orderIndicator ASC");
     AttributeList<ChildCategorie*> list;
     foreach(Categorie* c, qlist){
-        list.append(static_cast<ChildCategorie*>(c));
+        if(c)
+        {
+            list.append(static_cast<ChildCategorie*>(c));
+        }
     }
     return list;
     /*
