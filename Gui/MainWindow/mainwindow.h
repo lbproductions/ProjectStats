@@ -115,7 +115,6 @@ private:
       Speichert beim Beenden des Fensters alle möglichen Einstellungen, wie Größe und Splitter-Positionen.
       */
     void saveSettings();
-
 };
 
 }

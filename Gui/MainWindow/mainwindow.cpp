@@ -15,6 +15,7 @@
 #include <Database/database.h>
 #include <Database/Categories/childcategorie.h>
 #include <Gui/Misc/splitter.h>
+#include <Gui/Misc/macwindowcontroller.h>
 
 #include <QScrollArea>
 #include <QSettings>
@@ -46,6 +47,10 @@ MainWindow::MainWindow(QWidget *parent) :
     restoreSettings();
 
     Handler::getInstance()->messageSystem()->showWelcomeMessage();
+
+#ifdef Q_WS_MAC
+    setUpFullScreenButton(this);
+#endif
 }
 
 MainWindow::~MainWindow()
@@ -71,7 +76,7 @@ void MainWindow::restoreSettings()
 {
     QSettings settings;
     restoreState(settings.value("MainWindow/windowState").toByteArray());
-    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
+    //restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     m_verticalSplitter->restoreState(settings.value("MainWindow/verticalSplitter/windowState").toByteArray());
     m_verticalSplitter->restoreGeometry(settings.value("MainWindow/verticalSplitter/geometry").toByteArray());
 #ifdef Q_WS_MAC

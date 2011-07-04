@@ -211,7 +211,8 @@ HEADERS  += \
     Database/Categories/drinkscategorie.h \
     Database/Categories/childcategorie.h \
     Models/categoriesmodel.h \
-    Database/Filters/rules.h
+    Database/Filters/rules.h \
+    Gui/Misc/macwindowcontroller.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -223,7 +224,8 @@ FORMS    += \
 
 mac {
     HEADERS += cocoainitializer.h
-    OBJECTIVE_SOURCES += cocoainitializer.mm
+    OBJECTIVE_SOURCES += cocoainitializer.mm \
+                        Gui/Misc/macwindowcontroller.mm
     LIBS += -framework AppKit
 }
 
