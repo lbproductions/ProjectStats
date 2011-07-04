@@ -45,7 +45,7 @@ void PSProgressBar::setNormalMode(){
 
 }
 
-void PSProgressBar::mousePressEvent(QMouseEvent *event){
+void PSProgressBar::mousePressEvent(QMouseEvent * /*event*/){
     if (m_values.keys().size() > 0){
         QPair<int,ValueLabel*> pair = m_values.value(m_values.keys().at(m_clickcount%m_values.keys().size()));
         this->setValue(pair.first);

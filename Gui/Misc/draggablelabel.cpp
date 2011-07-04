@@ -11,7 +11,7 @@ DraggableLabel::DraggableLabel(Database::Row* row, QWidget *parent) :
     m_row = row;
 }
 
-void DraggableLabel::mousePressEvent(QMouseEvent *event){
+void DraggableLabel::mousePressEvent(QMouseEvent * /*event*/){
     QDrag *drag = new QDrag(this);
     QMimeData *mimeData = new QMimeData;
 
@@ -25,7 +25,7 @@ void DraggableLabel::mousePressEvent(QMouseEvent *event){
     pixmap.load(static_cast<Database::Drink*>(m_row)->iconPath->value());
     drag->setPixmap(pixmap);
 
-    Qt::DropAction dropAction = drag->exec();
+    drag->exec();
 }
 
 
