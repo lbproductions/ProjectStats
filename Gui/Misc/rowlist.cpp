@@ -1,5 +1,7 @@
 #include "rowlist.h"
 
+#include "rowlistheader.h"
+
 #include <Models/tablemodel.h>
 #include <Database/samplerow.h>
 
@@ -31,6 +33,8 @@ RowList::RowList(Models::TableModelBase *model, QWidget *parent) :
     setModel(model);
 
     connect(this,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(on_doubleClicked(QModelIndex)));
+
+    setHeader(new RowListHeader(Qt::Horizontal));
 }
 
 RowList::~RowList()

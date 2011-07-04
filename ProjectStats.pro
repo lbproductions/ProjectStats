@@ -112,7 +112,8 @@ SOURCES += main.cpp\
     Gui/Details/statswidget.cpp \
     Gui/Details/rowwindow.cpp \
     Gui/Details/rowwidget.cpp \
-    Gui/Details/summarywidget.cpp
+    Gui/Details/summarywidget.cpp \
+    Gui/Misc/rowlistheader.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -220,7 +221,8 @@ HEADERS  += \
     Gui/Details/statswidget.h \
     Gui/Details/rowwindow.h \
     Gui/Details/rowwidget.h \
-    Gui/Details/summarywidget.h
+    Gui/Details/summarywidget.h \
+    Gui/Misc/rowlistheader.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
