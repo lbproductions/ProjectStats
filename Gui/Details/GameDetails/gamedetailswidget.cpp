@@ -22,7 +22,7 @@ GameDetailsWidget::GameDetailsWidget(Database::Game* game, QWidget *parent) :
 
     ui->formLayout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
-    m_placesComboBox = new Misc::PlacesComboBox(Database::Places::instance(),this);
+    m_placesComboBox = new Misc::PlacesComboBox(this);
     ui->horizontalLayoutResidence->addWidget(m_placesComboBox);
 
     setEditable(false);

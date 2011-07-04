@@ -10,14 +10,10 @@
 
 using namespace Gui::Misc;
 
-PlacesComboBox::PlacesComboBox(Database::Places *placesTable, QWidget *parent) :
+PlacesComboBox::PlacesComboBox(QWidget *parent) :
     QComboBox(parent),
-    m_places(placesTable)
+    placeIndexBefore(-1)
 {
-
-    placeIndexBefore = -1;
-
-    connect(m_places,SIGNAL(rowChanged(Row*)),this,SLOT(updateView()));
     connect(this,SIGNAL(currentIndexChanged(int)),this,SLOT(on_currentIndexChanged()));
 
     updateView();
@@ -28,9 +24,7 @@ void PlacesComboBox::updateView()
     this->clear();
     m_placePositions.clear();
 
-    Q_ASSERT(!m_places.isNull());
-
-    addItems(m_places->allRows());
+    addItems(Database::Places::instance()->allRows());
 
     insertSeparator(count());
 
@@ -49,10 +43,12 @@ void PlacesComboBox::on_currentIndexChanged()
 	createplace->show();
 	return;
     }
-    if (placeIndexBefore != -1){
-        emit currentIndexChanged(m_places->rowById(m_placePositions.at(placeIndexBefore)),currentPlace());
+    if (placeIndexBefore != -1 && placeIndexBefore < m_placePositions.count())
+    {
+        emit currentIndexChanged(Database::Places::instance()->rowById(m_placePositions.at(placeIndexBefore)),currentPlace());
     }
-    else{
+    else
+    {
 	emit currentIndexChanged(0,currentPlace());
     }
 
@@ -76,14 +72,10 @@ void PlacesComboBox::on_placeCreationCanceled()
 
 void PlacesComboBox::addItems(const QList<Database::Place*> &places)
 {
-    QListIterator<Database::Place*> it(places);
-    while(it.hasNext()) {
-	QPointer<Database::Place> p = it.next();
-
-	Q_ASSERT(p != 0);
-
-	m_placePositions.insert(m_placePositions.size(),p->id());
-        QComboBox::addItem(p->displayString->value());
+    foreach(Database::Place *place, places)
+    {
+        m_placePositions.insert(m_placePositions.size(),place->id());
+        addItem(place->displayString->value());
     }
 }
 
@@ -96,16 +88,14 @@ void PlacesComboBox::setCurrentPlace(int placeId)
 
 Database::Place *PlacesComboBox::currentPlace() const
 {
-    Q_ASSERT(!m_places.isNull());
-
     int index = currentIndex();
 
-    if(index < 0 || index >= count() - 1)
+    if(index < 0 || index >= m_placePositions.count() - 1)
     {
 	return 0;
     }
 
     int placeId = m_placePositions.at(index);
 
-    return m_places->rowById(placeId);
+    return Database::Places::instance()->rowById(placeId);
 }

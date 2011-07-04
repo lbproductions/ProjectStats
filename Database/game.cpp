@@ -44,6 +44,14 @@ QPointer<Game> Games::createRowInstance(int id)
     return row;
 }
 
+QStringList Games::possibleTypes() const
+{
+    QStringList list;
+    list << "Doppelkopf";
+    list << "Skat";
+    return list;
+}
+
 END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Game, Game, Row)

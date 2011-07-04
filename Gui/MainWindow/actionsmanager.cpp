@@ -2,7 +2,7 @@
 
 #include "mainwindow.h"
 
-//#include <Gui/Wizards/NewGame/newgamewizard.h>
+#include <Gui/Wizards/NewGame/newgamewizard.h>
 #include <Gui/Details/PlaceDetails/placedetailswidget.h>
 #include <Gui/Details/DrinkDetails/drinkdetailswidget.h>
 #include <Gui/Filter/newleaguedialog.h>
@@ -86,10 +86,8 @@ QAction *ActionsManager::constructAction(const QString &name, const QString &ico
 
 void ActionsManager::openGameWizard()
 {
-    /*
     Wizards::NewGameWizard *gw = new Wizards::NewGameWizard(m_mainWindow);
     gw->show();
-    */
 }
 
 void ActionsManager::openNewPlayer(){
