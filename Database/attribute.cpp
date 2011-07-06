@@ -86,7 +86,8 @@ void AttributeFutureWatcherBase::connectTo(QLabel *label)
 	label->setText(toString());
     }
 
-    connect(this,SIGNAL(valueChanged(QString)),label,SLOT(setText(QString)));
+    //connect(this,SIGNAL(valueChanged(QString)),label,SLOT(setText(QString)));
+    connect(this,SIGNAL(valueChanged(QString)),this,SLOT(check(QString)));
 }
 
 void AttributeFutureWatcherBase::connectTo(QLineEdit *lineEdit)
@@ -106,6 +107,14 @@ void AttributeFutureWatcherBase::connectTo(QLineEdit *lineEdit)
 void AttributeBase::emitChanged()
 {
     emit changed();
+}
+
+void AttributeFutureWatcherBase::check(QString a){
+    qDebug() << a;
+}
+
+void AttributeFutureWatcherBase::updateKey(QVariant variant){
+
 }
 
 } // namespace Database

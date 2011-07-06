@@ -44,6 +44,7 @@ DrinkDetailsWidget::DrinkDetailsWidget(Database::Drink* drink, QWidget *parent) 
     this->setDescription(tr("This is the place to create a new drink to count them in a LiveGame"));
 
     readData();
+    connectToAttributes();
     setEditable(false);
 
     m_mayBeEditable = true;
@@ -70,6 +71,15 @@ void DrinkDetailsWidget::readData(){
     QPixmap pixmap(50,150);
     pixmap.load(m_filePath);
     m_labelPicture->setPixmap(pixmap);
+}
+
+void DrinkDetailsWidget::connectToAttributes(){
+    m_drink->alc->futureWatcher()->connectTo(ui->labelAlcoholValue);
+    m_drink->name->futureWatcher()->connectTo(ui->labelNameValue);
+    m_drink->size->futureWatcher()->connectTo(ui->labelSizeValue);
+    m_drink->type->futureWatcher()->connectTo(ui->labelTypeValue);
+
+    m_drink->name->futureWatcher()->connectTo(ui->lineEditName);
 }
 
 void DrinkDetailsWidget::onlabelPicclicked(){
@@ -105,8 +115,10 @@ void DrinkDetailsWidget::setEditable(bool editable)
 
 void DrinkDetailsWidget::on_lineEditName_editingFinished()
 {
+    /*
     Q_ASSERT(!m_drink.isNull());
     m_drink->name->setValue(ui->lineEditName->text());
+    */
 }
 
 void DrinkDetailsWidget::on_comboBoxType_currentIndexChanged(QString )

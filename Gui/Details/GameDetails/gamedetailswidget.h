@@ -53,6 +53,8 @@ private:
     */
     void readData();
 
+    void connectToAttributes();
+
 private slots:
     /**
     * Wird ausgeführt, wenn sich die ComboBox der Residence ändert

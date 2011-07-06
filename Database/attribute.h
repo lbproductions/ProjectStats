@@ -103,7 +103,6 @@ public:
     virtual QString toString() = 0;
     virtual QVariant toVariant() = 0;
     virtual QVariant displayVariant() = 0;
-    virtual void setValue(QVariant value) = 0;
     virtual void setValue(QVariant value, bool updateDatabase);
 
     virtual void startCalculateASync() = 0;
@@ -111,6 +110,9 @@ public:
     virtual bool isCalculating() = 0;
 
     void emitChanged();
+
+public slots:
+    virtual void setValue(QVariant value) = 0;
 
 protected slots:
     /*!
@@ -125,6 +127,7 @@ protected slots:
       Kann diese aus den gegebenen Änderungen der geänderten Abhängigkeit keinen neuen Wert berechnen, wird das Attribut komplett neu berechnet.
       */
     virtual void update() = 0;
+
 
 signals:
     /*!
@@ -324,7 +327,7 @@ signals:
       */
     void valueChanged(QString toString);
 
-private slots:
+protected slots:
     /*!
       Wird aufgerufen, wenn sich der Wert des Attributs ändert, oder die aktuelle QFuture zu Ende berechnet hat.<br>
       Im ersten Fall wird einfach nur allen verbundenen GUI-Elementen die Änderung mitgeteilt.<br>
@@ -339,9 +342,16 @@ private slots:
     void on_attributeAboutToChange();
 
     /*!
+      Wird für das Update eines Values aus einer Map oder List benötigt, um das richtige Element und dessen verknüpfte Labels zu aktualisieren.
+      */
+    virtual void updateKey(QVariant variant);
+
+    /*!
       \return true falls die aktuelle QFuture gerade rechnet.
       */
     virtual bool isRunning() = 0;
+
+    void check(QString a);
 
 private:
 
@@ -374,7 +384,7 @@ public:
       */
     bool isRunning();
 
-private:
+protected:
     friend class Attribute<T,R,C>;
 
     /*!
@@ -424,6 +434,7 @@ Attribute<T,R,C>::Attribute(const QString &name, const QString &displayName, Att
     m_futureWatcher(0)
 {
 }
+
 
 template<class T, class R, class C>
 AttributeFutureWatcher<T,R,C> *Attribute<T,R,C>::futureWatcher()
@@ -487,7 +498,7 @@ QVariant Attribute<T,R,C>::toVariant()
 template<class T, class R, class C>
 QVariant Attribute<T,R,C>::displayVariant()
 {
-    QVariant display = Handler::getInstance()->convert(this,toVariant());
+    QVariant display = Handler::getInstance()->convert(toVariant());
     if (!display.isNull()){
 	return display;
     }
@@ -707,6 +718,7 @@ QString AttributeFutureWatcher<T,R,C>::toString()
     v.setValue(m_attribute->value());
     return v.toString();
 }
+
 
 } // namespace Database
 

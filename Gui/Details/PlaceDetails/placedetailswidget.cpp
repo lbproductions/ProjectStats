@@ -101,6 +101,15 @@ void PlaceDetailsWidget::readPlaceData(){
     m_map->geoCode(m_place->displayString->value());
 }
 
+void PlaceDetailsWidget::connectToAttributes(){
+    m_place->comment->futureWatcher()->connectTo(ui->labelCommentValue);
+    m_place->player->futureWatcher()->connectTo(ui->labelHomeOfValue);
+    m_place->nummer->futureWatcher()->connectTo(ui->labelNrValue);
+    m_place->plz->futureWatcher()->connectTo(ui->labelPLZValue);
+    m_place->strasse->futureWatcher()->connectTo(ui->labelStreetValue);
+    m_place->ort->futureWatcher()->connectTo(ui->labelTownValue);
+}
+
 void PlaceDetailsWidget::setEditable(bool editable){
     ui->labelCommentValue->setVisible(!editable);
     ui->labelHomeOfValue->setVisible(!editable);

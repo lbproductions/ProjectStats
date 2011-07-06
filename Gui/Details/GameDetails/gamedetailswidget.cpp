@@ -29,6 +29,8 @@ GameDetailsWidget::GameDetailsWidget(Database::Game* game, QWidget *parent) :
 
     connect(m_placesComboBox,SIGNAL(currentIndexChanged(Database::Place*const,Database::Place*const)),
 	    this,SLOT(onPlacesComboBoxCurrentIndexChanged(Database::Place*const,Database::Place*const)));
+
+    connectToAttributes();
     readData();
 }
 
@@ -40,6 +42,15 @@ void GameDetailsWidget::readData(){
     ui->lineEditName->setText(m_game->name->value());
     m_placesComboBox->setCurrentPlace(m_game->site->value()->id());
     ui->textEditComment->setText(m_game->comment->value());
+}
+
+void GameDetailsWidget::connectToAttributes(){
+    m_game->date->futureWatcher()->connectTo(ui->labelDateValue);
+    m_game->length->futureWatcher()->connectTo(ui->labelLengthValue);
+    m_game->site->futureWatcher()->connectTo(ui->labelResidenceValue);
+    m_game->type->futureWatcher()->connectTo(ui->labelTypeValue);
+
+    m_game->name->futureWatcher()->connectTo(ui->lineEditName);
 }
 
 GameDetailsWidget::~GameDetailsWidget()

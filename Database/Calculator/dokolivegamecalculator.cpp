@@ -331,22 +331,26 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
                         }
                     }
                 }
-                QPair<Player*,Player*> pair;
-                pair.first = re1;
-                pair.second = re2;
-                hash.insert(pair,hash.value(pair) + 1);
-                QPair<Player*,Player*> pair1;
-                pair1.first = re2;
-                pair1.second = re1;
-                hash.insert(pair1,hash.value(pair1) + 1);
-                QPair<Player*,Player*> pair2;
-                pair2.first = contra1;
-                pair2.second = contra2;
-                hash.insert(pair2,hash.value(pair2) + 1);
-                QPair<Player*,Player*> pair3;
-                pair3.first = contra2;
-                pair3.second = contra1;
-                hash.insert(pair3,hash.value(pair3) + 1);
+                if(re1 != 0 && re2 != 0){
+                    QPair<Player*,Player*> pair;
+                    pair.first = re1;
+                    pair.second = re2;
+                    hash.insert(pair,hash.value(pair) + 1);
+                    QPair<Player*,Player*> pair1;
+                    pair1.first = re2;
+                    pair1.second = re1;
+                    hash.insert(pair1,hash.value(pair1) + 1);
+                }
+                if(contra1 !=0 && contra2 != 0){
+                    QPair<Player*,Player*> pair2;
+                    pair2.first = contra1;
+                    pair2.second = contra2;
+                    hash.insert(pair2,hash.value(pair2) + 1);
+                    QPair<Player*,Player*> pair3;
+                    pair3.first = contra2;
+                    pair3.second = contra1;
+                    hash.insert(pair3,hash.value(pair3) + 1);
+                }
 
             }
             else{
@@ -370,30 +374,33 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
                         }
                     }
                 }
-                QPair<Player*,Player*> pair;
-                pair.first = contra1;
-                pair.second = contra2;
-                hash.insert(pair,hash.value(pair) + 1);
-                QPair<Player*,Player*> pair1;
-                pair1.first = contra2;
-                pair1.second = contra1;
-                hash.insert(pair1,hash.value(pair1) + 1);
-                QPair<Player*,Player*> pair2;
-                pair2.first = contra1;
-                pair2.second = contra3;
-                hash.insert(pair2,hash.value(pair2) + 1);
-                QPair<Player*,Player*> pair3;
-                pair3.first = contra3;
-                pair3.second = contra1;
-                hash.insert(pair3,hash.value(pair3) + 1);
-                QPair<Player*,Player*> pair4;
-                pair4.first = contra3;
-                pair4.second = contra2;
-                hash.insert(pair4,hash.value(pair4) + 1);
-                QPair<Player*,Player*> pair5;
-                pair5.first = contra2;
-                pair5.second = contra3;
-                hash.insert(pair5,hash.value(pair5) + 1);
+
+                if(contra1 !=0 && contra2 != 0 && contra3 != 0){
+                    QPair<Player*,Player*> pair;
+                    pair.first = contra1;
+                    pair.second = contra2;
+                    hash.insert(pair,hash.value(pair) + 1);
+                    QPair<Player*,Player*> pair1;
+                    pair1.first = contra2;
+                    pair1.second = contra1;
+                    hash.insert(pair1,hash.value(pair1) + 1);
+                    QPair<Player*,Player*> pair2;
+                    pair2.first = contra1;
+                    pair2.second = contra3;
+                    hash.insert(pair2,hash.value(pair2) + 1);
+                    QPair<Player*,Player*> pair3;
+                    pair3.first = contra3;
+                    pair3.second = contra1;
+                    hash.insert(pair3,hash.value(pair3) + 1);
+                    QPair<Player*,Player*> pair4;
+                    pair4.first = contra3;
+                    pair4.second = contra2;
+                    hash.insert(pair4,hash.value(pair4) + 1);
+                    QPair<Player*,Player*> pair5;
+                    pair5.first = contra2;
+                    pair5.second = contra3;
+                    hash.insert(pair5,hash.value(pair5) + 1);
+                }
             }
         }
     }

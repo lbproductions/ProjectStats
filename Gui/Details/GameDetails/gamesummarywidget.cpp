@@ -26,6 +26,7 @@ GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
     for(int i = 0; i<m_game->playersSortedByPlacement->value().size();i++){
         QLabel* position = new QLabel(QString::number(m_game->placement->value(m_game->playersSortedByPlacement->value().at(i))));
         position->setAlignment(Qt::AlignCenter);
+        m_game->placement->mappingFutureWatcher()->connectTo(position,m_game->playersSortedByPlacement->value().at(i));
         QLabel* name = new QLabel(m_game->playersSortedByPlacement->value().at(i)->name->value());
         name->setAlignment(Qt::AlignCenter);
         QFont font = name->font();
