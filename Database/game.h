@@ -22,6 +22,8 @@ namespace Database{
 START_ROW_DECLARATION(Game, Row)
     DECLARE_ROW_CONSTRUCTORS(Game, Game)
 
+    Game(QString type, bool live);
+
     GameCalculator* m_calc;
 
     DECLARE_DATABASEATTRIBUTE(QString,Game,name)
@@ -45,6 +47,8 @@ START_ROW_DECLARATION(Game, Row)
     Gui::Details::SummaryWidget* summaryWidget();
 
     virtual Gui::Details::DetailsWidget* detailsWidget();
+
+    virtual void addPlayer(Player* player);
 
 END_ROW_DECLARATION(Game)
 

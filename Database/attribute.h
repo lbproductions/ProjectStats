@@ -103,7 +103,6 @@ public:
     virtual QString toString() = 0;
     virtual QVariant toVariant() = 0;
     virtual QVariant displayVariant() = 0;
-    virtual void setValue(QVariant value) = 0;
     virtual void setValue(QVariant value, bool updateDatabase);
 
     virtual void startCalculateASync() = 0;
@@ -111,6 +110,10 @@ public:
     virtual bool isCalculating() = 0;
 
     void emitChanged();
+
+public slots:
+    virtual void setValue(QVariant value) = 0;
+    void setValue(int value);
 
 protected slots:
     /*!

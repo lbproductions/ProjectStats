@@ -53,6 +53,7 @@ SkatLiveGameOptionsWidget::~SkatLiveGameOptionsWidget()
 bool SkatLiveGameOptionsWidget::isComplete() const
 {
     saveOptions();
+    return true;
 }
 
 int SkatLiveGameOptionsWidget::nextId() const

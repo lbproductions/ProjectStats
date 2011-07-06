@@ -7,10 +7,16 @@
 namespace Database
 {
     class Game;
+    class DokoLiveGame;
 }
 
 namespace Gui
 {
+
+namespace Misc
+{
+    class PlacesComboBox;
+}
 
 namespace Wizards
 {
@@ -23,7 +29,6 @@ namespace NewGame
     class OfflineDetailledGameDokoWidget;
     class LiveGameGeneralOptionsWidget;
     class LiveDokoGameOptionsWidget;
-    class LiveSummaryWidget;
     class WizardSideWidget;
     class SkatLiveGameOptionsWidget;
 }
@@ -52,13 +57,12 @@ public:
         Page_LiveGameDokoOptions,
         Page_OfflineSummary ,
         Page_DetailledOfflineDokoGame ,
-        Page_LiveSummary,
         Page_StartLiveGame,
         Page_SkatLiveGameOptionsWidget
     };
 
-    void setGame(Database::Game *game);
-    Database::Game *game() const;
+private slots:
+    void on_accepted();
 
 private:
     QPointer<NewGame::LiveOfflineGameWidget> m_liveOfflineGameWidget;
@@ -67,10 +71,13 @@ private:
     QPointer<NewGame::OfflineDetailledGameDokoWidget> m_offlineDokoWidget;
     QPointer<NewGame::LiveGameGeneralOptionsWidget> m_liveGameGeneralOptionsWidget;
     QPointer<NewGame::LiveDokoGameOptionsWidget> m_liveDokoGameOptionsWidget;
-    QPointer<NewGame::LiveSummaryWidget> m_liveSummaryWidget;
     QPointer<NewGame::SkatLiveGameOptionsWidget> m_skatLiveGameOptionsWidget;
 
     QPointer<NewGame::WizardSideWidget> m_sideWidget;
+
+    Database::DokoLiveGame *createDokoLiveGame();
+
+
 };
 
 }

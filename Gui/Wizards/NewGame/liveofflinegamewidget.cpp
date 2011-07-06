@@ -16,7 +16,8 @@ LiveOfflineGameWidget::LiveOfflineGameWidget(QWidget *parent) :
     QSettings settings;
 
     ui->radioButtonLiveGame->setChecked(settings.value("LiveOfflineGameWidget/radioButtonLiveGameChecked",true).toBool());
-    ui->radioButtonOfflineGame->setChecked(!settings.value("LiveOfflineGameWidget/radioButtonLiveGameChecked",true).toBool());
+
+    ui->radioButtonOfflineGame->setEnabled(false);
 
     registerField("isLive",ui->radioButtonLiveGame);
 

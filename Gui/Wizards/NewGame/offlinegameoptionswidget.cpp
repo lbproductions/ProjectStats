@@ -1,10 +1,13 @@
 #include "offlinegameoptionswidget.h"
 #include "ui_offlinegameoptionswidget.h"
 
+#include "newgamewizard.h"
+
+#include <Database/Doppelkopf/dokolivegame.h>
+
 #include <QLabel>
 #include <QSettings>
 
-#include "newgamewizard.h"
 
 using namespace Gui::Wizards::NewGame;
 
@@ -19,14 +22,14 @@ OfflineGameOptionsWidget::OfflineGameOptionsWidget(QWidget *parent) :
     ui->checkBoxDetailled->setChecked(settings.value("OfflineGameOptionsWidget/checkBoxDetailledChecked",true).toBool());
     ui->comboBoxType->setEnabled(settings.value("OfflineGameOptionsWidget/checkBoxDetailledChecked",true).toBool());
 
-    ui->comboBoxType->addItem("Doppelkopf");
+    ui->comboBoxType->addItem(Database::DokoLiveGame::TYPE);
     ui->comboBoxType->setCurrentIndex(settings.value("OfflineGameOptionsWidget/comboBoxTypeCurrentIndex",0).toInt());
 
     ui->spinBoxPlayerNumber->setValue(settings.value("OfflineGameOptionsWidget/spinBoxPlayerNumberValue",4).toInt());
 
-    this->registerField("offlineGame_isDetailled",ui->checkBoxDetailled);
-    this->registerField("type",ui->comboBoxType);
-    this->registerField("playerCount",ui->spinBoxPlayerNumber);
+    this->registerField("offline_isDetailled",ui->checkBoxDetailled);
+    this->registerField("offline_type",ui->comboBoxType);
+    this->registerField("offline_playerCount",ui->spinBoxPlayerNumber);
 
     connect(ui->checkBoxDetailled,SIGNAL(stateChanged(int)),this, SIGNAL(completeChanged()));
     connect(ui->comboBoxType,SIGNAL(currentIndexChanged(int)),this, SIGNAL(completeChanged()));
@@ -70,7 +73,7 @@ bool OfflineGameOptionsWidget::isComplete() const
 {
     if(ui->checkBoxDetailled->isChecked())
     {
-        if(ui->comboBoxType->currentText() == "Doppelkopf")
+        if(ui->comboBoxType->currentText() == Database::DokoLiveGame::TYPE)
         {
             if(ui->spinBoxPlayerNumber->value() < 4)
             {

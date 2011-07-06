@@ -6,6 +6,8 @@
 namespace Database
 {
     class LiveGame;
+    class Player;
+    class Place;
 }
 
 namespace Ui {
@@ -47,6 +49,10 @@ public:
     bool isComplete() const;
 
     void saveOptions() const;
+
+    QList<Database::Player*> selectedPlayers();
+
+    Database::Place *selectedPlace();
 
 private:
     Ui::LiveGameGeneralOptionsWidget *ui;

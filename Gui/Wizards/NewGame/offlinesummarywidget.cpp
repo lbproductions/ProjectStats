@@ -6,6 +6,7 @@
 #include <Database/game.h>
 #include <Database/place.h>
 #include <Database/Doppelkopf/dokoofflinegame.h>
+#include <Database/Doppelkopf/dokolivegame.h>
 #include <Database/player.h>
 
 using namespace Gui::Wizards::NewGame;
@@ -63,5 +64,5 @@ void OfflineSummaryWidget::initializePage()
     }
 
     ui->groupBox_2->setEnabled(!detailled);
-    ui->groupBox_2->setEnabled(detailled && field("type").toString() == "Doppelkopf");
+    ui->groupBox_2->setEnabled(detailled && field("type").toString() == Database::DokoLiveGame::TYPE);
 }

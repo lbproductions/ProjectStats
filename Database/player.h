@@ -47,6 +47,7 @@ START_ROW_DECLARATION(Player, Row)
 END_ROW_DECLARATION(Player)
 
 START_TABLE_DECLARATION(Player)
+    Player* playerByName(QString name);
 END_TABLE_DECLARATION()
 
 #endif // DATABASE_PLAYER_H

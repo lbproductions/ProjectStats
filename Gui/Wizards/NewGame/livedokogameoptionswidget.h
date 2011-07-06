@@ -31,7 +31,6 @@ public:
     explicit LiveDokoGameOptionsWidget(QWidget *parent = 0);
     ~LiveDokoGameOptionsWidget();
 
-
     int nextId() const;
 
 private slots:

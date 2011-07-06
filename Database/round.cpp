@@ -2,6 +2,7 @@
 
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/Skat/skatround.h>
+#include <Database/Doppelkopf/dokolivegame.h>
 #include "game.h"
 
 #include <QDateTime>
@@ -14,7 +15,7 @@ QPointer<Round> Rounds::createRowInstance(int id)
     Round *row = new Round(id,this);
     Round *row2 = 0;
 
-    if(row->game->value()->type->value() == "Doppelkopf")
+    if(row->game->value()->type->value() == DokoLiveGame::TYPE)
     {
         row2 = new DokoRound(id,this);
     }

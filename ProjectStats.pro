@@ -121,11 +121,9 @@ SOURCES += main.cpp\
     Gui/Wizards/NewGame/offlinegameoptionswidget.cpp \
     Gui/Wizards/NewGame/offlinedetailledgamedokowidget.cpp \
     Gui/Wizards/NewGame/newgamewizard.cpp \
-    Gui/Wizards/NewGame/livesummarywidget.cpp \
     Gui/Wizards/NewGame/liveofflinegamewidget.cpp \
     Gui/Wizards/NewGame/livegamegeneraloptionswidget.cpp \
-    Gui/Wizards/NewGame/livedokogameoptionswidget.cpp \
-    Gui/Wizards/NewGame/dokolivegamegroupbox.cpp
+    Gui/Wizards/NewGame/livedokogameoptionswidget.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -242,11 +240,9 @@ HEADERS  += \
     Gui/Wizards/NewGame/offlinegameoptionswidget.h \
     Gui/Wizards/NewGame/offlinedetailledgamedokowidget.h \
     Gui/Wizards/NewGame/newgamewizard.h \
-    Gui/Wizards/NewGame/livesummarywidget.h \
     Gui/Wizards/NewGame/liveofflinegamewidget.h \
     Gui/Wizards/NewGame/livegamegeneraloptionswidget.h \
-    Gui/Wizards/NewGame/livedokogameoptionswidget.h \
-    Gui/Wizards/NewGame/dokolivegamegroupbox.h
+    Gui/Wizards/NewGame/livedokogameoptionswidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \

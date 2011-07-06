@@ -21,8 +21,7 @@ LiveGameGeneralOptionsWidget::LiveGameGeneralOptionsWidget(QWidget *parent) :
 
     setupWidget();
 
-    registerField("type", ui->comboBoxGameType,"currentText",SIGNAL(currentTextChanged()));
-    registerField("place", placesbox,"currentPlace",SIGNAL(currentPlaceChanged(Database::Place*,Database::Place*)));
+    registerField("live_type", ui->comboBoxGameType,"currentText",SIGNAL(currentTextChanged()));
 
     connect(ui->comboBoxGameType,SIGNAL(currentIndexChanged(int)),this,SIGNAL(completeChanged()));
     connect(placesbox,SIGNAL(currentIndexChanged(int)),this,SIGNAL(completeChanged()));
@@ -49,7 +48,7 @@ int LiveGameGeneralOptionsWidget::nextId() const
 {
     saveOptions();
 
-    if (ui->comboBoxGameType->currentText() == "Doppelkopf")
+    if (ui->comboBoxGameType->currentText() == Database::DokoLiveGame::TYPE)
     {
         return NewGameWizard::Page_LiveGameDokoOptions;
     }
@@ -66,11 +65,12 @@ void LiveGameGeneralOptionsWidget::setupWidget()
     ui->comboBoxGameType->clear();
 
     ui->comboBoxGameType->addItem(tr("Choose a game..."));
+    ui->comboBoxGameType->addItem(Database::DokoLiveGame::TYPE);
 
-    foreach(QString type, Database::Games::instance()->possibleTypes())
-    {
-        ui->comboBoxGameType->addItem(type);
-    }
+//    foreach(QString type, Database::Games::instance()->possibleTypes())
+//    {
+//        ui->comboBoxGameType->addItem(type);
+//    }
 
     QSettings settings;
     int selectedIndex = ui->comboBoxGameType->findText(settings.value("LiveGameGeneralOptionsWidget/comboBoxGameTypeSelectedType",tr("Choose a game...")).toString());
@@ -96,6 +96,22 @@ void LiveGameGeneralOptionsWidget::setupWidget()
     ui->groupBox_3->setLayout(layout);
 }
 
+QList<Database::Player*> LiveGameGeneralOptionsWidget::selectedPlayers()
+{
+    QList<Database::Player*> list;
+    for(int i = 0; i < ui->listWidgetSelectedPlayers->count(); ++i)
+    {
+        list.append(Database::Players::instance()->playerByName(ui->listWidgetSelectedPlayers->item(i)->text()));
+    }
+
+    return list;
+}
+
+Database::Place *LiveGameGeneralOptionsWidget::selectedPlace()
+{
+    return placesbox->currentPlace();
+}
+
 bool LiveGameGeneralOptionsWidget::isComplete() const
 {
     if(ui->comboBoxGameType->currentIndex() < 0 || ui->comboBoxGameType->currentText() == tr("Choose a game...") )
@@ -110,7 +126,7 @@ bool LiveGameGeneralOptionsWidget::isComplete() const
 
     int minPlayerCount = 1;
 
-    if (ui->comboBoxGameType->currentText() == "Doppelkopf")
+    if (ui->comboBoxGameType->currentText() == Database::DokoLiveGame::TYPE)
     {
         minPlayerCount = 4;
     }

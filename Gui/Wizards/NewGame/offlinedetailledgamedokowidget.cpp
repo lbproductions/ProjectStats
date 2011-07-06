@@ -115,12 +115,12 @@ void OfflineDetailledGameDokoWidget::setPlayerNumberLayout(int number){
 Database::Game* OfflineDetailledGameDokoWidget::saveGame(){
     if (ui->lineEditGameName->text() != "" && correctInput){
 
-//	Database::Doppelkopf::DokoOfflineGame* game = static_cast<Database::Doppelkopf::DokoOfflineGame*>(Handler::getInstance()->database()->games()->createGame(ui->lineEditGameName->text(),false,"Doppelkopf"));
+//	Database::Doppelkopf::DokoOfflineGame* game = static_cast<Database::Doppelkopf::DokoOfflineGame*>(Handler::getInstance()->database()->games()->createGame(ui->lineEditGameName->text(),false,DokoLiveGame::TYPE));
 //	game->setType(ui->comboBoxGameResidence->currentText());
 //	game->setComment(ui->textEditGameComment->toPlainText());
 //	game->setSite(m_placesComboBox->currentPlace());
 //	game->setDate(ui->dateEditGame->dateTime());
-//	game->setType("Doppelkopf");
+//	game->setType(DokoLiveGame::TYPE);
 
 //	for (int i = 1; i<ui->gridLayoutPositions_2->rowCount();i++){
 //	    int position = static_cast<QSpinBox*>(ui->gridLayoutPositions_2->itemAtPosition(i,0)->widget())->value();

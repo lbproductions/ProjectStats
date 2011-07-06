@@ -4,6 +4,7 @@
 #include "newgamewizard.h"
 
 #include <Database/Doppelkopf/dokolivegame.h>
+#include <Database/place.h>
 
 #include <QSettings>
 
@@ -16,6 +17,24 @@ LiveDokoGameOptionsWidget::LiveDokoGameOptionsWidget(QWidget *parent) :
     ui->setupUi(this);
 
     this->setTitle("Doppelkopf Game Mechanics");
+
+    registerField("doko_mitHochzeit",ui->checkBoxHochzeit);
+    registerField("doko_mitSolo",ui->checkBoxSolo);
+    registerField("doko_mitTrumpfabgabe",ui->checkBoxTrumpfabgabe);
+    registerField("doko_mitSchmeisserei",ui->checkBoxSchmeisserei);
+    registerField("doko_mitSchweinerei",ui->checkBoxSchweinerei);
+
+    registerField("doko_mitBubenSolo",ui->checkBoxBuben);
+    registerField("doko_mitDamenSolo",ui->checkBoxDamen);
+    registerField("doko_mitFarbsolo",ui->checkBoxFarb);
+    registerField("doko_mitFleischlos",ui->checkBoxFleischlos);
+    registerField("doko_mitTrumpfsolo",ui->checkBoxTrumpf);
+    registerField("doko_mitPflichtsolo",ui->checkBoxPflichtsolo);
+
+    registerField("doko_mitFuenfKoenige",ui->checkBoxKings);
+    registerField("doko_mitZuWenigTrumpf",ui->checkBoxWenigTrumpf);
+    registerField("doko_mitNeunzigPunkte",ui->checkBoxPunkte);
+    registerField("doko_mitTrumpfabgabeSchmeisserei",ui->checkBoxAbgabe);
 
     QSettings settings;
     ui->checkBoxHochzeit->setChecked(settings.value("GameWizard/LiveGameDokoGameOptions/mitHochzeit",true).toBool());
@@ -70,32 +89,6 @@ int LiveDokoGameOptionsWidget::nextId() const
     saveOptions();
     return -1;
 }
-
-//Database::DokoLiveGame* LiveDokoGameOptionsWidget::startLiveGame()
-//{
-//    m_dokoLiveGame->doko_mitHochzeit->setValue(ui->checkBoxHochzeit->isChecked());
-//    m_dokoLiveGame->doko_mitSolo->setValue(ui->checkBoxSolo->isChecked());
-//    m_dokoLiveGame->doko_mitTrumpfabgabe->setValue(ui->checkBoxTrumpfabgabe->isChecked());
-//    m_dokoLiveGame->doko_mitSchmeisserei->setValue(ui->checkBoxSchmeisserei->isChecked());
-//    m_dokoLiveGame->doko_mitSchweinerei->setValue(ui->checkBoxSchweinerei->isChecked());
-
-////    m_dokoLiveGame->doko_mitBubenSolo(ui->checkBoxBuben->isChecked());
-////    m_dokoLiveGame->doko_mitDamenSolo(ui->checkBoxDamen->isChecked());
-////    m_dokoLiveGame->doko_mitFarbsolo(ui->checkBoxFarb->isChecked());
-////    m_dokoLiveGame->doko_mitFleischlos(ui->checkBoxFleischlos->isChecked());
-////    m_dokoLiveGame->doko_setMitTrumpfsolo(ui->checkBoxTrumpf->isChecked());
-
-////    m_dokoLiveGame->setMitFuenfKoenige(ui->checkBoxKings->isChecked());
-////    m_dokoLiveGame->setMitZuWenigTrumpf(ui->checkBoxWenigTrumpf->isChecked());
-////    m_dokoLiveGame->setMitNeunzigPunkte(ui->checkBoxPunkte->isChecked());
-////    m_dokoLiveGame->setMitTrumpfabgabeSchmeisserei(ui->checkBoxAbgabe->isChecked());
-////    m_dokoLiveGame->setMitPflichtsolo(ui->checkBoxPflichtsolo->isChecked());
-
-
-
-//    return m_dokoLiveGame;
-//}
-
 
 void Gui::Wizards::NewGame::LiveDokoGameOptionsWidget::on_checkBoxSolo_clicked(bool checked)
 {

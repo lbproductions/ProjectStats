@@ -34,6 +34,7 @@ int Row::id() const
 void Row::setId(int id)
 {
     m_id = id;
+    emit idChanged(id);
 }
 
 bool Row::isValid(){
