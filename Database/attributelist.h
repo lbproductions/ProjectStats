@@ -3,6 +3,7 @@
 
 #include <QList>
 #include <QObject>
+#include <QVariant>
 
 namespace Database{
 
@@ -18,6 +19,7 @@ protected:
 signals:
 
     void changed();
+    void changed(QVariant v);
 };
 
 template<class V>
@@ -43,12 +45,14 @@ template<class V>
 void AttributeList<V>::append(const V &value){
     QList<V>::append(value);
     emit changed();
+    emit changed(QVariant::fromValue<V>(value));
 }
 
 template<class V>
 void AttributeList<V>::insert ( int i, const V & value ){
     QList<V>::insert(i,value);
     emit changed();
+    emit changed(QVariant::fromValue<V>(value));
 }
 
 }

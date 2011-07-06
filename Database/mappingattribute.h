@@ -18,18 +18,8 @@ class Attribute;
 template<class T, class R, class C>
 class AttributeFutureWatcher;
 
-class MappingAttributeFutureWatcherBase: public QObject
-{
-    Q_OBJECT
-
-    public slots:
-
-
-
-};
-
 template<class K, class V, class R, class C>
-class MappingAttributeFutureWatcher : public AttributeFutureWatcher<AttributeHash<K,V>,R,C>, MappingAttributeFutureWatcherBase
+class MappingAttributeFutureWatcher : public AttributeFutureWatcher<AttributeHash<K,V>,R,C>
 {
 public:
 

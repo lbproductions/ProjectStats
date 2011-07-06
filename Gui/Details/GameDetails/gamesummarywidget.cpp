@@ -24,11 +24,12 @@ GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
 
     QGridLayout* layout = new QGridLayout();
     for(int i = 0; i<m_game->playersSortedByPlacement->value().size();i++){
-        QLabel* position = new QLabel(QString::number(m_game->placement->value(m_game->playersSortedByPlacement->value().at(i))));
+        QLabel* position = new QLabel(this);
         position->setAlignment(Qt::AlignCenter);
         m_game->placement->mappingFutureWatcher()->connectTo(position,m_game->playersSortedByPlacement->value().at(i));
-        QLabel* name = new QLabel(m_game->playersSortedByPlacement->value().at(i)->name->value());
+        QLabel* name = new QLabel(this);
         name->setAlignment(Qt::AlignCenter);
+        m_game->playersSortedByPlacement->listFutureWatcher()->connectTo(name,m_game->playersSortedByPlacement->value().at(i));
         QFont font = name->font();
         font.setBold(true);
         font.setPointSize(14);

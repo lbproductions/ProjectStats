@@ -111,26 +111,26 @@ bool Handler::showMainWindow(){
         m_database->initialize(databaseFile);
     }
 
-//    Database::AtomicRule *before = new Database::AtomicRule();
-//    before->parameter->setValue(QDate::fromString("2010-12-31").toString());
-//    before->attributeName->setValue("date");
-//    before->constraintId->setValue(Database::Constraints::DateIsBefore);
+    //    Database::AtomicRule *before = new Database::AtomicRule();
+    //    before->parameter->setValue(QDate::fromString("2010-12-31").toString());
+    //    before->attributeName->setValue("date");
+    //    before->constraintId->setValue(Database::Constraints::DateIsBefore);
 
-//    Database::AtomicRule *after = new Database::AtomicRule();
-//    after->parameter->setValue(QDate::fromString("2010-06-01").toString());
-//    after->attributeName->setValue("date");
-//    after->constraintId->setValue(Database::Constraints::DateIsAfter);
+    //    Database::AtomicRule *after = new Database::AtomicRule();
+    //    after->parameter->setValue(QDate::fromString("2010-06-01").toString());
+    //    after->attributeName->setValue("date");
+    //    after->constraintId->setValue(Database::Constraints::DateIsAfter);
 
-//    Database::RuleConjunction *conjunction = new Database::RuleConjunction();
-//    conjunction->addRule(before);
-//    conjunction->addRule(after);
+    //    Database::RuleConjunction *conjunction = new Database::RuleConjunction();
+    //    conjunction->addRule(before);
+    //    conjunction->addRule(after);
 
-//    Database::Rules::instance()->insertRow(conjunction);
+    //    Database::Rules::instance()->insertRow(conjunction);
 
-//    foreach(Database::Game *g, Database::Games::instance()->allRows())
-//    {
-//	qDebug() << g->id() << g->date->value();
-//    }
+    //    foreach(Database::Game *g, Database::Games::instance()->allRows())
+    //    {
+    //	qDebug() << g->id() << g->date->value();
+    //    }
 
     m_mainwindow = new Gui::MainWindow::MainWindow();
 
@@ -407,11 +407,8 @@ QVariant Handler::convert(QVariant var){
             QPair<Database::Player*,Database::Player*> pair = hash.keys().at(i);
             QPointer<Database::Player> p1 = pair.first;
             QPointer<Database::Player> p2 = pair.second;
-            if(!p1.isNull() && !p2.isNull()){
-                qDebug() << p1->id();
-                qDebug() << pair.second->id();
-                string += pair.first->name->value() + "-" + pair.second->name->value() + ":" + QString::number(hash.value(pair)) + " ,";
-            }
+            string += pair.first->name->value() + "-" + pair.second->name->value() + ":" + QString::number(hash.value(pair)) + " ,";
+
         }
         variant.setValue(string);
     }

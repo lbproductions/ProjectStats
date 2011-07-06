@@ -59,12 +59,6 @@ void DrinkDetailsWidget::readData(){
     ui->comboBoxType->setCurrentIndex(ui->comboBoxType->findText(m_drink->type->value()));
     ui->doubleSpinBoxAlc->setValue(m_drink->alc->value());
     ui->doubleSpinBoxSize->setValue(m_drink->size->value());
-    ui->lineEditName->setText(m_drink->name->value());
-
-    ui->labelAlcoholValue->setText(QString::number(m_drink->alc->value()));
-    ui->labelNameValue->setText(m_drink->name->value());
-    ui->labelSizeValue->setText(QString::number(m_drink->size->value()));
-    ui->labelTypeValue->setText(m_drink->type->value());
 
     m_filePath = m_drink->iconPath->value();
 
