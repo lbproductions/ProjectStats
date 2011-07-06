@@ -21,7 +21,7 @@ class PlacesComboBox : public QComboBox
     Q_OBJECT
 
 public:
-    PlacesComboBox(Database::Places *placesTable, QWidget *parent = 0);
+    PlacesComboBox(QWidget *parent = 0);
 
     void addItems(const QList<Database::Place*> &places);
 
@@ -42,7 +42,6 @@ private slots:
     void on_placeCreationCanceled();
 
 private:
-    QPointer<Database::Places> m_places;
     QVector<int> m_placePositions;
 
     int placeIndexBefore;

@@ -8,6 +8,18 @@
 #include "place.h"
 
 START_TABLE_IMPLEMENTATION(Player)
+
+Player* Players::playerByName(QString name)
+{
+    QSqlQuery select = query("SELECT id FROM players WHERE name = '"+name+"'");
+    if(select.first())
+    {
+        return rowById(select.value(0).toInt());
+    }
+
+    return 0;
+}
+
 END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Player, Player, Row)

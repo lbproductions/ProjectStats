@@ -107,6 +107,8 @@ public:
 
     virtual Gui::Details::SummaryWidget* summaryWidget();
 
+signals:
+    void idChanged(int newId);
 
 protected:
     /*!

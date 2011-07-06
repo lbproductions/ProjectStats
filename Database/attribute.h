@@ -113,6 +113,7 @@ public:
 
 public slots:
     virtual void setValue(QVariant value) = 0;
+    void setValue(int value);
 
 protected slots:
     /*!

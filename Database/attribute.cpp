@@ -40,6 +40,11 @@ int AttributeBase::role() const
     return m_role;
 }
 
+void AttributeBase::setValue(int value)
+{
+    setValue(QVariant(value));
+}
+
 void AttributeBase::setRole(int role)
 {
     m_role = role;

@@ -22,7 +22,7 @@ GameDetailsWidget::GameDetailsWidget(Database::Game* game, QWidget *parent) :
 
     ui->formLayout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
 
-    m_placesComboBox = new Misc::PlacesComboBox(Database::Places::instance(),this);
+    m_placesComboBox = new Misc::PlacesComboBox(this);
     ui->horizontalLayoutResidence->addWidget(m_placesComboBox);
 
     setEditable(false);
@@ -37,10 +37,13 @@ GameDetailsWidget::GameDetailsWidget(Database::Game* game, QWidget *parent) :
 void GameDetailsWidget::readData(){
     ui->labelDateValue->setText(m_game->date->value().toString("dd.MM.yyyy hh:mm:ss"));
     ui->labelLengthValue->setText(m_game->length->value().toString("hh:mm:ss"));
-    ui->labelResidenceValue->setText(m_game->site->value()->displayString->value());
+    if(m_game->site->value())
+    {
+        ui->labelResidenceValue->setText(m_game->site->value()->displayString->value());
+        m_placesComboBox->setCurrentPlace(m_game->site->value()->id());
+    }
     ui->labelTypeValue->setText(m_game->type->value());
     ui->lineEditName->setText(m_game->name->value());
-    m_placesComboBox->setCurrentPlace(m_game->site->value()->id());
     ui->textEditComment->setText(m_game->comment->value());
 }
 

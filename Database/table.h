@@ -424,8 +424,6 @@ QPointer<RowType> Table<RowType>::rowById(int id)
 template<class RowType>
 void Table<RowType>::insertRow(Row *row)
 {
-    qDebug() << "Table<RowType>::insertRow: Inserting row";
-
     QSqlQuery create = QSqlQuery(Database::instance()->sqlDatabaseLocked());
 
     QString queryString =   "INSERT INTO "+m_name+" (id";

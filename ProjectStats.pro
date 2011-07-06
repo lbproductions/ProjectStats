@@ -113,7 +113,17 @@ SOURCES += main.cpp\
     Gui/Details/rowwindow.cpp \
     Gui/Details/rowwidget.cpp \
     Gui/Details/summarywidget.cpp \
-    Gui/Misc/rowlistheader.cpp
+    Gui/Misc/rowlistheader.cpp \
+    Gui/Wizards/NewGame/wizardsidewidget.cpp \
+    Gui/Wizards/NewGame/skatlivegameoptionswidget.cpp \
+    Gui/Wizards/NewGame/offlinesummarywidget.cpp \
+    Gui/Wizards/NewGame/offlinegameresultwidget.cpp \
+    Gui/Wizards/NewGame/offlinegameoptionswidget.cpp \
+    Gui/Wizards/NewGame/offlinedetailledgamedokowidget.cpp \
+    Gui/Wizards/NewGame/newgamewizard.cpp \
+    Gui/Wizards/NewGame/liveofflinegamewidget.cpp \
+    Gui/Wizards/NewGame/livegamegeneraloptionswidget.cpp \
+    Gui/Wizards/NewGame/livedokogameoptionswidget.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -222,7 +232,17 @@ HEADERS  += \
     Gui/Details/rowwindow.h \
     Gui/Details/rowwidget.h \
     Gui/Details/summarywidget.h \
-    Gui/Misc/rowlistheader.h
+    Gui/Misc/rowlistheader.h \
+    Gui/Wizards/NewGame/wizardsidewidget.h \
+    Gui/Wizards/NewGame/skatlivegameoptionswidget.h \
+    Gui/Wizards/NewGame/offlinesummarywidget.h \
+    Gui/Wizards/NewGame/offlinegameresultwidget.h \
+    Gui/Wizards/NewGame/offlinegameoptionswidget.h \
+    Gui/Wizards/NewGame/offlinedetailledgamedokowidget.h \
+    Gui/Wizards/NewGame/newgamewizard.h \
+    Gui/Wizards/NewGame/liveofflinegamewidget.h \
+    Gui/Wizards/NewGame/livegamegeneraloptionswidget.h \
+    Gui/Wizards/NewGame/livedokogameoptionswidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -230,7 +250,18 @@ FORMS    += \
     Gui/Details/GameDetails/gamedetailswidget.ui \
     Gui/Details/DrinkDetails/DrinkDetailsWidget.ui \
     Gui/Filter/newleaguedialog.ui \
-    Gui/Misc/newrowwidget.ui
+    Gui/Misc/newrowwidget.ui \
+    Gui/Wizards/NewGame/wizardsidewidget.ui \
+    Gui/Wizards/NewGame/skatlivegameoptionswidget.ui \
+    Gui/Wizards/NewGame/offlinesummarywidget.ui \
+    Gui/Wizards/NewGame/offlinegameresultwidget.ui \
+    Gui/Wizards/NewGame/offlinegameoptionswidget.ui \
+    Gui/Wizards/NewGame/offlinedetailledgamedokowidget.ui \
+    Gui/Wizards/NewGame/livesummarywidget.ui \
+    Gui/Wizards/NewGame/liveofflinegamewidget.ui \
+    Gui/Wizards/NewGame/livegamegeneraloptionswidget.ui \
+    Gui/Wizards/NewGame/livedokogameoptionswidget.ui \
+    Gui/Wizards/NewGame/dokolivegamegroupbox.ui
 
 mac {
     HEADERS += cocoainitializer.h

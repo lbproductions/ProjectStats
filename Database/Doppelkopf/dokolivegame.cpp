@@ -1,5 +1,6 @@
 #include "dokolivegame.h"
 
+const QString Database::DokoLiveGame::TYPE("Doppelkopf");
 
 START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
 {
@@ -12,6 +13,17 @@ START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSchweinerei,tr("Doko_MitSchweinerei"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSchmeisserei,tr("Doko_MitSchmeisserei"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitPflichtsolo,tr("Doko_MitPflichtsolo"))
+
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitBubensolo,tr("doko_mitBubensolo"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitDamensolo,tr("doko_mitDamensolo"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFarbsolo,tr("doko_mitFarbsolo"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFleischloss,tr("doko_mitFleischloss"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfsolo,tr("doko_mitTrumpfsolo"))
+
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFuenfKoenige,tr("doko_mitZuWenigTrumpf"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitZuWenigTrumpf,tr("doko_mitZuWenigTrumpf"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitNeunzigPunkte,tr("doko_mitNeunzigPunkte"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfabgabeSchmeisserei,tr("doko_mitTrumpfabgabeSchmeisserei"))
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_re,"Doko_Re")
     rounds->addDependingAttribute(doko_re);
@@ -66,7 +78,44 @@ START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,double,DokoLiveGame,DokoLiveGameCalculator,calc,doko_pointAveragePerWin,tr("Doko_PointAveragePerWin"))
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_rounds,tr("Doko_Rounds"))
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_roundWins,tr("Doko_RoundWins"))
+}
 
+DokoLiveGame::DokoLiveGame(bool mitHochzeit,
+                            bool mitSolo,
+                            bool mitTrumpfabgabe,
+                            bool mitSchweinerei,
+                            bool mitSchmeisserei,
+                            bool mitPflichtsolo,
+                            bool mitBubensolo,
+                            bool mitDamensolo,
+                            bool mitFarbsolo,
+                            bool mitFleischloss,
+                            bool mitTrumpfsolo,
+                            bool mitFuenfKoenige,
+                            bool mitZuWenigTrumpf,
+                            bool mitNeunzigPunkte,
+                            bool mitTrumpfabgabeSchmeisserei) :
+    LiveGame(TYPE)
+{
+    initializeAttributes();
+
+    doko_mitHochzeit->setValue(mitHochzeit);
+    doko_mitSolo->setValue(mitSolo);
+    doko_mitTrumpfabgabe->setValue(mitTrumpfabgabe);
+    doko_mitSchweinerei->setValue(mitSchweinerei);
+    doko_mitSchmeisserei->setValue(mitSchmeisserei);
+    doko_mitPflichtsolo->setValue(mitPflichtsolo);
+
+    doko_mitBubensolo->setValue(mitBubensolo);
+    doko_mitDamensolo->setValue(mitDamensolo);
+    doko_mitFarbsolo->setValue(mitFarbsolo);
+    doko_mitFleischloss->setValue(mitFleischloss);
+    doko_mitTrumpfsolo->setValue(mitTrumpfsolo);
+
+    doko_mitFuenfKoenige->setValue(mitFuenfKoenige);
+    doko_mitZuWenigTrumpf->setValue(mitZuWenigTrumpf);
+    doko_mitNeunzigPunkte->setValue(mitNeunzigPunkte);
+    doko_mitTrumpfabgabeSchmeisserei->setValue(mitTrumpfabgabeSchmeisserei);
 }
 
 QString DokoLiveGame::mimeType() const

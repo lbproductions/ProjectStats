@@ -1,5 +1,6 @@
 #include "livegame.h"
 
+#include <Database/position.h>
 #include <Database/drink.h>
 #include <Database/livegamedrink.h>
 #include <Database/round.h>
@@ -41,9 +42,29 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
     rounds->addDependingAttribute(totalPoints);
 }
 
+LiveGame::LiveGame(QString type) :
+    Game(type,true)
+{
+    initializeAttributes();
+}
+
 QString LiveGame::mimeType() const
 {
     return "application/projectstats.liveGame";
+}
+
+void LiveGame::addPlayer(Player* player)
+{
+    foreach(Player *player, players->value())
+    {
+        qDebug() << player->name->value();
+    }
+
+    qDebug() << players->value().size();
+    Position* position = new Position(player,this,players->value().size());
+    addChildRow(position);
+
+    players->value().append(player);
 }
 
 END_ROW_IMPLEMENTATION()

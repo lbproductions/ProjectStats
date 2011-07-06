@@ -15,12 +15,39 @@
 START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_ROW_CONSTRUCTORS(DokoLiveGame, Game)
 
+    DokoLiveGame(bool mitHochzeit,
+                 bool mitSolo,
+                 bool mitTrumpfabgabe,
+                 bool mitSchweinerei,
+                 bool mitSchmeisserei,
+                 bool mitPflichtsolo,
+                 bool mitBubensolo,
+                 bool mitDamensolo,
+                 bool mitFarbsolo,
+                 bool mitFleischloss,
+                 bool mitTrumpfsolo,
+                 bool mitFuenfKoenige,
+                 bool mitZuWenigTrumpf,
+                 bool mitNeunzigPunkte,
+                 bool mitTrumpfabgabeSchmeisserei);
+
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitHochzeit)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSolo)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfabgabe)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSchweinerei)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSchmeisserei)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitPflichtsolo)
+
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitBubensolo)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitDamensolo)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFarbsolo)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFleischloss)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfsolo)
+
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFuenfKoenige)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitZuWenigTrumpf)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitNeunzigPunkte)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfabgabeSchmeisserei)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_re)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_reWins)
@@ -54,6 +81,7 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_rounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_roundWins)
 
+    static const QString TYPE;
 
 END_ROW_DECLARATION(DokoLiveGame)
 

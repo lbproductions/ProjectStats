@@ -23,7 +23,7 @@ QPointer<Game> Games::createRowInstance(int id)
 
     if(row->live->value())
     {
-	if(row->type->value() == "Doppelkopf")
+        if(row->type->value() == DokoLiveGame::TYPE)
 	{
 	    row2 = new DokoLiveGame(id,this);
 	}
@@ -44,6 +44,14 @@ QPointer<Game> Games::createRowInstance(int id)
     return row;
 }
 
+QStringList Games::possibleTypes() const
+{
+    QStringList list;
+    list << DokoLiveGame::TYPE;
+    list << "Skat";
+    return list;
+}
+
 END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Game, Game, Row)
@@ -58,11 +66,11 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
     IMPLEMENT_DATABASEATTRIBUTE(int,Game,siteId,tr("SiteId"))
 
     IMPLEMENT_ATTRIBUTE(QPointer<Place>,Game,site,tr("Site"))
-    siteId->addDependingAttribute(site);
+    site->addDependingAttribute(siteId);
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,m_calc,players,tr("Players"))
-    Positions::instance()->rows()->addDependingAttribute(players);
-    OfflineGameInformations::instance()->rows()->addDependingAttribute(players);
+    //Positions::instance()->rows()->addDependingAttribute(players);
+    //OfflineGameInformations::instance()->rows()->addDependingAttribute(players);
 
     IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement,tr("Placement"))
     players->addDependingAttribute(placement);
@@ -81,9 +89,15 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(Round::RoundState,Game,GameCalculator,state,tr("State"))
     state->setRole(Qt::DecorationRole);
+}
 
+Game::Game(QString type, bool live) :
+    Row(0,Games::instance())
+{
+    initializeAttributes();
 
-
+    this->type->setValue(type);
+    this->live->setValue(live);
 }
 
 QString Game::mimeType() const
@@ -102,6 +116,11 @@ Gui::Details::SummaryWidget* Game::summaryWidget(){
 
 Gui::Details::DetailsWidget* Game::detailsWidget(){
     return new Gui::Details::GameDetailsWidget(this);
+}
+
+void Game::addPlayer(Player* /*player*/)
+{
+    qWarning() << "Game::addPlayer: You must not call addPlayer() on a Game!";
 }
 
 END_ROW_IMPLEMENTATION()

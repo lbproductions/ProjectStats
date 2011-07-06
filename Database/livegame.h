@@ -20,6 +20,8 @@ class QTime;
 START_ROW_DECLARATION(LiveGame, Game)
     DECLARE_ROW_CONSTRUCTORS(LiveGame, Game)
 
+    LiveGame(QString type);
+
     DECLARE_LISTATTRIBUTE_IN_CALC(Drink*,LiveGame,LiveGameCalculator,drinks)
     DECLARE_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,rounds)
 
@@ -30,6 +32,8 @@ START_ROW_DECLARATION(LiveGame, Game)
     DECLARE_ATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,cardmixer)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,currentPlayingPlayers)
+
+    void addPlayer(Player* player);
 
 END_ROW_DECLARATION(LiveGame)
 

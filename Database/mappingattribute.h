@@ -155,7 +155,7 @@ void MappingAttributeFutureWatcher<K,V,R,C>::connectTo(QLabel* label, K key)
     }
     m_labels.insert(label,key);
 
-    connect(pointer->value(),SIGNAL(changed(QVariant)),this,SLOT(updateKey(QVariant)));
+    //connect(pointer->value(),SIGNAL(changed(QVariant)),this,SLOT(updateKey(QVariant)));
 }
 
 template<class K, class V, class R, class C>

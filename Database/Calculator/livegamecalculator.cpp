@@ -150,6 +150,11 @@ AttributeList<Player*> LiveGameCalculator::calculate_currentPlayingPlayers(){
         return AttributeList<Player*>();
     }
     */
+    if(m_livegame->rounds->value().isEmpty())
+    {
+        return AttributeList<Player*>();
+    }
+
     return m_livegame->rounds->value().last()->currentPlayingPlayers->value();
     //qDebug() << m_livegame->currentRound->value()->comment->value();
     //return m_livegame->currentRound->value()->currentPlayingPlayers->value();
@@ -184,7 +189,8 @@ Round::RoundState LiveGameCalculator::calculate_state(){
 }
 
 Player* LiveGameCalculator::calculate_cardmixer(){
-    if(m_livegame->playersSortedByPosition->value().isEmpty())
+    if(m_livegame->playersSortedByPosition->value().isEmpty() ||
+            m_livegame->rounds->value().isEmpty())
     {
         return 0;
     }

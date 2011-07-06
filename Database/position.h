@@ -9,6 +9,8 @@
 START_ROW_DECLARATION(Position, Row)
     DECLARE_ROW_CONSTRUCTORS(Position, Position)
 
+    Position(Player* player, Game* game, int position);
+
     DECLARE_DATABASEATTRIBUTE(int,Position,playerId)
     DECLARE_DATABASEATTRIBUTE(int,Position,gameId)
     DECLARE_DATABASEATTRIBUTE(int,Position,position)
