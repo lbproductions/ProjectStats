@@ -123,7 +123,9 @@ SOURCES += main.cpp\
     Gui/Wizards/NewGame/newgamewizard.cpp \
     Gui/Wizards/NewGame/liveofflinegamewidget.cpp \
     Gui/Wizards/NewGame/livegamegeneraloptionswidget.cpp \
-    Gui/Wizards/NewGame/livedokogameoptionswidget.cpp
+    Gui/Wizards/NewGame/livedokogameoptionswidget.cpp \
+    Gui/Details/PlayerDetails/playerdetailswidget.cpp \
+    Gui/Details/PlayerDetails/playerstatswidget.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -242,7 +244,9 @@ HEADERS  += \
     Gui/Wizards/NewGame/newgamewizard.h \
     Gui/Wizards/NewGame/liveofflinegamewidget.h \
     Gui/Wizards/NewGame/livegamegeneraloptionswidget.h \
-    Gui/Wizards/NewGame/livedokogameoptionswidget.h
+    Gui/Wizards/NewGame/livedokogameoptionswidget.h \
+    Gui/Details/PlayerDetails/playerdetailswidget.h \
+    Gui/Details/PlayerDetails/playerstatswidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -261,7 +265,9 @@ FORMS    += \
     Gui/Wizards/NewGame/liveofflinegamewidget.ui \
     Gui/Wizards/NewGame/livegamegeneraloptionswidget.ui \
     Gui/Wizards/NewGame/livedokogameoptionswidget.ui \
-    Gui/Wizards/NewGame/dokolivegamegroupbox.ui
+    Gui/Wizards/NewGame/dokolivegamegroupbox.ui \
+    Gui/Details/PlayerDetails/playerdetailswidget.ui \
+    Gui/Details/PlayerDetails/playerstatswidget.ui
 
 mac {
     HEADERS += cocoainitializer.h

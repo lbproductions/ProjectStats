@@ -11,7 +11,7 @@
 #include <QDesktopWidget>
 #include <QSettings>
 #include <QFileDialog>
-#include <QDate>
+#include <QDateTime>
 
 //#include <databasewindow.h>
 #include <messagesystem.h>
@@ -207,6 +207,19 @@ QVariant Handler::convert(QVariant var){
 	if (!player.isNull()){
 	    variant.setValue(player->name->value());
 	}
+    }
+
+    else if(QString(var.typeName()) == "QDateTime"){
+        QDateTime time = var.value<QDateTime>();
+        if(time.time().hour() == 0 && time.time().minute() == 0 && time.time().second() == 0){
+            variant.setValue(time.toString("dd.MM.yyyy"));
+        }
+        else if (time.date().year() != 1960){
+            variant.setValue(time);
+        }
+        else{
+            variant.setValue(tr("Never"));
+        }
     }
 
     else if(QString(var.typeName()) == "QPointer<Database::Place>"){
