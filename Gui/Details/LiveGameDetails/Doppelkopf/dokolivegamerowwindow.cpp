@@ -4,7 +4,9 @@
 
 #include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.h>
 #include <Database/Doppelkopf/dokolivegame.h>
-
+#ifdef Q_WS_MAC
+#   include <Gui/Misc/macwindowcontroller.h>
+#endif
 #include <QDebug>
 #include <QAction>
 #include <QToolBar>
@@ -28,6 +30,10 @@ DokoLiveGameRowWindow::DokoLiveGameRowWindow(Database::DokoLiveGame* dokogame, Q
     if (m_dokolivegame->doko_mitSchmeisserei->value()){
         Gui::Details::LiveGameDetails::LiveGameDetailsWidget* widget = m_liveGameDetailsWidget;
     }
+
+#ifdef Q_WS_MAC
+    setUpFullScreenButton(this);
+#endif
 }
 
 void DokoLiveGameRowWindow::setupToolBar()
