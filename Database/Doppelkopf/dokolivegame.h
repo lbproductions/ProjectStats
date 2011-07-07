@@ -88,7 +88,7 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
 
     virtual Gui::Details::DetailsWidget* detailsWidget();
 
-    virtual Gui::Details::RowWindow* detailsWindow();
+    virtual Gui::Details::RowWindow* rowWindow();
 
     static const QString TYPE;
 

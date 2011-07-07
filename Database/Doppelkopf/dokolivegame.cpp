@@ -132,7 +132,7 @@ Gui::Details::DetailsWidget* DokoLiveGame::detailsWidget()
     return new Gui::Details::DokoLiveGameDetailsWidget(this);
 }
 
-Gui::Details::RowWindow* DokoLiveGame::detailsWindow()
+Gui::Details::RowWindow* DokoLiveGame::rowWindow()
 {
     return new Gui::Details::DokoLiveGameRowWindow(this);
 }

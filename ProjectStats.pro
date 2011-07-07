@@ -306,7 +306,24 @@ HEADERS  += \
     Gui/Graphs/graphview.h \
     Gui/Graphs/dokolivegamegraphview.h \
     Gui/Details/PlayerDetails/playerdetailswidget.h \
-    Gui/Details/PlayerDetails/playerstatswidget.h
+    Gui/Details/PlayerDetails/playerstatswidget.h \
+    Gui/Details/LiveGameDetails/livegamesettingswidget.h \
+    Gui/Details/LiveGameDetails/livegamerowwindow.h \
+    Gui/Details/LiveGameDetails/livegameroundtable.h \
+    Gui/Details/LiveGameDetails/livegameinfogroupbox.h \
+    Gui/Details/LiveGameDetails/livegamedetailswidget.h \
+    Gui/Details/LiveGameDetails/endlivegamewidget.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/schmeissereiwidget.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/newdokoroundwidget.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamerowwindow.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtable.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameplayerstatswidget.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameinfogroupbox.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.h \
+    Gui/Details/LiveGameDetails/choosedrinkcountdialog.h \
+    Gui/Details/LiveGameDetails/beerwidget.h \
+    Gui/Details/LiveGameDetails/beerplayerwidget.h \
+    Gui/Details/LiveGameDetails/adddrinkwidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
