@@ -7,12 +7,14 @@
 using namespace Gui::Misc;
 
 Splitter::Splitter(Qt::Orientation orientation, QWidget *parent) :
-    QSplitter(orientation,parent)
+    QSplitter(orientation,parent),
+    m_fullscreen(false),
+    m_leftToRight(false)
 {
 }
 
 #ifdef Q_WS_MAC
-MacSplitterHandle::MacSplitterHandle(Qt::Orientation orientation, QSplitter *parent)
+MacSplitterHandle::MacSplitterHandle(Qt::Orientation orientation, Splitter *parent)
 : QSplitterHandle(orientation, parent) {   }
 
 // Paint the horizontal handle as a gradient, paint
@@ -39,18 +41,77 @@ void MacSplitterHandle::paintEvent(QPaintEvent *)
 
         painter.drawPixmap(width() / 2 - 2, 3, 4,4 , QPixmap(":/graphics/styles/mac/splitter/handle"));
     } else {
-	painter.setPen(topColor);
-	painter.drawLine(0, 0, 0, height());
+        if(static_cast<Splitter*>(parent())->isFullscreen())
+        {
+            if(static_cast<Splitter*>(parent())->isLeftToRight())
+            {
+                QColor leftColor(78,77,79);
+                QColor rightColor(26,25,26);
+
+                painter.setPen(leftColor);
+                painter.drawLine(0, 0, 0, height());
+                painter.setPen(rightColor);
+                painter.drawLine(1, 0, 1, height());
+            }
+            else
+            {
+                QColor leftColor(26,25,26);
+                QColor rightColor(78,77,79);
+
+                painter.setPen(leftColor);
+                painter.drawLine(2, 0, 2, height());
+                painter.setPen(rightColor);
+                painter.drawLine(3, 0, 3, height());
+            }
+        }
+        else
+        {
+            painter.setPen(topColor);
+            painter.drawLine(0, 0, 0, height());
+        }
     }
+}
+
+void Splitter::setFullscreen(bool fullscreen)
+{
+    m_fullscreen = fullscreen;
+    repaint();
+}
+
+bool Splitter::isFullscreen()
+{
+    return m_fullscreen;
+}
+
+void Splitter::setLeftToRight(bool leftToRight)
+{
+    m_leftToRight = leftToRight;
+    repaint();
+}
+
+bool Splitter::isLeftToRight()
+{
+    return m_leftToRight;
 }
 
 QSize MacSplitterHandle::sizeHint() const
 {
-    QSize parent = QSplitterHandle::sizeHint();
-    if (orientation() == Qt::Vertical) {
-        return parent + QSize(0, 2);
-    } else {
-	return QSize(1, parent.height());
+    QSize parentSize = QSplitterHandle::sizeHint();
+    if (orientation() == Qt::Vertical)
+    {
+        return parentSize + QSize(0, 2);
+    }
+    else
+    {
+        if(static_cast<Splitter*>(parent())->isFullscreen())
+        {
+            qDebug() << height();
+            return QSize(4, height());
+        }
+        else
+        {
+            return QSize(4, height());
+        }
     }
 }
 

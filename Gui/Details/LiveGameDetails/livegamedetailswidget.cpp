@@ -19,7 +19,8 @@ using namespace Gui::Details::LiveGameDetails;
 
 LiveGameDetailsWidget::LiveGameDetailsWidget(Database::LiveGame* livegame, QWidget* widget):
     DetailsWidget(livegame,widget),
-    m_livegame(livegame)
+    m_livegame(livegame),
+    m_playerTotalPointsTable(0)
 {
 
 }
@@ -65,26 +66,27 @@ void LiveGameDetailsWidget::setupWidget(){
     m_splitter->addWidget(m_playerTotalPointsTable);
     m_splitter->addWidget(m_graph);
     m_splitter->addWidget(m_gamecomment);
+
+    QWidget *centerWidget = new QWidget;
+    QLayout *centerLayout = new QHBoxLayout;
+    centerLayout->addWidget(m_splitter);
+    centerWidget->setLayout(centerLayout);
+
     Gui::Misc::Splitter* splitter = new Gui::Misc::Splitter(Qt::Horizontal);
+    splitter->setFullscreen(true);
+    splitter->setLeftToRight(true);
     splitter->addWidget(m_beerwidget);
-    splitter->addWidget(m_splitter);
-    splitter->addWidget(m_infoBox);
-    /*
-    m_centerLayout->addWidget(m_beerwidget);
-    m_centerLayout->addWidget(m_splitter);
-    m_centerLayout->addWidget(m_infoBox);
-    */
+    splitter->addWidget(centerWidget);
 
-
-    m_centerLayout->setSpacing(0);
-    m_centerLayout->setContentsMargins(0,0,0,0);
-
-    m_layout->addLayout(m_newItemLayout);
-    m_layout->addWidget(splitter);
-    //m_layout->addLayout(m_centerLayout);
+    Gui::Misc::Splitter* splitter2 = new Gui::Misc::Splitter(Qt::Horizontal);
+    splitter2->setFullscreen(true);
+    splitter2->addWidget(splitter);
+    splitter2->addWidget(m_infoBox);
 
     m_layout->setSpacing(0);
     m_layout->setContentsMargins(0,0,0,0);
+
+    m_layout->addWidget(splitter2);
 
     m_playerTotalPointsTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     for (int i = 0; i<m_playerTotalPointsTable->columnCount();i++){

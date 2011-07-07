@@ -26,8 +26,8 @@ DokoLiveGamePlayerStatsWidget::DokoLiveGamePlayerStatsWidget(Database::DokoLiveG
 }
 
 void DokoLiveGamePlayerStatsWidget::updateWidget(){
-    double width = (double)this->width() / (double)(playerlist.size() + 1);
-    int roundId = m_livegame->currentRound->value()->id();
+    //double width = (double)this->width() / (double)(playerlist.size() + 1);
+    //int roundId = m_livegame->currentRound->value()->id();
 
 //    if (prevWidth != width || roundId != prevRoundId){
 //	prevWidth = width;
