@@ -42,6 +42,11 @@ START_ROW_DECLARATION(LiveGame, Game)
 
     void finishGame();
 
+    Round* startNextRound();
+
+private:
+    virtual Round *createRound();
+
 END_ROW_DECLARATION(LiveGame)
 
 #endif // DATABASE_LIVEGAME_H

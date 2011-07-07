@@ -137,7 +137,7 @@ Gui::Details::RowWindow* DokoLiveGame::detailsWindow()
     return new Gui::Details::DokoLiveGameRowWindow(this);
 }
 
-DokoRound *DokoLiveGame::createRound()
+Round *DokoLiveGame::createRound()
 {
     DokoRound* round = new DokoRound(this,rounds->value().count());
     addChildRow(round);

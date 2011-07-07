@@ -180,7 +180,7 @@ void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
 	}
         round->comment->setValue(ui->lineEditComment->text());
         round->db_state->setValue(Database::Round::FinishedState);
-	m_livegame->createRound();
+        m_livegame->startNextRound();
         m_livegame->currentRound->value()->startTime->setValue(QDateTime().currentDateTime());
         emit roundCreated();
         this->reject();

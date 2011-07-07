@@ -90,9 +90,10 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
 
     virtual Gui::Details::RowWindow* detailsWindow();
 
-    DokoRound *createRound();
-
     static const QString TYPE;
+
+protected:
+    Round *createRound();
 
 END_ROW_DECLARATION(DokoLiveGame)
 
