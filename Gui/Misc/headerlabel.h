@@ -15,6 +15,7 @@ class HeaderLabel : public QLabel
 public:
     explicit HeaderLabel(QString text, QWidget *parent = 0);
 
+    void paintEvent(QPaintEvent *event);
 signals:
 
 public slots:

@@ -16,7 +16,6 @@ using namespace Gui::Details;
 DokoLiveGameRowWindow::DokoLiveGameRowWindow(Database::DokoLiveGame* dokogame, QWidget *parent) :
     LiveGameRowWindow(dokogame,parent)
 {
-    qDebug() << "asdf";
     m_liveGameDetailsWidget = new DokoLiveGameDetailsWidget(dokogame,this);
 
     m_livegame = dokogame;
