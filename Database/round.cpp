@@ -61,6 +61,17 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,roundPoints,tr("RoundPoints"))
 }
 
+Round::Round(Game* game, int number) :
+    Row(0,Rounds::instance())
+{
+    initializeAttributes();
+    this->gameId->setValue(game->id());
+    this->number->setValue(number);
+
+    this->startTime->setValue(QDateTime::currentDateTime());
+    this->db_state->setValue(Round::RunningState);
+}
+
 QString Round::mimeType() const
 {
     return "application/projectstats.round";

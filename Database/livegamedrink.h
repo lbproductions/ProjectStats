@@ -6,8 +6,15 @@
 #include "attribute.h"
 #include "databaseattribute.h"
 
+namespace Database
+{
+    class Drink;
+}
+
 START_ROW_DECLARATION(LiveGameDrink, Row)
     DECLARE_ROW_CONSTRUCTORS(LiveGameDrink, LiveGameDrink)
+
+    LiveGameDrink(Player* player, Round* round, Drink* drink);
 
     DECLARE_DATABASEATTRIBUTE(int,LiveGameDrink,playerId)
     DECLARE_DATABASEATTRIBUTE(int,LiveGameDrink,roundId)

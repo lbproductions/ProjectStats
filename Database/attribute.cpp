@@ -40,9 +40,9 @@ int AttributeBase::role() const
     return m_role;
 }
 
-void AttributeBase::setValue(int value)
+void AttributeBase::changeValue(int value)
 {
-    setValue(QVariant(value));
+    changeValue(QVariant(value));
 }
 
 void AttributeBase::setRole(int role)
@@ -65,9 +65,9 @@ bool AttributeBase::isDatabaseAttribute() const
     return false;
 }
 
-void AttributeBase::setValue(QVariant value, bool /*updateDatabase*/)
+void AttributeBase::changeValue(QVariant value, bool /*updateDatabase*/)
 {
-    setValue(value);
+    changeValue(value);
 }
 
 AttributeFutureWatcherBase::AttributeFutureWatcherBase() :

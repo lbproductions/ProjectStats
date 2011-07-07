@@ -14,6 +14,8 @@ namespace Database{
 START_ROW_DECLARATION(Schmeisserei, Row)
     DECLARE_ROW_CONSTRUCTORS(Schmeisserei, Schmeisserei)
 
+    Schmeisserei(Player* player, Round* round, QString type);
+
     DECLARE_DATABASEATTRIBUTE(int,Schmeisserei,roundId)
     DECLARE_DATABASEATTRIBUTE(int,Schmeisserei,playerId)
     DECLARE_DATABASEATTRIBUTE(QString,Schmeisserei,type)

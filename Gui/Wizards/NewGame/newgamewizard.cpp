@@ -79,7 +79,7 @@ void NewGameWizard::on_accepted()
         game->date->setValue(QDateTime::currentDateTime());
 
         QPointer<Database::Place> place = m_liveGameGeneralOptionsWidget->selectedPlace();
-        game->site->setValue(place);
+        game->siteId->setValue(place->id());
 
         foreach(Database::Player *player, m_liveGameGeneralOptionsWidget->selectedPlayers())
         {

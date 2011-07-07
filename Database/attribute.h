@@ -103,7 +103,7 @@ public:
     virtual QString toString() = 0;
     virtual QVariant toVariant() = 0;
     virtual QVariant displayVariant() = 0;
-    virtual void setValue(QVariant value, bool updateDatabase);
+    virtual void changeValue(QVariant value, bool updateDatabase);
 
     virtual void startCalculateASync() = 0;
 
@@ -112,8 +112,8 @@ public:
     void emitChanged();
 
 public slots:
-    virtual void setValue(QVariant value) = 0;
-    void setValue(int value);
+    virtual void changeValue(QVariant value) = 0;
+    void changeValue(int value);
 
 protected slots:
     /*!
@@ -152,6 +152,12 @@ protected:
 
 template<class T, class R, class C>
 class AttributeFutureWatcher;
+
+template<class RowType, class Owner>
+class TableModel;
+
+template<class RowType>
+class Table;
 
 //! Repräsentiert ein Attribut einer Row.
 /*!
@@ -195,16 +201,18 @@ public:
 
     QVariant displayVariant();
 
+protected:
     /*!
       Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
       */
-    virtual void setValue(T value);
+    virtual void changeValue(T value);
 
     /*!
       Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
       */
-    virtual void setValue(QVariant value);
+    virtual void changeValue(QVariant value);
 
+public:
     /*!
       Startet im Hintergrund eine Neuberechnung des Attributs und
       gibt den AttributeFutureWatcher dieses Attributs zurück.
@@ -266,6 +274,7 @@ public:
 
 protected:
     friend class AttributeFutureWatcher<T,R,C>;
+    friend class TableModel<R, Table<R> >;
 
     /*!
       Wird aufgerufen, falls sich Attribute ändern, von denen dieses Attribut abhängt.<br>
@@ -507,7 +516,7 @@ QString Attribute<T,R,C>::toString()
 
 
 template<class T, class R, class C>
-void Attribute<T,R,C>::setValue(T value)
+void Attribute<T,R,C>::changeValue(T value)
 {
     m_lock.lockForWrite();
     QVariant v1;
@@ -526,9 +535,9 @@ void Attribute<T,R,C>::setValue(T value)
 }
 
 template<class T, class R, class C>
-void Attribute<T,R,C>::setValue(QVariant value)
+void Attribute<T,R,C>::changeValue(QVariant value)
 {
-    setValue(value.value<T>());
+    changeValue(value.value<T>());
 }
 
 template<class T, class R, class C>
@@ -682,7 +691,7 @@ void AttributeFutureWatcher<T,R,C>::update()
 	if(sender() == m_futureWatcher)
 	{
 	    T value = m_futureWatcher->future().result();
-	    m_attribute->setValue(value);
+            m_attribute->changeValue(value);
 	    QVariant v;
 	    v.setValue(value);
 	    emit valueChanged(v.toString());

@@ -12,6 +12,11 @@
 #include <Database/mappingattribute.h>
 #include <Database/Calculator/dokolivegamecalculator.h>
 
+namespace Database
+{
+    class DokoRound;
+}
+
 START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_ROW_CONSTRUCTORS(DokoLiveGame, Game)
 
@@ -41,7 +46,7 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitBubensolo)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitDamensolo)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFarbsolo)
-    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFleischloss)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFleischlos)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfsolo)
 
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFuenfKoenige)
@@ -80,6 +85,12 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,double,DokoLiveGame,DokoLiveGameCalculator,doko_pointAveragePerWin)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_rounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_roundWins)
+
+    virtual Gui::Details::DetailsWidget* detailsWidget();
+
+    virtual Gui::Details::RowWindow* detailsWindow();
+
+    DokoRound *createRound();
 
     static const QString TYPE;
 

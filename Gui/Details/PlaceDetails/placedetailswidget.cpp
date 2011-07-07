@@ -43,7 +43,7 @@ PlaceDetailsWidget::PlaceDetailsWidget(Database::Place* place, QWidget *parent) 
     m_labelPicture->setEnabled(true);
 
     if (m_place->iconPath->value() == ""){
-        m_place->icon->setValue(m_filePath);
+        m_place->iconPath->setValue(m_filePath);
     }
 
     connect(m_labelPicture,SIGNAL(clicked()),this,SLOT(onlabelPicclicked()));
@@ -176,7 +176,7 @@ void PlaceDetailsWidget::onlabelPicclicked(){
 	pixmap.load(fileName);
 	m_labelPicture->setPixmap(pixmap);
 	m_filePath = fileName;
-        m_place->icon->setValue(m_filePath);
+        m_place->iconPath->setValue(m_filePath);
     }
 }
 

@@ -123,7 +123,36 @@ SOURCES += main.cpp\
     Gui/Wizards/NewGame/newgamewizard.cpp \
     Gui/Wizards/NewGame/liveofflinegamewidget.cpp \
     Gui/Wizards/NewGame/livegamegeneraloptionswidget.cpp \
-    Gui/Wizards/NewGame/livedokogameoptionswidget.cpp
+    Gui/Wizards/NewGame/livedokogameoptionswidget.cpp \
+    Gui/Details/LiveGameDetails/livegamesettingswidget.cpp \
+    Gui/Details/LiveGameDetails/livegamerowwindow.cpp \
+    Gui/Details/LiveGameDetails/livegameroundtable.cpp \
+    Gui/Details/LiveGameDetails/livegameinfogroupbox.cpp \
+    Gui/Details/LiveGameDetails/livegamedetailswidget.cpp \
+    Gui/Details/LiveGameDetails/endlivegamewidget.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/schmeissereiwidget.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/newdokoroundwidget.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamerowwindow.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtable.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameplayerstatswidget.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameinfogroupbox.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.cpp \
+    Gui/Details/LiveGameDetails/choosedrinkcountdialog.cpp \
+    Gui/Details/LiveGameDetails/beerwidget.cpp \
+    Gui/Details/LiveGameDetails/beerplayerwidget.cpp \
+    Gui/Details/LiveGameDetails/adddrinkwidget.cpp \
+    Gui/Graphs/livegamegraphview.cpp \
+    Gui/Graphs/Items/livegameplayerpointsgraph.cpp \
+    Gui/Graphs/Items/livegamecoordinatesystem.cpp \
+    Gui/Graphs/Items/graphpoint.cpp \
+    Gui/Graphs/Items/graph.cpp \
+    Gui/Graphs/Items/dokolivegameplayerpointsgraph.cpp \
+    Gui/Graphs/Items/dokolivegamecoordinatesystem.cpp \
+    Gui/Graphs/Items/dokographpoint.cpp \
+    Gui/Graphs/Items/coordinatesystem.cpp \
+    Gui/Graphs/Items/abstractitem.cpp \
+    Gui/Graphs/graphview.cpp \
+    Gui/Graphs/dokolivegamegraphview.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -242,7 +271,38 @@ HEADERS  += \
     Gui/Wizards/NewGame/newgamewizard.h \
     Gui/Wizards/NewGame/liveofflinegamewidget.h \
     Gui/Wizards/NewGame/livegamegeneraloptionswidget.h \
-    Gui/Wizards/NewGame/livedokogameoptionswidget.h
+    Gui/Wizards/NewGame/livedokogameoptionswidget.h \
+    Gui/Details/LiveGameDetails/livegamesettingswidget.h \
+    Gui/Details/LiveGameDetails/livegamerowwindow.h \
+    Gui/Details/LiveGameDetails/livegameroundtable.h \
+    Gui/Details/LiveGameDetails/livegameinfogroupbox.h \
+    Gui/Details/LiveGameDetails/livegamedetailswidget.h \
+    Gui/Details/LiveGameDetails/endlivegamewidget.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/schmeissereiwidget.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/newdokoroundwidget.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamerowwindow.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtable.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameplayerstatswidget.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameinfogroupbox.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.h \
+    Gui/Details/LiveGameDetails/choosedrinkcountdialog.h \
+    Gui/Details/LiveGameDetails/beerwidget.h \
+    Gui/Details/LiveGameDetails/beerplayerwidget.h \
+    Gui/Details/LiveGameDetails/adddrinkwidget.h \
+    Gui/Graphs/roundgraphview.h \
+    Gui/Graphs/livegamegraphview.h \
+    Gui/Graphs/Items/playergraph.h \
+    Gui/Graphs/Items/livegameplayerpointsgraph.h \
+    Gui/Graphs/Items/livegamecoordinatesystem.h \
+    Gui/Graphs/Items/graphpoint.h \
+    Gui/Graphs/Items/graph.h \
+    Gui/Graphs/Items/dokolivegameplayerpointsgraph.h \
+    Gui/Graphs/Items/dokolivegamecoordinatesystem.h \
+    Gui/Graphs/Items/dokographpoint.h \
+    Gui/Graphs/Items/coordinatesystem.h \
+    Gui/Graphs/Items/abstractitem.h \
+    Gui/Graphs/graphview.h \
+    Gui/Graphs/dokolivegamegraphview.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -261,7 +321,16 @@ FORMS    += \
     Gui/Wizards/NewGame/liveofflinegamewidget.ui \
     Gui/Wizards/NewGame/livegamegeneraloptionswidget.ui \
     Gui/Wizards/NewGame/livedokogameoptionswidget.ui \
-    Gui/Wizards/NewGame/dokolivegamegroupbox.ui
+    Gui/Wizards/NewGame/dokolivegamegroupbox.ui \
+    Gui/Details/LiveGameDetails/livegamesettingswidget.ui \
+    Gui/Details/LiveGameDetails/endlivegamewidget.ui \
+    Gui/Details/LiveGameDetails/Doppelkopf/schmeissereiwidget.ui \
+    Gui/Details/LiveGameDetails/Doppelkopf/newdokoroundwidget.ui \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamerowwindow.ui \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.ui \
+    Gui/Details/LiveGameDetails/choosedrinkcountdialog.ui \
+    Gui/Details/LiveGameDetails/beerplayerwidget.ui \
+    Gui/Details/LiveGameDetails/adddrinkwidget.ui
 
 mac {
     HEADERS += cocoainitializer.h

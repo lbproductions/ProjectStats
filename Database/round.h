@@ -17,6 +17,8 @@ namespace Database{
 START_ROW_DECLARATION(Round, Row)
     DECLARE_ROW_CONSTRUCTORS(Round, Round)
 
+    Round(Game* game, int number);
+
     enum RoundState {
         RunningState, //!< Die Runde läuft gerade
         PausedState, //!< Die Runde ist Pausiert

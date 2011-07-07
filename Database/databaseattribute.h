@@ -61,7 +61,7 @@ public:
 protected:
     friend class Table<R>;
 
-    void setValue(QVariant value, bool updateDatabase);
+    void changeValue(QVariant value, bool updateDatabase);
 
     /*!
       Liest den Wert aus der Datenbank aus.<br>
@@ -86,16 +86,16 @@ DatabaseAttribute<T,R,C>::DatabaseAttribute(const QString &name, const QString &
 template<class T, class R, class C>
 void DatabaseAttribute<T,R,C>::setValue(T value)
 {
-    setValue(value, true);
+    changeValue(value, true);
 }
 
 template<class T, class R, class C>
-void DatabaseAttribute<T,R,C>::setValue(QVariant value, bool updateDatabase)
+void DatabaseAttribute<T,R,C>::changeValue(QVariant value, bool updateDatabase)
 {
     QVariant v;
     v.setValue(Attribute<T,R,C>::m_value);
 
-    Attribute<T,R,C>::setValue(value.value<T>());
+    Attribute<T,R,C>::changeValue(value.value<T>());
 
     if(updateDatabase)
     {

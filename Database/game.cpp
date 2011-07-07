@@ -9,6 +9,7 @@
 #include "Skat/skatlivegame.h"
 #include "offlinegame.h"
 
+#include <Gui/Details/rowwindow.h>
 #include <Gui/Details/GameDetails/gamedetailswidget.h>
 #include <Gui/Details/GameDetails/gamesummarywidget.h>
 
@@ -66,11 +67,11 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
     IMPLEMENT_DATABASEATTRIBUTE(int,Game,siteId,tr("SiteId"))
 
     IMPLEMENT_ATTRIBUTE(QPointer<Place>,Game,site,tr("Site"))
-    site->addDependingAttribute(siteId);
+    siteId->addDependingAttribute(site);
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,m_calc,players,tr("Players"))
-    //Positions::instance()->rows()->addDependingAttribute(players);
-    //OfflineGameInformations::instance()->rows()->addDependingAttribute(players);
+    Positions::instance()->rows()->addDependingAttribute(players);
+    OfflineGameInformations::instance()->rows()->addDependingAttribute(players);
 
     IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement,tr("Placement"))
     players->addDependingAttribute(placement);
@@ -116,6 +117,11 @@ Gui::Details::SummaryWidget* Game::summaryWidget(){
 
 Gui::Details::DetailsWidget* Game::detailsWidget(){
     return new Gui::Details::GameDetailsWidget(this);
+}
+
+Gui::Details::RowWindow* Game::detailsWindow()
+{
+    return new Gui::Details::RowWindow(this);
 }
 
 void Game::addPlayer(Player* /*player*/)

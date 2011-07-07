@@ -48,6 +48,8 @@ START_ROW_DECLARATION(Game, Row)
 
     virtual Gui::Details::DetailsWidget* detailsWidget();
 
+    virtual Gui::Details::RowWindow* detailsWindow();
+
     virtual void addPlayer(Player* player);
 
 END_ROW_DECLARATION(Game)

@@ -242,7 +242,7 @@ bool TableModel<RowType, Owner>::setData(const QModelIndex &index, const QVarian
         QString name = m_owner->registeredAttributes()->values().at(index.column())->name();
         Database::AttributeBase *attribute = row->attribute(name);
 
-        attribute->setValue(value);
+        attribute->changeValue(value);
 
         emit dataChanged(index, index);
         return true;

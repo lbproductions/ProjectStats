@@ -53,6 +53,7 @@ public:
 
     virtual int calculate_totalPoints();
 
+    bool calculate_isFinished();
 
 signals:
 

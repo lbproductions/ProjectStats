@@ -203,4 +203,14 @@ int LiveGameCalculator::calculate_totalPoints(){
     return 0;
 }
 
+bool LiveGameCalculator::calculate_isFinished()
+{
+    bool finished = true;
+    foreach(Round *r, m_livegame->rounds->value())
+    {
+        finished = finished && (r != 0) && (r->state->value() == Round::FinishedState);
+    }
+    return finished;
+}
+
 } // namespace Database

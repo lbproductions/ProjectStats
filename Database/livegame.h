@@ -30,10 +30,17 @@ START_ROW_DECLARATION(LiveGame, Game)
     DECLARE_ATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,lastRound)
     DECLARE_ATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,currentRound)
     DECLARE_ATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,cardmixer)
+    DECLARE_ATTRIBUTE_IN_CALC(bool,LiveGame,LiveGameCalculator,isFinished)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,currentPlayingPlayers)
 
     void addPlayer(Player* player);
+
+    void addDrink(Player* player, Drink* drink);
+
+    void setState(Round::RoundState state);
+
+    void finishGame();
 
 END_ROW_DECLARATION(LiveGame)
 

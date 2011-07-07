@@ -12,10 +12,13 @@
 
 namespace Database{
     class Schmeisserei;
+    class DokoLiveGame;
 }
 
 START_ROW_DECLARATION(DokoRound, Round)
     DECLARE_ROW_CONSTRUCTORS(DokoRound, Round)
+
+    DokoRound(DokoLiveGame* game, int number);
 
     DECLARE_DATABASEATTRIBUTE(int,DokoRound,doko_hochzeitPlayerId)
     DECLARE_DATABASEATTRIBUTE(int,DokoRound,doko_trumpfabgabePlayerId)
@@ -28,6 +31,8 @@ START_ROW_DECLARATION(DokoRound, Round)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Schmeisserei*,DokoRound,DokoRoundCalculator,doko_schmeissereien)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,bool,DokoRound,DokoRoundCalculator,doko_re)
+
+    void addSchmeisserei(Player* player, const QString& type);
 
 END_ROW_DECLARATION(DokoRound)
 

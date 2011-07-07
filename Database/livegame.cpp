@@ -5,6 +5,7 @@
 #include <Database/livegamedrink.h>
 #include <Database/round.h>
 #include <Database/point.h>
+#include "round.h"
 
 #include <QTime>
 
@@ -40,6 +41,8 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,totalPoints,tr("TotalPoints"))
     rounds->addDependingAttribute(totalPoints);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(bool,LiveGame,LiveGameCalculator,calc,isFinished,tr("Finished"))
 }
 
 LiveGame::LiveGame(QString type) :
@@ -55,16 +58,37 @@ QString LiveGame::mimeType() const
 
 void LiveGame::addPlayer(Player* player)
 {
-    foreach(Player *player, players->value())
-    {
-        qDebug() << player->name->value();
-    }
-
-    qDebug() << players->value().size();
     Position* position = new Position(player,this,players->value().size());
     addChildRow(position);
+}
 
-    players->value().append(player);
+void LiveGame::addDrink(Player* player, Drink* drink)
+{
+    Round* round = 0;
+    if(!rounds->value().isEmpty())
+    {
+        rounds->value().last();
+    }
+
+    LiveGameDrink* liveGameDrink = new LiveGameDrink(player,round,drink);
+    addChildRow(liveGameDrink);
+}
+
+void LiveGame::setState(Round::RoundState state)
+{
+    if(rounds->value().isEmpty())
+    {
+        return;
+    }
+
+    rounds->value().last()->db_state->setValue(state);
+}
+
+void LiveGame::finishGame()
+{
+    Round* round = rounds->value().takeLast();
+
+    Rounds::instance()->deleteRow(round);
 }
 
 END_ROW_IMPLEMENTATION()

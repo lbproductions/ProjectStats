@@ -29,6 +29,8 @@ public:
     void append(const V &value);
 
     void insert ( int i, const V & value );
+
+    V takeLast();
 };
 
 template<class V>
@@ -49,6 +51,14 @@ template<class V>
 void AttributeList<V>::insert ( int i, const V & value ){
     QList<V>::insert(i,value);
     emit changed();
+}
+
+template<class V>
+V AttributeList<V>::takeLast()
+{
+    V v = QList<V>::takeLast();
+    emit changed();
+    return v;
 }
 
 }

@@ -368,7 +368,7 @@ void Table<RowType>::initializeRowCaches()
                 AttributeBase *rowAttribute = row->attribute(name);
                 if(rowAttribute != 0)
                 {
-                    rowAttribute->setValue(select.value(i+1),false);
+                    rowAttribute->changeValue(select.value(i+1),false);
                 }
             }
 	}

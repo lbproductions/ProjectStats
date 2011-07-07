@@ -16,7 +16,7 @@ public:
     /*!
       Darf nicht aufgerufen werden!
       */
-    void setValue(V value);
+    void changeValue(V value);
 
     /*!
     Gibt für den Wert an der Stelle pos zurück.
@@ -33,7 +33,7 @@ ListAttribute<V,R,C>::ListAttribute(const QString &name, const QString &displayN
 }
 
 template<class V, class R, class C>
-void ListAttribute<V,R,C>::setValue(V value){
+void ListAttribute<V,R,C>::changeValue(V value){
     qWarning() << "MappingAttribute<T>::setValue(): You may not invoke this method on a MappingAttribute!";
 }
 

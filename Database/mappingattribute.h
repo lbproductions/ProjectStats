@@ -61,7 +61,7 @@ void MappingAttribute<K,V,R,C>::setValue(K key, V value){
     QVariant v2;
     v2.setValue(value);
     bool change = v1 != v2;
-    Attribute<AttributeHash<K,V>*,R,C>::m_cacheInitialized = true;
+    Attribute<AttributeHash<K,V>,R,C>::m_cacheInitialized = true;
     if(change)
     {
 	Attribute<AttributeHash<K,V>,R,C>::m_value.insert(key,value);

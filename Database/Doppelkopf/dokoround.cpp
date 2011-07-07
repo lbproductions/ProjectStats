@@ -1,6 +1,9 @@
 #include "dokoround.h"
 
 #include "schmeisserei.h"
+#include "dokolivegame.h"
+
+#include <Database/player.h>
 
 START_ROW_IMPLEMENTATION(DokoRound, Round, Round)
 {
@@ -22,9 +25,22 @@ START_ROW_IMPLEMENTATION(DokoRound, Round, Round)
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,bool,DokoRound,DokoRoundCalculator,calc,doko_re,tr("Doko_Re"))
 }
 
+DokoRound::DokoRound(DokoLiveGame* game, int number) :
+    Round(game,number)
+{
+}
+
 QString DokoRound::mimeType() const
 {
     return "application/projectstats.dokoRound";
+}
+
+void DokoRound::addSchmeisserei(Player* player, const QString& type)
+{
+    Schmeisserei* schmeisserei = new Schmeisserei(player,this,type);
+    addChildRow(schmeisserei);
+
+    doko_schmeissereien->value().append(schmeisserei);
 }
 
 END_ROW_IMPLEMENTATION()

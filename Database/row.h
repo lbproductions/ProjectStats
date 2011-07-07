@@ -36,8 +36,8 @@ class Row : public AttributeOwner
 {
     Q_OBJECT
 public:
-    Row() : AttributeOwner(Database::instance()) {}
-    Row(const Row &other) : AttributeOwner(other.parent()) {}
+    Row() : AttributeOwner(Database::instance()), m_id(0) {}
+    Row(const Row &other) : AttributeOwner(other.parent()), m_id(0) {}
 
     /*!
       \return Die ID der Reihe.

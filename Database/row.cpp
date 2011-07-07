@@ -121,6 +121,11 @@ QList<Row*> Row::childRows() const
 void Row::addChildRow(Row *row)
 {
     m_childRows.append(row);
+
+    if(m_id != 0)
+    {
+        row->table()->insertRow(row);
+    }
 }
 
 void Row::addChildRows(QList<Row *> rows)

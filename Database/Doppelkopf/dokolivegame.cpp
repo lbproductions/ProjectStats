@@ -1,5 +1,9 @@
 #include "dokolivegame.h"
 
+#include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamerowwindow.h>
+#include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.h>
+#include <Database/Doppelkopf/dokoround.h>
+
 const QString Database::DokoLiveGame::TYPE("Doppelkopf");
 
 START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
@@ -17,7 +21,7 @@ START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitBubensolo,tr("doko_mitBubensolo"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitDamensolo,tr("doko_mitDamensolo"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFarbsolo,tr("doko_mitFarbsolo"))
-    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFleischloss,tr("doko_mitFleischloss"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFleischlos,tr("doko_mitFleischlos"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfsolo,tr("doko_mitTrumpfsolo"))
 
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFuenfKoenige,tr("doko_mitZuWenigTrumpf"))
@@ -89,7 +93,7 @@ DokoLiveGame::DokoLiveGame(bool mitHochzeit,
                             bool mitBubensolo,
                             bool mitDamensolo,
                             bool mitFarbsolo,
-                            bool mitFleischloss,
+                            bool mitFleischlos,
                             bool mitTrumpfsolo,
                             bool mitFuenfKoenige,
                             bool mitZuWenigTrumpf,
@@ -109,7 +113,7 @@ DokoLiveGame::DokoLiveGame(bool mitHochzeit,
     doko_mitBubensolo->setValue(mitBubensolo);
     doko_mitDamensolo->setValue(mitDamensolo);
     doko_mitFarbsolo->setValue(mitFarbsolo);
-    doko_mitFleischloss->setValue(mitFleischloss);
+    doko_mitFleischlos->setValue(mitFleischlos);
     doko_mitTrumpfsolo->setValue(mitTrumpfsolo);
 
     doko_mitFuenfKoenige->setValue(mitFuenfKoenige);
@@ -121,6 +125,24 @@ DokoLiveGame::DokoLiveGame(bool mitHochzeit,
 QString DokoLiveGame::mimeType() const
 {
     return "application/projectstats.dokoLiveGame";
+}
+
+Gui::Details::DetailsWidget* DokoLiveGame::detailsWidget()
+{
+    return new Gui::Details::DokoLiveGameDetailsWidget(this);
+}
+
+Gui::Details::RowWindow* DokoLiveGame::detailsWindow()
+{
+    return new Gui::Details::DokoLiveGameRowWindow(this);
+}
+
+DokoRound *DokoLiveGame::createRound()
+{
+    DokoRound* round = new DokoRound(this,rounds->value().count());
+    addChildRow(round);
+
+    return round;
 }
 
 END_ROW_IMPLEMENTATION()
