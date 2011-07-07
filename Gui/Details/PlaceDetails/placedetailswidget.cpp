@@ -63,6 +63,7 @@ PlaceDetailsWidget::PlaceDetailsWidget(Database::Place* place, QWidget *parent) 
     ui->lineEditPLZ->setFocus();
 
     readPlaceData();
+    connectToAttributes();
     setEditable(false);
 
     m_mayBeEditable = true;
@@ -77,17 +78,6 @@ PlaceDetailsWidget::~PlaceDetailsWidget()
 }
 
 void PlaceDetailsWidget::readPlaceData(){
-    ui->labelCommentValue->setText(m_place->comment->value());
-    ui->labelHomeOfValue->setText(m_place->player->value()->name->value());
-    ui->labelNrValue->setText(QString::number(m_place->nummer->value()));
-    ui->labelPLZValue->setText(QString::number(m_place->plz->value()));
-    ui->labelStreetValue->setText(m_place->strasse->value());
-    ui->labelTownValue->setText(m_place->ort->value());
-
-    ui->lineEditNumber->setText(QString::number(m_place->nummer->value()));
-    ui->lineEditPLZ->setText(QString::number(m_place->plz->value()));
-    ui->lineEditStreet->setText(m_place->strasse->value());
-    ui->lineEditTown->setText(m_place->ort->value());
     ui->textEditComment->setText(m_place->comment->value());
     ui->comboBoxPlayer->setCurrentIndex(ui->comboBoxPlayer->findText(m_place->player->value()->name->value()));
 
@@ -99,6 +89,20 @@ void PlaceDetailsWidget::readPlaceData(){
 
     m_map->clearCoordinates();
     m_map->geoCode(m_place->displayString->value());
+}
+
+void PlaceDetailsWidget::connectToAttributes(){
+    m_place->comment->futureWatcher()->connectTo(ui->labelCommentValue);
+    m_place->player->futureWatcher()->connectTo(ui->labelHomeOfValue);
+    m_place->nummer->futureWatcher()->connectTo(ui->labelNrValue);
+    m_place->plz->futureWatcher()->connectTo(ui->labelPLZValue);
+    m_place->strasse->futureWatcher()->connectTo(ui->labelStreetValue);
+    m_place->ort->futureWatcher()->connectTo(ui->labelTownValue);
+
+    m_place->nummer->futureWatcher()->connectTo(ui->lineEditNumber);
+    m_place->plz->futureWatcher()->connectTo(ui->lineEditPLZ);
+    m_place->strasse->futureWatcher()->connectTo(ui->lineEditStreet);
+    m_place->ort->futureWatcher()->connectTo(ui->lineEditTown);
 }
 
 void PlaceDetailsWidget::setEditable(bool editable){

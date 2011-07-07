@@ -2,9 +2,11 @@
 #define DATABASE_MAPPINGATTRIBUTE_H
 
 #include "attributehash.h"
+#include "handler.h"
 
 #include <QDebug>
 #include <QVariant>
+#include <QLabel>
 
 namespace Database {
 
@@ -12,6 +14,33 @@ class Row;
 
 template<class T, class R, class C>
 class Attribute;
+
+template<class T, class R, class C>
+class AttributeFutureWatcher;
+
+template<class K, class V, class R, class C>
+class MappingAttributeFutureWatcher : public AttributeFutureWatcher<AttributeHash<K,V>,R,C>
+{
+public:
+
+    MappingAttributeFutureWatcher(Attribute<AttributeHash<K,V>,R,C>* parent);
+
+    /*!
+      Verbindet diesen FutureWatcher mit dem Label \p label.<br>
+      Alle zukünftigen Änderungen werden dem Label mitgeteilt, sodass es sich automatisch anpassen kann.
+      */
+    void connectTo(QLabel *label, K key);
+
+ protected:
+    /*!
+      Wird für das Update eines Values aus einer Map oder List benötigt, um das richtige Element und dessen verknüpfte Labels zu aktualisieren.
+      */
+    void updateKey(QVariant variant);
+
+    QMap<QLabel*,K> m_labels; //!< Speichert alle Labels, die mit dem Attribut verbunden wurden, sowie dessen Key.
+
+
+};
 
 
 template<class K, class V, class R, class C>
@@ -40,6 +69,11 @@ public:
     const V value(K key);
 
     AttributeHash<K,V>& value();
+
+    MappingAttributeFutureWatcher<K,V,R,C> *mappingFutureWatcher();
+
+protected:
+    MappingAttributeFutureWatcher<K,V,R,C>* m_attributeFutureWatcher;
 };
 
 template<class K, class V, class R, class C>
@@ -82,6 +116,63 @@ AttributeHash<K,V>& MappingAttribute<K,V,R,C>::value(){
      Attribute<AttributeHash<K,V>,R,C>::value();
      connect(&this->m_value,SIGNAL(changed()),this,SIGNAL(changed()));
      return Attribute<AttributeHash<K,V>,R,C>::m_value;
+}
+
+template<class K, class V, class R, class C>
+MappingAttributeFutureWatcher<K,V,R,C>::MappingAttributeFutureWatcher(Attribute<AttributeHash<K,V>,R,C>* parent):
+    AttributeFutureWatcher<AttributeHash<K,V>,R,C>(parent)
+{
+}
+
+template<class K, class V, class R, class C>
+void MappingAttributeFutureWatcher<K,V,R,C>::connectTo(QLabel* label, K key)
+{
+    QPointer<MappingAttribute<K,V,R,C> > pointer = (MappingAttribute<K,V,R,C>*) AttributeFutureWatcher<AttributeHash<K,V>,R,C>::m_attribute.data();
+
+    if(AttributeFutureWatcher<AttributeHash<K,V>,R,C>::isRunning())
+    {
+        label->setText("Loading...");
+    }
+    else
+    {
+        QVariant display = Handler::getInstance()->convert(QVariant::fromValue<V>(pointer->value(key)));
+        if (!display.isNull()){
+            label->setText(display.toString());
+        }
+        else{
+            label->setText(QVariant::fromValue<V>(pointer->value(key)).toString());
+        }
+    }
+    m_labels.insert(label,key);
+
+    //connect(pointer->value(),SIGNAL(changed(QVariant)),this,SLOT(updateKey(QVariant)));
+}
+
+template<class K, class V, class R, class C>
+void MappingAttributeFutureWatcher<K,V,R,C>::updateKey(QVariant variant){
+    K key = variant.value<K>();
+    QPointer<MappingAttribute<K,V,R,C> > pointer = (MappingAttribute<K,V,R,C>*) AttributeFutureWatcher<AttributeHash<K,V>,R,C>::m_attribute.data();
+    QVariant display = Handler::getInstance()->convert(QVariant::fromValue<V>(pointer->value(key)));
+    foreach(QLabel* label, m_labels.keys()){
+        if (!display.isNull()){
+            label->setText(display.toString());
+        }
+        else{
+            label->setText(QVariant::fromValue<V>(pointer->value(key)).toString());
+        }
+    }
+}
+
+template<class K, class V, class R, class C>
+MappingAttributeFutureWatcher<K,V,R,C> *MappingAttribute<K,V,R,C>::mappingFutureWatcher()
+{
+    if(m_attributeFutureWatcher == 0)
+    {
+        m_attributeFutureWatcher = new MappingAttributeFutureWatcher<K,V,R,C>(this);
+        //m_attributeFutureWatcher->moveToThread(this->thread());
+        //m_attributeFutureWatcher->setParent(this);
+    }
+    return m_attributeFutureWatcher;
 }
 
 } // namespace Database

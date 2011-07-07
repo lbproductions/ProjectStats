@@ -57,7 +57,7 @@ public:
       */
     static Handler* const getInstance();
 
-    QVariant convert(Database::AttributeBase* base, QVariant var);
+    QVariant convert(QVariant var);
 
 
     /*!
@@ -125,6 +125,8 @@ Q_DECLARE_METATYPE(QPointer<Database::Player>)
 Q_DECLARE_METATYPE(QPointer<Database::Round>)
 Q_DECLARE_METATYPE(QPointer<Database::Game>)
 Q_DECLARE_METATYPE(Database::ParentCategorie*)
+Q_DECLARE_METATYPE(Database::ChildCategorie*)
+Q_DECLARE_METATYPE(QPair<Database::Player* COMMA Database::Player*>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::LiveGame* COMMA double>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA bool>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA double>)

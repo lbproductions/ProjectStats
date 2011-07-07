@@ -86,13 +86,13 @@ void BeerPlayerWidget::onNumberChosen(int number){
     m_parent->updateWidget();
 }
 
-void BeerPlayerWidget::dragMoveEvent(QDragMoveEvent *event)
+void BeerPlayerWidget::dragMoveEvent(QDragMoveEvent * /*event*/)
 {
     this->setStyleSheet("QGroupBox{border: 2px solid white}");
     this->repaint();
 }
 
-void BeerPlayerWidget::dragLeaveEvent(QDragLeaveEvent *event){
+void BeerPlayerWidget::dragLeaveEvent(QDragLeaveEvent * /*event*/){
     this->setStyleSheet("QGroupBox{border: 2px solid black}");
     this->repaint();
 }

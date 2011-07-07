@@ -29,20 +29,26 @@ GameDetailsWidget::GameDetailsWidget(Database::Game* game, QWidget *parent) :
 
     connect(m_placesComboBox,SIGNAL(currentIndexChanged(Database::Place*const,Database::Place*const)),
 	    this,SLOT(onPlacesComboBoxCurrentIndexChanged(Database::Place*const,Database::Place*const)));
+
+    connectToAttributes();
     readData();
 }
 
 void GameDetailsWidget::readData(){
-    ui->labelDateValue->setText(m_game->date->value().toString("dd.MM.yyyy hh:mm:ss"));
-    ui->labelLengthValue->setText(m_game->length->value().toString("hh:mm:ss"));
     if(m_game->site->value())
     {
-        ui->labelResidenceValue->setText(m_game->site->value()->displayString->value());
         m_placesComboBox->setCurrentPlace(m_game->site->value()->id());
     }
-    ui->labelTypeValue->setText(m_game->type->value());
-    ui->lineEditName->setText(m_game->name->value());
     ui->textEditComment->setText(m_game->comment->value());
+}
+
+void GameDetailsWidget::connectToAttributes(){
+    m_game->date->futureWatcher()->connectTo(ui->labelDateValue);
+    m_game->length->futureWatcher()->connectTo(ui->labelLengthValue);
+    m_game->site->futureWatcher()->connectTo(ui->labelResidenceValue);
+    m_game->type->futureWatcher()->connectTo(ui->labelTypeValue);
+
+    m_game->name->futureWatcher()->connectTo(ui->lineEditName);
 }
 
 GameDetailsWidget::~GameDetailsWidget()

@@ -3,6 +3,7 @@
 
 #include <QMap>
 #include <QObject>
+#include <QVariant>
 
 namespace Database{
 
@@ -18,6 +19,7 @@ protected:
 signals:
 
     void changed();
+    void changed(QVariant);
 };
 
 template<class Key, class V>
@@ -40,7 +42,9 @@ AttributeHash<Key,V>::AttributeHash(QObject *parent) :
 template<class Key, class V>
 typename QMap<Key, V>::iterator AttributeHash<Key,V>::insert ( const Key & key, const V & value ){
     typename QMap<Key, V>::iterator it = QMap<Key,V>::insert(key,value);
+    QVariant asdf = QVariant::fromValue<Key>(key);
     emit AttributeHash<Key,V>::changed();
+    emit AttributeHash<Key,V>::changed(asdf);
     return it;
 }
 

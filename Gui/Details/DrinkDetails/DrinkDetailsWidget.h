@@ -49,6 +49,8 @@ private:
 
     void readData();
 
+    void connectToAttributes();
+
     Ui::DrinkDetailsWidget *ui;
 
     QString m_filePath;

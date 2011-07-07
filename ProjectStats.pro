@@ -152,7 +152,9 @@ SOURCES += main.cpp\
     Gui/Graphs/Items/coordinatesystem.cpp \
     Gui/Graphs/Items/abstractitem.cpp \
     Gui/Graphs/graphview.cpp \
-    Gui/Graphs/dokolivegamegraphview.cpp
+    Gui/Graphs/dokolivegamegraphview.cpp \
+    Gui/Details/PlayerDetails/playerdetailswidget.cpp \
+    Gui/Details/PlayerDetails/playerstatswidget.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -302,7 +304,9 @@ HEADERS  += \
     Gui/Graphs/Items/coordinatesystem.h \
     Gui/Graphs/Items/abstractitem.h \
     Gui/Graphs/graphview.h \
-    Gui/Graphs/dokolivegamegraphview.h
+    Gui/Graphs/dokolivegamegraphview.h \
+    Gui/Details/PlayerDetails/playerdetailswidget.h \
+    Gui/Details/PlayerDetails/playerstatswidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -330,7 +334,9 @@ FORMS    += \
     Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.ui \
     Gui/Details/LiveGameDetails/choosedrinkcountdialog.ui \
     Gui/Details/LiveGameDetails/beerplayerwidget.ui \
-    Gui/Details/LiveGameDetails/adddrinkwidget.ui
+    Gui/Details/LiveGameDetails/adddrinkwidget.ui \
+    Gui/Details/PlayerDetails/playerdetailswidget.ui \
+    Gui/Details/PlayerDetails/playerstatswidget.ui
 
 mac {
     HEADERS += cocoainitializer.h

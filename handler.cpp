@@ -11,7 +11,7 @@
 #include <QDesktopWidget>
 #include <QSettings>
 #include <QFileDialog>
-#include <QDate>
+#include <QDateTime>
 
 //#include <databasewindow.h>
 #include <messagesystem.h>
@@ -111,26 +111,26 @@ bool Handler::showMainWindow(){
         m_database->initialize(databaseFile);
     }
 
-//    Database::AtomicRule *before = new Database::AtomicRule();
-//    before->parameter->setValue(QDate::fromString("2010-12-31").toString());
-//    before->attributeName->setValue("date");
-//    before->constraintId->setValue(Database::Constraints::DateIsBefore);
+    //    Database::AtomicRule *before = new Database::AtomicRule();
+    //    before->parameter->setValue(QDate::fromString("2010-12-31").toString());
+    //    before->attributeName->setValue("date");
+    //    before->constraintId->setValue(Database::Constraints::DateIsBefore);
 
-//    Database::AtomicRule *after = new Database::AtomicRule();
-//    after->parameter->setValue(QDate::fromString("2010-06-01").toString());
-//    after->attributeName->setValue("date");
-//    after->constraintId->setValue(Database::Constraints::DateIsAfter);
+    //    Database::AtomicRule *after = new Database::AtomicRule();
+    //    after->parameter->setValue(QDate::fromString("2010-06-01").toString());
+    //    after->attributeName->setValue("date");
+    //    after->constraintId->setValue(Database::Constraints::DateIsAfter);
 
-//    Database::RuleConjunction *conjunction = new Database::RuleConjunction();
-//    conjunction->addRule(before);
-//    conjunction->addRule(after);
+    //    Database::RuleConjunction *conjunction = new Database::RuleConjunction();
+    //    conjunction->addRule(before);
+    //    conjunction->addRule(after);
 
-//    Database::Rules::instance()->insertRow(conjunction);
+    //    Database::Rules::instance()->insertRow(conjunction);
 
-//    foreach(Database::Game *g, Database::Games::instance()->allRows())
-//    {
-//	qDebug() << g->id() << g->date->value();
-//    }
+    //    foreach(Database::Game *g, Database::Games::instance()->allRows())
+    //    {
+    //	qDebug() << g->id() << g->date->value();
+    //    }
 
     m_mainwindow = new Gui::MainWindow::MainWindow();
 
@@ -200,45 +200,58 @@ MessageSystem* Handler::messageSystem(){
     return m_messagesystem;
 }
 
-QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
+QVariant Handler::convert(QVariant var){
     QVariant variant;
     if(QString(var.typeName()) == "QPointer<Database::Player>"){
-	QPointer<Database::Player> player = base->toVariant().value<QPointer<Database::Player> >();
+        QPointer<Database::Player> player = var.value<QPointer<Database::Player> >();
 	if (!player.isNull()){
 	    variant.setValue(player->name->value());
 	}
     }
 
+    else if(QString(var.typeName()) == "QDateTime"){
+        QDateTime time = var.value<QDateTime>();
+        if(time.time().hour() == 0 && time.time().minute() == 0 && time.time().second() == 0){
+            variant.setValue(time.toString("dd.MM.yyyy"));
+        }
+        else if (time.date().year() != 1960){
+            variant.setValue(time);
+        }
+        else{
+            variant.setValue(tr("Never"));
+        }
+    }
+
     else if(QString(var.typeName()) == "QPointer<Database::Place>"){
-	QPointer<Database::Place> place = base->toVariant().value<QPointer<Database::Place> >();
+        QPointer<Database::Place> place = var.value<QPointer<Database::Place> >();
 	if (!place.isNull()){
 	    variant.setValue(place->strasse->value() + place->nummer->value() + ", " + place->ort->value());
 	}
     }
 
     else if(QString(var.typeName()) == "QPointer<Database::Game>"){
-	QPointer<Database::Game> game = base->toVariant().value<QPointer<Database::Game> >();
+        QPointer<Database::Game> game = var.value<QPointer<Database::Game> >();
 	if (!game.isNull()){
 	    variant.setValue(game->name->value());
 	}
     }
 
     else if(QString(var.typeName()) == "Database::Round*"){
-        Database::Round* round = base->toVariant().value<Database::Round*>();
+        Database::Round* round = var.value<Database::Round*>();
         if (round != 0){
             variant.setValue(round->id());
         }
     }
 
     else if(QString(var.typeName()) == "Database::Player*"){
-        Database::Player* player = base->toVariant().value<Database::Player*>();
+        Database::Player* player = var.value<Database::Player*>();
         if (player != 0){
             variant.setValue(player->name->value());
         }
     }
 
     else if(QString(var.typeName()) == "Database::Round::RoundState"){
-        Database::Round::RoundState round = base->toVariant().value<Database::Round::RoundState>();
+        Database::Round::RoundState round = var.value<Database::Round::RoundState>();
         QPixmap pixmap;
         if(round == Database::Round::FinishedState){
             pixmap.load(":/graphics/icons/mac/gamewidget/gamestate_finished");
@@ -281,7 +294,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
     }
 
     else if(QString(var.typeName()) == "Database::AttributeList<Database::Place*>"){
-	Database::AttributeList<Database::Place*> list = base->toVariant().value<Database::AttributeList<Database::Place*> >();
+        Database::AttributeList<Database::Place*> list = var.value<Database::AttributeList<Database::Place*> >();
 	QString string = "";
 	for (int i = 0; i<list.size();i++){
 	    string += list.at(i)->displayString->value();
@@ -293,7 +306,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
     }
 
     else if(QString(var.typeName()) == "Database::AttributeList<Database::Drink*>"){
-        Database::AttributeList<Database::Drink*> list = base->toVariant().value<Database::AttributeList<Database::Drink*> >();
+        Database::AttributeList<Database::Drink*> list = var.value<Database::AttributeList<Database::Drink*> >();
         QHash<Database::Drink*,int> hash;
         for(int i = 0; i<list.size();i++){
             hash.insert(list.at(i),hash.value(list.at(i)) + 1);
@@ -309,17 +322,17 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
     }
 
     else if(QString(var.typeName()) == "Database::AttributeList<Database::Game*>"){
-	Database::AttributeList<Database::Game*> list = base->toVariant().value<Database::AttributeList<Database::Game*> >();
+        Database::AttributeList<Database::Game*> list = var.value<Database::AttributeList<Database::Game*> >();
 	variant.setValue(list.size());
     }
 
     else if(QString(var.typeName()) == "Database::AttributeList<Database::Round*>"){
-        Database::AttributeList<Database::Round*> list = base->toVariant().value<Database::AttributeList<Database::Round*> >();
+        Database::AttributeList<Database::Round*> list = var.value<Database::AttributeList<Database::Round*> >();
         variant.setValue(list.size());
     }
 
     else if(QString(var.typeName()) == "Database::AttributeList<Database::Player*>"){
-	Database::AttributeList<Database::Player*> list = base->toVariant().value<Database::AttributeList<Database::Player*> >();
+        Database::AttributeList<Database::Player*> list = var.value<Database::AttributeList<Database::Player*> >();
 	QString string = "";
 	for (int i = 0; i<list.size();i++){
 	    string += list.at(i)->name->value();
@@ -331,7 +344,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
     }
 
     else if(QString(var.typeName()) == "Database::AttributeList<Database::Schmeisserei*>"){
-        Database::AttributeList<Database::Schmeisserei*> list = base->toVariant().value<Database::AttributeList<Database::Schmeisserei*> >();
+        Database::AttributeList<Database::Schmeisserei*> list = var.value<Database::AttributeList<Database::Schmeisserei*> >();
         QString string = "";
         for (int i = 0; i<list.size();i++){
             string += list.at(i)->player->value()->name->value();
@@ -346,7 +359,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
 
     else if(QString(var.typeName()) == "Database::AttributeHash<Database::Player*COMMA int>"){
 	QString string = "";
-	Database::AttributeHash<Database::Player*,int> hash = base->toVariant().value<Database::AttributeHash<Database::Player*,int> >();
+        Database::AttributeHash<Database::Player*,int> hash = var.value<Database::AttributeHash<Database::Player*,int> >();
 	foreach(Database::Player* p, hash.keys()){
             string += p->name->value() + ":" + QString::number(hash.value(p)) + ", ";
 	}
@@ -355,7 +368,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
 
     else if(QString(var.typeName()) == "Database::AttributeHash<Database::Player*COMMA double>"){
         QString string = "";
-        Database::AttributeHash<Database::Player*,double> hash = base->toVariant().value<Database::AttributeHash<Database::Player*,double> >();
+        Database::AttributeHash<Database::Player*,double> hash = var.value<Database::AttributeHash<Database::Player*,double> >();
         foreach(Database::Player* p, hash.keys()){
             string += p->name->value() + ":" + QString::number(hash.value(p)) + ", ";
         }
@@ -364,7 +377,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
 
     else if(QString(var.typeName()) == "Database::AttributeHash<Database::Player*COMMA bool>"){
         QString string = "";
-        Database::AttributeHash<Database::Player*,bool> hash = base->toVariant().value<Database::AttributeHash<Database::Player*,bool> >();
+        Database::AttributeHash<Database::Player*,bool> hash = var.value<Database::AttributeHash<Database::Player*,bool> >();
         foreach(Database::Player* p, hash.keys()){
             if(hash.value(p)){
                 string += p->name->value() + ":" + "true" + ", ";
@@ -378,7 +391,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
 
     else if(QString(var.typeName()) == "Database::AttributeHash<Database::LiveGame*COMMA double>"){
         QString string = "";
-        Database::AttributeHash<Database::LiveGame*,double> hash = base->toVariant().value<Database::AttributeHash<Database::LiveGame*,double> >();
+        Database::AttributeHash<Database::LiveGame*,double> hash = var.value<Database::AttributeHash<Database::LiveGame*,double> >();
         foreach(Database::LiveGame* p, hash.keys()){
             string += p->name->value() + ":" + QString::number(hash.value(p)) + ", ";
         }
@@ -386,7 +399,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
     }
     else if(QString(var.typeName()) == "Database::AttributeHash<QString COMMA int>"){
         QString string = "";
-        Database::AttributeHash<QString,int> hash = base->toVariant().value<Database::AttributeHash<QString,int> >();
+        Database::AttributeHash<QString,int> hash = var.value<Database::AttributeHash<QString,int> >();
         foreach(QString i, hash.keys()){
             string += i + ":" + QString::number(hash.value(i)) + ", ";
         }
@@ -394,7 +407,7 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
     }
     else if(QString(var.typeName()) == "Database::AttributeHash<int COMMA int>"){
         QString string = "";
-        Database::AttributeHash<int,int> hash = base->toVariant().value<Database::AttributeHash<int,int> >();
+        Database::AttributeHash<int,int> hash = var.value<Database::AttributeHash<int,int> >();
         foreach(int i, hash.keys()){
             string += QString::number(i) + ":" + QString::number(hash.value(i)) + ", ";
         }
@@ -402,10 +415,13 @@ QVariant Handler::convert(Database::AttributeBase* base, QVariant var){
     }
     else if(QString(var.typeName()) == "Database::AttributeHash<QPair<Database::Player*COMMA Database::Player*>COMMA int>"){
         QString string = "";
-        Database::AttributeHash<QPair<Database::Player*,Database::Player*>,int> hash = base->toVariant().value<Database::AttributeHash<QPair<Database::Player*,Database::Player*>,int> >();
+        Database::AttributeHash<QPair<Database::Player*,Database::Player*>,int> hash = var.value<Database::AttributeHash<QPair<Database::Player*,Database::Player*>,int> >();
         for(int i = 0; i< hash.keys().size();i++){
             QPair<Database::Player*,Database::Player*> pair = hash.keys().at(i);
+            QPointer<Database::Player> p1 = pair.first;
+            QPointer<Database::Player> p2 = pair.second;
             string += pair.first->name->value() + "-" + pair.second->name->value() + ":" + QString::number(hash.value(pair)) + " ,";
+
         }
         variant.setValue(string);
     }

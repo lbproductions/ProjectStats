@@ -12,6 +12,13 @@
 
 #include <QDebug>
 
+namespace Gui{
+    namespace Details{
+        class DetailsWidget;
+        class StatsWidget;
+    }
+}
+
 namespace Database{
     class Place;
 }
@@ -42,6 +49,10 @@ START_ROW_DECLARATION(Player, Row)
     DECLARE_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,lastWin)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(LiveGame*,double,Player,PlayerCalculator,alcPegel)
+
+    Gui::Details::DetailsWidget* detailsWidget();
+
+    Gui::Details::StatsWidget* statsWidget();
 
 
 END_ROW_DECLARATION(Player)

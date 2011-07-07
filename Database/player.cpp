@@ -7,6 +7,9 @@
 #include "game.h"
 #include "place.h"
 
+#include <Gui/Details/PlayerDetails/playerdetailswidget.h>
+#include <Gui/Details/PlayerDetails/playerstatswidget.h>
+
 START_TABLE_IMPLEMENTATION(Player)
 
 Player* Players::playerByName(QString name)
@@ -76,6 +79,14 @@ QString Player::mimeType() const
 
 QImage Player::calculate_avatar(){
     return QImage(avatarPath->value()).scaledToHeight(30);
+}
+
+Gui::Details::DetailsWidget* Player::detailsWidget(){
+    return new Gui::Details::PlayerDetailsWidget(this);
+}
+
+Gui::Details::StatsWidget* Player::statsWidget(){
+    return new Gui::Details::PlayerStatsWidget(this);
 }
 
 END_ROW_IMPLEMENTATION()
