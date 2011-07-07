@@ -41,7 +41,7 @@ void DokoGraphPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem * /
     else if(m_dokoround->doko_trumpfabgabePlayerId->value() == m_player->id()){
         text = "T";
     }
-    else if(m_dokoround->doko_re1PlayerId->value() == m_player->id() || m_dokoround->doko_re2PlayerId->value() == m_player->id()){
+    else if(m_dokoround->doko_re->value(m_player)){
         text = "R";
     }
     else if (m_dokoround->currentPlayingPlayers->value().contains(m_player)){

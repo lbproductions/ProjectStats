@@ -22,7 +22,7 @@
 using namespace Gui::Details::LiveGameDetails;
 
 BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, QList<QPointer<Database::Drink> > drinklist, Database::LiveGame* livegame, QWidget *parent) :
-    QGroupBox(parent),
+    AbstractLiveGameWidget(parent),
     ui(new Ui::BeerPlayerWidget),
     m_livegame(livegame),
     m_player(player)
@@ -42,7 +42,9 @@ BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, QList<QPointer<Data
 
     m_parent = static_cast<BeerWidget*>(parent);
 
-    this->setStyleSheet("QGroupBox{border: 2px solid black}");
+    m_palette = this->palette();
+
+    //this->setStyleSheet("QGroupBox{border: 2px solid black}");
 
 }
 
@@ -53,8 +55,9 @@ BeerPlayerWidget::~BeerPlayerWidget()
 
 void BeerPlayerWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat("application/projectstats.livegame/drink"))
+    if (event->mimeData()->hasFormat("application/projectstats.livegame/drink")){
         event->acceptProposedAction();
+    }
 }
 
 void BeerPlayerWidget::dropEvent(QDropEvent *event)
@@ -88,11 +91,29 @@ void BeerPlayerWidget::onNumberChosen(int number){
 
 void BeerPlayerWidget::dragMoveEvent(QDragMoveEvent * /*event*/)
 {
-    this->setStyleSheet("QGroupBox{border: 2px solid white}");
+    this->setStyleSheet("QFrame{background: rgb(51,51,51); color: white; border-radius: 10px;}");
     this->repaint();
 }
 
 void BeerPlayerWidget::dragLeaveEvent(QDragLeaveEvent * /*event*/){
-    this->setStyleSheet("QGroupBox{border: 2px solid black}");
+    this->setStyleSheet("QFrame{background: black; color: white; border-radius: 10px;}");
     this->repaint();
+}
+
+void BeerPlayerWidget::setFullscreen(){
+    this->setStyleSheet("QFrame{background: black; color: white; border-radius: 10px;}");
+    ui->line->setStyleSheet("QFrame{background-color:gray;}");
+
+    /*
+    QPalette p(this->palette());
+    p.setColor(QPalette::Window, Qt::black);
+    p.setColor(QPalette::Foreground, Qt::white);
+    this->setPalette(p);
+    this->setContentsMargins(10,10,10,10);
+    this->setMinimumHeight(80);
+    */
+}
+
+void BeerPlayerWidget::setNormalMode(){
+    this->setStyleSheet("");
 }

@@ -3,7 +3,9 @@
 
 #include <QGroupBox>
 #include <QPointer>
+#include <QFrame>
 
+#include <Gui/Details/LiveGameDetails/abstractlivegamewidget.h>
 
 namespace Ui {
     class BeerPlayerWidget;
@@ -26,7 +28,7 @@ namespace LiveGameDetails
 {
     class BeerWidget;
 
-class BeerPlayerWidget : public QGroupBox
+class BeerPlayerWidget : public AbstractLiveGameWidget
 {
     Q_OBJECT
 
@@ -50,6 +52,14 @@ private:
     Database::Drink* m_droppedDrink;
 
     BeerWidget* m_parent;
+
+    QPalette m_palette;
+
+public slots:
+
+    void setFullscreen();
+
+    void setNormalMode();
 
 private slots:
 

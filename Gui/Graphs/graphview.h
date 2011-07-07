@@ -20,7 +20,13 @@ public:
     /*!
       Erstellt ein GraphView.
       */
-    explicit GraphView(QWidget *parent);
+
+    explicit GraphView(QWidget *parent = 0);
+
+public slots:
+    void setFullscreen();
+
+    void setNormalMode();
 };
 
 }

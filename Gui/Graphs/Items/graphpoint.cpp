@@ -12,7 +12,6 @@ GraphPoint::GraphPoint(QPoint point, Graph* graph) :
     AbstractItem(graph),
     m_graph(graph),
     m_point(point),
-    //m_radius(5)
     m_radius(3)
 {
     m_pen = QPen();

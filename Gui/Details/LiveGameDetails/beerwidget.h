@@ -1,8 +1,8 @@
 #ifndef BEERWIDGET_H
 #define BEERWIDGET_H
 
-#include <QGroupBox>
 #include <QPointer>
+#include <Gui/Details/LiveGameDetails/abstractlivegamewidget.h>
 
 class QVBoxLayout;
 
@@ -25,7 +25,7 @@ namespace LiveGameDetails
 /**
 * GroupBox, die die bereits getrunkenen Getränke der Player eines LiveGames anzeigt.
 */
-class BeerWidget : public QGroupBox
+class BeerWidget : public AbstractLiveGameWidget
 {
     Q_OBJECT
 public:
@@ -34,13 +34,19 @@ public:
     */
     explicit BeerWidget(Database::LiveGame* livegame, QWidget *parent = 0);
 
-private:
     QVBoxLayout* m_layout;
     QPointer<Database::LiveGame> m_livegame;
     QList< Database::Player* > m_playerlist;
 
+    QPalette m_defaultpalette;
+    bool m_isFullscreen;
+
 public slots:
     void updateWidget();
+
+    void setFullscreen();
+
+    void setNormalMode();
 
 };
 

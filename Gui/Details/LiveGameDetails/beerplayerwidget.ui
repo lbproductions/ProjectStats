@@ -13,36 +13,67 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_3">
    <property name="margin">
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="labelName">
-     <property name="text">
-      <string>Player-Name</string>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="labelName">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Player-Name</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <layout class="QGridLayout" name="gridLayoutDrinks"/>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <layout class="QGridLayout" name="gridLayoutDrinks"/>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
-      </spacer>
-     </item>
-    </layout>
    </item>
   </layout>
  </widget>

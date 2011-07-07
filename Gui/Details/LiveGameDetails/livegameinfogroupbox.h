@@ -5,6 +5,9 @@
 #include <QVBoxLayout>
 #include <QPointer>
 
+#include <Gui/Details/LiveGameDetails/abstractlivegamewidget.h>
+
+
 namespace Database{
     class LiveGame;
 }
@@ -16,7 +19,7 @@ namespace Gui{
         namespace LiveGameDetails{
 
 
-class LiveGameInfoGroupBox : public QGroupBox
+class LiveGameInfoGroupBox : public AbstractLiveGameWidget
 {
     Q_OBJECT
 public:
@@ -27,12 +30,17 @@ public:
 signals:
 
 public slots:
+    void setFullscreen();
+
+    void setNormalMode();
 
 protected:
 
     QPointer<Database::LiveGame> m_game;
 
     QVBoxLayout* m_layout;
+
+    QPalette m_defaultpalette;
 
 };
 

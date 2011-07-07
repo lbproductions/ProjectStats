@@ -57,6 +57,10 @@ signals:
 
 public slots:
 
+    void setFullscreen();
+
+    void setNormalMode();
+
 };
 
 }

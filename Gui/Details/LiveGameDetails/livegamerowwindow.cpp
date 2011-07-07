@@ -4,6 +4,8 @@
 #include <QToolBar>
 #include <QLabel>
 
+#include <QDebug>
+
 using namespace Gui::Details;
 
 LiveGameRowWindow::LiveGameRowWindow(Database::LiveGame* livegame, QWidget* widget):
@@ -59,16 +61,19 @@ void LiveGameRowWindow::setupToolBar(){
     connect(m_liveGameDetailsWidget,SIGNAL(finishedGameShown()),this,SLOT(disableIcons()));
     connect(m_liveGameDetailsWidget,SIGNAL(gameEnded()),this,SLOT(onGameEnded()));
 
-    setUnifiedTitleAndToolBarOnMac(true);
+    //setUnifiedTitleAndToolBarOnMac(true);
 }
 
 void LiveGameRowWindow::setFullScreen(bool state){
     if (state){
-        //this->showFullScreen();
+        //setUnifiedTitleAndToolBarOnMac(false);
+        this->showFullScreen();
         m_actionFullScreen->setIcon(QIcon(":/graphics/icons/mac/livegame/normal"));
         m_actionFullScreen->setText(tr("NormalMode"));
         m_liveGameDetailsWidget->setFullscreenMode();
-        this->repaint();
+        //m_toolbar->setStyleSheet("QWidget { background: black; border: 2px solid black; color: white;}");
+        m_toolbar->setStyleSheet("QWidget { background-image: url(:/graphics/styles/mac/toolbar/fullscreen/toolbar_background_fullscreen); border: 0px solid transparent; border-bottom: 1px solid gray;color: white;}");
+        qDebug() << "Height of Toolbar: " + QString::number(m_toolbar->height());
     }
     else{
         this->setMinimumSize(100,100);
@@ -76,6 +81,8 @@ void LiveGameRowWindow::setFullScreen(bool state){
         m_actionFullScreen->setIcon(QIcon(":/graphics/icons/mac/livegame/fullscreen"));
         m_actionFullScreen->setText(tr("FullScreen"));
         m_liveGameDetailsWidget->setNormalMode();
+        m_toolbar->setStyleSheet("");
+        //setUnifiedTitleAndToolBarOnMac(true);
     }
 }
 
@@ -108,6 +115,7 @@ void LiveGameRowWindow::finishLiveGame(){
 void LiveGameRowWindow::onLiveGameClosed(){
 
     m_liveGameDetailsWidget->closeGame();
+
     this->close();
 
 }

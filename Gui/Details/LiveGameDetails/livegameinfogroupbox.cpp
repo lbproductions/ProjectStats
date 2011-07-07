@@ -8,12 +8,13 @@
 #include <Gui/Misc/headerlabel.h>
 
 #include <QDebug>
+#include <QGraphicsEffect>
 
 using namespace Gui::Details::LiveGameDetails;
 
 
 LiveGameInfoGroupBox::LiveGameInfoGroupBox(Database::LiveGame* livegame, QWidget* parent) :
-    QGroupBox(parent),
+    AbstractLiveGameWidget(parent),
     m_game(livegame)
 {    
     m_layout = new QVBoxLayout(this);
@@ -43,6 +44,24 @@ LiveGameInfoGroupBox::LiveGameInfoGroupBox(Database::LiveGame* livegame, QWidget
     this->setLayout(m_layout);
 
     this->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Expanding);
+    this->setAutoFillBackground(true);
+
+    m_defaultpalette = this->palette();
+}
+
+void LiveGameInfoGroupBox::setFullscreen(){
+    QPalette palette = this->palette();
+    QPixmap pixmap;
+    pixmap.load(":/graphics/styles/mac/toolbar/fullscreen/sidebar_background_fullscreen");
+    palette.setBrush(QPalette::Window,QBrush(pixmap));
+    this->setPalette(palette);
+    this->setStyleSheet(QString("Gui--Misc--HeaderLabel{font-size: 20px; font-style: italic; color: rgb(200,200,200);}")+
+                "Gui--Misc--ValueLabel{font-size: 40px; color: white;}");
+}
+
+void LiveGameInfoGroupBox::setNormalMode(){
+    this->setPalette(m_defaultpalette);
+    this->setStyleSheet("");
 }
 
 void LiveGameInfoGroupBox::updateWidget(QString lengthText){

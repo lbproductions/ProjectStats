@@ -2,6 +2,7 @@
 
 #include <Database/livegame.h>
 #include <Database/player.h>
+#include <Gui/Misc/splitter.h>
 
 #include <global.h>
 #include <messagesystem.h>
@@ -64,13 +65,26 @@ void LiveGameDetailsWidget::setupWidget(){
     m_splitter->addWidget(m_playerTotalPointsTable);
     m_splitter->addWidget(m_graph);
     m_splitter->addWidget(m_gamecomment);
-
+    Gui::Misc::Splitter* splitter = new Gui::Misc::Splitter(Qt::Horizontal);
+    splitter->addWidget(m_beerwidget);
+    splitter->addWidget(m_splitter);
+    splitter->addWidget(m_infoBox);
+    /*
     m_centerLayout->addWidget(m_beerwidget);
     m_centerLayout->addWidget(m_splitter);
     m_centerLayout->addWidget(m_infoBox);
+    */
+
+
+    m_centerLayout->setSpacing(0);
+    m_centerLayout->setContentsMargins(0,0,0,0);
 
     m_layout->addLayout(m_newItemLayout);
-    m_layout->addLayout(m_centerLayout);
+    m_layout->addWidget(splitter);
+    //m_layout->addLayout(m_centerLayout);
+
+    m_layout->setSpacing(0);
+    m_layout->setContentsMargins(0,0,0,0);
 
     m_playerTotalPointsTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     for (int i = 0; i<m_playerTotalPointsTable->columnCount();i++){
@@ -153,6 +167,7 @@ void LiveGameDetailsWidget::resumeGame(){
 
 void LiveGameDetailsWidget::closeGame(){
     m_livegame->finishGame();
+    //Handler::getInstance()->messageSystem()->checkForStats(m_livegame);
 }
 
 void LiveGameDetailsWidget::updateWidget(){
@@ -226,10 +241,12 @@ void LiveGameDetailsWidget::showRoundWidget(){
 void LiveGameDetailsWidget::showLiveGameSettingsWidget(){
     m_settingsWidget = new LiveGameDetails::LiveGameSettingsWidget(this);
 
-    QFile newround(":/stylesheets/livegame/newroundwidget_fullscreen");
-    newround.open(QFile::ReadOnly);
-    m_settingsWidget->setStyleSheet(newround.readAll());
-    newround.close();
+    if (m_fullscreen){
+        QFile newround(":/stylesheets/livegame/newroundwidget_fullscreen");
+        newround.open(QFile::ReadOnly);
+        m_settingsWidget->setStyleSheet(newround.readAll());
+        newround.close();
+    }
 
     m_newItemLayout->addWidget(m_settingsWidget);
 
@@ -255,10 +272,12 @@ void LiveGameDetailsWidget::onDrinkDealed(){
 void LiveGameDetailsWidget::showAddDrinkWidget(){
     m_addDrinkWidget = new LiveGameDetails::AddDrinkWidget(m_livegame,this);
 
-    QFile newround(":/stylesheets/livegame/newroundwidget_fullscreen");
-    newround.open(QFile::ReadOnly);
-    m_addDrinkWidget->setStyleSheet(newround.readAll());
-    newround.close();
+    if (m_fullscreen){
+        QFile newround(":/stylesheets/livegame/newroundwidget_fullscreen");
+        newround.open(QFile::ReadOnly);
+        m_addDrinkWidget->setStyleSheet(newround.readAll());
+        newround.close();
+    }
 
     m_newItemLayout->addWidget(m_addDrinkWidget);
 
@@ -272,11 +291,14 @@ QPointer<BeerWidget> LiveGameDetailsWidget::beerwidget(){
 }
 
 void LiveGameDetailsWidget::setFullscreenMode(){
+
     this->setAutoFillBackground(true);
     this->setBackgroundRole(QPalette::Background);
     QPalette p(this->palette());
-    p.setColor(QPalette::Background, Qt::black);
+    p.setColor(QPalette::Background, QColor(51,51,51));
     this->setPalette(p);
+
+    /*
 
     QString path;
     qDebug() << "Resolution:" + QString::number(Handler::getInstance()->getDesktopWidth()) + "x" + QString::number(Handler::getInstance()->getDesktopHeight());
@@ -301,13 +323,29 @@ void LiveGameDetailsWidget::setFullscreenMode(){
     m_roundTable->setStyleSheet(table.readAll());
     table.close();
 
+    /*
     QFile beerwidget(":/stylesheets/livegame/beerwidget_fullscreen");
     beerwidget.open(QFile::ReadOnly);
     m_beerwidget->setStyleSheet(beerwidget.readAll());
     beerwidget.close();
+    */
+
+    //this->setStyleSheet("Gui--Details--LiveGameDetails--LiveGameDetailsWidget{background-color: black;}QSplitter::handle{height: 10px; background-color: transparent; border: 0px solid #6c6c6c;}");
+    this->setStyleSheet("");
+
+    m_roundTable->setFullscreen();
+
+    m_beerwidget->updateWidget();
+    m_beerwidget->setFullscreen();
+
+    m_infoBox->setFullscreen();
 
     m_fullscreen = true;
     m_roundTable->markCardMixer(m_fullscreen);
+
+    m_graph->setFullscreen();
+
+    m_playerTotalPointsTable->setStyleSheet("QWidget{background-color:black; color: white; border-radius: 10px;}");
 
     this->repaint();
 }
@@ -319,21 +357,40 @@ void LiveGameDetailsWidget::setNormalMode(){
     p.setColor(QPalette::Background, Qt::white);
     this->setPalette(p);
 
-    QFile normal(":/stylesheet/livegame/livegame_normal");
+
+    //QFile normal(":/stylesheet/livegame/livegame_normal");
+    QFile normal("");
     normal.open(QFile::ReadOnly);
     this->setStyleSheet(normal.readAll());
     normal.close();
 
     m_graph->setStyleSheet("");
-    m_roundTable->setStyleSheet("");
+    m_roundTable->setNormalMode();
 
-    QFile beerwidget(":/stylesheets/livegame/beerwidget_normal");
+    /*
+    //QFile beerwidget(":/stylesheets/livegame/beerwidget_normal");
+    QFile beerwidget("");
     beerwidget.open(QFile::ReadOnly);
     m_beerwidget->setStyleSheet(beerwidget.readAll());
     beerwidget.close();
+    */
+
+    m_beerwidget->setNormalMode();
+
+    QFile graph("");
+    graph.open(QFile::ReadOnly);
+    m_graph->setStyleSheet(graph.readAll());
+    graph.close();
+
+    QFile table("");
+    table.open(QFile::ReadOnly);
+    m_roundTable->setStyleSheet(table.readAll());
+    table.close();
 
     m_fullscreen = false;
     m_roundTable->markCardMixer(m_fullscreen);
+
+    m_infoBox->setNormalMode();
 
     this->repaint();
 }

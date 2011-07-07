@@ -154,7 +154,8 @@ SOURCES += main.cpp\
     Gui/Graphs/graphview.cpp \
     Gui/Graphs/dokolivegamegraphview.cpp \
     Gui/Details/PlayerDetails/playerdetailswidget.cpp \
-    Gui/Details/PlayerDetails/playerstatswidget.cpp
+    Gui/Details/PlayerDetails/playerstatswidget.cpp \
+    Gui/Details/LiveGameDetails/abstractlivegamewidget.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -323,7 +324,8 @@ HEADERS  += \
     Gui/Details/LiveGameDetails/choosedrinkcountdialog.h \
     Gui/Details/LiveGameDetails/beerwidget.h \
     Gui/Details/LiveGameDetails/beerplayerwidget.h \
-    Gui/Details/LiveGameDetails/adddrinkwidget.h
+    Gui/Details/LiveGameDetails/adddrinkwidget.h \
+    Gui/Details/LiveGameDetails/abstractlivegamewidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
