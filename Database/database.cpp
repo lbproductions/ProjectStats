@@ -6,6 +6,8 @@
 #include <QSqlError>
 #include <QElapsedTimer>
 
+#include "game.h"
+
 namespace Database {
 
 IMPLEMENT_SINGLETON(Database)
@@ -57,6 +59,8 @@ void Database::initialize(const QFile &databaseFile)
 
 void Database::createTables()
 {
+    qDebug() << "Database::createTables: Creating " << m_tables.count() << " tables";
+    qDebug() << this;
     foreach(QPointer<TableBase> table, m_tables)
     {
         Q_ASSERT(!table.isNull());
@@ -67,6 +71,10 @@ void Database::createTables()
 
     QElapsedTimer timer;
     timer.start();
+
+    static_cast<TableBase*>(Games::instance())->initializeCache();
+
+    qDebug() << "Database::createTables: Initializing caches for Games took" << timer.restart() << "ms";
     foreach(QPointer<TableBase> table, m_tables)
     {
         Q_ASSERT(!table.isNull());
@@ -81,7 +89,8 @@ void Database::createTables()
 void Database::registerTable(TableBase *table)
 {
     m_tables.append(table);
-    qDebug() << "Database::registerTable: Table " << table->name() << " registered";
+    qDebug() << "Database::registerTable: Table " << table->name() << " registered.";
+    qDebug() << this;
 }
 
 QSqlDatabase Database::sqlDatabaseLocked()

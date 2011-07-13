@@ -13,6 +13,29 @@ Splitter::Splitter(Qt::Orientation orientation, QWidget *parent) :
 {
 }
 
+void Splitter::setFullscreen(bool fullscreen)
+{
+    m_fullscreen = fullscreen;
+    repaint();
+}
+
+bool Splitter::isFullscreen()
+{
+    return m_fullscreen;
+}
+
+void Splitter::setLeftToRight(bool leftToRight)
+{
+    m_leftToRight = leftToRight;
+    repaint();
+}
+
+bool Splitter::isLeftToRight()
+{
+    return m_leftToRight;
+}
+
+
 #ifdef Q_WS_MAC
 MacSplitterHandle::MacSplitterHandle(Qt::Orientation orientation, Splitter *parent)
 : QSplitterHandle(orientation, parent) {   }
@@ -70,28 +93,6 @@ void MacSplitterHandle::paintEvent(QPaintEvent *)
             painter.drawLine(0, 0, 0, height());
         }
     }
-}
-
-void Splitter::setFullscreen(bool fullscreen)
-{
-    m_fullscreen = fullscreen;
-    repaint();
-}
-
-bool Splitter::isFullscreen()
-{
-    return m_fullscreen;
-}
-
-void Splitter::setLeftToRight(bool leftToRight)
-{
-    m_leftToRight = leftToRight;
-    repaint();
-}
-
-bool Splitter::isLeftToRight()
-{
-    return m_leftToRight;
 }
 
 QSize MacSplitterHandle::sizeHint() const

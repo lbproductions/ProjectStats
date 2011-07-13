@@ -2,8 +2,7 @@
 #define NEWLEAGUEDIALOG_H
 
 #include <QDialog>
-
-class QDate;
+#include <QDate>
 
 namespace Ui {
     class NewLeagueDialog;

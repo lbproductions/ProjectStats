@@ -9,7 +9,6 @@
 //#include <Database/Categories/leaguefoldercategorie.h>
 //#include <Database/Filters/leaguefilter.h>
 
-#include <QDate>
 #include <QListWidgetItem>
 
 NewLeagueDialog::NewLeagueDialog(QWidget *parent) :

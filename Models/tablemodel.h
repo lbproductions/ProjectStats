@@ -221,7 +221,7 @@ QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) co
         value = "Loading...";
     }
 
-    if(role == Qt::DisplayRole && attribute->role() == Qt::DisplayRole || role == Qt::EditRole)
+    if( (role == Qt::DisplayRole && attribute->role() == Qt::DisplayRole) || role == Qt::EditRole)
     {
         return value;
     }
