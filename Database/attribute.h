@@ -451,8 +451,7 @@ AttributeFutureWatcher<T,R,C> *Attribute<T,R,C>::futureWatcher()
 {
     if(m_futureWatcher == 0)
     {
-	m_futureWatcher = new AttributeFutureWatcher<T,R,C>(this);
-	m_futureWatcher->moveToThread(this->thread());
+        m_futureWatcher = new AttributeFutureWatcher<T,R,C>(this);
 	m_futureWatcher->setParent(this);
     }
     return m_futureWatcher;

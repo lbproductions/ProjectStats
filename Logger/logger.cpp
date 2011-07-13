@@ -98,7 +98,9 @@ void Logger::fatal(const char *msg)
 
 void Logger::init()
 {
+#ifndef Q_OS_WIN
     qInstallMsgHandler(myMessageOutput);
+#endif
 }
 
 void myMessageOutput(QtMsgType type, const char *msg)

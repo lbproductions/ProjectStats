@@ -170,6 +170,7 @@ protected:
     Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> > *m_rows; //!< Alle Rows gecacht
     Models::TableModel<RowType, Table<RowType> > *m_model;
     static QMap<QString, AttributeBase*> *registeredDatabaseAttributes();
+    bool m_cacheInitialized;
 
 private:
     /*!
@@ -225,7 +226,8 @@ template<class RowType>
 Table<RowType>::Table(const QString &name) :
     TableBase(name),
     m_rows(new Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> >("rows", "rows", this)),
-    m_model(0)
+    m_model(0),
+    m_cacheInitialized(false)
 {
 }
 
@@ -300,6 +302,11 @@ void Table<RowType>::alterTableToContainAllAttributes()
 template<class RowType>
 void Table<RowType>::initializeCache()
 {
+    if(m_cacheInitialized)
+    {
+        return;
+    }
+
     QSqlQuery select = QSqlQuery(Database::instance()->sqlDatabaseLocked());
     QString query("SELECT id FROM "+m_name);
 
@@ -329,6 +336,7 @@ void Table<RowType>::initializeCache()
     initializeRowCaches();
 
     m_model = new Models::TableModel<RowType, Table<RowType> >(this);
+    m_cacheInitialized = true;
 }
 
 template<class RowType>
