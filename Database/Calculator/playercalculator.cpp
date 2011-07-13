@@ -5,8 +5,12 @@
 #include <Database/place.h>
 #include <Database/drink.h>
 #include <Database/livegame.h>
+#include <handler.h>
 
 #include <Database/attributelist.h>
+
+#include <Gui/Details/PlayerDetails/abstractplayerstatswidget.h>
+#include <Gui/MainWindow/mainwindow.h>
 
 #include <QDebug>
 #include <QDateTime>
@@ -28,6 +32,15 @@ AttributeList<Game*> PlayerCalculator::calculate_games(){
     }
 
     return list;
+}
+
+AttributeHash<QString,int> PlayerCalculator::calculate_gameCount(){
+    AttributeHash<QString,int> hash;
+    foreach(Game* g,m_player->games->value()){
+        hash.insert("General",hash.value("General")+1);
+        hash.insert(g->type->value(),hash.value(g->type->value())+1);
+    }
+    return hash;
 }
 
 AttributeList<Place*> PlayerCalculator::calculate_places(){
@@ -53,33 +66,42 @@ AttributeHash<QString,int> PlayerCalculator::calculate_points(){
     return hash;
 }
 
-double PlayerCalculator::calculate_average(){
-    if(m_player->games->value().size() > 0){
-        return (double)m_player->points->value("General") / (double)m_player->games->value().size();
+AttributeHash<QString,double> PlayerCalculator::calculate_average(){
+    AttributeHash<QString,double> hash;
+    foreach(QString type, Games::instance()->types->value()){
+        if(m_player->gameCount->value(type) != 0){
+            hash.insert(type,(double)m_player->points->value(type) / (double)m_player->gameCount->value(type));
+        }
+        else{
+            hash.insert(type,0);
+        }
     }
-    else{
-        return 0.0;
+    if(m_player->gameCount->value("General") > 0){
+        hash.insert("General",(double)m_player->points->value("General") / (double)m_player->gameCount->value("General"));
     }
+    return hash;
 }
 
-int PlayerCalculator::calculate_wins(){
-    int count = 0;
+AttributeHash<QString,int> PlayerCalculator::calculate_wins(){
+    AttributeHash<QString,int> hash;
     for(int i = 0; i<m_player->games->value().size();i++){
         if(m_player->games->value(i)->placement->value(m_player) == 1){
-            count++;
+            hash.insert("General",hash.value("General")+1);
+            hash.insert(m_player->games->value(i)->type->value(),hash.value(m_player->games->value(i)->type->value())+1);
         }
     }
-    return count;
+    return hash;
 }
 
-int PlayerCalculator::calculate_losses(){
-    int count = 0;
+AttributeHash<QString,int> PlayerCalculator::calculate_losses(){
+    AttributeHash<QString,int> hash;
     for(int i = 0; i<m_player->games->value().size();i++){
         if(m_player->games->value(i)->placement->value(m_player) == m_player->games->value(i)->players->value().size()){
-            count++;
+            hash.insert("General",hash.value("General")+1);
+            hash.insert(m_player->games->value(i)->type->value(),hash.value(m_player->games->value(i)->type->value())+1);
         }
     }
-    return count;
+    return hash;
 }
 
 QDateTime PlayerCalculator::calculate_lastGame(){

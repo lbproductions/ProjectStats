@@ -215,7 +215,7 @@ QVariant Handler::convert(QVariant var){
             variant.setValue(time.toString("dd.MM.yyyy"));
         }
         else if (time.date().year() != 1960){
-            variant.setValue(time);
+            variant.setValue(time.toString("dd.MM.yyyy hh:mm"));
         }
         else{
             variant.setValue(tr("Never"));
@@ -400,6 +400,14 @@ QVariant Handler::convert(QVariant var){
     else if(QString(var.typeName()) == "Database::AttributeHash<QString COMMA int>"){
         QString string = "";
         Database::AttributeHash<QString,int> hash = var.value<Database::AttributeHash<QString,int> >();
+        foreach(QString i, hash.keys()){
+            string += i + ":" + QString::number(hash.value(i)) + ", ";
+        }
+        variant.setValue(string);
+    }
+    else if(QString(var.typeName()) == "Database::AttributeHash<QString COMMA double>"){
+        QString string = "";
+        Database::AttributeHash<QString,double> hash = var.value<Database::AttributeHash<QString,double> >();
         foreach(QString i, hash.keys()){
             string += i + ":" + QString::number(hash.value(i)) + ", ";
         }

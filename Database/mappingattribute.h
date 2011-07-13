@@ -112,7 +112,8 @@ const V MappingAttribute<K,V,R,C>::value(K key){
 
 template<class K, class V, class R, class C>
 AttributeHash<K,V>& MappingAttribute<K,V,R,C>::value(){
-    disconnect(&this->m_value);
+
+     disconnect(&this->m_value);
      Attribute<AttributeHash<K,V>,R,C>::value();
      connect(&this->m_value,SIGNAL(changed()),this,SIGNAL(changed()));
      return Attribute<AttributeHash<K,V>,R,C>::m_value;

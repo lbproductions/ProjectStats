@@ -8,6 +8,12 @@
 
 class QDateTime;
 
+namespace Gui{
+    namespace Details{
+        class AbstractPlayerStatsWidget;
+    }
+}
+
 namespace Database {
 
 class Player;
@@ -27,11 +33,13 @@ public:
 
     AttributeList<Place*> calculate_places();
 
-    double calculate_average();
+    AttributeHash<QString,double> calculate_average();
 
-    int calculate_wins();
+    AttributeHash<QString,int> calculate_wins();
 
-    int calculate_losses();
+    AttributeHash<QString,int> calculate_losses();
+
+    AttributeHash<QString,int> calculate_gameCount();
 
     QDateTime calculate_lastGame();
 

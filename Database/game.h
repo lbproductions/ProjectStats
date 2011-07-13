@@ -60,6 +60,9 @@ START_TABLE_DECLARATION(Game)
 
     QStringList possibleTypes() const;
 
+    ListAttribute<QString,Games, Games> *types;
+    AttributeList<QString> calculate_types();
+
 END_TABLE_DECLARATION()
 
 Q_DECLARE_METATYPE(QPointer<Database::Place>)

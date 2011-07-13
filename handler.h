@@ -31,6 +31,10 @@ namespace Gui
     {
 	class MainWindow;
     }
+
+    namespace Details{
+        class AbstractPlayerStatsWidget;
+    }
 }
 
 //! Der Startpunkt dieses Programms.
@@ -131,9 +135,12 @@ Q_DECLARE_METATYPE(Database::AttributeHash<Database::LiveGame* COMMA double>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA bool>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA double>)
 Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA int>)
+Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA double>)
 Q_DECLARE_METATYPE(Database::AttributeHash<QPair<Database::Player* COMMA Database::Player*> COMMA int>)
 Q_DECLARE_METATYPE(Database::AttributeHash<int COMMA int>)
+Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA Gui::Details::AbstractPlayerStatsWidget*>)
 Q_DECLARE_METATYPE(Database::AttributeList<int>)
+Q_DECLARE_METATYPE(Database::AttributeList<QString>)
 Q_DECLARE_METATYPE(Database::AttributeList<Database::ChildCategorie*>)
 
 

@@ -17,8 +17,6 @@
 
 #include <handler.h>
 
-Q_DECLARE_METATYPE(Database::AttributeList<QString>)
-
 int main(int argc, char *argv[])
 {
     Logger::init();

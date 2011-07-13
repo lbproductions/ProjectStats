@@ -9,6 +9,7 @@
 
 #include <Gui/Details/PlayerDetails/playerdetailswidget.h>
 #include <Gui/Details/PlayerDetails/playerstatswidget.h>
+#include <Gui/Details/PlayerDetails/abstractplayerstatswidget.h>
 
 START_TABLE_IMPLEMENTATION(Player)
 
@@ -45,20 +46,23 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Game*,Player,PlayerCalculator,calc,games,tr("Games"))
     Games::instance()->rows()->addDependingAttribute(games);
 
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,gameCount,tr("GameCount"))
+    games->addDependingAttribute(gameCount);
+
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,calc,places,tr("Places"))
     Places::instance()->rows()->addDependingAttribute(places);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,points,tr("Points"))
     games->addDependingAttribute(points);
 
-    IMPLEMENT_ATTRIBUTE_IN_CALC(double,Player,PlayerCalculator,calc,average,tr("Average"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,calc,average,tr("Average"))
     games->addDependingAttribute(average);
     points->addDependingAttribute(average);
 
-    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,calc,wins,tr("Wins"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,wins,tr("Wins"))
     games->addDependingAttribute(wins);
 
-    IMPLEMENT_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,calc,losses,tr("Losses"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,losses,tr("Losses"))
     games->addDependingAttribute(losses);
 
     IMPLEMENT_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,calc,lastGame,tr("LastGame"))
@@ -87,6 +91,10 @@ Gui::Details::DetailsWidget* Player::detailsWidget(){
 
 Gui::Details::StatsWidget* Player::statsWidget(){
     return new Gui::Details::PlayerStatsWidget(this);
+}
+
+Gui::Details::AbstractPlayerStatsWidget* Player::typeStatsWidget(QString type){
+    return new Gui::Details::AbstractPlayerStatsWidget(this,type);
 }
 
 END_ROW_IMPLEMENTATION()

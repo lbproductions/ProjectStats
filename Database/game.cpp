@@ -15,7 +15,16 @@
 
 #include <QDateTime>
 
-START_TABLE_IMPLEMENTATION(Game)
+namespace Database {
+IMPLEMENT_SINGLETON( Games )
+Games::Games() :
+    Table<Game>(QString("Games"))
+{
+    types = new ListAttribute<QString,Games, Games>("types",tr("Types"), this);
+    types->setCalculationFunction(this,&Games::calculate_types);
+    this->rows()->addDependingAttribute(types);
+}
+REGISTER_TABLE(Games)
 
 QPointer<Game> Games::createRowInstance(int id)
 {
@@ -50,6 +59,16 @@ QStringList Games::possibleTypes() const
     QStringList list;
     list << DokoLiveGame::TYPE;
     list << "Skat";
+    return list;
+}
+
+AttributeList<QString> Games::calculate_types(){
+    AttributeList<QString> list;
+    foreach(Game* g, Games::instance()->allRows()){
+        if(!list.contains(g->type->value())){
+            list.append(g->type->value());
+        }
+    }
     return list;
 }
 

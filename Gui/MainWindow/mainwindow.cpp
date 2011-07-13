@@ -76,7 +76,7 @@ void MainWindow::restoreSettings()
 {
     QSettings settings;
     restoreState(settings.value("MainWindow/windowState").toByteArray());
-    //restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
+    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     m_verticalSplitter->restoreState(settings.value("MainWindow/verticalSplitter/windowState").toByteArray());
     m_verticalSplitter->restoreGeometry(settings.value("MainWindow/verticalSplitter/geometry").toByteArray());
 #ifdef Q_WS_MAC

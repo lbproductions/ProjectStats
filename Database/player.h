@@ -16,6 +16,7 @@ namespace Gui{
     namespace Details{
         class DetailsWidget;
         class StatsWidget;
+        class AbstractPlayerStatsWidget;
     }
 }
 
@@ -40,10 +41,11 @@ START_ROW_DECLARATION(Player, Row)
     DECLARE_LISTATTRIBUTE_IN_CALC(Game*,Player,PlayerCalculator,games)
     DECLARE_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,places)
 
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,gameCount)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,points)
-    DECLARE_ATTRIBUTE_IN_CALC(double,Player,PlayerCalculator,average)
-    DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,wins)
-    DECLARE_ATTRIBUTE_IN_CALC(int,Player,PlayerCalculator,losses)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,average)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,wins)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,losses)
 
     DECLARE_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,lastGame)
     DECLARE_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,lastWin)
@@ -53,6 +55,8 @@ START_ROW_DECLARATION(Player, Row)
     Gui::Details::DetailsWidget* detailsWidget();
 
     Gui::Details::StatsWidget* statsWidget();
+
+    Gui::Details::AbstractPlayerStatsWidget* typeStatsWidget(QString type);
 
 
 END_ROW_DECLARATION(Player)

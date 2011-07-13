@@ -5,7 +5,7 @@
 #include <Database/game.h>
 //#include <Stats/PlayerStats/abstractplayerstats.h>
 //#include <Stats/PlayerStats/generalplayerstats.h>
-//#include <Gui/Details/PlayerDetails/abstractplayerstatswidget.h>
+#include <Gui/Details/PlayerDetails/abstractplayerstatswidget.h>
 
 using namespace Gui::Details;
 
@@ -19,11 +19,15 @@ PlayerStatsWidget::PlayerStatsWidget(Database::Player* player, QWidget *parent) 
 //	ui->tabWidget->addTab(stats->statsWidget(),stats->statsWidget()->title());
 //    }
 
-    player->average->futureWatcher()->connectTo(ui->labelAverageValue);
-    player->games->futureWatcher()->connectTo(ui->labelGamesValue);
-    player->losses->futureWatcher()->connectTo(ui->labelLossesValue);
+    foreach(QString s, Database::Games::instance()->types->value()){
+        ui->tabWidget->addTab(player->typeStatsWidget(s),s);
+    }
+
+    player->average->mappingFutureWatcher()->connectTo(ui->labelAverageValue,"General");
+    player->gameCount->mappingFutureWatcher()->connectTo(ui->labelGamesValue,"General");
+    player->losses->mappingFutureWatcher()->connectTo(ui->labelLossesValue,"General");
     player->points->mappingFutureWatcher()->connectTo(ui->labelPointsValue,"General");
-    player->wins->futureWatcher()->connectTo(ui->labelWinsValue);
+    player->wins->mappingFutureWatcher()->connectTo(ui->labelWinsValue,"General");
 
     QDateTime game = player->lastGame->value();
     if(game.date().year() != 1960)

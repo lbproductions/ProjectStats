@@ -40,7 +40,7 @@ template<class V, class R, class C>
 class ListAttribute : public Attribute<AttributeList<V>,R,C>
 {
 public:
-    ListAttribute(const QString &name, const QString &displayName, Row *row);
+    ListAttribute(const QString &name, const QString &displayName, AttributeOwner *owner);
 
     /*!
     Gibt für den Wert an der Stelle pos zurück.
@@ -56,8 +56,8 @@ protected:
 };
 
 template<class V, class R, class C>
-ListAttribute<V,R,C>::ListAttribute(const QString &name, const QString &displayName, Row *row):
-    Attribute<AttributeList<V>,R,C>(name,displayName,row)
+ListAttribute<V,R,C>::ListAttribute(const QString &name, const QString &displayName, AttributeOwner *owner):
+    Attribute<AttributeList<V>,R,C>(name,displayName,owner)
 {
 }
 
