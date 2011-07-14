@@ -7,7 +7,8 @@
 using namespace Gui::Misc;
 
 RowListHeader::RowListHeader(Qt::Orientation orientation, QWidget *parent) :
-    QHeaderView(orientation,parent)
+    QHeaderView(orientation,parent),
+    m_menu(0)
 {
 }
 
