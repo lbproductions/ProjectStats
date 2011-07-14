@@ -137,7 +137,9 @@ void MappingAttributeFutureWatcher<K,V,R,C>::connectTo(QLabel* label, K key)
     }
     else
     {
-        QVariant display = Handler::getInstance()->convert(QVariant::fromValue<V>(pointer->value(key)));
+        AttributeVariant variant;
+        variant.setValue(pointer->value(key));
+        QVariant display = variant.displayVariant();
         if (!display.isNull()){
             label->setText(display.toString());
         }
@@ -154,7 +156,9 @@ template<class K, class V, class R, class C>
 void MappingAttributeFutureWatcher<K,V,R,C>::updateKey(QVariant variant){
     K key = variant.value<K>();
     MappingAttribute<K,V,R,C>* pointer = static_cast<MappingAttribute<K,V,R,C>*>(AttributeFutureWatcher<AttributeHash<K,V>,R,C>::m_attribute);
-    QVariant display = Handler::getInstance()->convert(QVariant::fromValue<V>(pointer->value(key)));
+    AttributeVariant var;
+    var.setValue(pointer->value(key));
+    QVariant display = var.displayVariant();
     foreach(QLabel* label, m_labels.keys()){
         if (!display.isNull()){
             label->setText(display.toString());

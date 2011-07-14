@@ -13,6 +13,7 @@
 #include <QDebug>
 
 #include <handler.h>
+#include "attributevariant.h"
 
 /*!
   Ruft auf dem Objekt \p object die Funktion \p ptrToMember auf.<br>
@@ -101,7 +102,7 @@ public:
     virtual QString sqlType() const = 0;
 
     virtual QString toString() = 0;
-    virtual QVariant toVariant() = 0;
+    virtual AttributeVariant toVariant() = 0;
     virtual QVariant displayVariant() = 0;
     virtual void changeValue(QVariant value, bool updateDatabase);
 
@@ -110,6 +111,10 @@ public:
     virtual bool isCalculating() = 0;
 
     void emitChanged();
+
+    void setDisplayRole(AttributeVariant::DisplayRole role);
+
+    AttributeVariant::DisplayRole displayRole();
 
 public slots:
     virtual void changeValue(QVariant value) = 0;
@@ -149,6 +154,8 @@ protected:
     QString m_name;
     QString m_displayName;
     int m_role;
+
+    AttributeVariant::DisplayRole m_displayRole;
 };
 
 template<class T, class R, class C>
@@ -200,7 +207,7 @@ public:
 
     QString toString();
 
-    QVariant toVariant();
+    AttributeVariant toVariant();
 
     QVariant displayVariant();
 
@@ -506,9 +513,9 @@ T& Attribute<T,R,C>::value()
 }
 
 template<class T, class R, class C>
-QVariant Attribute<T,R,C>::toVariant()
+AttributeVariant Attribute<T,R,C>::toVariant()
 {
-    QVariant v;
+    AttributeVariant v;
     v.setValue(value());
     return v;
 }
@@ -516,19 +523,22 @@ QVariant Attribute<T,R,C>::toVariant()
 template<class T, class R, class C>
 QVariant Attribute<T,R,C>::displayVariant()
 {
-    QVariant display = Handler::getInstance()->convert(toVariant());
-    if (!display.isNull()){
-	return display;
+    AttributeVariant display = toVariant();
+    display.setDisplayRole(AttributeVariant::MainWindow);
+    QVariant variant = display.displayVariant();
+    if (!variant.isNull()){
+        return variant;
     }
     else{
-	return toVariant();
+        return display;
     }
 }
 
 template<class T, class R, class C>
 QString Attribute<T,R,C>::toString()
 {
-  return toVariant().toString();
+  //return toVariant().toString();
+    return "asdd";
 }
 
 

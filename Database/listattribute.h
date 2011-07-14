@@ -91,7 +91,9 @@ void ListAttributeFutureWatcher<V,R,C>::connectTo(QLabel* label, V value)
     }
     else
     {
-        QVariant display = Handler::getInstance()->convert(QVariant::fromValue<V>(value));
+        AttributeVariant variant;
+        variant.setValue(value);
+        QVariant display = variant.displayVariant();
         if (!display.isNull()){
             label->setText(display.toString());
         }
@@ -107,8 +109,9 @@ void ListAttributeFutureWatcher<V,R,C>::connectTo(QLabel* label, V value)
 template<class V, class R, class C>
 void ListAttributeFutureWatcher<V,R,C>::updateKey(QVariant variant){
     V value = variant.value<V>();
-    //QPointer<ListAttribute<V,R,C> > pointer = (ListAttribute<V,R,C>*) AttributeFutureWatcher<AttributeList<V>,R,C>::m_attribute.data();
-    QVariant display = Handler::getInstance()->convert(QVariant::fromValue<V>(value));
+    AttributeVariant var;
+    var.setValue(value);
+    QVariant display = var.displayVariant();
     foreach(QLabel* label, m_labels.keys()){
         if (!display.isNull()){
             label->setText(display.toString());

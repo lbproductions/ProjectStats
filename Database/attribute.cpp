@@ -70,6 +70,14 @@ void AttributeBase::changeValue(QVariant value, bool /*updateDatabase*/)
     changeValue(value);
 }
 
+void AttributeBase::setDisplayRole(AttributeVariant::DisplayRole role){
+    m_displayRole = role;
+}
+
+AttributeVariant::DisplayRole AttributeBase::displayRole(){
+    return m_displayRole;
+}
+
 AttributeFutureWatcherBase::AttributeFutureWatcherBase() :
     QObject()
 {
@@ -121,5 +129,6 @@ void AttributeFutureWatcherBase::check(QString a){
 void AttributeFutureWatcherBase::updateKey(QVariant variant){
 
 }
+
 
 } // namespace Database

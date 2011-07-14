@@ -6,6 +6,8 @@
 #include <QVariant>
 #include <QDateTime>
 
+#include <attributevariant.h>
+
 #include <Database/attributehash.h>
 #include <Database/attributelist.h>
 
@@ -62,8 +64,6 @@ public:
       Gibt die eine QApplication Instanz zurück.
       */
     static Handler* const getInstance();
-
-    QVariant convert(QVariant var);
 
 
     /*!

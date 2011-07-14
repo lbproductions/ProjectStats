@@ -156,7 +156,8 @@ SOURCES += main.cpp\
     Gui/Details/PlayerDetails/playerdetailswidget.cpp \
     Gui/Details/PlayerDetails/playerstatswidget.cpp \
     Gui/Details/LiveGameDetails/abstractlivegamewidget.cpp \
-    Gui/Details/PlayerDetails/abstractplayerstatswidget.cpp
+    Gui/Details/PlayerDetails/abstractplayerstatswidget.cpp \
+    attributevariant.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -327,7 +328,8 @@ HEADERS  += \
     Gui/Details/LiveGameDetails/beerplayerwidget.h \
     Gui/Details/LiveGameDetails/adddrinkwidget.h \
     Gui/Details/LiveGameDetails/abstractlivegamewidget.h \
-    Gui/Details/PlayerDetails/abstractplayerstatswidget.h
+    Gui/Details/PlayerDetails/abstractplayerstatswidget.h \
+    attributevariant.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
