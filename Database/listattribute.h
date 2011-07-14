@@ -57,7 +57,8 @@ protected:
 
 template<class V, class R, class C>
 ListAttribute<V,R,C>::ListAttribute(const QString &name, const QString &displayName, AttributeOwner *owner):
-    Attribute<AttributeList<V>,R,C>(name,displayName,owner)
+    Attribute<AttributeList<V>,R,C>(name,displayName,owner),
+    m_attributeFutureWatcher(0)
 {
 }
 
