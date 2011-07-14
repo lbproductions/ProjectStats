@@ -22,8 +22,8 @@ Position::Position(Player* player, Game* game, int position) :
     this->gameId->setValue(game->id());
     this->position->setValue(position);
 
-    connect(game,SIGNAL(idChanged(int)),this->gameId,SLOT(setValue(int)));
-    connect(player,SIGNAL(idChanged(int)),this->playerId,SLOT(setValue(int)));
+    connect(game,SIGNAL(idChanged(int)),this->gameId,SLOT(changeValue(int)));
+    connect(player,SIGNAL(idChanged(int)),this->playerId,SLOT(changeValue(int)));
 }
 
 QString Position::mimeType() const

@@ -15,6 +15,7 @@
 #include <Database/Doppelkopf/dokolivegame.h>
 #include <Database/Skat/skatlivegame.h>
 #include <Database/livegame.h>
+#include <Gui/Details/rowwindow.h>
 
 #include <QDebug>
 #include <QMessageBox>
@@ -63,35 +64,42 @@ void NewGameWizard::initializeWidget()
 
 void NewGameWizard::on_accepted()
 {
-    Database::Game *game = 0;
+    Database::Game* game = 0;
     if(field("isLive").toBool())
     {
+        Database::LiveGame *livegame = 0;
         QString type = field("live_type").toString();
         if(type == Database::DokoLiveGame::TYPE)
         {
-            game = createDokoLiveGame();
+            livegame = createDokoLiveGame();
         }
         else if(type == "Skat")
         {
 
         }
 
-        game->date->setValue(QDateTime::currentDateTime());
+        Database::Games::instance()->insertRow(livegame);
+
+        livegame->startNextRound();
+
+        livegame->date->setValue(QDateTime::currentDateTime());
 
         QPointer<Database::Place> place = m_liveGameGeneralOptionsWidget->selectedPlace();
-        game->siteId->setValue(place->id());
+        livegame->siteId->setValue(place->id());
 
         foreach(Database::Player *player, m_liveGameGeneralOptionsWidget->selectedPlayers())
         {
-            game->addPlayer(player);
+            livegame->addPlayer(player);
         }
+
+        game = livegame;
     }
     else
     {
 
     }
 
-    Database::Games::instance()->insertRow(game);
+    game->rowWindow()->show();
 }
 
 Database::DokoLiveGame *NewGameWizard::createDokoLiveGame()
