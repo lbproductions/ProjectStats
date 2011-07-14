@@ -47,8 +47,8 @@ START_ROW_DECLARATION(Player, Row)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,wins)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,losses)
 
-    DECLARE_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,lastGame)
-    DECLARE_ATTRIBUTE_IN_CALC(QDateTime,Player,PlayerCalculator,lastWin)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,QDateTime,Player,PlayerCalculator,lastGame)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,QDateTime,Player,PlayerCalculator,lastWin)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(LiveGame*,double,Player,PlayerCalculator,alcPegel)
 

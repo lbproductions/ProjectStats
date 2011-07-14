@@ -41,9 +41,9 @@ public:
 
     AttributeHash<QString,int> calculate_gameCount();
 
-    QDateTime calculate_lastGame();
+    AttributeHash<QString,QDateTime> calculate_lastGame();
 
-    QDateTime calculate_lastWin();
+    AttributeHash<QString,QDateTime> calculate_lastWin();
 
     AttributeHash<LiveGame*,double> calculate_alcPegel();
 

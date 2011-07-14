@@ -16,6 +16,8 @@ AbstractPlayerStatsWidget::AbstractPlayerStatsWidget(Database::Player* player, Q
     player->losses->mappingFutureWatcher()->connectTo(ui->labelLosses,type);
     player->wins->mappingFutureWatcher()->connectTo(ui->labelWins,type);
     player->average->mappingFutureWatcher()->connectTo(ui->labelAverage,type);
+    player->lastWin->mappingFutureWatcher()->connectTo(ui->labelLastWin,type);
+    player->lastGame->mappingFutureWatcher()->connectTo(ui->labelLastGame,type);
 }
 
 AbstractPlayerStatsWidget::~AbstractPlayerStatsWidget()

@@ -29,20 +29,18 @@ PlayerStatsWidget::PlayerStatsWidget(Database::Player* player, QWidget *parent) 
     player->points->mappingFutureWatcher()->connectTo(ui->labelPointsValue,"General");
     player->wins->mappingFutureWatcher()->connectTo(ui->labelWinsValue,"General");
 
-    QDateTime game = player->lastGame->value();
-    if(game.date().year() != 1960)
+    if(player->lastGame->value("General") != QDateTime())
     {
-        player->lastGame->futureWatcher()->connectTo(ui->labelLastGameValue);
+        player->lastGame->mappingFutureWatcher()->connectTo(ui->labelLastGameValue,"General");
     }
     else
     {
 	ui->labelLastGameValue->setText(tr("Never"));
     }
 
-    game = player->lastWin->value();
-    if(game.date().year() != 1960)
+    if(player->lastWin->value("General") != QDateTime())
     {
-        player->lastGame->futureWatcher()->connectTo(ui->labelLastWinValue);
+        player->lastWin->mappingFutureWatcher()->connectTo(ui->labelLastWinValue,"General");
     }
     else
     {

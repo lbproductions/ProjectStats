@@ -11,7 +11,6 @@
 #include <QDesktopWidget>
 #include <QSettings>
 #include <QFileDialog>
-#include <QDateTime>
 
 //#include <databasewindow.h>
 #include <messagesystem.h>
@@ -410,6 +409,14 @@ QVariant Handler::convert(QVariant var){
         Database::AttributeHash<QString,double> hash = var.value<Database::AttributeHash<QString,double> >();
         foreach(QString i, hash.keys()){
             string += i + ":" + QString::number(hash.value(i)) + ", ";
+        }
+        variant.setValue(string);
+    }
+    else if(QString(var.typeName()) == "Database::AttributeHash<QString COMMA QDateTime>"){
+        QString string = "";
+        Database::AttributeHash<QString,QDateTime> hash = var.value<Database::AttributeHash<QString,QDateTime> >();
+        foreach(QString i, hash.keys()){
+            string += i + ":" + this->convert(QVariant::fromValue<QDateTime>(hash.value(i))).toString() + ", ";
         }
         variant.setValue(string);
     }

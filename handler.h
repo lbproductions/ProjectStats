@@ -4,11 +4,13 @@
 #include <QApplication>
 #include <QPointer>
 #include <QVariant>
+#include <QDateTime>
 
 #include <Database/attributehash.h>
 #include <Database/attributelist.h>
 
 class MessageSystem;
+class QDateTime;
 
 namespace Database
 {
@@ -136,6 +138,7 @@ Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA bool>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA double>)
 Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA int>)
 Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA double>)
+Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA QDateTime>)
 Q_DECLARE_METATYPE(Database::AttributeHash<QPair<Database::Player* COMMA Database::Player*> COMMA int>)
 Q_DECLARE_METATYPE(Database::AttributeHash<int COMMA int>)
 Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA Gui::Details::AbstractPlayerStatsWidget*>)

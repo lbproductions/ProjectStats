@@ -104,24 +104,36 @@ AttributeHash<QString,int> PlayerCalculator::calculate_losses(){
     return hash;
 }
 
-QDateTime PlayerCalculator::calculate_lastGame(){
-    QDateTime time(QDate(1960,1,1));
+AttributeHash<QString,QDateTime> PlayerCalculator::calculate_lastGame(){
+    AttributeHash<QString,QDateTime> hash;
     for(int i = 0; i<m_player->games->value().size();i++){
-        if(m_player->games->value(i)->date->value() > time){
-            time = m_player->games->value(i)->date->value();
+        foreach(QString type, Games::instance()->types->value()){
+            if(m_player->games->value(i)->type->value() == type && m_player->games->value(i)->date->value() > hash.value(type)){
+                hash.insert(type,m_player->games->value(i)->date->value());
+            }
+            if(m_player->games->value(i)->date->value() > hash.value("General")){
+                hash.insert("General",m_player->games->value(i)->date->value());
+            }
         }
+
     }
-    return time;
+    return hash;
 }
 
-QDateTime PlayerCalculator::calculate_lastWin(){
-    QDateTime time(QDate(1960,1,1));
+AttributeHash<QString,QDateTime> PlayerCalculator::calculate_lastWin(){
+    AttributeHash<QString,QDateTime> hash;
     for(int i = 0; i<m_player->games->value().size();i++){
-        if(m_player->games->value(i)->date->value() > time && m_player->games->value(i)->placement->value(m_player) == 1){
-            time = m_player->games->value(i)->date->value();
+        foreach(QString type, Games::instance()->types->value()){
+            if(m_player->games->value(i)->type->value() == type && m_player->games->value(i)->date->value() > hash.value(type) && m_player->games->value(i)->placement->value(m_player) == 1){
+                hash.insert(type,m_player->games->value(i)->date->value());
+            }
+            if(m_player->games->value(i)->date->value() > hash.value("General") && m_player->games->value(i)->placement->value(m_player) == 1){
+                hash.insert("General",m_player->games->value(i)->date->value());
+            }
         }
+
     }
-    return time;
+    return hash;
 }
 
 AttributeHash<LiveGame*,double> PlayerCalculator::calculate_alcPegel(){
