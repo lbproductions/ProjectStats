@@ -183,6 +183,8 @@ public:
       */
     Attribute();
 
+    ~Attribute();
+
     /*!
       Erstellt ein Attribut für die Row \p row.
       */
@@ -419,7 +421,7 @@ protected:
       */
     QString toString();
 
-    QPointer<Attribute<T,R,C> > m_attribute; //!< Das beobachtete Attribut.
+    Attribute<T,R,C>* m_attribute; //!< Das beobachtete Attribut.
     QPointer<QFutureWatcher<T> > m_futureWatcher; //!< Der interne QFutureWatcher.
 };
 
@@ -445,6 +447,14 @@ Attribute<T,R,C>::Attribute(const QString &name, const QString &displayName, Att
 {
 }
 
+template<class T, class R, class C>
+Attribute<T,R,C>::~Attribute()
+{
+    if(m_futureWatcher)
+    {
+        m_futureWatcher->deleteLater();
+    }
+}
 
 template<class T, class R, class C>
 AttributeFutureWatcher<T,R,C> *Attribute<T,R,C>::futureWatcher()
@@ -452,7 +462,6 @@ AttributeFutureWatcher<T,R,C> *Attribute<T,R,C>::futureWatcher()
     if(m_futureWatcher == 0)
     {
         m_futureWatcher = new AttributeFutureWatcher<T,R,C>(this);
-	m_futureWatcher->setParent(this);
     }
     return m_futureWatcher;
 }

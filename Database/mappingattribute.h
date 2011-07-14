@@ -78,7 +78,8 @@ protected:
 
 template<class K, class V, class R, class C>
 MappingAttribute<K,V,R,C>::MappingAttribute(const QString &name, const QString &displayName, Row *row):
-    Attribute<AttributeHash<K,V> ,R,C>(name,displayName,row)
+    Attribute<AttributeHash<K,V> ,R,C>(name,displayName,row),
+    m_attributeFutureWatcher(0)
 {
 }
 
@@ -128,7 +129,7 @@ MappingAttributeFutureWatcher<K,V,R,C>::MappingAttributeFutureWatcher(Attribute<
 template<class K, class V, class R, class C>
 void MappingAttributeFutureWatcher<K,V,R,C>::connectTo(QLabel* label, K key)
 {
-    QPointer<MappingAttribute<K,V,R,C> > pointer = (MappingAttribute<K,V,R,C>*) AttributeFutureWatcher<AttributeHash<K,V>,R,C>::m_attribute.data();
+    MappingAttribute<K,V,R,C>* pointer = static_cast<MappingAttribute<K,V,R,C>*>(AttributeFutureWatcher<AttributeHash<K,V>,R,C>::m_attribute);
 
     if(AttributeFutureWatcher<AttributeHash<K,V>,R,C>::isRunning())
     {
@@ -152,7 +153,7 @@ void MappingAttributeFutureWatcher<K,V,R,C>::connectTo(QLabel* label, K key)
 template<class K, class V, class R, class C>
 void MappingAttributeFutureWatcher<K,V,R,C>::updateKey(QVariant variant){
     K key = variant.value<K>();
-    QPointer<MappingAttribute<K,V,R,C> > pointer = (MappingAttribute<K,V,R,C>*) AttributeFutureWatcher<AttributeHash<K,V>,R,C>::m_attribute.data();
+    MappingAttribute<K,V,R,C>* pointer = static_cast<MappingAttribute<K,V,R,C>*>(AttributeFutureWatcher<AttributeHash<K,V>,R,C>::m_attribute);
     QVariant display = Handler::getInstance()->convert(QVariant::fromValue<V>(pointer->value(key)));
     foreach(QLabel* label, m_labels.keys()){
         if (!display.isNull()){
