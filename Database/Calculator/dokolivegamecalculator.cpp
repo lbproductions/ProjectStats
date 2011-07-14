@@ -298,7 +298,7 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
         if (check){
             DokoRound* round = static_cast<DokoRound*>(r);
             if(round->doko_soloPlayerId->value() == -1){
-                Player* re1;
+                Player* re1 = 0;
                 if(round->doko_re1PlayerId->value() != -1){
                     re1 = Players::instance()->rowById(round->doko_re1PlayerId->value());
                 }
@@ -307,7 +307,7 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
                     qWarning() << "RoundID: " << round->id();
                     break;
                 }
-                Player* re2;
+                Player* re2 = 0;
                 if(round->doko_re1PlayerId->value() != -1){
                     re2 = Players::instance()->rowById(round->doko_re2PlayerId->value());
                 }
@@ -316,8 +316,8 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
                     qWarning() << "RoundID: " << round->id();
                     break;
                 }
-                Player* contra1;
-                Player* contra2;
+                Player* contra1 = 0;
+                Player* contra2 = 0;
                 int count = 0;
                 for(int j = 0; j<r->currentPlayingPlayers->value().size();j++){
                     if(r->currentPlayingPlayers->value(j)->id() != round->doko_re2PlayerId->value() && r->currentPlayingPlayers->value(j)->id() != round->doko_re1PlayerId->value()){
@@ -354,9 +354,9 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
 
             }
             else{
-                Player* contra1;
-                Player* contra2;
-                Player* contra3;
+                Player* contra1 = 0;
+                Player* contra2 = 0;
+                Player* contra3 = 0;
                 int count = 0;
                 for(int j = 0; j<r->currentPlayingPlayers->value().size();j++){
                     if(r->currentPlayingPlayers->value(j)->id() != round->doko_soloPlayerId->value()){
@@ -420,7 +420,7 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
         if (check){
             DokoRound* round = static_cast<DokoRound*>(r);
             if(round->doko_soloPlayerId->value() == -1){
-                Player* re1;
+                Player* re1 = 0;
                 if(round->doko_re1PlayerId->value() != -1){
                     re1 = Players::instance()->rowById(round->doko_re1PlayerId->value());
                 }
@@ -429,7 +429,7 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
                     qWarning() << "RoundID: " << round->id();
                     break;
                 }
-                Player* re2;
+                Player* re2 = 0;
                 if(round->doko_re1PlayerId->value() != -1){
                     re2 = Players::instance()->rowById(round->doko_re2PlayerId->value());
                 }
@@ -451,8 +451,8 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
                     }
                 }
                 else{
-                    Player* contra1;
-                    Player* contra2;
+                    Player* contra1 = 0;
+                    Player* contra2 = 0;
                     int count = 0;
                     for(int j = 0; j<r->currentPlayingPlayers->value().size();j++){
                         if(r->currentPlayingPlayers->value(j)->id() != round->doko_re2PlayerId->value() && r->currentPlayingPlayers->value(j)->id() != round->doko_re1PlayerId->value()){
@@ -481,9 +481,9 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
             }
             else{
                 if(round->points->value(Players::instance()->rowById(round->doko_re1PlayerId->value())) < 0){
-                    Player* contra1;
-                    Player* contra2;
-                    Player* contra3;
+                    Player* contra1 = 0;
+                    Player* contra2 = 0;
+                    Player* contra3 = 0;
                     int count = 0;
                     for(int j = 0; j<r->currentPlayingPlayers->value().size();j++){
                         if(r->currentPlayingPlayers->value(j)->id() != round->doko_soloPlayerId->value()){

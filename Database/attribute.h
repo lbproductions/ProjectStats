@@ -741,9 +741,13 @@ bool AttributeFutureWatcher<T,R,C>::isRunning()
 template<class T, class R, class C>
 QString AttributeFutureWatcher<T,R,C>::toString()
 {
-    QVariant v;
+    AttributeVariant v;
     v.setValue(m_attribute->value());
-    return v.toString();
+    QVariant display = v.displayVariant();
+    if(display.isNull()){
+        return v.toString();
+    }
+    return display.toString();
 }
 
 
