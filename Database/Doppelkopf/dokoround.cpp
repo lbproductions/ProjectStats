@@ -28,6 +28,7 @@ START_ROW_IMPLEMENTATION(DokoRound, Round, Round)
 DokoRound::DokoRound(DokoLiveGame* game, int number) :
     Round(game,number)
 {
+    initializeAttributes();
 }
 
 QString DokoRound::mimeType() const

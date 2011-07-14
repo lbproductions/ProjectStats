@@ -70,6 +70,8 @@ Round::Round(Game* game, int number) :
 
     this->startTime->setValue(QDateTime::currentDateTime());
     this->db_state->setValue(Round::RunningState);
+
+    connect(game,SIGNAL(idChanged(int)),gameId,SLOT(changeValue(int)));
 }
 
 QString Round::mimeType() const

@@ -49,7 +49,6 @@ LiveGame::LiveGame(QString type) :
     Game(type,true)
 {
     initializeAttributes();
-    createRound();
 }
 
 QString LiveGame::mimeType() const
@@ -95,8 +94,11 @@ Round* LiveGame::createRound()
 
 Round* LiveGame::startNextRound()
 {
-    Round* lastRound = rounds->value().last();
-    lastRound->db_state->setValue(Round::FinishedState);
+    if(!rounds->value().isEmpty())
+    {
+        Round* lastRound = rounds->value().last();
+        lastRound->db_state->setValue(Round::FinishedState);
+    }
 
     return createRound();
 }

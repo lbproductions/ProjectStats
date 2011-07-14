@@ -51,7 +51,7 @@ protected:
 
     QPointer<Database::LiveGame> m_livegame;
 
-    QList<QPointer<Database::Player> > playerlist;
+    QList< Database::Player *> playerlist;
 
 signals:
 

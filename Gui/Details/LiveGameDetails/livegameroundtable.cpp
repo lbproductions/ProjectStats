@@ -14,6 +14,8 @@ LiveGameRoundTable::LiveGameRoundTable(Database::LiveGame* livegame, QWidget *pa
 {
     m_livegame = livegame;
 
+    playerlist = m_livegame->playersSortedByPosition->value();
+
     foreach(Database::Player *player, m_livegame->playersSortedByPosition->value())
     {
 	this->insertColumn(this->columnCount());
