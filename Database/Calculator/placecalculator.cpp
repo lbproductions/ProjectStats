@@ -15,7 +15,7 @@ PlaceCalculator::PlaceCalculator(Place* place, QObject *parent) :
 int PlaceCalculator::calculate_gameCount(){
     int count = 0;
     foreach(Game* g, Games::instance()->allRows()){
-        if (g->site->value() == m_place){
+        if (g->siteId->value() == m_place->id()){
             count++;
         }
     }

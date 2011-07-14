@@ -28,7 +28,7 @@ QVariant AttributeVariant::displayVariant(){
             variant.setValue(player->name->value());
         }
     }
-
+    /*
     else if(QString(this->typeName()) == "QDateTime"){
         QDateTime time = this->value<QDateTime>();
         if(time.time().hour() == 0 && time.time().minute() == 0 && time.time().second() == 0){
@@ -41,11 +41,12 @@ QVariant AttributeVariant::displayVariant(){
             variant.setValue(QString("Never"));
         }
     }
-
+    */
     else if(QString(this->typeName()) == "QPointer<Database::Place>"){
         QPointer<Database::Place> place = this->value<QPointer<Database::Place> >();
+        qDebug() << place;
         if (!place.isNull()){
-            variant.setValue(place->strasse->value() + place->nummer->value() + ", " + place->ort->value());
+            variant.setValue(place->displayString->value());
         }
     }
 
