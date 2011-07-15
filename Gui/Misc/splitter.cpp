@@ -106,12 +106,11 @@ QSize MacSplitterHandle::sizeHint() const
     {
         if(static_cast<Splitter*>(parent())->isFullscreen())
         {
-            qDebug() << height();
             return QSize(4, height());
         }
         else
         {
-            return QSize(4, height());
+            return QSize(1, height());
         }
     }
 }
