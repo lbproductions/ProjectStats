@@ -72,6 +72,7 @@ void Database::createTables()
     QElapsedTimer timer;
     timer.start();
 
+    static_cast<TableBase*>(Places::instance())->initializeCache();
     static_cast<TableBase*>(Games::instance())->initializeCache();
 
     qDebug() << "Database::createTables: Initializing caches for Games took" << timer.restart() << "ms";

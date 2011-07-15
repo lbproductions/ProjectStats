@@ -2,6 +2,7 @@
 #include "ui_newrowwidget.h"
 
 #include <Gui/Details/detailswidget.h>
+#include <Database/table.h>
 
 #include <QScrollArea>
 
@@ -43,6 +44,7 @@ NewRowWidget::~NewRowWidget()
 
 void NewRowWidget::on_pushButtonCreate_clicked()
 {
+    m_row->table()->insertRow(m_row);
     this->close();
 }
 

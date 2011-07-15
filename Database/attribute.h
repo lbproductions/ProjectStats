@@ -537,8 +537,7 @@ QVariant Attribute<T,R,C>::displayVariant()
 template<class T, class R, class C>
 QString Attribute<T,R,C>::toString()
 {
-  //return toVariant().toString();
-    return "asdd";
+  return toVariant().toString();
 }
 
 

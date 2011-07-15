@@ -43,10 +43,10 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     avatarPath->addDependingAttribute(avatar);
     avatar->setRole(Qt::DecorationRole);
 
-    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Game*,Player,PlayerCalculator,calc,games,tr("Games"))
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Game*,Player,PlayerCalculator,calc,games,tr("GameList"))
     Games::instance()->rows()->addDependingAttribute(games);
 
-    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,gameCount,tr("GameCount"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,gameCount,tr("Games"))
     games->addDependingAttribute(gameCount);
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,calc,places,tr("Places"))

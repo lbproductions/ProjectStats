@@ -44,7 +44,6 @@ QVariant AttributeVariant::displayVariant(){
     */
     else if(QString(this->typeName()) == "QPointer<Database::Place>"){
         QPointer<Database::Place> place = this->value<QPointer<Database::Place> >();
-        qDebug() << place;
         if (!place.isNull()){
             variant.setValue(place->displayString->value());
         }

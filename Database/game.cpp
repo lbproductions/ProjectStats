@@ -127,7 +127,8 @@ QString Game::mimeType() const
 
 QPointer<Place> Game::calculate_site()
 {
-    return Places::instance()->rowById(this->siteId->value());
+    QPointer<Place> pointer = Places::instance()->rowById(siteId->value());
+    return pointer;
 }
 
 Gui::Details::SummaryWidget* Game::summaryWidget(){

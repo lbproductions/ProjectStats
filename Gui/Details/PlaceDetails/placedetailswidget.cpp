@@ -79,7 +79,9 @@ PlaceDetailsWidget::~PlaceDetailsWidget()
 
 void PlaceDetailsWidget::readPlaceData(){
     ui->textEditComment->setText(m_place->comment->value());
-    ui->comboBoxPlayer->setCurrentIndex(ui->comboBoxPlayer->findText(m_place->player->value()->name->value()));
+    if(m_place->player->value() != 0){
+        ui->comboBoxPlayer->setCurrentIndex(ui->comboBoxPlayer->findText(m_place->player->value()->name->value()));
+    }
 
     m_filePath = m_place->iconPath->value();
 
