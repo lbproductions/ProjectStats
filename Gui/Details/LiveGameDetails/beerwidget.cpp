@@ -33,4 +33,6 @@ BeerWidget::BeerWidget(Database::LiveGame* livegame, QWidget *parent) :
         layout->addWidget(new BeerPlayerWidget(p,livegame,this));
         layout->addStretch();
     }
+
+    this->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
 }

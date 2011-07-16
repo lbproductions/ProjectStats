@@ -22,7 +22,12 @@ void AttributeVariant::setDisplayRole(DisplayRole role){
 
 QVariant AttributeVariant::displayVariant(){
     QVariant variant;
-    if(QString(this->typeName()) == "QPointer<Database::Player>"){
+
+    if(this->type() == QVariant::Double)
+    {
+        variant.setValue(QString("%L1").arg(this->toDouble(),0,'f',2));
+    }
+    else if(QString(this->typeName()) == "QPointer<Database::Player>"){
         QPointer<Database::Player> player = this->value<QPointer<Database::Player> >();
         if (!player.isNull()){
             variant.setValue(player->name->value());

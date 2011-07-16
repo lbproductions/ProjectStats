@@ -12,6 +12,12 @@ namespace Database
 
 namespace Gui{
 
+namespace Misc
+{
+    class HeaderLabel;
+    class ValueLabel;
+}
+
 namespace Details{
 
 namespace LiveGameDetails{
@@ -25,6 +31,17 @@ public:
 protected:
     Database::LiveGame* m_game;
     QVBoxLayout* m_layout;
+
+    Misc::HeaderLabel* m_typeHeaderLabel;
+    Misc::ValueLabel* m_typeLabel;
+
+    Misc::HeaderLabel* m_timeHeaderLabel;
+    Misc::ValueLabel* m_timeLabel;
+
+protected slots:
+    void reflectState();
+
+    void updateTime();
 };
 
 }

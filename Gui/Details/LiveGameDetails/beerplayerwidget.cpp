@@ -69,6 +69,8 @@ void BeerPlayerWidget::update()
         drinkIcon->setPixmap(QPixmap::fromImage(drink->icon->value().scaled(20,45,Qt::KeepAspectRatio,Qt::SmoothTransformation)));
         ui->gridLayoutDrinks->addWidget(drinkIcon,(drinks/5),drinks%5,Qt::AlignCenter);
     }
+
+    this->repaint();
 }
 
 BeerPlayerWidget::~BeerPlayerWidget()
@@ -101,10 +103,13 @@ void BeerPlayerWidget::dropEvent(QDropEvent *event)
         ChooseDrinkCountDialog dialog(d,m_player,m_livegame);
         dialog.exec();
     }
+    this->setStyleSheet("QFrame{background: black; color: white; border-radius: 10px;}");
+    this->repaint();
 }
 
 void BeerPlayerWidget::dragMoveEvent(QDragMoveEvent * /*event*/)
 {
+    this->repaint();
 }
 
 void BeerPlayerWidget::dragLeaveEvent(QDragLeaveEvent * /*event*/)

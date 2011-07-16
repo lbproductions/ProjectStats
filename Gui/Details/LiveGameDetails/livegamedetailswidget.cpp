@@ -178,8 +178,8 @@ void LiveGameDetailsWidget::updateWidget(){
 
         QVBoxLayout* layout = static_cast<QVBoxLayout*>(m_infoBox->layout());
 
-        QLabel* label = static_cast<QLabel*>(layout->itemAt(3)->widget());
-        label->setText((gameLength+QTime(timeGame.elapsed()/1000/60/60,timeGame.elapsed()/1000/60%60,timeGame.elapsed()/1000%60,0)).toString("hh:mm:ss"));
+        //QLabel* label = static_cast<QLabel*>(layout->itemAt(3)->widget());
+        ////label->setText((gameLength+QTime(timeGame.elapsed()/1000/60/60,timeGame.elapsed()/1000/60%60,timeGame.elapsed()/1000%60,0)).toString("hh:mm:ss"));
 
         for (int i = 0; i<m_playerTotalPointsTable->columnCount();i++){
              m_playerTotalPointsTable->setColumnWidth(i,(double)m_splitter->width()/m_playerTotalPointsTable->columnCount());
