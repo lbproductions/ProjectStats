@@ -20,6 +20,7 @@ START_ROW_DECLARATION(Round, Row)
     Round(Game* game, int number);
 
     enum RoundState {
+        UnkownState, //!< Wenn das Attribut noch nicht initialisiert wurde
         RunningState, //!< Die Runde läuft gerade
         PausedState, //!< Die Runde ist Pausiert
         FinishedState //!< Die Runde wurde beendet

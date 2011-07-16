@@ -13,16 +13,21 @@
 
 using namespace Gui::Details::LiveGameDetails;
 
-AddDrinkWidget::AddDrinkWidget(Database::LiveGame* livegame, QWidget *parent) :
+AddDrinkWidget::AddDrinkWidget(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddDrinkWidget)
 {
     ui->setupUi(this);
 
-    Q_ASSERT(parent != 0);
+    QFile newround(":/stylesheets/livegame/newroundwidget_fullscreen");
+    newround.open(QFile::ReadOnly);
+    setStyleSheet(newround.readAll());
+    newround.close();
 
     QList<Database::Drink*> drinklist = Database::Drinks::instance()->/*drinksByDrinkCount*/allRows();
-    for (int i = 0; i<drinklist.size();i++){
+
+    for (int i = 0; i<drinklist.size();i++)
+    {
         QVBoxLayout* layout = new QVBoxLayout();
         DraggableLabel* label = new DraggableLabel(drinklist.at(i));
         label->setText(drinklist.at(i)->name->value());

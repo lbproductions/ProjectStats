@@ -11,30 +11,36 @@ using namespace Gui::Details::LiveGameDetails::DokoLiveGameDetails;
 
 SchmeissereiWidget::SchmeissereiWidget(Database::DokoLiveGame* livegame, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SchmeissereiWidget)
+    ui(new Ui::SchmeissereiWidget),
+    m_livegame(livegame)
 {
     ui->setupUi(this);
 
-    m_livegame = livegame;
+    QFile newround(":/stylesheets/livegame/newroundwidget_fullscreen");
+    newround.open(QFile::ReadOnly);
+    setStyleSheet(newround.readAll());
+    newround.close();
 
-    if (m_livegame->doko_mitFuenfKoenige->value()){
+    if (m_livegame->doko_mitFuenfKoenige->value())
+    {
         ui->comboBoxType->addItem(QString::fromUtf8("5 Könige"));
     }
-    if (m_livegame->doko_mitZuWenigTrumpf->value()){
+    if (m_livegame->doko_mitZuWenigTrumpf->value())
+    {
         ui->comboBoxType->addItem("Zu wenig Trumpf");
     }
-    if (m_livegame->doko_mitTrumpfabgabeSchmeisserei->value()){
+    if (m_livegame->doko_mitTrumpfabgabeSchmeisserei->value())
+    {
         ui->comboBoxType->addItem("Trumpfabgabe nicht genommen");
     }
-    if (m_livegame->doko_mitNeunzigPunkte->value()){
+    if (m_livegame->doko_mitNeunzigPunkte->value())
+    {
         ui->comboBoxType->addItem(">90 Punkte");
     }
 
-
-    QList< Database::Player* > playerlist = m_livegame->playersSortedByPosition->value();
-    QListIterator< Database::Player* > it(playerlist);
-    while (it.hasNext()){
-        ui->comboBoxPlayer->addItem(it.next()->name->value());
+    foreach(Database::Player* player, m_livegame->playersSortedByPosition->value())
+    {
+        ui->comboBoxPlayer->addItem(player->name->value());
     }
 
     setWindowModality(Qt::WindowModal);
@@ -47,19 +53,13 @@ SchmeissereiWidget::~SchmeissereiWidget()
 
 void SchmeissereiWidget::on_pushButton_clicked()
 {
-    Database::Round *r;
-    Database::DokoRound* round;
-    r = m_livegame->currentRound->value();
-    Q_ASSERT(r != 0);
-    round = static_cast<Database::DokoRound*>(r);
-    Q_ASSERT(round != 0);
+    Database::DokoRound* round = static_cast<Database::DokoRound*>(m_livegame->currentRound->value());
 
     round->addSchmeisserei(Database::Players::instance()->playerByName(ui->comboBoxPlayer->currentText()),ui->comboBoxType->currentText());
-    emit schmeissereiAdded();
-    this->reject();
+    accept();
 }
 
-void Gui::Details::LiveGameDetails::DokoLiveGameDetails::SchmeissereiWidget::on_pushButtonClose_clicked()
+void SchmeissereiWidget::on_pushButtonClose_clicked()
 {
-    this->reject();
+    reject();
 }

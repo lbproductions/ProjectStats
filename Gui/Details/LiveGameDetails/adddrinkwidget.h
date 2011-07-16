@@ -37,21 +37,13 @@ public:
     /**
     * Erstellt eine neue Instanz des AddDrinkWidgets für das übergebene LiveGame. Dieses wird dabei mit den Playern des Spiels und den existierenden Drinks befüllt.
     */
-    explicit AddDrinkWidget(Database::LiveGame* livegame, QWidget *parent = 0);
+    explicit AddDrinkWidget(QWidget *parent = 0);
+
     ~AddDrinkWidget();
 
 private:
     Ui::AddDrinkWidget *ui;
 
-    QPointer<Database::LiveGame> m_livegame;
-    QPointer<BeerWidget> m_beerwidget;
-    QList < QPointer<Database::Player> > playerlist;
-
-signals:
-    /**
-    * Wird gesendet, wenn neue Drinks dem Game hinzugefügt wurden.
-    */
-    void drinkDealed();
 private slots:
     void on_pushButtonClose_clicked();
 };

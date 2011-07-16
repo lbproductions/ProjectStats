@@ -74,6 +74,15 @@ void AttributeBase::setDisplayRole(AttributeVariant::DisplayRole role){
     m_displayRole = role;
 }
 
+void AttributeBase::onChange()
+{
+    qDebug() << "Attribute<T,R,C>::onChange():" << this->m_name << "changed. Will now update:";
+    foreach(AttributeBase* a, m_dependingAttributes)
+    {
+        qDebug() << "Attribute<T,R,C>::onChange():" << a->name();
+    }
+}
+
 AttributeVariant::DisplayRole AttributeBase::displayRole(){
     return m_displayRole;
 }

@@ -79,23 +79,6 @@ void DokoLiveGameDetailsWidget::fillWidget(){
     LiveGameDetailsWidget::fillWidget();
 }
 
-void DokoLiveGameDetailsWidget::showSchmeissereiWidget(){
-    m_schmeissereiWidget = new LiveGameDetails::DokoLiveGameDetails::SchmeissereiWidget(m_dokolivegame,this);
-
-    if (m_fullscreen){
-        QFile newround(":/stylesheets/livegame/newroundwidget_fullscreen");
-        newround.open(QFile::ReadOnly);
-        m_schmeissereiWidget->setStyleSheet(newround.readAll());
-        newround.close();
-    }
-
-    m_newItemLayout->addWidget(m_schmeissereiWidget);
-
-    connect(m_schmeissereiWidget,SIGNAL(schmeissereiAdded()),this,SIGNAL(schmeissereiAdded()));
-
-    this->repaint();
-}
-
 void DokoLiveGameDetailsWidget::showRoundWidget(){
     m_dokoRoundWidget = new LiveGameDetails::DokoLiveGameDetails::NewDokoRoundWidget(m_dokolivegame,this);
 

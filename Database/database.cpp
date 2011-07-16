@@ -84,7 +84,6 @@ void Database::createTables()
 
         qDebug() << "Database::createTables: Initializing caches for" <<  table->name() << "took" << timer.restart() << "ms";
     }
-
 }
 
 void Database::registerTable(TableBase *table)

@@ -10,7 +10,6 @@ namespace Ui {
 
 namespace Database
 {
-    class Place;
     class LiveGame;
 }
 
@@ -35,6 +34,7 @@ public:
     * Erstellt eine neue Instanz des EndLiveGameWidget für das übergebene LiveGame.
     */
     explicit EndLiveGameWidget(Database::LiveGame* livegame, QWidget *parent = 0);
+
     ~EndLiveGameWidget();
 
 private slots:
@@ -43,9 +43,6 @@ private slots:
     */
     void on_pushButtonFinish_clicked();
 
-    /**
-    * Schließt das Widget ohne Änderungen am LiveGame.
-    */
     void on_pushButtonCancel_clicked();
 
 private:
@@ -53,11 +50,6 @@ private:
 
     QPointer<Database::LiveGame> m_livegame;
 
-signals:
-    /**
-    * Wird gesendet, wenn das Spiel endgültig beendet wird.
-    */
-    void liveGameClosed();
 };
 
 }

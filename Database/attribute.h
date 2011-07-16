@@ -134,6 +134,7 @@ protected slots:
       */
     virtual void update() = 0;
 
+    virtual void onChange();
 
 signals:
     /*!
@@ -154,6 +155,7 @@ protected:
     QString m_name;
     QString m_displayName;
     int m_role;
+    QList<AttributeBase*> m_dependingAttributes;
 
     AttributeVariant::DisplayRole m_displayRole;
 };
@@ -679,7 +681,9 @@ void Attribute<T,R,C>::recalculate()
 template<class T, class R, class C>
 void Attribute<T,R,C>::addDependingAttribute(AttributeBase *dependingAttribute)
 {
+    m_dependingAttributes.append(dependingAttribute);
     connect(this,SIGNAL(changed()),dependingAttribute,SLOT(update()));
+    //connect(this,SIGNAL(changed()),this,SLOT(onChange()));
 }
 
 template<class T, class R, class C>

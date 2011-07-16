@@ -1,12 +1,15 @@
 #include "dokolivegamerowwindow.h"
 
 #include "dokolivegamedetailswidget.h"
+#include "schmeissereiwidget.h"
 
 #include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.h>
 #include <Database/Doppelkopf/dokolivegame.h>
 #ifdef Q_WS_MAC
 #   include <Gui/Misc/macwindowcontroller.h>
 #endif
+
+
 #include <QDebug>
 #include <QAction>
 #include <QToolBar>
@@ -14,34 +17,25 @@
 using namespace Gui::Details;
 
 DokoLiveGameRowWindow::DokoLiveGameRowWindow(Database::DokoLiveGame* dokogame, QWidget *parent) :
-    LiveGameRowWindow(dokogame,parent)
+    LiveGameRowWindow(dokogame,parent),
+    m_dokolivegame(dokogame)
 {
-    m_liveGameDetailsWidget = new DokoLiveGameDetailsWidget(dokogame,this);
+    //m_liveGameDetailsWidget = new DokoLiveGameDetailsWidget(dokogame,this);
 
-    m_livegame = dokogame;
-    m_dokolivegame = dokogame;
-
-    this->setCentralWidget(m_liveGameDetailsWidget);
+    //this->setCentralWidget(m_rowWidget);
 
     setupToolBar();
-    this->fillWidget();
 
-    if (m_dokolivegame->doko_mitSchmeisserei->value()){
-        Gui::Details::LiveGameDetails::LiveGameDetailsWidget* widget = m_liveGameDetailsWidget;
-    }
-
-#ifdef Q_WS_MAC
-    setUpFullScreenButton(this);
-#endif
+    reflectState();
 }
 
 void DokoLiveGameRowWindow::setupToolBar()
 {
-    LiveGameRowWindow::setupToolBar();
-    if (m_dokolivegame->doko_mitSchmeisserei->value()){
+    if (m_dokolivegame->doko_mitSchmeisserei->value())
+    {
         m_actionSchmeisserei = new QAction(QIcon(":/graphics/icons/mac/livegame/schmeisserei"),tr("Schmeisserei"),m_toolbar);
         //m_actionSchmeisserei->setCheckable(true);
-        connect(m_actionSchmeisserei,SIGNAL(triggered()),this,SLOT(newSchmeisserei()));
+        connect(m_actionSchmeisserei,SIGNAL(triggered()),this,SLOT(showNewSchmeissereiDialog()));
         m_toolbar->insertAction(m_actionFullScreen,m_actionSchmeisserei);
     }
 
@@ -50,23 +44,32 @@ void DokoLiveGameRowWindow::setupToolBar()
     m_toolbar->insertWidget(m_actionFullScreen,spacer);
 }
 
-void DokoLiveGameRowWindow::newSchmeisserei(){
-        Gui::Details::LiveGameDetails::LiveGameDetailsWidget* widget = m_liveGameDetailsWidget;
-        static_cast<DokoLiveGameDetailsWidget*>(widget)->showSchmeissereiWidget();
+void DokoLiveGameRowWindow::showNewSchmeissereiDialog()
+{
+    LiveGameDetails::DokoLiveGameDetails::SchmeissereiWidget schmeissereiWidget(m_dokolivegame,this);
+    schmeissereiWidget.exec();
 }
 
-void DokoLiveGameRowWindow::pauseLiveGame(bool state){
-    if(state){
+void DokoLiveGameRowWindow::reflectState()
+{
+    m_actionSchmeisserei->setEnabled(true);
+
+    switch(m_livegame->state->value())
+    {
+    case Database::Round::PausedState:
         m_actionSchmeisserei->setEnabled(false);
-    }
-    else{
-        m_actionSchmeisserei->setEnabled(true);
-    }
-    LiveGameRowWindow::pauseLiveGame(state);
-}
+        break;
 
-void DokoLiveGameRowWindow::disableIcons(){
-    m_actionSchmeisserei->setEnabled(false);
-    LiveGameRowWindow::disableIcons();
-}
+    case Database::Round::FinishedState:
+        m_actionSchmeisserei->setEnabled(false);
+        break;
 
+    case Database::Round::RunningState:
+        break;
+
+    default:
+        break;
+    }
+
+    LiveGameRowWindow::reflectState();
+}

@@ -25,7 +25,25 @@
      <property name="title">
       <string>AddDrinks</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayoutGroupBox"/>
+     <layout class="QHBoxLayout" name="horizontalLayoutGroupBox">
+      <item>
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>599</width>
+           <height>82</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>

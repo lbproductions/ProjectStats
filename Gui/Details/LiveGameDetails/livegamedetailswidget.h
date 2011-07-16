@@ -102,11 +102,6 @@ public slots:
     void hideHeadHorizontalWidget();
 
     /**
-     * Zeigt das AddDrinkWidget an.
-     */
-    void showAddDrinkWidget();
-
-    /**
      * Gibt das BeerWidget zurück.
      */
     QPointer<BeerWidget> beerwidget();
@@ -131,11 +126,6 @@ public slots:
     * Wird bei einer Änderung im LiveGameSettingsWidget aufgerufen. Ist dafür verantwortlich die dort ausgewählten Widgets anzuzeigen.
     */
     virtual void onSettingsChanged();
-
-    /**
-     * Zeigt das entsprechende NewRoundWidget an.
-     */
-    virtual void showRoundWidget();
 
     /**
      * Zeigt das LiveGameSettingsWidget an.

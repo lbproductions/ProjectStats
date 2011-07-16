@@ -79,11 +79,15 @@ QString Round::mimeType() const
     return "application/projectstats.round";
 }
 
-QPointer<Game> Round::calculate_game(){
-    return Games::instance()->rowById(this->gameId->value());
+QPointer<Game> Round::calculate_game()
+{
+    Game *game = Games::instance()->rowById(this->gameId->value());
+    state->addDependingAttribute(game->state);
+    return game;
 }
 
-Round::RoundState Round::calculate_state(){
+Round::RoundState Round::calculate_state()
+{
     return (RoundState)db_state->value();
 }
 

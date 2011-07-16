@@ -36,6 +36,7 @@ public:
     * Erstellt eine neu Instanz des SchmeissereiWidgets für das übergebene DokoLiveGame und befüllt dabei das Widget mit Daten aus livegame.
     */
     explicit SchmeissereiWidget(Database::DokoLiveGame* livegame, QWidget *parent = 0);
+
     ~SchmeissereiWidget();
 
 private slots:
@@ -50,15 +51,12 @@ private:
     Ui::SchmeissereiWidget *ui;
 
     QPointer<Database::DokoLiveGame> m_livegame;
-
-signals:
-    /**
-    * Wird nach dem Hinzufügen der Schmeisserei gesendet.
-    */
     void schmeissereiAdded();
 };
 
 }
 }
-}}
+}
+}
+
 #endif // SCHMEISSEREIWIDGET_H

@@ -131,6 +131,11 @@ bool Handler::showMainWindow(){
     //	qDebug() << g->id() << g->date->value();
     //    }
 
+//    foreach(Database::Round* r, Database::Rounds::instance()->allRows())
+//    {
+//        r->db_state->setValue(r->db_state->value()+1);
+//    }
+
     m_mainwindow = new Gui::MainWindow::MainWindow();
 
     m_mainwindow->show();

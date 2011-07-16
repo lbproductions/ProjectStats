@@ -236,10 +236,6 @@ void LiveGameDetailsWidget::onRoundCreated(){
     checkForEndOfGame();
 }
 
-void LiveGameDetailsWidget::showRoundWidget(){
-
-}
-
 void LiveGameDetailsWidget::showLiveGameSettingsWidget(){
     m_settingsWidget = new LiveGameDetails::LiveGameSettingsWidget(this);
 
@@ -269,23 +265,6 @@ void LiveGameDetailsWidget::hideHeadHorizontalWidget(){
 void LiveGameDetailsWidget::onDrinkDealed(){
     m_beerwidget->updateWidget();
     emit drinkDealed();
-}
-
-void LiveGameDetailsWidget::showAddDrinkWidget(){
-    m_addDrinkWidget = new LiveGameDetails::AddDrinkWidget(m_livegame,this);
-
-    if (m_fullscreen){
-        QFile newround(":/stylesheets/livegame/newroundwidget_fullscreen");
-        newround.open(QFile::ReadOnly);
-        m_addDrinkWidget->setStyleSheet(newround.readAll());
-        newround.close();
-    }
-
-    m_newItemLayout->addWidget(m_addDrinkWidget);
-
-    connect(m_addDrinkWidget,SIGNAL(drinkDealed()),this,SLOT(onDrinkDealed()));
-
-    this->repaint();
 }
 
 QPointer<BeerWidget> LiveGameDetailsWidget::beerwidget(){

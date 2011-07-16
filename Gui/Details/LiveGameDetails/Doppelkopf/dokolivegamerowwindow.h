@@ -45,17 +45,12 @@ private slots:
     /**
     * Wird von der Action m_actionSchmeisserei aufgerufen. Zeigt das SchmeissereiWidget an
     */
-    void newSchmeisserei();
+    void showNewSchmeissereiDialog();
 
     /**
     * Wird von der Action m_actionPause aufgerufen. Wechselt je nach Zustand von state zwischen Pausieren und Fortsetzen des LiveGames.
     */
-    void pauseLiveGame(bool state);
-
-    /**
-    * Deaktiviert alle Actions außer der des FullScreens. Wird benötigt um bereits abgeschlossene Spiele kenntlich zu machen.
-    */
-    void disableIcons();
+    void reflectState();
 };
 
 }
