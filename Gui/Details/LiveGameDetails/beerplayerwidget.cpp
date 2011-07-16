@@ -4,6 +4,7 @@
 #include <Database/player.h>
 #include <Database/drink.h>
 #include <Database/livegame.h>
+#include <Database/livegamedrink.h>
 
 #include <handler.h>
 #include <Database/database.h>
@@ -21,7 +22,7 @@
 
 using namespace Gui::Details::LiveGameDetails;
 
-BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, QList<QPointer<Database::Drink> > drinklist, Database::LiveGame* livegame, QWidget *parent) :
+BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, Database::LiveGame* livegame, QWidget *parent) :
     AbstractLiveGameWidget(parent),
     ui(new Ui::BeerPlayerWidget),
     m_livegame(livegame),
@@ -29,13 +30,17 @@ BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, QList<QPointer<Data
 {
     ui->setupUi(this);
 
-    ui->labelName->setText(player->name->value() + " (" + QString::number(player->alcPegel->value(livegame)) + ")");
+    player->name->futureWatcher()->connectTo(ui->labelName);
+    player->alcPegel->mappingFutureWatcher()->connectTo(ui->labelAlc,livegame);
 
-    for (int i = 0; i<drinklist.size();i++){
-	int drinks = i;
-        DraggableLabel* drinkIcon = new DraggableLabel(drinklist.at(i),this);
-        drinkIcon->setPixmap(QPixmap::fromImage(drinklist.at(i)->icon->value().scaled(20,45,Qt::KeepAspectRatio,Qt::SmoothTransformation)));
+    int drinks = 0;
+    foreach(Database::LiveGameDrink* lgdrink, livegame->drinksPerPlayer->value(player))
+    {
+        Database::Drink* drink = lgdrink->drink->value();
+        DraggableLabel* drinkIcon = new DraggableLabel(drink,this);
+        drinkIcon->setPixmap(QPixmap::fromImage(drink->icon->value().scaled(20,45,Qt::KeepAspectRatio,Qt::SmoothTransformation)));
 	ui->gridLayoutDrinks->addWidget(drinkIcon,(drinks/5),drinks%5,Qt::AlignCenter);
+        drinks++;
     }
 
     setAcceptDrops(true);
@@ -44,8 +49,8 @@ BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, QList<QPointer<Data
 
     m_palette = this->palette();
 
-    //this->setStyleSheet("QGroupBox{border: 2px solid black}");
-
+    this->setStyleSheet("QFrame{background: black; color: white; border-radius: 10px;}");
+    ui->line->setStyleSheet("QFrame{background-color:gray;}");
 }
 
 BeerPlayerWidget::~BeerPlayerWidget()
@@ -86,7 +91,7 @@ void BeerPlayerWidget::onNumberChosen(int number){
     for(int i = 0; i<number;i++){
         m_livegame->addDrink(m_player,m_droppedDrink);
     }
-    m_parent->updateWidget();
+    //m_parent->updateWidget();
 }
 
 void BeerPlayerWidget::dragMoveEvent(QDragMoveEvent * /*event*/)
@@ -101,9 +106,6 @@ void BeerPlayerWidget::dragLeaveEvent(QDragLeaveEvent * /*event*/){
 }
 
 void BeerPlayerWidget::setFullscreen(){
-    this->setStyleSheet("QFrame{background: black; color: white; border-radius: 10px;}");
-    ui->line->setStyleSheet("QFrame{background-color:gray;}");
-
     /*
     QPalette p(this->palette());
     p.setColor(QPalette::Window, Qt::black);

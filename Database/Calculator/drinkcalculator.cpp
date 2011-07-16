@@ -1,5 +1,6 @@
 #include "drinkcalculator.h"
 
+#include <Database/livegamedrink.h>
 #include <Database/drink.h>
 #include <Database/livegame.h>
 
@@ -18,12 +19,10 @@ int DrinkCalculator::calculate_drinkCount(){
     foreach(Game* g, Games::instance()->allRows()){
         if(g->live->value()){
             LiveGame* l = static_cast<LiveGame*>(g);
-            if(l->drinks != 0){
-                foreach(Drink* d, l->drinks->value()){
-                    if(d->id() == m_drink->id()){
-                        count++;
-                    }
-                }   
+            foreach(LiveGameDrink* d, l->drinks->value()){
+                if(d->drinkId->value() == m_drink->id()){
+                    count++;
+                }
             }
         }
     }

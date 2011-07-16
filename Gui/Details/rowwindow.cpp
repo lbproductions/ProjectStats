@@ -13,20 +13,23 @@ RowWindow::RowWindow(QWidget *parent):
 {
 }
 
-RowWindow::RowWindow(Database::Row* row, QWidget *parent) :
+RowWindow::RowWindow(Database::Row* row, QWidget *parent, bool setupCentralWidget) :
     QMainWindow(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
-    QPalette p = palette();
-    p.setColor(QPalette::Window, QColor(255,255,255));
-    setPalette(p);
+    if(setupCentralWidget)
+    {
+        QPalette p = palette();
+        p.setColor(QPalette::Window, QColor(255,255,255));
+        setPalette(p);
 
-    m_rowWidget = row->rowWidget();
+        m_rowWidget = row->rowWidget();
 
-    QScrollArea *scrollArea = new QScrollArea(this);
-    scrollArea->setWidget(m_rowWidget);
-    setCentralWidget(scrollArea);
+        QScrollArea *scrollArea = new QScrollArea(this);
+        scrollArea->setWidget(m_rowWidget);
+        setCentralWidget(scrollArea);
+    }
 #ifdef Q_WS_MAC
     setUpFullScreenButton(this);
 #endif

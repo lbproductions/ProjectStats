@@ -127,7 +127,7 @@ void LiveGameDetailsWidget::fillWidget(){
         item->setFont(QFont("Lucia Grande",30,QFont::Bold,false));
         m_playerTotalPointsTable->setItem(0,i,item);
 
-        m_beerwidget->updateWidget();
+        //m_beerwidget->updateWidget();
     }
 
     QTableWidgetItem* item = new QTableWidgetItem(QString::number(m_livegame->totalPoints->value()));
@@ -141,7 +141,7 @@ void LiveGameDetailsWidget::fillWidget(){
         emit finishedGameShown();
         m_roundTable->addRound(roundlist.at(roundlist.size()-1));
 
-        m_infoBox->updateWidget((gameLength+QTime(timeGame.elapsed()/1000/60/60,timeGame.elapsed()/1000/60%60,timeGame.elapsed()/1000%60,0)).toString("hh:mm:ss"));
+        //m_infoBox->updateWidget((gameLength+QTime(timeGame.elapsed()/1000/60/60,timeGame.elapsed()/1000/60%60,timeGame.elapsed()/1000%60,0)).toString("hh:mm:ss"));
     }
 
     if (m_livegame->isFinished->value()){
@@ -227,7 +227,7 @@ void LiveGameDetailsWidget::onRoundCreated(){
 
     m_roundTable->scrollToBottom();
 
-    m_infoBox->updateWidget((gameLength+QTime(timeGame.elapsed()/1000/60/60,timeGame.elapsed()/1000/60%60,timeGame.elapsed()/1000%60,0)).toString("hh:mm:ss"));
+    //m_infoBox->updateWidget((gameLength+QTime(timeGame.elapsed()/1000/60/60,timeGame.elapsed()/1000/60%60,timeGame.elapsed()/1000%60,0)).toString("hh:mm:ss"));
 
     //Handler::getInstance()->messageSystem()->checkForStats(m_livegame);
 
@@ -263,7 +263,7 @@ void LiveGameDetailsWidget::hideHeadHorizontalWidget(){
 }
 
 void LiveGameDetailsWidget::onDrinkDealed(){
-    m_beerwidget->updateWidget();
+    //m_beerwidget->updateWidget();
     emit drinkDealed();
 }
 
@@ -316,8 +316,8 @@ void LiveGameDetailsWidget::setFullscreenMode(){
 
     m_roundTable->setFullscreen();
 
-    m_beerwidget->updateWidget();
-    m_beerwidget->setFullscreen();
+    //m_beerwidget->updateWidget();
+    //m_beerwidget->setFullscreen();
 
     m_infoBox->setFullscreen();
 

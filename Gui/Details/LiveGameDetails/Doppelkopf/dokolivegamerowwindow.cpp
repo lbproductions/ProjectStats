@@ -5,10 +5,6 @@
 
 #include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.h>
 #include <Database/Doppelkopf/dokolivegame.h>
-#ifdef Q_WS_MAC
-#   include <Gui/Misc/macwindowcontroller.h>
-#endif
-
 
 #include <QDebug>
 #include <QAction>
@@ -20,9 +16,9 @@ DokoLiveGameRowWindow::DokoLiveGameRowWindow(Database::DokoLiveGame* dokogame, Q
     LiveGameRowWindow(dokogame,parent),
     m_dokolivegame(dokogame)
 {
-    //m_liveGameDetailsWidget = new DokoLiveGameDetailsWidget(dokogame,this);
+    m_liveGameDetailsWidget = new DokoLiveGameDetailsWidget(dokogame,this);
 
-    //this->setCentralWidget(m_rowWidget);
+    this->setCentralWidget(m_liveGameDetailsWidget);
 
     setupToolBar();
 

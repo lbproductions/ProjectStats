@@ -21,6 +21,8 @@ START_ROW_DECLARATION(LiveGameDrink, Row)
     DECLARE_DATABASEATTRIBUTE(QDateTime,LiveGameDrink,time)
     DECLARE_DATABASEATTRIBUTE(int,LiveGameDrink,drinkId)
 
+    DECLARE_ATTRIBUTE(Drink*, LiveGameDrink, drink)
+
 END_ROW_DECLARATION(LiveGameDrink)
 
 START_TABLE_DECLARATION(LiveGameDrink)

@@ -20,7 +20,7 @@ class RowWindow : public QMainWindow
     Q_OBJECT
 public:
     RowWindow(QWidget *parent = 0);
-    explicit RowWindow(Database::Row* row, QWidget *parent = 0);
+    explicit RowWindow(Database::Row* row, QWidget *parent = 0, bool setupCentralWidget = true);
 
 signals:
 

@@ -4,6 +4,7 @@
 #include <Database/player.h>
 #include <Database/place.h>
 #include <Database/drink.h>
+#include <Database/livegamedrink.h>
 #include <Database/livegame.h>
 #include <handler.h>
 
@@ -164,10 +165,11 @@ AttributeHash<LiveGame*,double> PlayerCalculator::calculate_alcPegel(){
             LiveGame* game = static_cast<LiveGame*>(m_player->games->value(i));
             for(int j = 0; j<game->drinks->value().size();j++){
                 {
-                    if(game->drinks->value(j) != 0)
+                    Drink* drink = Drinks::instance()->rowById(game->drinks->value(j)->drinkId->value());
+                    if(drink != 0)
                     {
-                        A += game->drinks->value(j)->size->value()*100 /*in cl umrechnen*/
-                                * game->drinks->value(j)->alc->value() *0.08;
+                        A += drink->size->value()*100 /*in cl umrechnen*/
+                                * drink->alc->value() *0.08;
                     }
                 }
 

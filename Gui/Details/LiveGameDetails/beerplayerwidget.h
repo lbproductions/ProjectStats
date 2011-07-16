@@ -33,7 +33,7 @@ class BeerPlayerWidget : public AbstractLiveGameWidget
     Q_OBJECT
 
 public:
-    explicit BeerPlayerWidget(Database::Player* player, QList<QPointer<Database::Drink> > drinklist, Database::LiveGame* livegame, QWidget *parent = 0);
+    explicit BeerPlayerWidget(Database::Player* player, Database::LiveGame* livegame, QWidget *parent = 0);
     ~BeerPlayerWidget();
 
     void dragEnterEvent(QDragEnterEvent *event);

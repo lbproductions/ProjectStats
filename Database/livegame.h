@@ -22,8 +22,12 @@ START_ROW_DECLARATION(LiveGame, Game)
 
     LiveGame(QString type);
 
-    DECLARE_LISTATTRIBUTE_IN_CALC(Drink*,LiveGame,LiveGameCalculator,drinks)
+    DECLARE_LISTATTRIBUTE_IN_CALC(LiveGameDrink*,LiveGame,LiveGameCalculator,drinks)
+
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,AttributeList<LiveGameDrink*>,LiveGame,LiveGameCalculator,drinksPerPlayer)
+
     DECLARE_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,rounds)
+    DECLARE_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,roundCount)
 
     DECLARE_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,percComplete)
     DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,totalPoints)
@@ -48,5 +52,7 @@ private:
     virtual Round *createRound();
 
 END_ROW_DECLARATION(LiveGame)
+
+Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA Database::AttributeList<Database::LiveGameDrink*> >)
 
 #endif // DATABASE_LIVEGAME_H

@@ -37,12 +37,17 @@
     (void) sender; //supress unused parameter error
     NSView *view = (NSView*) m_widget->winId();
     NSWindow* window = [view window];
-//    [view enterFullScreenMode: view.window.screen
-//                  withOptions: nil];
      [window toggleFullScreen: nil];
 }
 
 @end
+
+void toggleFullscreen(QWidget* widget)
+{
+    NSView *view = (NSView*) widget->winId();
+    NSWindow* window = [view window];
+    [window toggleFullScreen: nil];
+}
 
 void setUpFullScreenButton(QWidget *window)
 {

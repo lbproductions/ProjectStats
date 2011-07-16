@@ -21,14 +21,29 @@ LiveGameCalculator::LiveGameCalculator(LiveGame* livegame, QObject *parent) :
 {
 }
 
-AttributeList<Drink*> LiveGameCalculator::calculate_drinks(){
-    AttributeList<Drink*> list;
+AttributeList<LiveGameDrink*> LiveGameCalculator::calculate_drinks(){
+    AttributeList<LiveGameDrink*> list;
     foreach(LiveGameDrink* d, LiveGameDrinks::instance()->allRows()){
 	if (Rounds::instance()->rowById(d->roundId->value())->game->value()->id() == m_livegame->id()){
-	    list.append(Drinks::instance()->rowById(d->drinkId->value()));
+            list.append(d);
 	}
     }
     return list;
+}
+
+AttributeHash<Player*,AttributeList<LiveGameDrink*> > LiveGameCalculator::calculate_drinksPerPlayer()
+{
+    AttributeHash<Player*,AttributeList<LiveGameDrink*> > hash;
+
+    foreach(LiveGameDrink* drink, m_livegame->drinks->value())
+    {
+        Player* player = Players::instance()->rowById(drink->playerId->value());
+        AttributeList<LiveGameDrink*> list = hash.value(player);
+        list.append(drink);
+        hash.insert(player,list);
+    }
+
+    return hash;
 }
 
 AttributeList<Round*> LiveGameCalculator::calculate_rounds(){
@@ -179,6 +194,18 @@ Round* LiveGameCalculator::calculate_currentRound(){
         return 0;
     }
     return m_livegame->rounds->value().last();
+}
+
+int LiveGameCalculator::calculate_roundCount()
+{
+    if(m_livegame->isFinished->value())
+    {
+        return m_livegame->rounds->value().size();
+    }
+    else
+    {
+        return m_livegame->rounds->value().size() - 1;
+    }
 }
 
 Round::RoundState LiveGameCalculator::calculate_state(){

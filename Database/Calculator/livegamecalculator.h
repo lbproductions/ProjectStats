@@ -16,7 +16,7 @@ class QTime;
 namespace Database {
 
 class LiveGame;
-class Drink;
+class LiveGameDrink;
 class Player;
 
 class LiveGameCalculator : public GameCalculator
@@ -31,13 +31,17 @@ public:
 
     AttributeList<Player*> calculate_currentPlayingPlayers();
 
-    AttributeList<Drink*> calculate_drinks();
+    AttributeList<LiveGameDrink*> calculate_drinks();
+
+    AttributeHash<Player*, AttributeList<LiveGameDrink*> > calculate_drinksPerPlayer();
 
     AttributeList<Round*> calculate_rounds();
 
     AttributeHash<Player*,int> calculate_points();
 
     AttributeHash<Player*,int> calculate_placement();
+
+    int calculate_roundCount();
 
     Round* calculate_lastRound();
 

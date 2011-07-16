@@ -3,18 +3,21 @@
 
 #include <Gui/Details/LiveGameDetails/livegameinfogroupbox.h>
 
-namespace Database{
+namespace Database
+{
     class DokoLiveGame;
 }
 
-namespace Gui{
+namespace Gui
+{
 
-    namespace Details{
+namespace Details
+{
 
-    namespace LiveGameDetails
-    {
+namespace LiveGameDetails
+{
 
-    namespace DokoLiveGameDetails{
+namespace DokoLiveGameDetails{
 
 class DokoLiveGameInfoGroupBox : public LiveGameInfoGroupBox
 {
@@ -25,9 +28,12 @@ public:
 
 private:
 
-    QPointer<Database::DokoLiveGame> m_dokogame;
+    Database::DokoLiveGame* m_dokogame;
 };
 
-}}}}
+}
+}
+}
+}
 
 #endif // DOKOLIVEGAMEINFOGROUPBOX_H

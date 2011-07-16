@@ -15,6 +15,9 @@ START_ROW_IMPLEMENTATION(LiveGameDrink, LiveGameDrink, Row)
     IMPLEMENT_DATABASEATTRIBUTE(int,LiveGameDrink,roundId,tr("RoundId"))
     IMPLEMENT_DATABASEATTRIBUTE(QDateTime,LiveGameDrink,time,tr("Time"))
     IMPLEMENT_DATABASEATTRIBUTE(int,LiveGameDrink,drinkId,tr("DrinkId"))
+
+    IMPLEMENT_ATTRIBUTE(Drink*, LiveGameDrink, drink, tr("Drink"))
+    drinkId->addDependingAttribute(drink);
 }
 
 LiveGameDrink::LiveGameDrink(Player* player, Round* round, Drink* drink) :
@@ -27,12 +30,17 @@ LiveGameDrink::LiveGameDrink(Player* player, Round* round, Drink* drink) :
 
     connect(player,SIGNAL(idChanged(int)),playerId,SLOT(changeValue(int)));
     connect(round,SIGNAL(idChanged(int)),roundId,SLOT(changeValue(int)));
+    connect(drink,SIGNAL(idChanged(int)),drinkId,SLOT(changeValue(int)));
 }
-
 
 QString LiveGameDrink::mimeType() const
 {
     return "application/projectstats.liveGameDrink";
+}
+
+Drink* LiveGameDrink::calculate_drink()
+{
+    return Drinks::instance()->rowById(drinkId->value());
 }
 
 END_ROW_IMPLEMENTATION()
