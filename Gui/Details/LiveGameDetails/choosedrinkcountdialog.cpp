@@ -1,11 +1,19 @@
 #include "choosedrinkcountdialog.h"
 #include "ui_choosedrinkcountdialog.h"
 
-ChooseDrinkCountDialog::ChooseDrinkCountDialog(QWidget *parent) :
+#include <Database/livegame.h>
+#include <Database/drink.h>
+
+ChooseDrinkCountDialog::ChooseDrinkCountDialog(Database::Drink* drink, Database::Player* player, Database::LiveGame* game, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ChooseDrinkCountDialog)
+    ui(new Ui::ChooseDrinkCountDialog),
+    m_drink(drink),
+    m_player(player),
+    m_game(game)
 {
     ui->setupUi(this);
+
+    this->setModal(true);
 }
 
 ChooseDrinkCountDialog::~ChooseDrinkCountDialog()
@@ -15,10 +23,15 @@ ChooseDrinkCountDialog::~ChooseDrinkCountDialog()
 
 void ChooseDrinkCountDialog::on_buttonBox_accepted()
 {
-    emit numberChosen(ui->spinBox->value());
+    for(int i = 0; i < ui->spinBox->value(); ++i)
+    {
+        m_game->addDrink(m_player,m_drink);
+    }
+
+    this->accept();
 }
 
 void ChooseDrinkCountDialog::on_buttonBox_rejected()
 {
-    this->hide();
+    this->reject();
 }

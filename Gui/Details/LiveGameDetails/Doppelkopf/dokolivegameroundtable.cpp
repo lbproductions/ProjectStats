@@ -70,21 +70,21 @@ void DokoLiveGameRoundTable::addRound(Database::Round *round){
 void DokoLiveGameRoundTable::markCardMixer(bool fullscreen){
     if (fullscreen)
         for (int i = 0; i<this->columnCount();i++){
-            if (this->horizontalHeaderItem(i)->text() == m_livegame->cardmixer->value()->name->value()){
-                this->horizontalHeaderItem(i)->setTextColor(QColor("red"));
-            }
-            else{
-                this->horizontalHeaderItem(i)->setTextColor(QColor("white"));
-            }
+//            if (this->horizontalHeaderItem(i)->text() == m_livegame->cardmixer->value()->name->value()){
+//                this->horizontalHeaderItem(i)->setTextColor(QColor("red"));
+//            }
+//            else{
+//                this->horizontalHeaderItem(i)->setTextColor(QColor("white"));
+//            }
         }
     else{
         for (int i = 0; i<this->columnCount();i++){
-            if (this->horizontalHeaderItem(i)->text() == m_livegame->cardmixer->value()->name->value()){
-                this->horizontalHeaderItem(i)->setTextColor(QColor("red"));
-            }
-            else{
-                this->horizontalHeaderItem(i)->setTextColor(QColor("black"));
-            }
+//            if (this->horizontalHeaderItem(i)->text() == m_livegame->cardmixer->value()->name->value()){
+//                this->horizontalHeaderItem(i)->setTextColor(QColor("red"));
+//            }
+//            else{
+//                this->horizontalHeaderItem(i)->setTextColor(QColor("black"));
+//            }
         }
     }
 }

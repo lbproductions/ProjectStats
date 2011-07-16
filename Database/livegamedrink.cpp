@@ -23,6 +23,8 @@ START_ROW_IMPLEMENTATION(LiveGameDrink, LiveGameDrink, Row)
 LiveGameDrink::LiveGameDrink(Player* player, Round* round, Drink* drink) :
     Row(0,LiveGameDrinks::instance())
 {
+    initializeAttributes();
+
     this->playerId->setValue(player->id());
     this->roundId->setValue(round->id());
     this->drinkId->setValue(drink->id());

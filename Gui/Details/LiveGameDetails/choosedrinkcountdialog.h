@@ -7,12 +7,19 @@ namespace Ui {
     class ChooseDrinkCountDialog;
 }
 
+namespace Database
+{
+    class Drink;
+    class LiveGame;
+    class Player;
+}
+
 class ChooseDrinkCountDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ChooseDrinkCountDialog(QWidget *parent = 0);
+    explicit ChooseDrinkCountDialog(Database::Drink* drink, Database::Player* player, Database::LiveGame* game, QWidget *parent = 0);
     ~ChooseDrinkCountDialog();
 
 private slots:
@@ -20,11 +27,15 @@ private slots:
 
     void on_buttonBox_rejected();
 
-signals:
-    void numberChosen(int number);
-
 private:
     Ui::ChooseDrinkCountDialog *ui;
+
+    Database::Drink* m_drink;
+
+    Database::Player* m_player;
+
+    Database::LiveGame* m_game;
+
 };
 
 #endif // CHOOSEDRINKCOUNTDIALOG_H

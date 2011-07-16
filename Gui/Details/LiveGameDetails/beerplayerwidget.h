@@ -34,6 +34,7 @@ class BeerPlayerWidget : public AbstractLiveGameWidget
 
 public:
     explicit BeerPlayerWidget(Database::Player* player, Database::LiveGame* livegame, QWidget *parent = 0);
+
     ~BeerPlayerWidget();
 
     void dragEnterEvent(QDragEnterEvent *event);
@@ -49,21 +50,8 @@ private:
     Database::LiveGame* m_livegame;
     Database::Player* m_player;
 
-    Database::Drink* m_droppedDrink;
-
-    BeerWidget* m_parent;
-
-    QPalette m_palette;
-
-public slots:
-
-    void setFullscreen();
-
-    void setNormalMode();
-
 private slots:
-
-    void onNumberChosen(int number);
+    void update();
 };
 
 }

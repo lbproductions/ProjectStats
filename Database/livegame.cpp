@@ -17,6 +17,7 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(LiveGameDrink*,LiveGame,LiveGameCalculator,calc,drinks,tr("Drinks"))
     LiveGameDrinks::instance()->rows()->addDependingAttribute(drinks);
+    //drinks->setCheckChange(false);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,AttributeList<LiveGameDrink*>,LiveGame,LiveGameCalculator,calc,drinksPerPlayer,tr("Drinks per Player"))
     drinks->addDependingAttribute(drinksPerPlayer);
@@ -70,11 +71,7 @@ void LiveGame::addPlayer(Player* player)
 
 void LiveGame::addDrink(Player* player, Drink* drink)
 {
-    Round* round = 0;
-    if(!rounds->value().isEmpty())
-    {
-        rounds->value().last();
-    }
+    Round* round = currentRound->value();
 
     LiveGameDrink* liveGameDrink = new LiveGameDrink(player,round,drink);
     addChildRow(liveGameDrink);
@@ -82,12 +79,7 @@ void LiveGame::addDrink(Player* player, Drink* drink)
 
 void LiveGame::setState(Round::RoundState state)
 {
-    if(rounds->value().isEmpty())
-    {
-        return;
-    }
-
-    rounds->value().last()->db_state->setValue(state);
+    currentRound->value()->db_state->setValue(state);
 }
 
 Round* LiveGame::createRound()
@@ -102,8 +94,7 @@ Round* LiveGame::startNextRound()
 {
     if(!rounds->value().isEmpty())
     {
-        Round* lastRound = rounds->value().last();
-        lastRound->db_state->setValue(Round::FinishedState);
+        currentRound->value()->db_state->setValue(Round::FinishedState);
     }
 
     return createRound();

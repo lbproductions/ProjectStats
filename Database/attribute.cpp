@@ -17,7 +17,10 @@ AttributeOwner::AttributeOwner(QObject *parent) :
 AttributeBase::AttributeBase() :
     QObject(),
     m_owner(0),
-    m_role(Qt::DisplayRole)
+    m_name(QString()),
+    m_displayName(QString()),
+    m_role(Qt::DisplayRole),
+    m_checkChange(true)
 {
 }
 
@@ -26,7 +29,8 @@ AttributeBase::AttributeBase(const QString &name, const QString &displayName, At
     m_owner(row),
     m_name(name),
     m_displayName(displayName),
-    m_role(Qt::DisplayRole)
+    m_role(Qt::DisplayRole),
+    m_checkChange(true)
 {
 }
 
@@ -72,6 +76,11 @@ void AttributeBase::changeValue(QVariant value, bool /*updateDatabase*/)
 
 void AttributeBase::setDisplayRole(AttributeVariant::DisplayRole role){
     m_displayRole = role;
+}
+
+void AttributeBase::setCheckChange(bool check)
+{
+    m_checkChange = check;
 }
 
 void AttributeBase::onChange()
