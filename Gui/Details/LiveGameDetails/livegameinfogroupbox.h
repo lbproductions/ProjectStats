@@ -38,6 +38,9 @@ protected:
     Misc::HeaderLabel* m_timeHeaderLabel;
     Misc::ValueLabel* m_timeLabel;
 
+    Misc::HeaderLabel* m_cardmixerHeaderLabel;
+    Misc::ValueLabel* m_cardmixerLabel;
+
 protected slots:
     void reflectState();
 

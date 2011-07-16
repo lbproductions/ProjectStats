@@ -3,19 +3,23 @@
 
 #include <Gui/Details/LiveGameDetails/livegameroundtable.h>
 
-namespace Database{
+namespace Database
+{
     class DokoLiveGame;
     class DokoRound;
 }
 
-namespace Gui{
+namespace Gui
+{
 
-    namespace Details{
+namespace Details
+{
 
-    namespace LiveGameDetails
-    {
+namespace LiveGameDetails
+{
 
-    namespace DokoLiveGameDetails{
+namespace DokoLiveGameDetails
+{
 
 class DokoLiveGameRoundTable : public LiveGameRoundTable
 {
@@ -23,11 +27,11 @@ public:
     DokoLiveGameRoundTable(Database::DokoLiveGame* livegame, QWidget *parent = 0);
 
     void addRound(Database::Round* round);
-
-    void markCardMixer(bool fullscreen);
 };
 
-}}
-}}
+}
+}
+}
+}
 
 #endif // DOKOLIVEGAMEROUNDTABLE_H

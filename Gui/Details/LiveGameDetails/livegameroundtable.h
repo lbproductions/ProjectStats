@@ -35,32 +35,24 @@ public:
     /**
     * Fügt zur Tabelle eine neue Runde hinzu. Für diese wird eine neue Reihe erstellt und mit den Daten aus der Runde befüllt.
     */
-    virtual void addRound(Database::Round* round);
+    virtual void addRound(Database::Round *round);
 
     /**
     * Aktualisiert die Spaltenbreite je nachdem wie breit das gesamte Widget ist.
     */
     void updateSizes();
 
+private slots:
     /**
     * Markiert das HeaderItem des aktuellen Cardmixers durch einen farbigen Hintergrund
     */
-    virtual void markCardMixer(bool fullscreen);
+    void markCardMixer();
+
+    void addCurrentRound();
 
 protected:
 
     QPointer<Database::LiveGame> m_livegame;
-
-    QList< Database::Player *> playerlist;
-
-signals:
-
-public slots:
-
-    void setFullscreen();
-
-    void setNormalMode();
-
 };
 
 }

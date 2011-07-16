@@ -34,12 +34,13 @@ LiveGameInfoGroupBox::LiveGameInfoGroupBox(Database::LiveGame* livegame, QWidget
     m_game->length->futureWatcher()->connectTo(lengthLabel);
     m_layout->addWidget(lengthLabel);
 
-    m_layout->addWidget(new Misc::HeaderLabel(tr("Dealer"),this));
-    Misc::ValueLabel* cardmixerLabel = new Misc::ValueLabel("-",this);
-    m_game->cardmixer->futureWatcher()->connectTo(cardmixerLabel);
-    m_layout->addWidget(cardmixerLabel);
+    m_cardmixerHeaderLabel = new Misc::HeaderLabel(tr("Dealer"),this);
+    m_layout->addWidget(m_cardmixerHeaderLabel);
+    m_cardmixerLabel = new Misc::ValueLabel("-",this);
+    m_game->cardmixer->futureWatcher()->connectTo(m_cardmixerLabel);
+    m_layout->addWidget(m_cardmixerLabel);
 
-    m_layout->addWidget(new Misc::HeaderLabel(tr("RoundCount"),this));
+    m_layout->addWidget(new Misc::HeaderLabel(tr("Number of Rounds"),this));
     Misc::ValueLabel* roundCountLabel = new Misc::ValueLabel("-",this);
     m_game->roundCount->futureWatcher()->connectTo(roundCountLabel);
     m_layout->addWidget(roundCountLabel);
@@ -72,6 +73,8 @@ void LiveGameInfoGroupBox::reflectState()
     m_typeLabel->setVisible(false);
     m_timeHeaderLabel->setVisible(false);
     m_timeLabel->setVisible(false);
+    m_cardmixerHeaderLabel->setVisible(false);
+    m_cardmixerLabel->setVisible(false);
 
     switch(m_game->state->value())
     {
@@ -84,6 +87,8 @@ void LiveGameInfoGroupBox::reflectState()
     case Database::Round::RunningState:
         m_timeHeaderLabel->setVisible(true);
         m_timeLabel->setVisible(true);
+        m_cardmixerHeaderLabel->setVisible(true);
+        m_cardmixerLabel->setVisible(true);
         break;
 
     default:

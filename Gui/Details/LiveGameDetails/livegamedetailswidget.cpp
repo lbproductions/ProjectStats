@@ -25,8 +25,8 @@ LiveGameDetailsWidget::LiveGameDetailsWidget(Database::LiveGame* livegame, QWidg
 
 }
 
-void LiveGameDetailsWidget::initializeItems(){
-
+void LiveGameDetailsWidget::initializeItems()
+{
     m_layout = new QVBoxLayout();
     m_newItemLayout = new QVBoxLayout();
     m_centerLayout = new QHBoxLayout();
@@ -103,8 +103,6 @@ void LiveGameDetailsWidget::setupWidget(){
     item->setSizeHint(QSize(0,0));
     m_playerTotalPointsTable->setVerticalHeaderItem(0,item);
 
-    m_roundTable->markCardMixer(m_fullscreen);
-
     this->setLayout(m_layout);
 
 //    Handler::getInstance()->messageSystem()->checkForStats(m_livegame);
@@ -115,8 +113,12 @@ void LiveGameDetailsWidget::setupWidget(){
 void LiveGameDetailsWidget::fillWidget(){
 
     QList<Database::Round*> roundlist = m_livegame->rounds->value();
-    for(int i = 0; i<roundlist.size()-1;i++){
-        m_roundTable->addRound(roundlist.at(i));
+    foreach(Database::Round* round, roundlist)
+    {
+        if(round->state->value() == Database::Round::FinishedState)
+        {
+            m_roundTable->addRound(round);
+        }
     }
 
     gameLength = m_livegame->length->value();
@@ -134,15 +136,6 @@ void LiveGameDetailsWidget::fillWidget(){
     item->setTextAlignment(Qt::AlignCenter);
     item->setFont(QFont("Lucia Grande",30,QFont::Bold,false));
     m_playerTotalPointsTable->setItem(0,m_playerlist.size(),item);
-
-    if (m_livegame->isFinished->value()){
-        m_roundTable->updateSizes();
-        //m_statswidget->updateWidget();
-        emit finishedGameShown();
-        m_roundTable->addRound(roundlist.at(roundlist.size()-1));
-
-        //m_infoBox->updateWidget((gameLength+QTime(timeGame.elapsed()/1000/60/60,timeGame.elapsed()/1000/60%60,timeGame.elapsed()/1000%60,0)).toString("hh:mm:ss"));
-    }
 
     if (m_livegame->isFinished->value()){
         m_gamecomment->setText(m_livegame->comment->value());
@@ -210,9 +203,6 @@ void LiveGameDetailsWidget::onRoundCreated(){
 
     timeGame.start();
     lengthPause = 0;
-
-    m_roundTable->addRound(m_livegame->lastRound->value());
-    m_roundTable->markCardMixer(m_fullscreen);
 
     for (int i = 0; i < m_playerlist.size(); i++){
         QTableWidgetItem* item = new QTableWidgetItem(QString::number(m_livegame->points->value(m_playerlist.at(i))));
@@ -314,15 +304,12 @@ void LiveGameDetailsWidget::setFullscreenMode(){
     //this->setStyleSheet("Gui--Details--LiveGameDetails--LiveGameDetailsWidget{background-color: black;}QSplitter::handle{height: 10px; background-color: transparent; border: 0px solid #6c6c6c;}");
     this->setStyleSheet("");
 
-    m_roundTable->setFullscreen();
-
     //m_beerwidget->updateWidget();
     //m_beerwidget->setFullscreen();
 
     m_infoBox->setFullscreen();
 
     m_fullscreen = true;
-    m_roundTable->markCardMixer(m_fullscreen);
 
     m_graph->setFullscreen();
 
@@ -346,7 +333,6 @@ void LiveGameDetailsWidget::setNormalMode(){
     normal.close();
 
     m_graph->setStyleSheet("");
-    m_roundTable->setNormalMode();
 
     /*
     //QFile beerwidget(":/stylesheets/livegame/beerwidget_normal");
@@ -369,7 +355,6 @@ void LiveGameDetailsWidget::setNormalMode(){
     table.close();
 
     m_fullscreen = false;
-    m_roundTable->markCardMixer(m_fullscreen);
 
     m_infoBox->setNormalMode();
 

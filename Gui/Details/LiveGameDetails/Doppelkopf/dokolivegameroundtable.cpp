@@ -11,80 +11,60 @@ DokoLiveGameRoundTable::DokoLiveGameRoundTable(Database::DokoLiveGame* livegame,
 {
 }
 
-void DokoLiveGameRoundTable::addRound(Database::Round *round){
-    Q_ASSERT(round != 0);
+void DokoLiveGameRoundTable::addRound(Database::Round* round)
+{
     Database::DokoRound* dokoround = static_cast<Database::DokoRound*>(round);
-    Q_ASSERT(dokoround != 0);
 
     this->insertRow(this->rowCount());
-    for(int i = 0; i<playerlist.size();i++){
+    int i = 0;
+    foreach(Database::Player* p, m_livegame->playersSortedByPosition->value())
+    {
         QTableWidgetItem* item = new QTableWidgetItem("");
-        if (dokoround->doko_re->value(playerlist.at(i))){
-            item->setText(QString::number(dokoround->points->value(playerlist.at(i))) + " (R)");
+        if (dokoround->doko_re->value(p)){
+            item->setText(QString::number(dokoround->points->value(p)) + " (R)");
         }
         else{
-            item->setText(QString::number(dokoround->points->value(playerlist.at(i))) + " (C)");
+            item->setText(QString::number(dokoround->points->value(p)) + " (C)");
         }
-        if (dokoround->points->value(playerlist.at(i)) == 0){
+        if (dokoround->points->value(p) == 0){
             item->setBackgroundColor(QColor("lightGray"));
         }
-        if (dokoround->points->value(playerlist.at(i)) < 0){
+        if (dokoround->points->value(p) < 0){
             item->setBackgroundColor(QColor(148,0,0));
         }
-        if (dokoround->points->value(playerlist.at(i)) < -3){
+        if (dokoround->points->value(p) < -3){
             item->setBackgroundColor(QColor(188,0,0));
         }
-        if (dokoround->points->value(playerlist.at(i)) < -6){
+        if (dokoround->points->value(p) < -6){
             item->setBackgroundColor(QColor(220,0,0));
         }
-        if (dokoround->points->value(playerlist.at(i)) <-9){
+        if (dokoround->points->value(p) <-9){
             item->setBackgroundColor(QColor(255,0,0));
         }
-        if (dokoround->points->value(playerlist.at(i)) > 0){
+        if (dokoround->points->value(p) > 0){
             item->setBackgroundColor(QColor(10,104,0));
         }
-        if (dokoround->points->value(playerlist.at(i)) > 3){
+        if (dokoround->points->value(p) > 3){
             item->setBackgroundColor(QColor(13,141,0));
         }
-        if (dokoround->points->value(playerlist.at(i)) > 6){
+        if (dokoround->points->value(p) > 6){
             item->setBackgroundColor(QColor(19,205,0));
         }
-        if (dokoround->points->value(playerlist.at(i)) > 9){
+        if (dokoround->points->value(p) > 9){
             item->setBackgroundColor(QColor(24,255,0));
         }
 
         item->setTextAlignment(Qt::AlignCenter);
         this->setItem(this->rowCount()-1,i,item);
+        ++i;
     }
 
 
     QTableWidgetItem* item = new QTableWidgetItem(QString::number(dokoround->roundPoints->value()));
     item->setTextAlignment(Qt::AlignCenter);
-    this->setItem(this->rowCount()-1,playerlist.size(),item);
+    this->setItem(this->rowCount()-1,m_livegame->players->value().size(),item);
 
     QTableWidgetItem* item1 = new QTableWidgetItem("");
     item1->setSizeHint(QSize(0,0));
     this->setVerticalHeaderItem(this->rowCount()-1,item1);
-}
-
-void DokoLiveGameRoundTable::markCardMixer(bool fullscreen){
-    if (fullscreen)
-        for (int i = 0; i<this->columnCount();i++){
-//            if (this->horizontalHeaderItem(i)->text() == m_livegame->cardmixer->value()->name->value()){
-//                this->horizontalHeaderItem(i)->setTextColor(QColor("red"));
-//            }
-//            else{
-//                this->horizontalHeaderItem(i)->setTextColor(QColor("white"));
-//            }
-        }
-    else{
-        for (int i = 0; i<this->columnCount();i++){
-//            if (this->horizontalHeaderItem(i)->text() == m_livegame->cardmixer->value()->name->value()){
-//                this->horizontalHeaderItem(i)->setTextColor(QColor("red"));
-//            }
-//            else{
-//                this->horizontalHeaderItem(i)->setTextColor(QColor("black"));
-//            }
-        }
-    }
 }
