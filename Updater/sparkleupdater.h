@@ -1,7 +1,7 @@
 #ifndef SPARKLEUPDATER_H
 #define SPARKLEUPDATER_H
 
-#include "updater.h"
+#include "Updater.h"
 
 #include <QString>
 

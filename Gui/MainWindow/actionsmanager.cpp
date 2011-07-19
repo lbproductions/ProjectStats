@@ -4,7 +4,7 @@
 
 #include <Gui/Wizards/NewGame/newgamewizard.h>
 #include <Gui/Details/PlaceDetails/placedetailswidget.h>
-#include <Gui/Details/DrinkDetails/drinkdetailswidget.h>
+#include <Gui/Details/DrinkDetails/DrinkDetailsWidget.h>
 #include <Gui/Filter/newleaguedialog.h>
 #include <handler.h>
 #include <Database/player.h>

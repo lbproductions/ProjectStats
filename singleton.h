@@ -46,7 +46,19 @@ Classname::Classname ## Guard::~Classname ## Guard() \
 
 #endif //Q_WS_MAC
 
+#ifdef Q_OS_LINUX
+    #define OS_LINUX true
+#else
+    #define OS_LINUX false
+#endif
+
 #ifdef Q_OS_WIN
+    #define OS_WINDOWS true
+#else
+    #define OS_WINDOWS false
+#endif
+
+#if (OS_LINUX || OS_WINDOWS)
 
 #define DECLARE_SINGLETON( NAME )    \
     public: \

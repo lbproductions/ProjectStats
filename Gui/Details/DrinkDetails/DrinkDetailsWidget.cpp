@@ -1,5 +1,5 @@
-#include "drinkdetailswidget.h"
-#include "ui_drinkdetailswidget.h"
+#include "DrinkDetailsWidget.h"
+#include "ui_DrinkDetailsWidget.h"
 
 #include <Gui/Misc/clickablelabel.h>
 #include <Database/drink.h>

@@ -15,7 +15,7 @@
 //#include <databasewindow.h>
 #include <messagesystem.h>
 #include <Updater/sparkleupdater.h>
-#include <Updater/updater.h>
+#include <Updater/Updater.h>
 
 #include <Gui/MainWindow/mainwindow.h>
 
