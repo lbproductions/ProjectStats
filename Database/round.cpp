@@ -4,6 +4,7 @@
 #include <Database/Skat/skatround.h>
 #include <Database/Doppelkopf/dokolivegame.h>
 #include "game.h"
+#include "point.h"
 
 #include <QDateTime>
 #include <QDebug>
@@ -89,6 +90,14 @@ QPointer<Game> Round::calculate_game()
 Round::RoundState Round::calculate_state()
 {
     return (RoundState)db_state->value();
+}
+
+void Round::addPoints(Player* player, int points)
+{
+    Point* point = new Point(this,player,points);
+    addChildRow(point);
+
+    this->points->setValue(player,points);
 }
 
 END_ROW_IMPLEMENTATION()

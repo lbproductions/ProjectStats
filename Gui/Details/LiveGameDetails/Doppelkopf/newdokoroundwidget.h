@@ -54,16 +54,6 @@ private:
 
     QPointer<Database::DokoLiveGame> m_livegame;
 
-    QList<Database::Player*> m_playerlist;
-
-    bool m_schmeissereiState;
-
-signals:
-    /**
-    * Wird gesendet, wenn eine neue Runde erstellt wurde.
-    */
-    void roundCreated();
-
 private slots:
     /**
     * Wird nach einer Änderung in der ComboBox für die Trumpfabgabe aufgerufen. Verändert die Darstellung des Widgets speziell für die Trumpfabgabe.

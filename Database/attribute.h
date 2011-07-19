@@ -9,6 +9,7 @@
 #include <QtConcurrentRun>
 #include <QVariant>
 #include <QFutureWatcher>
+#include <QWaitCondition>
 
 #include <QDebug>
 
@@ -357,7 +358,9 @@ protected slots:
       Im ersten Fall wird einfach nur allen verbundenen GUI-Elementen die Änderung mitgeteilt.<br>
       Im zweiten Fall wird der Wert des Attributs aktualisiert und die Änderung anschließend bekannt gegeben.
       */
-    virtual void update() = 0;
+    virtual void updateFromFutureWatcher() = 0;
+
+    virtual void updateFromAttribute() = 0;
 
     /*!
       Wird aufgerufen, wenn das Attribute signalisiert, dass es sich bald ändern wird.<br>
@@ -426,15 +429,23 @@ protected:
       Im ersten Fall wird einfach nur allen verbundenen GUI-Elementen die Änderung mitgeteilt.<br>
       Im zweiten Fall wird der Wert des Attributs aktualisiert und die Änderung anschließend bekannt gegeben.
       */
-    void update();
+    void updateFromFutureWatcher();
+
+    void updateFromAttribute();
 
     /*!
       Der Wert des Attributs. (Wird vom AttributeFutureWatcherInterface verwendet)
       */
     QString toString();
 
+    void waitForFinished();
+
     Attribute<T,R,C>* m_attribute; //!< Das beobachtete Attribut.
     QPointer<QFutureWatcher<T> > m_futureWatcher; //!< Der interne QFutureWatcher.
+    QMutex m_mutex;
+    QMutex m_waitMutex; //!< Mit diesem Mutex warten wir auf das endgültige update des wertes
+    QWaitCondition m_waitCondition;
+    QWaitCondition m_waitCondition2;
 };
 
 template<class T, class R, class C>
@@ -462,19 +473,23 @@ Attribute<T,R,C>::Attribute(const QString &name, const QString &displayName, Att
 template<class T, class R, class C>
 Attribute<T,R,C>::~Attribute()
 {
+    m_lock.lockForWrite();
     if(m_futureWatcher)
     {
         m_futureWatcher->deleteLater();
     }
+    m_lock.unlock();
 }
 
 template<class T, class R, class C>
 AttributeFutureWatcher<T,R,C> *Attribute<T,R,C>::futureWatcher()
 {
+    m_lock.lockForWrite();
     if(m_futureWatcher == 0)
     {
         m_futureWatcher = new AttributeFutureWatcher<T,R,C>(this);
     }
+    m_lock.unlock();
     return m_futureWatcher;
 }
 
@@ -499,21 +514,26 @@ T Attribute<T,R,C>::operator()()
 template<class T, class R, class C>
 T& Attribute<T,R,C>::value()
 {
+    futureWatcher()->m_mutex.lock();
     m_lock.lockForWrite();
     if(!m_cacheInitialized)
     {
 	if(!futureWatcher()->isRunning())
 	{
-	    m_value = calculate();
+            m_value = calculate();
 	}
 	else
-	{
-	    futureWatcher()->m_futureWatcher->waitForFinished();
-	}
-	m_cacheInitialized = true;
+        {
+            m_lock.unlock();
+            futureWatcher()->waitForFinished();
+            m_lock.lockForWrite();
+            changeValue(futureWatcher()->futureWatcher()->result());
+        }
+        m_cacheInitialized = true;
     }
 
     m_lock.unlock();
+    futureWatcher()->m_mutex.unlock();
     return m_value;
 }
 
@@ -521,7 +541,7 @@ template<class T, class R, class C>
 AttributeVariant Attribute<T,R,C>::toVariant()
 {
     AttributeVariant v;
-    v.setValue(value());
+    v.setValue(m_value);
     return v;
 }
 
@@ -564,9 +584,13 @@ void Attribute<T,R,C>::changeValue(const T &value)
     {
 	m_value = value;
 
+        m_lock.unlock();
 	emit changed();
     }
-    m_lock.unlock();
+    else
+    {
+        m_lock.unlock();
+    }
 }
 
 template<class T, class R, class C>
@@ -578,14 +602,14 @@ void Attribute<T,R,C>::changeValue(const QVariant& value)
 template<class T, class R, class C>
 AttributeFutureWatcher<T,R,C> *Attribute<T,R,C>::calculateASync()
 {
+    m_lock.lockForWrite();
     if(!m_cacheInitialized && !futureWatcher()->isRunning())
     {
-	m_lock.lockForWrite();
-	emit aboutToChange();
+        emit aboutToChange();
 	QFuture<T> future = QtConcurrent::run(this, &Attribute<T,R,C>::calculate);
-	futureWatcher()->setFuture(future);
-	m_lock.unlock();
+        futureWatcher()->setFuture(future);
     }
+    m_lock.unlock();
 
     return futureWatcher();
 }
@@ -639,42 +663,46 @@ T Attribute<T,R,C>::calculate() const
 template<class T, class R, class C>
 void Attribute<T,R,C>::update()
 {
+    m_lock.lockForWrite();
+
     if(!m_cacheInitialized)
     {
-	recalculate();
+        recalculate();
+        m_lock.unlock();
 	return;
     }
 
-    m_lock.lockForWrite();
     AttributeBase *dependentAttribute = static_cast<AttributeBase*>(sender());
     AttributeSpecificUpdateFunction updateFunction = m_updateFunctions.value(dependentAttribute->name(), 0);
     QFuture<T> future;
 
     if(updateFunction != 0)
     {
+        futureWatcher()->m_mutex.lock();
 	future = QtConcurrent::run(static_cast<C*>(m_calculator), updateFunction);
     }
     else
     {
 	if(m_updateFunction == 0)
-	{
-	    m_lock.unlock();
-	    recalculate();
+        {
+            recalculate();
+            m_lock.unlock();
 	    return;
 	}
 
+        futureWatcher()->m_mutex.lock();
 	future = CALL_MEMBER_FN(static_cast<C*>(m_calculator),m_updateFunction)(dependentAttribute);
     }
 
     if(future.isRunning() || future.isResultReadyAt(0))
     {
 	futureWatcher()->setFuture(future);
+        futureWatcher()->m_mutex.unlock();
     }
     else
     {
 	recalculate(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
     }
-
     m_lock.unlock();
 }
 
@@ -697,21 +725,28 @@ template<class T, class R, class C>
 AttributeFutureWatcher<T,R,C>::AttributeFutureWatcher(Attribute<T,R,C> *parent) :
     AttributeFutureWatcherBase(),
     m_attribute(parent),
-    m_futureWatcher(new QFutureWatcher<T>())
+    m_futureWatcher(new QFutureWatcher<T>()),
+    m_mutex(QMutex::NonRecursive),
+    m_waitMutex(QMutex::NonRecursive)
 {
-    connect(m_futureWatcher,SIGNAL(finished()),this,SLOT(update()));
-    connect(m_attribute,SIGNAL(changed()),this,SLOT(update()));
+    connect(m_futureWatcher,SIGNAL(finished()),this,SLOT(updateFromFutureWatcher()));
+    connect(m_attribute,SIGNAL(changed()),this,SLOT(updateFromAttribute()));
     connect(m_attribute,SIGNAL(aboutToChange()),this,SLOT(on_attributeAboutToChange()));
 }
 
 template<class T, class R, class C>
 void AttributeFutureWatcher<T,R,C>::setFuture(QFuture<T> future)
 {
+    if(m_futureWatcher->isRunning())
+    {
+        qDebug() << "AttributeFutureWatcher<T,R,C>::setFuture: m_futureWatcher->isRunning()";
+        return;
+    }
     m_futureWatcher->setFuture(future);
 
-    if(future.isFinished())
+    if(m_futureWatcher->isFinished())
     {
-	update();
+        updateFromFutureWatcher();
     }
 }
 template<class T, class R, class C>
@@ -721,25 +756,43 @@ QFutureWatcher<T> *AttributeFutureWatcher<T,R,C>::futureWatcher() const
 }
 
 template<class T, class R, class C>
-void AttributeFutureWatcher<T,R,C>::update()
+void AttributeFutureWatcher<T,R,C>::waitForFinished()
 {
+    m_waitMutex.lock();
+    if(m_futureWatcher->isRunning())
+    {
+        qDebug() << "Starting to wait for" << m_attribute;
+        QThreadPool::globalInstance()->releaseThread();
+        m_waitCondition2.wait(&m_waitMutex);
+        m_waitCondition.wait(&m_mutex);
+        QThreadPool::globalInstance()->reserveThread();
+    }
+    m_waitMutex.unlock();
+}
+
+template<class T, class R, class C>
+void AttributeFutureWatcher<T,R,C>::updateFromFutureWatcher()
+{
+    m_waitCondition2.wakeAll();
+    m_mutex.lock();
     if(m_futureWatcher->future().isResultReadyAt(0))
     {
-	if(sender() == m_futureWatcher)
-	{
-	    T value = m_futureWatcher->future().result();
-            m_attribute->changeValue(value);
-	    QVariant v;
-	    v.setValue(value);
-	    emit valueChanged(v.toString());
-	}
-	else
-        {
-	    QVariant v;
-            v.setValue(m_attribute->value());
-	    emit valueChanged(v.toString());
-	}
+        T value = m_futureWatcher->future().result();
+        m_attribute->changeValue(value);
     }
+    qDebug() << m_attribute << "finished updateFromFutureWatcher";
+    m_waitCondition.wakeAll();
+    m_mutex.unlock();
+}
+
+
+template<class T, class R, class C>
+void AttributeFutureWatcher<T,R,C>::updateFromAttribute()
+{
+    qDebug() << m_attribute << "finished updateFromAttribute";
+    QVariant v;
+    v.setValue(m_attribute->m_value);
+    emit valueChanged(v.toString());
 }
 
 template<class T, class R, class C>

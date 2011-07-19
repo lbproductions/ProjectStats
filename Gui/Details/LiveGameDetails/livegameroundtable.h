@@ -37,12 +37,9 @@ public:
     */
     virtual void addRound(Database::Round *round);
 
-    /**
-    * Aktualisiert die Spaltenbreite je nachdem wie breit das gesamte Widget ist.
-    */
     void updateSizes();
 
-private slots:
+protected slots:
     /**
     * Markiert das HeaderItem des aktuellen Cardmixers durch einen farbigen Hintergrund
     */
@@ -50,9 +47,12 @@ private slots:
 
     void addCurrentRound();
 
-protected:
+    void resizeEvent(QResizeEvent *event);
 
+protected:
     QPointer<Database::LiveGame> m_livegame;
+
+    void fillWidget();
 };
 
 }

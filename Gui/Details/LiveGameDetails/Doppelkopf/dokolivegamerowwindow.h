@@ -40,7 +40,7 @@ private:
 
     QAction* m_actionSchmeisserei;
 
-private slots:
+protected slots:
 
     /**
     * Wird von der Action m_actionSchmeisserei aufgerufen. Zeigt das SchmeissereiWidget an
@@ -51,6 +51,8 @@ private slots:
     * Wird von der Action m_actionPause aufgerufen. Wechselt je nach Zustand von state zwischen Pausieren und Fortsetzen des LiveGames.
     */
     void reflectState();
+
+    void showNewRoundDialog();
 };
 
 }

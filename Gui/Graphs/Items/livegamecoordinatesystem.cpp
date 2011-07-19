@@ -48,12 +48,12 @@ void LiveGameCoordinateSystem::paint(QPainter *painter, const QStyleOptionGraphi
 
     //Zeichne die einen grauen Strich, wenn alle Spieler einmal gegeben haben.
     int playerCount = m_liveGame->playersSortedByPosition->value().size();
-    for(float i = playerCount; i < m_liveGame->rounds->value().size(); i+=playerCount)
+    for(float i = playerCount; i < m_liveGame->rounds->value().size() && i > 0; i+=playerCount)
     {
 	QPen pen;
 	pen.setColor(QColor(204,204,204));
 	pen.setWidth(0);
-	painter->setPen(pen);
+        painter->setPen(pen);
 	painter->drawLine((i+0.5) * m_xScale,-(m_yMax+2) * m_yScale,
 			   (i+0.5) * m_xScale,-(m_yMin-2) * m_yScale);
     }

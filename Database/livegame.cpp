@@ -27,18 +27,18 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
 
     rounds->addDependingAttribute(length);
 
-    IMPLEMENT_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,calc,roundCount,tr("Round Count"))
-    rounds->addDependingAttribute(roundCount);
-
-    IMPLEMENT_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,calc,percComplete,tr("%Complete"))
-    rounds->addDependingAttribute(percComplete);
-
-    IMPLEMENT_ATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,calc,lastRound,tr("LastRound"))
-    rounds->addDependingAttribute(lastRound);
-
     IMPLEMENT_ATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,calc,currentRound,tr("CurrentRound"))
     rounds->addDependingAttribute(currentRound);
     currentRound->addDependingAttribute(state);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,calc,roundCount,tr("Round Count"))
+    currentRound->addDependingAttribute(roundCount);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,calc,percComplete,tr("%Complete"))
+    currentRound->addDependingAttribute(percComplete);
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,calc,lastRound,tr("LastRound"))
+    currentRound->addDependingAttribute(lastRound);
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,calc,currentPlayingPlayers,tr("CurrentPlayingPlayers"))
     currentRound->addDependingAttribute(currentPlayingPlayers);
@@ -47,7 +47,7 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
     currentRound->addDependingAttribute(cardmixer);
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,totalPoints,tr("TotalPoints"))
-    rounds->addDependingAttribute(totalPoints);
+    currentRound->addDependingAttribute(totalPoints);
 
     IMPLEMENT_ATTRIBUTE_IN_CALC(bool,LiveGame,LiveGameCalculator,calc,isFinished,tr("Finished"))
 }
@@ -92,12 +92,19 @@ Round* LiveGame::createRound()
 
 Round* LiveGame::startNextRound()
 {
-    if(!rounds->value().isEmpty())
+    Round* lastRound = currentRound->value();
+    Round* newround = createRound();/*
+    rounds->recalculate();
+    rounds->futureWatcher()->futureWatcher()->waitForFinished();
+    currentRound->recalculate();
+    currentRound->futureWatcher()->futureWatcher()->waitForFinished();
+    currentRound->emitChanged();*/
+    if(lastRound)
     {
-        currentRound->value()->db_state->setValue(Round::FinishedState);
+        lastRound->db_state->setValue(Round::FinishedState);
     }
 
-    return createRound();
+    return newround;
 }
 
 void LiveGame::finishGame()

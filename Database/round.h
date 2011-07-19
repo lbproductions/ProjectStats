@@ -44,6 +44,8 @@ START_ROW_DECLARATION(Round, Row)
     DECLARE_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Round,RoundCalculator,currentPlayingPlayers)
     DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,roundPoints)
 
+    void addPoints(Player* player, int points);
+
 END_ROW_DECLARATION(Round)
 
 START_TABLE_DECLARATION(Round)

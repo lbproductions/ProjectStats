@@ -7,8 +7,16 @@
 #include "attribute.h"
 #include "databaseattribute.h"
 
+namespace Database
+{
+    class Round;
+    class Player;
+}
+
 START_ROW_DECLARATION(Point, Row)
     DECLARE_ROW_CONSTRUCTORS(Point, Point)
+
+    Point(Round* round, Player* player, int points);
 
     DECLARE_DATABASEATTRIBUTE(int,Point,playerId)
     DECLARE_DATABASEATTRIBUTE(int,Point,roundId)

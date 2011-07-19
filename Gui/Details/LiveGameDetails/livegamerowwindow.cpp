@@ -1,5 +1,7 @@
 #include "livegamerowwindow.h"
 
+#include "adddrinkwidget.h"
+
 #ifdef Q_WS_MAC
 #   include <Gui/Misc/macwindowcontroller.h>
 #endif
@@ -7,7 +9,6 @@
 #include <QAction>
 #include <QToolBar>
 #include <QLabel>
-
 #include <QDebug>
 
 using namespace Gui::Details;
