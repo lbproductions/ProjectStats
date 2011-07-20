@@ -157,7 +157,9 @@ SOURCES += main.cpp\
     Gui/Details/PlayerDetails/playerstatswidget.cpp \
     Gui/Details/LiveGameDetails/abstractlivegamewidget.cpp \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.cpp \
-    attributevariant.cpp
+    attributevariant.cpp \
+    Database/Doppelkopf/dokoplayerstats.cpp \
+    Gui/Details/PlayerDetails/dokoplayerstatswidget.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -329,7 +331,9 @@ HEADERS  += \
     Gui/Details/LiveGameDetails/adddrinkwidget.h \
     Gui/Details/LiveGameDetails/abstractlivegamewidget.h \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.h \
-    attributevariant.h
+    attributevariant.h \
+    Database/Doppelkopf/dokoplayerstats.h \
+    Gui/Details/PlayerDetails/dokoplayerstatswidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -360,7 +364,8 @@ FORMS    += \
     Gui/Details/LiveGameDetails/adddrinkwidget.ui \
     Gui/Details/PlayerDetails/playerdetailswidget.ui \
     Gui/Details/PlayerDetails/playerstatswidget.ui \
-    Gui/Details/PlayerDetails/abstractplayerstatswidget.ui
+    Gui/Details/PlayerDetails/abstractplayerstatswidget.ui \
+    Gui/Details/PlayerDetails/dokoplayerstatswidget.ui
 
 mac {
     HEADERS += cocoainitializer.h

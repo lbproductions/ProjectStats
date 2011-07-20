@@ -23,7 +23,7 @@ public:
     explicit AbstractPlayerStatsWidget(Database::Player* player, QString type, QWidget *parent = 0);
     ~AbstractPlayerStatsWidget();
 
-private:
+protected:
     Ui::AbstractPlayerStatsWidget *ui;
 };
 
