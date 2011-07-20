@@ -24,6 +24,7 @@ namespace Database
     class Round;
     class ChildCategorie;
     class ParentCategorie;
+    class LiveGameDrink;
 }
 
 

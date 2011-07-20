@@ -163,7 +163,7 @@ AttributeHash<LiveGame*,double> PlayerCalculator::calculate_alcPegel(){
 
         if(m_player->games->value(i)->live->value()){
             LiveGame* game = static_cast<LiveGame*>(m_player->games->value(i));
-            for(int j = 0; j<game->drinks->value().size();j++){
+            for(int j = 0; j<game->drinksPerPlayer->value().size();j++){
                 {
                     Drink* drink = Drinks::instance()->rowById(game->drinks->value(j)->drinkId->value());
                     if(drink != 0)

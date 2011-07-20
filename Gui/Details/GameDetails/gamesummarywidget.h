@@ -38,8 +38,6 @@ protected:
 
     QPointer<Database::Game> m_game;
 
-    void connectToAttributes();
-
 
 };
 

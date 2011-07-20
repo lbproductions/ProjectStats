@@ -24,9 +24,9 @@ LiveGameCalculator::LiveGameCalculator(LiveGame* livegame, QObject *parent) :
 AttributeList<LiveGameDrink*> LiveGameCalculator::calculate_drinks(){
     AttributeList<LiveGameDrink*> list;
     foreach(LiveGameDrink* d, LiveGameDrinks::instance()->allRows()){
-	if (Rounds::instance()->rowById(d->roundId->value())->game->value()->id() == m_livegame->id()){
+        if (Rounds::instance()->rowById(d->roundId->value())->game->value()->id() == m_livegame->id()){
             list.append(d);
-	}
+        }
     }
     return list;
 }
@@ -49,9 +49,9 @@ AttributeHash<Player*,AttributeList<LiveGameDrink*> > LiveGameCalculator::calcul
 AttributeList<Round*> LiveGameCalculator::calculate_rounds(){
     AttributeList<Round*> list;
     foreach(Round* r, Rounds::instance()->allRows()){
-	if(r->gameId->value() == m_livegame->id()){
-	    list.append(r);
-	}
+        if(r->gameId->value() == m_livegame->id()){
+            list.append(r);
+        }
     }
     return list;
 }
@@ -238,6 +238,36 @@ bool LiveGameCalculator::calculate_isFinished()
         finished = finished && (r != 0) && (r->state->value() == Round::FinishedState);
     }
     return finished;
+}
+
+bool sortPlayersByAlcPegel(QPair<Player*,LiveGame*> pair1, QPair<Player*,LiveGame*> pair2){
+    return pair1.first->alcPegel->value(pair1.second) > pair2.first->alcPegel->value(pair2.second);
+}
+
+AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByAlcPegel(){
+    AttributeList<Player*> alist;
+    if(m_livegame->drinks->value().size() > 0){
+        QList<QPair<Player*,LiveGame*> > list;
+        for (int i = 0; i<m_game->players->value().size();i++){
+            QPair<Player*,LiveGame*> pair;
+            pair.first = m_game->players->value(i);
+            pair.second = m_livegame;
+            list.append(pair);
+        }
+        qSort(list.begin(),list.end(),sortPlayersByAlcPegel);
+        for(int i = 0; i<list.size();i++){
+            alist.append(list.at(i).first);
+        }
+    }
+    return alist;
+}
+
+AttributeHash<Drink*,int> LiveGameCalculator::calculate_drinkCount(){
+    AttributeHash<Drink*,int> hash;
+    foreach(LiveGameDrink* drink, m_livegame->drinks->value()){
+        hash.insert(drink->drink->value(),hash.value(drink->drink->value())+1);
+    }
+    return hash;
 }
 
 } // namespace Database

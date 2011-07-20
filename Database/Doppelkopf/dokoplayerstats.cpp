@@ -161,8 +161,7 @@ int DokoPlayerStats::calculate_livePoints(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
-            count += game->points->value(m_player);
+            count += g->points->value(m_player);
         }
     }
     return count;
@@ -172,6 +171,7 @@ int DokoPlayerStats::calculate_offlinePoints(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(!g->live->value()){
+            count += g->points->value(m_player);
         }
     }
     return count;

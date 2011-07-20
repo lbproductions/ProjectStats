@@ -159,7 +159,8 @@ SOURCES += main.cpp\
     Gui/Details/PlayerDetails/abstractplayerstatswidget.cpp \
     attributevariant.cpp \
     Database/Doppelkopf/dokoplayerstats.cpp \
-    Gui/Details/PlayerDetails/dokoplayerstatswidget.cpp
+    Gui/Details/PlayerDetails/dokoplayerstatswidget.cpp \
+    Gui/Details/LiveGameDetails/livegamesummarywidget.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -333,7 +334,8 @@ HEADERS  += \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.h \
     attributevariant.h \
     Database/Doppelkopf/dokoplayerstats.h \
-    Gui/Details/PlayerDetails/dokoplayerstatswidget.h
+    Gui/Details/PlayerDetails/dokoplayerstatswidget.h \
+    Gui/Details/LiveGameDetails/livegamesummarywidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -384,3 +386,5 @@ OTHER_FILES += \
 
 RESOURCES += \
     Ressources/Ressources.qrc
+
+

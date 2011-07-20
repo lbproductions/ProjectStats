@@ -9,6 +9,8 @@
 
 #include <QTime>
 
+#include <Gui/Details/LiveGameDetails/livegamesummarywidget.h>
+
 
 START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
 {
@@ -19,8 +21,14 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
     LiveGameDrinks::instance()->rows()->addDependingAttribute(drinks);
     //drinks->setCheckChange(false);
 
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Drink*,int,LiveGame,LiveGameCalculator,calc,drinkCount,tr("DrinkCount"))
+    drinks->addDependingAttribute(drinkCount);
+
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,AttributeList<LiveGameDrink*>,LiveGame,LiveGameCalculator,calc,drinksPerPlayer,tr("Drinks per Player"))
     drinks->addDependingAttribute(drinksPerPlayer);
+
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,calc,playersSortedByAlcPegel,tr("PlayersSortedByAlcPegel"))
+    drinksPerPlayer->addDependingAttribute(playersSortedByAlcPegel);
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,calc,rounds,tr("Rounds"))
     Rounds::instance()->rows()->addDependingAttribute(rounds);
@@ -112,6 +120,10 @@ void LiveGame::finishGame()
     Round* round = rounds->value().takeLast();
 
     Rounds::instance()->deleteRow(round);
+}
+
+Gui::Details::SummaryWidget* LiveGame::summaryWidget(){
+    return new Gui::Details::LiveGameDetails::LiveGameSummaryWidget(this);
 }
 
 END_ROW_IMPLEMENTATION()
