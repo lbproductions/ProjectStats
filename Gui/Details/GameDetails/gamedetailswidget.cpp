@@ -12,19 +12,14 @@ using namespace Gui::Details;
 
 GameDetailsWidget::GameDetailsWidget(Database::Game* game, QWidget *parent) :
     DetailsWidget(game,parent),
-    ui(new Ui::GameWidget)
+    ui(new Ui::GameWidget),
+    m_game(game),
+    m_placesComboBox(new Misc::PlacesComboBox(this))
 {
     ui->setupUi(this);
-
-    m_mayBeEditable = true;
-
-    m_game = game;
-
-    ui->formLayout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
-
-    m_placesComboBox = new Misc::PlacesComboBox(this);
     ui->horizontalLayoutResidence->addWidget(m_placesComboBox);
 
+    m_mayBeEditable = true;
     setEditable(false);
 
     connect(m_placesComboBox,SIGNAL(currentIndexChanged(Database::Place*const,Database::Place*const)),
@@ -39,6 +34,7 @@ void GameDetailsWidget::readData(){
     {
         m_placesComboBox->setCurrentPlace(m_game->site->value()->id());
     }
+
     ui->textEditComment->setText(m_game->comment->value());
 }
 
@@ -47,7 +43,6 @@ void GameDetailsWidget::connectToAttributes(){
     m_game->length->futureWatcher()->connectTo(ui->labelLengthValue);
     m_game->site->futureWatcher()->connectTo(ui->labelResidenceValue);
     m_game->type->futureWatcher()->connectTo(ui->labelTypeValue);
-
     m_game->name->futureWatcher()->connectTo(ui->lineEditName);
 }
 
@@ -96,6 +91,7 @@ void GameDetailsWidget::on_textEditComment_textChanged()
 void GameDetailsWidget::on_lineEditName_editingFinished()
 {
     Q_ASSERT(!m_game.isNull());
+
     m_game->name->setValue(ui->lineEditName->text());
     readData();
 }
