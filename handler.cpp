@@ -76,7 +76,7 @@ Handler::~Handler()
     }
 }
 
-Handler* const Handler::getInstance(){
+Handler* const Handler::getInstance() {
     return qobject_cast<Handler*>(QApplication::instance());
 }
 
