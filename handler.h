@@ -131,8 +131,7 @@ private:
 Q_DECLARE_METATYPE(QPointer<Database::Player>)
 Q_DECLARE_METATYPE(QPointer<Database::Round>)
 Q_DECLARE_METATYPE(QPointer<Database::Game>)
-Q_DECLARE_METATYPE(Database::ParentCategorie*)
-Q_DECLARE_METATYPE(Database::ChildCategorie*)
+Q_DECLARE_METATYPE(QPointer<Database::ParentCategorie>)
 Q_DECLARE_METATYPE(QPair<Database::Player* COMMA Database::Player*>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::LiveGame* COMMA double>)
 Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA bool>)
@@ -145,7 +144,6 @@ Q_DECLARE_METATYPE(Database::AttributeHash<int COMMA int>)
 Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA Gui::Details::AbstractPlayerStatsWidget*>)
 Q_DECLARE_METATYPE(Database::AttributeList<int>)
 Q_DECLARE_METATYPE(Database::AttributeList<QString>)
-Q_DECLARE_METATYPE(Database::AttributeList<Database::ChildCategorie*>)
 
 
 #endif // HANDLER_H

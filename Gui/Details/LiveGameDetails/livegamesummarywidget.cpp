@@ -43,11 +43,13 @@ LiveGameSummaryWidget::LiveGameSummaryWidget(Database::LiveGame* game, QWidget *
         if (!game->drinks->value().isEmpty()){
             QGridLayout* layout = new QGridLayout();
             for(int i = 0; i<m_livegame->playersSortedByAlcPegel->value().size();i++){
-                QLabel* avatar = new QLabel(this);
-                avatar->setPixmap(QPixmap(m_livegame->playersSortedByAlcPegel->value(i)->avatarPath->value()).scaled(40,45,Qt::KeepAspectRatio,Qt::SmoothTransformation));
-                layout->addWidget(avatar,i,0);
-                QLabel* label = new QLabel(m_livegame->playersSortedByAlcPegel->value(i)->name->value() + " (" + QString::number(m_livegame->playersSortedByAlcPegel->value(i)->alcPegel->value(m_livegame)) + ")");
-                layout->addWidget(label,i,1);
+                if(m_livegame->playersSortedByAlcPegel->value(i)->alcPegel->value(m_livegame) > 0.0){
+                    QLabel* avatar = new QLabel(this);
+                    avatar->setPixmap(QPixmap(m_livegame->playersSortedByAlcPegel->value(i)->avatarPath->value()).scaled(40,45,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+                    layout->addWidget(avatar,i,0);
+                    QLabel* label = new QLabel(m_livegame->playersSortedByAlcPegel->value(i)->name->value() + " (" + QString::number(m_livegame->playersSortedByAlcPegel->value(i)->alcPegel->value(m_livegame)) + ")");
+                    layout->addWidget(label,i,1);
+                }
             }
 
             drinklayout->addLayout(layout,1,1);
@@ -55,33 +57,6 @@ LiveGameSummaryWidget::LiveGameSummaryWidget(Database::LiveGame* game, QWidget *
         else{
             drinklayout->addWidget(new QLabel("-"),1,1);
         }
-
-        /*
-    drinklayout->addWidget(new QLabel(tr("Most drinks:")),2,0);
-    if(m_livegame->drinks(m_mostdrinks.at(0).first).size() > 0){
-        QGridLayout* layout = new QGridLayout();
-        for(int i = 0; i<m_mostdrinks.size();i++){
-            if (m_livegame->drinks(m_mostdrinks.at(i).first).size() == m_livegame->drinks(m_mostdrinks.at(0).first).size()){
-                QLabel* avatar = new QLabel(this);
-                if(m_mostdrinks.at(i).first->avatarFilePath() != ""){
-                    avatar->setPixmap(m_mostdrinks.at(i).first->avatar().scaled(40,45,Qt::KeepAspectRatio,Qt::SmoothTransformation));
-                }
-                else{
-                    QPixmap pixmap;
-                    pixmap.load(":/graphics/images/player");
-                    avatar->setPixmap(pixmap.scaled(40,45,Qt::KeepAspectRatio,Qt::SmoothTransformation));
-                }
-                layout->addWidget(avatar,i,0);
-                QLabel* label = new QLabel(m_mostdrinks.at(i).first->name() + " (" + QString::number(m_livegame->drinks(m_mostdrinks.at(i).first).size()) + ")");
-                layout->addWidget(label,i,1);
-            }
-        }
-        drinklayout->addLayout(layout,2,1);
-    }
-    else{
-        drinklayout->addWidget(new QLabel("-"),2,1);
-    }
-    */
 
         drinkwidget->setLayout(drinklayout);
         ui->tabWidget->addTab(drinkwidget,tr("Drinks"));

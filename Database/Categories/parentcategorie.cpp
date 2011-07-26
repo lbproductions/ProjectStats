@@ -3,12 +3,15 @@
 #include "../categorie.h"
 #include "childcategorie.h"
 
-using namespace Database;
 
-ParentCategorie::ParentCategorie(int id, Categories *table) :
-    Categorie(id,table)
+START_ROW_IMPLEMENTATION(ParentCategorie, Categorie, Categorie)
 {
     IMPLEMENT_LISTATTRIBUTE(ChildCategorie*,ParentCategorie,childCategories,tr("ChildCategories"))
+}
+
+QString ParentCategorie::mimeType() const
+{
+    return "application/projectstats.parentCategorie";
 }
 
 AttributeList<ChildCategorie*> ParentCategorie::calculate_childCategories()
@@ -35,3 +38,5 @@ AttributeList<ChildCategorie*> ParentCategorie::calculate_childCategories()
     return list;
     */
 }
+
+END_ROW_IMPLEMENTATION()

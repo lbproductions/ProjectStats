@@ -7,10 +7,7 @@
 #include <QStringList>
 #include <QDebug>
 
-using namespace Database;
-
-FolderCategorie::FolderCategorie(int id, Categories *table) :
-    ChildCategorie(id,table)
+START_ROW_IMPLEMENTATION(FolderCategorie, Categorie, ChildCategorie)
 {
     IMPLEMENT_LISTATTRIBUTE(int,FolderCategorie,rows,tr("Rows"))
 }
@@ -24,6 +21,11 @@ AttributeList<int> FolderCategorie::calculate_rows()
         }
     }
     return list;
+}
+
+QString FolderCategorie::mimeType() const
+{
+    return "application/projectstats.folderCategorie";
 }
 
 void FolderCategorie::insertRow(Row *row)
@@ -71,3 +73,5 @@ bool FolderCategorie::acceptMimeTypes(const QStringList &mimeTypes)
 void FolderCategorie::dropMimeData(const QMimeData */*data*/)
 {
 }
+
+END_ROW_IMPLEMENTATION()

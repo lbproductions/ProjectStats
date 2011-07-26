@@ -11,6 +11,7 @@
 #include "Categories/playersfoldercategorie.h"
 #include "Categories/drinksfoldercategorie.h"
 #include "Categories/placesfoldercategorie.h"
+#include "Categories/leaguefoldercategorie.h"
 
 START_TABLE_IMPLEMENTATION(Categorie)
 QPointer<Categorie> Categories::createRowInstance(int id)
@@ -65,7 +66,7 @@ QPointer<Categorie> Categories::createRowInstance(int id)
                 c = new PlacesFolderCategorie(categorieId,this);
                 break;
             case ChildCategorie::LeagueCategorieContentType:
-                //c = new LeagueFolderCategorie(categorieId,this);
+                c = new LeagueFolderCategorie(categorieId,this);
                 break;
             }
             break;

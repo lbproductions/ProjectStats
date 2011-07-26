@@ -33,6 +33,8 @@ GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
         m_game->playersSortedByPlacement->listFutureWatcher()->connectTo(name,m_game->playersSortedByPlacement->value().at(i));
         font = name->font();
         font.setBold(true);
+        font.setPointSize(10);
+        name->setFont(font);
         m_labelList.append(name);
 
         switch(m_game->placement->value(m_game->playersSortedByPlacement->value().at(i)))

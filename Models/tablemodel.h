@@ -37,6 +37,7 @@ class TableModel : public TableModelBase
 {
 public:
     TableModel(Owner *parent);
+    TableModel(QList<RowType*> data, Owner *parent);
 
     QStringList mimeTypes() const;
     QMimeData *mimeData(const QModelIndexList &indexes) const;
@@ -59,6 +60,23 @@ private:
     QList<RowType*> m_data;
     Owner *m_owner;
 };
+
+template<class RowType, class Owner>
+TableModel<RowType, Owner>::TableModel(QList<RowType*> data, Owner *parent) :
+    TableModelBase(parent),
+    m_data(data),
+    m_owner(parent)
+{
+    this->setSupportedDragActions(Qt::CopyAction);
+
+    foreach(Database::AttributeOwner *owner, parent->rows()->value())
+    {
+        foreach(Database::AttributeBase *attribute, owner->attributes())
+        {
+            connect(attribute,SIGNAL(changed()),this,SLOT(on_attribute_changed()));
+        }
+    }
+}
 
 template<class RowType, class Owner>
 TableModel<RowType, Owner>::TableModel(Owner *parent) :
