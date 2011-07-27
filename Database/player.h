@@ -9,6 +9,7 @@
 #include "mappingattribute.h"
 
 #include <Database/Calculator/playercalculator.h>
+#include <Database/Doppelkopf/dokoplayerstats.h>
 
 #include <QDebug>
 
@@ -57,6 +58,12 @@ START_ROW_DECLARATION(Player, Row)
     Gui::Details::StatsWidget* statsWidget();
 
     Gui::Details::AbstractPlayerStatsWidget* typeStatsWidget(QString type);
+
+    DokoPlayerStats* dokoStats();
+
+private:
+
+    QPointer<DokoPlayerStats> m_dokoStats;
 
 
 END_ROW_DECLARATION(Player)

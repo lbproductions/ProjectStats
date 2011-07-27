@@ -98,10 +98,12 @@ void LiveGameGeneralOptionsWidget::setupWidget()
 
 QList<Database::Player*> LiveGameGeneralOptionsWidget::selectedPlayers()
 {
+    QListIterator<QListWidgetItem *> it(ui->listWidgetSelectedPlayers->selectedItems());
     QList<Database::Player*> list;
-    for(int i = 0; i < ui->listWidgetSelectedPlayers->count(); ++i)
+
+    while (it.hasNext())
     {
-        list.append(Database::Players::instance()->playerByName(ui->listWidgetSelectedPlayers->item(i)->text()));
+        list.append(Database::Players::instance()->playerByName(it.next()->text()));
     }
 
     return list;
@@ -153,10 +155,20 @@ void LiveGameGeneralOptionsWidget::on_comboBoxGameType_currentIndexChanged(int /
 
 void LiveGameGeneralOptionsWidget::on_pushButtonSelect_clicked()
 {
-    ui->listWidgetSelectedPlayers->addItem(ui->listWidgetAllPlayers->takeItem(ui->listWidgetAllPlayers->currentRow()));
+    QListIterator<QListWidgetItem *> it(ui->listWidgetAllPlayers->selectedItems());
+
+    while (it.hasNext())
+    {
+        ui->listWidgetSelectedPlayers->addItem(ui->listWidgetAllPlayers->takeItem(ui->listWidgetAllPlayers->row(it.next())));
+    }
 }
 
 void LiveGameGeneralOptionsWidget::on_pushButtonDeselect_clicked()
 {
-    ui->listWidgetAllPlayers->addItem(ui->listWidgetSelectedPlayers->takeItem(ui->listWidgetSelectedPlayers->currentRow()));
+    QListIterator<QListWidgetItem *> it(ui->listWidgetSelectedPlayers->selectedItems());
+
+    while (it.hasNext())
+    {
+        ui->listWidgetAllPlayers->addItem(ui->listWidgetSelectedPlayers->takeItem(ui->listWidgetSelectedPlayers->row(it.next())));
+    }
 }

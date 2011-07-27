@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QPointer>
+#include <QList>
+#include <QLabel>
+#include <QDebug>
 
 #include <Gui/Details/summarywidget.h>
 
@@ -17,32 +20,35 @@ namespace Database{
 namespace Gui
 {
 
-namespace Details
-{
+    namespace Details
+    {
 
-    class GameDetailsWidget;
+        class GameDetailsWidget;
 
-namespace GameDetails
-{
+        namespace GameDetails
+        {
 
-class GameSummaryWidget : public SummaryWidget
-{
-    Q_OBJECT
+            class GameSummaryWidget : public SummaryWidget
+            {
 
-public:
-    explicit GameSummaryWidget(Database::Game* game, QWidget *parent = 0);
-    ~GameSummaryWidget();
+                Q_OBJECT
 
-protected:
-    Ui::GameSummaryWidget *ui;
+                public:
+                    explicit GameSummaryWidget(Database::Game* game, QWidget *parent = 0);
+                    ~GameSummaryWidget();
 
-    QPointer<Database::Game> m_game;
+                protected:
+                    Ui::GameSummaryWidget *ui;
+                    QPointer<Database::Game> m_game;
+                    Gui::Details::GameDetailsWidget* m_widget;
+                    QList<QLabel *> m_labelList;
 
-    void connectToAttributes();
+            };
 
+        }
 
-};
+    }
 
-}}}
+}
 
 #endif // DOKOLIVEGAMESUMMARYWIDGET_H

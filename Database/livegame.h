@@ -23,8 +23,10 @@ START_ROW_DECLARATION(LiveGame, Game)
     LiveGame(QString type);
 
     DECLARE_LISTATTRIBUTE_IN_CALC(LiveGameDrink*,LiveGame,LiveGameCalculator,drinks)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Drink*,int,LiveGame,LiveGameCalculator,drinkCount)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,AttributeList<LiveGameDrink*>,LiveGame,LiveGameCalculator,drinksPerPlayer)
+    DECLARE_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,playersSortedByAlcPegel)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,rounds)
     DECLARE_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,roundCount)
@@ -47,6 +49,8 @@ START_ROW_DECLARATION(LiveGame, Game)
     void finishGame();
 
     Round* startNextRound();
+
+    Gui::Details::SummaryWidget* summaryWidget();
 
 private:
     virtual Round *createRound();

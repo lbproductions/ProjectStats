@@ -6,13 +6,9 @@
 
 class QMimeData;
 
-namespace Database
-{
+START_ROW_DECLARATION(FolderCategorie, ChildCategorie)
+    DECLARE_ROW_CONSTRUCTORS(FolderCategorie, ChildCategorie)
 
-class FolderCategorie : public ChildCategorie
-{
-    Q_OBJECT
-public:
     virtual bool acceptMimeTypes(const QStringList &mimeTypes);
     virtual void dropMimeData(const QMimeData *data);
 
@@ -26,9 +22,7 @@ protected:
     void insertRow(Row *row);
     void removeRow(Row *row);
 
-    FolderCategorie(int id, Categories *table);
-};
+END_ROW_DECLARATION(FolderCategorie)
 
-}
 
 #endif // FOLDERCATEGORIE_H

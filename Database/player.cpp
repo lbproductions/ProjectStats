@@ -10,6 +10,7 @@
 #include <Gui/Details/PlayerDetails/playerdetailswidget.h>
 #include <Gui/Details/PlayerDetails/playerstatswidget.h>
 #include <Gui/Details/PlayerDetails/abstractplayerstatswidget.h>
+#include <Gui/Details/PlayerDetails/dokoplayerstatswidget.h>
 
 START_TABLE_IMPLEMENTATION(Player)
 
@@ -94,7 +95,17 @@ Gui::Details::StatsWidget* Player::statsWidget(){
 }
 
 Gui::Details::AbstractPlayerStatsWidget* Player::typeStatsWidget(QString type){
+    if(type == "Doppelkopf"){
+        return new Gui::Details::DokoPlayerStatsWidget(this);
+    }
     return new Gui::Details::AbstractPlayerStatsWidget(this,type);
+}
+
+DokoPlayerStats* Player::dokoStats(){
+    if(m_dokoStats.isNull()){
+        m_dokoStats = new DokoPlayerStats(this);
+    }
+    return m_dokoStats;
 }
 
 END_ROW_IMPLEMENTATION()

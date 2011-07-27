@@ -107,6 +107,9 @@
         <file alias="broncemedal">graphics/icons/general/Medals/broncemedal.png</file>
         <file alias="goldmedal">graphics/icons/general/Medals/goldmedal.png</file>
         <file alias="silvermedal">graphics/icons/general/Medals/silvermedal.png</file>
+        <file alias="broncemedal-scaled">graphics/icons/general/Medals/broncemedal-scaled.png</file>
+        <file alias="goldmedal-scaled">graphics/icons/general/Medals/goldmedal-scaled.png</file>
+        <file alias="silvermedal-scaled">graphics/icons/general/Medals/silvermedal-scaled.png</file>
     </qresource>
     <qresource prefix="/graphics/styles/mac/toolbar/fullscreen">
         <file alias="toolbar_background_fullscreen">graphics/styles/mac/toolbar/fullscreen/fullscreen_toolbar_background.png</file>

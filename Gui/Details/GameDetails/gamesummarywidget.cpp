@@ -5,61 +5,82 @@
 #include <Database/player.h>
 #include <Gui/Details/GameDetails/gamedetailswidget.h>
 
-#include <QGridLayout>
-#include <QLabel>
-#include <QDebug>
-
 using namespace Gui::Details::GameDetails;
 
 GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
     SummaryWidget(parent),
-    ui(new Ui::GameSummaryWidget)
+    ui(new Ui::GameSummaryWidget),
+    m_game(game),
+    m_widget(new Gui::Details::GameDetailsWidget(m_game, this))
 {
     ui->setupUi(this);
+    ui->horizontalLayout->insertWidget(0, m_widget);
 
-    m_game = game;
+    int size = m_game->playersSortedByPlacement->value().size();
+    QLabel* position;
+    QLabel* name;
+    QFont font;
+    QPixmap pixmap;
 
-    Gui::Details::GameDetailsWidget* widget = new Gui::Details::GameDetailsWidget(m_game,this);
-    ui->verticalLayoutGameWidget->addWidget(widget);
-
-    QGridLayout* layout = new QGridLayout();
-    for(int i = 0; i<m_game->playersSortedByPlacement->value().size();i++){
-        QLabel* position = new QLabel(this);
+    for(int i = 0; i < size; i++) {
+        position = new QLabel(this);
         position->setAlignment(Qt::AlignCenter);
-        m_game->placement->mappingFutureWatcher()->connectTo(position,m_game->playersSortedByPlacement->value().at(i));
-        QLabel* name = new QLabel(this);
+        m_game->placement->mappingFutureWatcher()->connectTo(position, m_game->playersSortedByPlacement->value().at(i));
+        m_labelList.append(position);
+
+        name = new QLabel(this);
         name->setAlignment(Qt::AlignCenter);
+
         m_game->playersSortedByPlacement->value().at(i)->name->futureWatcher()->connectTo(name);
-        QFont font = name->font();
+        font = name->font();
+
         font.setBold(true);
-        font.setPointSize(14);
-        QPixmap pixmap;
-        switch(m_game->placement->value(m_game->playersSortedByPlacement->value().at(i))){
-        case 1:
-            pixmap.load(":/graphics/icons/general/medals/goldmedal");
-            position->setPixmap(pixmap.scaled(50,50));
-            name->setFont(font);
-            break;
-        case 2:
-            pixmap.load(":/graphics/icons/general/medals/silvermedal");
-            position->setPixmap(pixmap.scaled(50,50));
-            name->setFont(font);
-            break;
-        case 3:
-            pixmap.load(":/graphics/icons/general/medals/broncemedal");
-            position->setPixmap(pixmap.scaled(50,50));
-            name->setFont(font);
-            break;
-        default:
-            break;
+        font.setPointSize(10);
+        name->setFont(font);
+        m_labelList.append(name);
+
+        switch(m_game->placement->value(m_game->playersSortedByPlacement->value().at(i)))
+        {
+            case 1:
+                pixmap.load(":/graphics/icons/general/medals/goldmedal-scaled");
+                position->setPixmap(pixmap);
+                font.setPointSize(24);
+                name->setFont(font);
+                break;
+
+            case 2:
+                pixmap.load(":/graphics/icons/general/medals/silvermedal-scaled");
+                position->setPixmap(pixmap);
+                font.setPointSize(16);
+                name->setFont(font);
+                break;
+
+            case 3:
+                pixmap.load(":/graphics/icons/general/medals/broncemedal-scaled");
+                position->setPixmap(pixmap);
+                font.setPointSize(10);
+                name->setFont(font);
+                break;
+
+            default:
+                break;
+
         }
-        layout->addWidget(position,i,0);
-        layout->addWidget(name,i,1);
+
+        ui->gridLayout->addWidget(position, i, 0);
+        ui->gridLayout->addWidget(name, i, 1);
     }
-    ui->tab->setLayout(layout);
 }
 
 GameSummaryWidget::~GameSummaryWidget()
 {
+    QListIterator<QLabel *> it(m_labelList);
+
+    while (it.hasNext())
+    {
+        delete it.next();
+    }
+
+    delete m_widget;
     delete ui;
 }

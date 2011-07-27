@@ -11,8 +11,7 @@
 
 #include <Database/row.h>
 
-#include <Models/gamesmodel.h>
-#include <Models/playersmodel.h>
+#include <Models/tablemodel.h>
 
 #include <QHBoxLayout>
 #include <QScrollArea>

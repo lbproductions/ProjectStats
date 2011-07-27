@@ -32,6 +32,7 @@
 #include <Database/Doppelkopf/schmeisserei.h>
 #include <Database/Categories/childcategorie.h>
 #include <Database/Categories/parentcategorie.h>
+#include <Database/livegamedrink.h>
 
 Handler::Handler(int argc, char *argv[])
     : QApplication(argc,argv),
@@ -75,7 +76,7 @@ Handler::~Handler()
     }
 }
 
-Handler* const Handler::getInstance(){
+Handler* const Handler::getInstance() {
     return qobject_cast<Handler*>(QApplication::instance());
 }
 

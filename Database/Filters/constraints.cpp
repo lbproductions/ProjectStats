@@ -18,6 +18,8 @@ bool Constraints::appliesTo(const QVariant &value, Database::Constraints::Constr
         return value.toDate() > parameter.toDate();
     case DateIsEqual:
         return value.toDate() == parameter.toDate();
+    case StringIsEqual:
+        return value.toString() == parameter.toString();
     default:
         return false;
     }

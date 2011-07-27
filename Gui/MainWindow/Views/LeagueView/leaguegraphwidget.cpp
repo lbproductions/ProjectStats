@@ -2,7 +2,7 @@
 
 #include <Gui/Misc/splitter.h>
 #include <Database/Categories/leaguefoldercategorie.h>
-#include <Gui/Graphs/playerplacementgraphview.h>
+//#include <Gui/Graphs/playerplacementgraphview.h>
 
 #include <QHBoxLayout>
 #include <QScrollArea>
@@ -44,8 +44,10 @@ LeagueGraphWidget::LeagueGraphWidget(Database::LeagueFolderCategorie *categorie,
 }
 
 void LeagueGraphWidget::graphClicked(QTreeWidgetItem* item){
+    /*
     if (item->text(0) == "PlayerPlacement"){
         m_graphview = new Gui::Graphs::PlayerPlacementGraphView(m_categorie->players(),m_categorie->games());
         m_scrollAreaDetails->setWidget(m_graphview);
     }
+    */
 }

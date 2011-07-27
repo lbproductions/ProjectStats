@@ -17,56 +17,58 @@ namespace Ui {
 namespace Gui
 {
 
-namespace Misc
-{
-    class PlacesComboBox;
-}
+    namespace Misc
+    {
+        class PlacesComboBox;
+    }
 
-namespace Wizards
-{
+    namespace Wizards
+    {
 
-namespace NewGame
-{
+        namespace NewGame
+        {
 
-class LiveGameGeneralOptionsWidget : public QWizardPage
-{
-    Q_OBJECT
+            class LiveGameGeneralOptionsWidget : public QWizardPage
+            {
+                Q_OBJECT
 
-public:
-    explicit LiveGameGeneralOptionsWidget(QWidget *parent = 0);
-    ~LiveGameGeneralOptionsWidget();
+                public:
+                    explicit LiveGameGeneralOptionsWidget(QWidget *parent = 0);
+                    ~LiveGameGeneralOptionsWidget();
 
-    void setupWidget();
+                    void setupWidget();
 
-    Database::LiveGame* createLiveGame();
+                    Database::LiveGame* createLiveGame();
 
-    QString selectedType();
+                    QString selectedType();
 
-    int selectedPlayersCount();
+                    int selectedPlayersCount();
 
-    int nextId() const;
+                    int nextId() const;
 
-    bool isComplete() const;
+                    bool isComplete() const;
 
-    void saveOptions() const;
+                    void saveOptions() const;
 
-    QList<Database::Player*> selectedPlayers();
+                    QList<Database::Player*> selectedPlayers();
 
-    Database::Place *selectedPlace();
+                    Database::Place *selectedPlace();
 
-private:
-    Ui::LiveGameGeneralOptionsWidget *ui;
+                private:
+                    Ui::LiveGameGeneralOptionsWidget *ui;
+                    Gui::Misc::PlacesComboBox* placesbox;
 
-    Gui::Misc::PlacesComboBox* placesbox;
+                private slots:
+                    void on_pushButtonDeselect_clicked();
+                    void on_pushButtonSelect_clicked();
+                    void on_comboBoxGameType_currentIndexChanged(int index);
 
-private slots:
-    void on_pushButtonDeselect_clicked();
-    void on_pushButtonSelect_clicked();
-    void on_comboBoxGameType_currentIndexChanged(int index);
-};
+            };
 
-}
-}
+        }
+
+    }
+
 }
 
 #endif // LIVEGAMEGENERALOPTIONSWIDGET_H

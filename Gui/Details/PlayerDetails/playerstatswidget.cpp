@@ -15,9 +15,6 @@ PlayerStatsWidget::PlayerStatsWidget(Database::Player* player, QWidget *parent) 
 {
     ui->setupUi(this);
 
-//    foreach(Stats::Players::AbstractPlayerStats* stats, player->stats().values()){
-//	ui->tabWidget->addTab(stats->statsWidget(),stats->statsWidget()->title());
-//    }
 
     foreach(QString s, Database::Games::instance()->types->value()){
         ui->tabWidget->addTab(player->typeStatsWidget(s),s);

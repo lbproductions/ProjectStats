@@ -158,7 +158,18 @@ SOURCES += main.cpp\
     Gui/Details/LiveGameDetails/abstractlivegamewidget.cpp \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.cpp \
     attributevariant.cpp \
-    Database/taskscheduler.cpp
+    Database/taskscheduler.cpp \
+    Database/Doppelkopf/dokoplayerstats.cpp \
+    Gui/Details/PlayerDetails/dokoplayerstatswidget.cpp \
+    Gui/Details/LiveGameDetails/livegamesummarywidget.cpp \
+    Database/Categories/leaguefoldercategorie.cpp \
+    Database/Filters/leaguefilter.cpp \
+    Database/Filters/filter.cpp \
+    Database/Filters/enoughleagueplayersrule.cpp \
+    Gui/MainWindow/Views/LeagueView/leagueview.cpp \
+    Gui/MainWindow/Views/LeagueView/leaguestatswidget.cpp \
+    Gui/MainWindow/Views/LeagueView/leagueoverviewwidget.cpp \
+    Gui/MainWindow/Views/LeagueView/leaguegraphwidget.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -331,7 +342,18 @@ HEADERS  += \
     Gui/Details/LiveGameDetails/abstractlivegamewidget.h \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.h \
     attributevariant.h \
-    Database/taskscheduler.h
+    Database/taskscheduler.h \
+    Database/Doppelkopf/dokoplayerstats.h \
+    Gui/Details/PlayerDetails/dokoplayerstatswidget.h \
+    Gui/Details/LiveGameDetails/livegamesummarywidget.h \
+    Database/Categories/leaguefoldercategorie.h \
+    Database/Filters/leaguefilter.h \
+    Database/Filters/filter.h \
+    Database/Filters/enoughleagueplayersrule.h \
+    Gui/MainWindow/Views/LeagueView/leagueview.h \
+    Gui/MainWindow/Views/LeagueView/leaguestatswidget.h \
+    Gui/MainWindow/Views/LeagueView/leagueoverviewwidget.h \
+    Gui/MainWindow/Views/LeagueView/leaguegraphwidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -362,7 +384,8 @@ FORMS    += \
     Gui/Details/LiveGameDetails/adddrinkwidget.ui \
     Gui/Details/PlayerDetails/playerdetailswidget.ui \
     Gui/Details/PlayerDetails/playerstatswidget.ui \
-    Gui/Details/PlayerDetails/abstractplayerstatswidget.ui
+    Gui/Details/PlayerDetails/abstractplayerstatswidget.ui \
+    Gui/Details/PlayerDetails/dokoplayerstatswidget.ui
 
 mac {
     HEADERS += cocoainitializer.h
@@ -381,5 +404,3 @@ OTHER_FILES += \
 
 RESOURCES += \
     Ressources/Ressources.qrc
-
-

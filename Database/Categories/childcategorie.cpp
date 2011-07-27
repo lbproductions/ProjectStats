@@ -7,13 +7,17 @@
 
 using namespace Database;
 
-ChildCategorie::ChildCategorie(int id, Categories *table) :
-    Categorie(id,table)
+START_ROW_IMPLEMENTATION(ChildCategorie, Categorie, Categorie)
 {
-    IMPLEMENT_ATTRIBUTE(ParentCategorie*,ChildCategorie,parentCategorie,tr("ParentCategorie"))
+    IMPLEMENT_ATTRIBUTE(QPointer<ParentCategorie>,ChildCategorie,parentCategorie,tr("ParentCategorie"))
 }
 
-ParentCategorie *ChildCategorie::calculate_parentCategorie()
+QString ChildCategorie::mimeType() const
+{
+    return "application/projectstats.childCategorie";
+}
+
+QPointer<ParentCategorie> ChildCategorie::calculate_parentCategorie()
 {        
         int id = -1;
         for(int i = 0; i<Categories::instance()->allRows().size();i++){
@@ -21,8 +25,7 @@ ParentCategorie *ChildCategorie::calculate_parentCategorie()
                 id = Categories::instance()->allRows().at(i)->id();
             }
         }
-
-        return qobject_cast<ParentCategorie*>(Categories::instance()->rowById(id));
+        return (ParentCategorie*)Categories::instance()->rowById(id).data();
 
 }
 
@@ -35,3 +38,5 @@ Gui::MainWindow::Views::View *ChildCategorie::view()
 {
     return 0;
 }
+
+END_ROW_IMPLEMENTATION()

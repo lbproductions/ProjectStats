@@ -15,16 +15,11 @@ namespace Gui
     }
 }
 
-namespace Database
-{
-
 class Categories;
 class ParentCategorie;
 
-class ChildCategorie : public Categorie
-{
-    Q_OBJECT
-public:
+START_ROW_DECLARATION(ChildCategorie, Categorie)
+    DECLARE_ROW_CONSTRUCTORS(ChildCategorie, Categorie)
     /*!
       Gibt an, welchen Typ diese Kategorie hat.
       */
@@ -36,12 +31,10 @@ public:
         LeagueCategorieContentType //!< Die Kategorie enthält Places
     };
 
-    ChildCategorie(int id, Categories *table);
-
     /*!
       \return Der Vater dieser Kategorie, sprich die Überschrift unter der sie in der Sidebar eingefügt ist.
       */
-    DECLARE_ATTRIBUTE(ParentCategorie*,ChildCategorie,parentCategorie)
+    DECLARE_ATTRIBUTE(QPointer<ParentCategorie>,ChildCategorie,parentCategorie)
 
     /*!
       \return Das TableModel, welches alle Elemente, die in dieser Kategorie enhalten sind, beschreibt.
@@ -54,7 +47,5 @@ friend class ParentCategorie;
 protected:
     QPointer<Gui::MainWindow::Views::View> m_view;
 
-};
-
-}
+END_ROW_DECLARATION(ChildCategorie)
 #endif // CHILDCATEGORIE_H

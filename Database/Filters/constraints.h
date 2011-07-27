@@ -11,7 +11,8 @@ public:
     enum Constraint {
         DateIsBefore,
         DateIsAfter,
-        DateIsEqual
+        DateIsEqual,
+        StringIsEqual
     };
 
     Constraints();

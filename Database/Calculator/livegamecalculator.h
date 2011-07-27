@@ -18,6 +18,7 @@ namespace Database {
 class LiveGame;
 class LiveGameDrink;
 class Player;
+class Drink;
 
 class LiveGameCalculator : public GameCalculator
 {
@@ -33,7 +34,11 @@ public:
 
     AttributeList<LiveGameDrink*> calculate_drinks();
 
+    AttributeHash<Drink*,int> calculate_drinkCount();
+
     AttributeHash<Player*, AttributeList<LiveGameDrink*> > calculate_drinksPerPlayer();
+
+    AttributeList<Player*> calculate_playersSortedByAlcPegel();
 
     AttributeList<Round*> calculate_rounds();
 
@@ -73,5 +78,7 @@ protected:
 bool sortPlayersByPosition(QPair<Database::Player*,Database::Game*> pair1, QPair<Database::Player*,Database::Game*> pair2);
 
 bool sortPlayersByPlacement(QPair<Database::Player*,Database::Game*> pair1, QPair<Database::Player*,Database::Game*> pair2);
+
+bool sortPlayersByAlcPegel(QPair<Database::Player*,Database::LiveGame*> pair1, QPair<Database::Player*,Database::LiveGame*> pair2);
 
 #endif // DATABASE_LIVEGAMECALCULATOR_H
