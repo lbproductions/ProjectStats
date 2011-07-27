@@ -54,12 +54,6 @@ BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, Database::LiveGame*
 
 void BeerPlayerWidget::update()
 {
-    //FAIL:
-    m_livegame->drinks->recalculate();
-    m_livegame->drinks->futureWatcher()->futureWatcher()->waitForFinished();
-    m_livegame->drinksPerPlayer->recalculate();
-    m_livegame->drinksPerPlayer->futureWatcher()->futureWatcher()->waitForFinished();
-
     int drinks = m_livegame->drinksPerPlayer->value(m_player).size() - 1;
 
     if(drinks >= 0)

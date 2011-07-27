@@ -12,7 +12,8 @@
 #include <QDateTime>
 #include <QObject>
 
-AttributeVariant::AttributeVariant()
+AttributeVariant::AttributeVariant() :
+    QVariant()
 {
 }
 

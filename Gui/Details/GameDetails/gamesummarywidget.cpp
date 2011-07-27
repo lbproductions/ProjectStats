@@ -29,7 +29,7 @@ GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
         m_game->placement->mappingFutureWatcher()->connectTo(position,m_game->playersSortedByPlacement->value().at(i));
         QLabel* name = new QLabel(this);
         name->setAlignment(Qt::AlignCenter);
-        m_game->playersSortedByPlacement->listFutureWatcher()->connectTo(name,m_game->playersSortedByPlacement->value().at(i));
+        m_game->playersSortedByPlacement->value().at(i)->name->futureWatcher()->connectTo(name);
         QFont font = name->font();
         font.setBold(true);
         font.setPointSize(14);

@@ -1,6 +1,7 @@
 #ifndef DATABASE_MAPPINGATTRIBUTE_H
 #define DATABASE_MAPPINGATTRIBUTE_H
 
+#include "attribute.h"
 #include "attributehash.h"
 #include "handler.h"
 
@@ -15,14 +16,10 @@ class Row;
 template<class T, class R, class C>
 class Attribute;
 
-template<class T, class R, class C>
-class AttributeFutureWatcher;
-
 template<class K, class V, class R, class C>
-class MappingAttributeFutureWatcher : public AttributeFutureWatcher<AttributeHash<K,V>,R,C>
+class MappingAttributeFutureWatcher : public AttributeFutureWatcher
 {
 public:
-
     MappingAttributeFutureWatcher(Attribute<AttributeHash<K,V>,R,C>* parent);
 
     /*!
@@ -38,10 +35,7 @@ public:
     void updateKey(QVariant variant);
 
     QMap<QLabel*,K> m_labels; //!< Speichert alle Labels, die mit dem Attribut verbunden wurden, sowie dessen Key.
-
-
 };
-
 
 template<class K, class V, class R, class C>
 class MappingAttribute : public Attribute<AttributeHash<K,V>,R,C>
@@ -90,7 +84,7 @@ void MappingAttribute<K,V,R,C>::setValue(V value){
 
 template<class K, class V, class R, class C>
 void MappingAttribute<K,V,R,C>::setValue(K key, V value){
-    Attribute<AttributeHash<K,V>,R,C>::m_lock.lockForWrite();
+    Attribute<AttributeHash<K,V>,R,C>::m_lock.lock();
     QVariant v1;
     v1.setValue(Attribute<AttributeHash<K,V>,R,C>::m_value.value(key));
     QVariant v2;
@@ -112,8 +106,8 @@ const V MappingAttribute<K,V,R,C>::value(K key){
 }
 
 template<class K, class V, class R, class C>
-AttributeHash<K,V>& MappingAttribute<K,V,R,C>::value(){
-
+AttributeHash<K,V>& MappingAttribute<K,V,R,C>::value()
+{
      disconnect(&this->m_value);
      Attribute<AttributeHash<K,V>,R,C>::value();
      connect(&this->m_value,SIGNAL(changed()),this,SIGNAL(changed()));
@@ -122,16 +116,16 @@ AttributeHash<K,V>& MappingAttribute<K,V,R,C>::value(){
 
 template<class K, class V, class R, class C>
 MappingAttributeFutureWatcher<K,V,R,C>::MappingAttributeFutureWatcher(Attribute<AttributeHash<K,V>,R,C>* parent):
-    AttributeFutureWatcher<AttributeHash<K,V>,R,C>(parent)
+    AttributeFutureWatcher(parent)
 {
 }
 
 template<class K, class V, class R, class C>
 void MappingAttributeFutureWatcher<K,V,R,C>::connectTo(QLabel* label, K key)
 {
-    MappingAttribute<K,V,R,C>* pointer = static_cast<MappingAttribute<K,V,R,C>*>(AttributeFutureWatcher<AttributeHash<K,V>,R,C>::m_attribute);
+    MappingAttribute<K,V,R,C>* pointer = static_cast<MappingAttribute<K,V,R,C>*>(AttributeFutureWatcher::m_attribute);
 
-    if(AttributeFutureWatcher<AttributeHash<K,V>,R,C>::isRunning())
+    if(pointer->isCalculating())
     {
         label->setText("Loading...");
     }
@@ -155,7 +149,7 @@ void MappingAttributeFutureWatcher<K,V,R,C>::connectTo(QLabel* label, K key)
 template<class K, class V, class R, class C>
 void MappingAttributeFutureWatcher<K,V,R,C>::updateKey(QVariant variant){
     K key = variant.value<K>();
-    MappingAttribute<K,V,R,C>* pointer = static_cast<MappingAttribute<K,V,R,C>*>(AttributeFutureWatcher<AttributeHash<K,V>,R,C>::m_attribute);
+    MappingAttribute<K,V,R,C>* pointer = static_cast<MappingAttribute<K,V,R,C>*>(AttributeFutureWatcher::m_attribute);
     AttributeVariant var;
     var.setValue(pointer->value(key));
     QVariant display = var.displayVariant();

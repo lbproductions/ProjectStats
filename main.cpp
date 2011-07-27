@@ -1,20 +1,7 @@
 #include <QtGui/QApplication>
 
-#include <Database/Filters/atomicrule.h>
-#include <Database/Filters/ruleconjunction.h>
-#include <Database/Filters/ruledisjunction.h>
-#include <Database/database.h>
-#include <Database/listattribute.h>
-#include <Database/Calculator/gamecalculator.h>
-#include <Database/game.h>
-
 #include <Logger/logger.h>
 #include <cocoainitializer.h>
-
-#include <QDebug>
-#include <QElapsedTimer>
-#include <QThread>
-
 #include <handler.h>
 
 int main(int argc, char *argv[])
@@ -42,7 +29,7 @@ int main(int argc, char *argv[])
 
     if(handler.showMainWindow())
     {
-	return handler.exec();
+        return handler.exec();
     }
     return 0;
 }

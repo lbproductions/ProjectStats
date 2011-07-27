@@ -18,7 +18,7 @@
 namespace Database {
 IMPLEMENT_SINGLETON( Games )
 Games::Games() :
-    Table<Game>(QString("Games"))
+    Table<Game>(QString("games"))
 {
     types = new ListAttribute<QString,Games, Games>("types",tr("Types"), this);
     types->setCalculationFunction(this,&Games::calculate_types);

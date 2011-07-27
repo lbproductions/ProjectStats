@@ -4,17 +4,17 @@
 #include <QObject>
 
 #include <QPointer>
-#include <QFuture>
-#include <QReadWriteLock>
-#include <QtConcurrentRun>
+#include <QMutex>
 #include <QVariant>
-#include <QFutureWatcher>
 #include <QWaitCondition>
-
+#include <QFuture>
+#include <QThreadPool>
 #include <QDebug>
+#include <QMutexLocker>
 
 #include <handler.h>
 #include "attributevariant.h"
+#include "taskscheduler.h"
 
 /*!
   Ruft auf dem Objekt \p object die Funktion \p ptrToMember auf.<br>
@@ -29,11 +29,23 @@ class QLineEdit;
 
 namespace Database {
 
+class Changeable : public QObject
+{
+    Q_OBJECT
+public:
+    explicit Changeable(QObject *parent = 0);
+
+    virtual QString toString();
+
+signals:
+    void changed();
+};
+
 class Player;
 
 class AttributeBase;
 
-class AttributeOwner : public QObject
+class AttributeOwner : public Changeable
 {
     Q_OBJECT
 public:
@@ -58,7 +70,7 @@ public:
 /*!
   In Qt ist es nicht möglich dass template-Klassen QObjects sind oder mit Hilfe des Q_OBJECT Macros über signals und slots verfügen. Aus diesem Grund haben wir diese Elternklasse, von der Attribute erben kann, die diese Funktionalitäten enthält und damit auch für seine Kindklasse bereitstellt.
   */
-class AttributeBase : public QObject
+class AttributeBase : public Changeable
 {
     Q_OBJECT
 public:
@@ -127,7 +139,7 @@ protected slots:
     /*!
       Berechnet den Wert des Attributs komplett neu.
       */
-    virtual void recalculate() = 0;
+    virtual void recalculateFromScratch() = 0;
 
     /*!
       Wird aufgerufen, falls sich Attribute ändern, von denen dieses Attribut abhängt.<br>
@@ -135,7 +147,7 @@ protected slots:
       Sonst wird zunächst die Updatefunktion nach einem neuen Wert gefragt.<br>
       Kann diese aus den gegebenen Änderungen der geänderten Abhängigkeit keinen neuen Wert berechnen, wird das Attribut komplett neu berechnet.
       */
-    virtual void update() = 0;
+    virtual void updateFromDependency() = 0;
 
     virtual void onChange();
 
@@ -164,8 +176,10 @@ protected:
     bool m_checkChange;
 };
 
-template<class T, class R, class C>
 class AttributeFutureWatcher;
+
+template<class AttributeType, class ValueType>
+class RecalculationTask;
 
 template<class RowType, class Owner>
 class TableModel;
@@ -216,33 +230,20 @@ public:
     AttributeVariant toVariant();
 
     QVariant displayVariant();
-
-protected:
-    /*!
-      Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
-      */
-    virtual void changeValue(const T &value);
-
-    /*!
-      Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
-      */
-    virtual void changeValue(const QVariant &value);
-
-public:
     /*!
       Startet im Hintergrund eine Neuberechnung des Attributs und
       gibt den AttributeFutureWatcher dieses Attributs zurück.
 
       \return der AttributeFutureWatcher dieses Attributs.
       */
-    AttributeFutureWatcher<T,R,C> *calculateASync();
+    AttributeFutureWatcher* calculateASync();
 
     /*!
       Gibt den AttributeFutureWatcher dieses Attributs zurück.
 
       \return der AttributeFutureWatcher dieses Attributs.
       */
-    AttributeFutureWatcher<T,R,C> *futureWatcher();
+    AttributeFutureWatcher* futureWatcher();
 
     /*!
       Setzt die Calculationfunction dieses Attributs auf \p calculateFuntion.<br>
@@ -291,10 +292,20 @@ public:
     /*!
       Berechnet den Wert des Attributs komplett neu.
       */
-    void recalculate();
+    void recalculateFromScratch();
 protected:
-    friend class AttributeFutureWatcher<T,R,C>;
     friend class TableModel<R, Table<R> >;
+    friend class RecalculationTask<Attribute<T,R,C>,T>;
+
+    /*!
+      Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
+      */
+    virtual void changeValue(const T &value);
+
+    /*!
+      Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
+      */
+    virtual void changeValue(const QVariant &value);
 
     /*!
       Wird aufgerufen, falls sich Attribute ändern, von denen dieses Attribut abhängt.<br>
@@ -302,8 +313,11 @@ protected:
       Sonst wird zunächst die Updatefunktion nach einem neuen Wert gefragt.<br>
       Kann diese aus den gegebenen Änderungen der geänderten Abhängigkeit keinen neuen Wert berechnen, wird das Attribut komplett neu berechnet.
       */
-    void update();
+    void updateFromDependency();
 
+    bool waitForCalculationOrGetLock();
+
+    void returnLock();
 
     /*!
       Ist eine Calculationfunction gesetzt, wird diese aufgerufen um den Wert des Attributs zu berechnen. Sonst wird ein leeres T() zurückgegeben.<br>
@@ -313,12 +327,18 @@ protected:
 
     bool m_cacheInitialized; //!< true, wenn der Cache den korrekten Wert enthält.
     T m_value; //!< Der Cache für den Wert des Attributs.
+    AttributeFutureWatcher* m_futureWatcher; //!< Der FutureWatcher dieser Klasse.
+
     C* m_calculator; //! Calculator für Calc-Funktion
     CalculateFunction m_calculateFunction; //!< Die Funktion zum (neu-)berechnen des Werts.
     UpdateFunction m_updateFunction; //!< Die Funktion zum Updaten des Attributs.
-    QReadWriteLock m_lock; //!< Ein Mutex um die Klasse Threadsicher zu machen.
-    AttributeFutureWatcher<T,R,C> *m_futureWatcher; //!< Der FutureWatcher dieser Klasse.
     QHash<QString,AttributeSpecificUpdateFunction> m_updateFunctions;
+
+    QMutex m_lock; //!< Ein Mutex um die Klasse Threadsicher zu machen.
+    QMutex m_calculatingMutex;
+    QMutex m_waitingMutex;
+    QWaitCondition m_waitCondition;
+    RecalculationTask<Attribute<T,R,C>, T>* m_currentTask;
 };
 
 //! Dieses Interface dient dazu, der template-Klasse AttributeFutureWatcher signals und slots, sowie ein Dasein als QObject zu ermöglichen.
@@ -326,11 +346,11 @@ protected:
   In Qt ist es nicht möglich dass template-Klassen QObjects sind oder mit Hilfe des Q_OBJECT Macros über signals und slots verfügen. Aus diesem Grund haben wir diese Elternklasse, von der AttributeFutureWatcher erben kann, die diese Funktionalitäten enthält und damit auch für seine Kindklasse bereitstellt.<br>
   Das "Interface" kümmert sich zudem um das Verbinden dieses FutureWatchers mit GUI Elementen.
   */
-class AttributeFutureWatcherBase : public QObject
+class AttributeFutureWatcher : public QObject
 {
     Q_OBJECT
 public:
-    explicit AttributeFutureWatcherBase();
+    explicit AttributeFutureWatcher(AttributeBase* attribute);
 
     /*!
       Verbindet diesen FutureWatcher mit dem Label \p label.<br>
@@ -350,112 +370,47 @@ signals:
 
       \param value Der neue Wert.
       */
-    void valueChanged(QString toString);
+    void valueChanged(QString value);
 
 protected slots:
-    /*!
-      Wird aufgerufen, wenn sich der Wert des Attributs ändert, oder die aktuelle QFuture zu Ende berechnet hat.<br>
-      Im ersten Fall wird einfach nur allen verbundenen GUI-Elementen die Änderung mitgeteilt.<br>
-      Im zweiten Fall wird der Wert des Attributs aktualisiert und die Änderung anschließend bekannt gegeben.
-      */
-    virtual void updateFromFutureWatcher() = 0;
-
-    virtual void updateFromAttribute() = 0;
-
     /*!
       Wird aufgerufen, wenn das Attribute signalisiert, dass es sich bald ändern wird.<br>
       Setzt alle verbundenen GUI-Elemente auf "Loading..."
       */
-    void on_attributeAboutToChange();
+    void on_attribute_aboutToChange();
 
-    /*!
-      Wird für das Update eines Values aus einer Map oder List benötigt, um das richtige Element und dessen verknüpfte Labels zu aktualisieren.
-      */
-    virtual void updateKey(QVariant variant);
-
-    /*!
-      \return true falls die aktuelle QFuture gerade rechnet.
-      */
-    virtual bool isRunning() = 0;
-
-    void check(QString a);
-
-private:
-
-    /*!
-      Der Wert des Attributs.
-      */
-    virtual QString toString() = 0;
-
-};
-
-//! Ein AttributeFutureWatcher beobachtet Änderungen seines Attributs und dessen QFutures.
-/*!
-  Die Klasse ist vor allem dafür zuständig die QFutures seines Attributs zu beobachten und falls eine davon einen Wert liefert, diesen dem Attribut mitzuteilen.<br>
-  Außerdem können sich GUI-Elemente mit dem FutureWatcher verbinden und so über zukünftige Änderungen informiert werden.
-  */
-template<class T, class R, class C>
-class AttributeFutureWatcher : public AttributeFutureWatcherBase
-{
-public:
-    /*!
-      Gibt den internen QFutureWatcher zurück. Dieser kann zum Beispiel verwendet werden um selber auf Änderungen per signal-slot zu lauschen, oder aber an die aktuelle QFuture zu gelangen.<br>
-      Die aktuelle QFuture muss jedoch nicht zwangsläufig auch die Future sein, die den zukünftigen Wert bestimmt.
-
-      \return der interne QFutureWatcher
-      */
-    QFutureWatcher<T> *futureWatcher() const;
-
-    /*!
-      \return true falls die aktuelle QFuture gerade rechnet. (Wird vom AttributeFutureWatcherInterface verwendet)
-      */
-    bool isRunning();
+    void on_attribute_changed();
 
 protected:
-    friend class Attribute<T,R,C>;
+    AttributeBase* m_attribute;
+};
 
-    /*!
-      Erstellt einen FutureWatcher für das Attribut \p attribute.
-      */
-    explicit AttributeFutureWatcher(Attribute<T,R,C> *attribute);
+template<class AttributeType, class ValueType>
+class RecalculationTask : public Task
+{
+public:
+    explicit RecalculationTask(AttributeType* m_attribute, int priority = QThread::InheritPriority);
 
-    /*!
-      Setzt die aktuelle QFuture auf \p future.
-      */
-    void setFuture(QFuture<T> future);
+    void execute();
 
-    /*!
-      Wird aufgerufen, wenn sich der Wert des Attributs ändert, oder die aktuelle QFuture zu Ende berechnet hat.<br>
-      Im ersten Fall wird einfach nur allen verbundenen GUI-Elementen die Änderung mitgeteilt.<br>
-      Im zweiten Fall wird der Wert des Attributs aktualisiert und die Änderung anschließend bekannt gegeben.
-      */
-    void updateFromFutureWatcher();
-
-    void updateFromAttribute();
-
-    /*!
-      Der Wert des Attributs. (Wird vom AttributeFutureWatcherInterface verwendet)
-      */
-    QString toString();
-
-    void waitForFinished();
-
-    Attribute<T,R,C>* m_attribute; //!< Das beobachtete Attribut.
-    QPointer<QFutureWatcher<T> > m_futureWatcher; //!< Der interne QFutureWatcher.
-    QMutex m_mutex;
-    QMutex m_waitMutex; //!< Mit diesem Mutex warten wir auf das endgültige update des wertes
-    QWaitCondition m_waitCondition;
-    QWaitCondition m_waitCondition2;
+private:
+    AttributeType* m_attribute;
 };
 
 template<class T, class R, class C>
 Attribute<T,R,C>::Attribute() :
     AttributeBase(),
     m_cacheInitialized(false),
+    m_futureWatcher(0),
+    m_calculator(0),
     m_calculateFunction(0),
     m_updateFunction(0),
-    m_lock(QReadWriteLock::Recursive),
-    m_futureWatcher(0)
+    m_updateFunctions(QHash<QString,AttributeSpecificUpdateFunction>()),
+    m_lock(QMutex::Recursive),
+    m_calculatingMutex(QMutex::Recursive),
+    m_waitingMutex(QMutex::NonRecursive),
+    m_waitCondition(),
+    m_currentTask(0)
 {
 }
 
@@ -463,85 +418,33 @@ template<class T, class R, class C>
 Attribute<T,R,C>::Attribute(const QString &name, const QString &displayName, AttributeOwner *owner) :
     AttributeBase(name, displayName, owner),
     m_cacheInitialized(false),
+    m_futureWatcher(0),
+    m_calculator(0),
     m_calculateFunction(0),
     m_updateFunction(0),
-    m_lock(QReadWriteLock::Recursive),
-    m_futureWatcher(0)
+    m_updateFunctions(QHash<QString,AttributeSpecificUpdateFunction>()),
+    m_lock(QMutex::Recursive),
+    m_calculatingMutex(QMutex::Recursive),
+    m_waitingMutex(QMutex::NonRecursive),
+    m_waitCondition(),
+    m_currentTask(0)
 {
 }
 
 template<class T, class R, class C>
 Attribute<T,R,C>::~Attribute()
 {
-    m_lock.lockForWrite();
     if(m_futureWatcher)
     {
         m_futureWatcher->deleteLater();
     }
-    m_lock.unlock();
-}
-
-template<class T, class R, class C>
-AttributeFutureWatcher<T,R,C> *Attribute<T,R,C>::futureWatcher()
-{
-    m_lock.lockForWrite();
-    if(m_futureWatcher == 0)
-    {
-        m_futureWatcher = new AttributeFutureWatcher<T,R,C>(this);
-    }
-    m_lock.unlock();
-    return m_futureWatcher;
-}
-
-template<class T, class R, class C>
-void Attribute<T,R,C>::startCalculateASync()
-{
-    calculateASync();
-}
-
-template<class T, class R, class C>
-bool Attribute<T,R,C>::isCalculating()
-{
-    return futureWatcher()->isRunning();
-}
-
-template<class T, class R, class C>
-T Attribute<T,R,C>::operator()()
-{
-    return value();
-}
-
-template<class T, class R, class C>
-T& Attribute<T,R,C>::value()
-{
-    futureWatcher()->m_mutex.lock();
-    m_lock.lockForWrite();
-    if(!m_cacheInitialized)
-    {
-	if(!futureWatcher()->isRunning())
-	{
-            m_value = calculate();
-	}
-	else
-        {
-            m_lock.unlock();
-            futureWatcher()->waitForFinished();
-            m_lock.lockForWrite();
-            changeValue(futureWatcher()->futureWatcher()->result());
-        }
-        m_cacheInitialized = true;
-    }
-
-    m_lock.unlock();
-    futureWatcher()->m_mutex.unlock();
-    return m_value;
 }
 
 template<class T, class R, class C>
 AttributeVariant Attribute<T,R,C>::toVariant()
 {
     AttributeVariant v;
-    v.setValue(m_value);
+    v.setValue(value());
     return v;
 }
 
@@ -565,11 +468,173 @@ QString Attribute<T,R,C>::toString()
   return toVariant().toString();
 }
 
+template<class T, class R, class C>
+AttributeFutureWatcher* Attribute<T,R,C>::futureWatcher()
+{
+    m_lock.lock();
+    if(m_futureWatcher == 0)
+    {
+        m_futureWatcher = new AttributeFutureWatcher(this);
+    }
+    m_lock.unlock();
+    return m_futureWatcher;
+}
+
+template<class T, class R, class C>
+T Attribute<T,R,C>::calculate() const
+{
+    if(m_calculateFunction == 0)
+    {
+        return T();
+    }
+
+    T newValue = CALL_MEMBER_FN(static_cast<C*>(m_calculator),m_calculateFunction)();
+
+    return newValue;
+}
+
+template<class T, class R, class C>
+void Attribute<T,R,C>::startCalculateASync()
+{
+    calculateASync();
+}
+
+
+template<class T, class R, class C>
+void Attribute<T,R,C>::updateFromDependency()
+{
+//    m_lock.lock();
+//    if(!m_cacheInitialized)
+//    {
+        recalculateFromScratch();
+//    }
+//    m_lock.unlock();
+
+    /*m_lock.lockForWrite();
+    AttributeBase *dependentAttribute = static_cast<AttributeBase*>(sender());
+    AttributeSpecificUpdateFunction updateFunction = m_updateFunctions.value(dependentAttribute->name(), 0);
+    QFuture<T> future;
+
+    if(updateFunction != 0)
+    {
+        future = QtConcurrent::run(static_cast<C*>(m_calculator), updateFunction);
+    }
+    else
+    {
+        if(m_updateFunction == 0)
+        {
+            m_lock.unlock();
+            recalculateFromScratch();
+            return;
+        }
+
+        future = CALL_MEMBER_FN(static_cast<C*>(m_calculator),m_updateFunction)(dependentAttribute);
+    }
+
+    if(future.isRunning() || future.isResultReadyAt(0))
+    {
+        futureWatcher()->setFuture(future);
+    }
+    else
+    {
+        recalculateFromScratch(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
+    }
+
+    m_lock.unlock();*/
+}
+
+template<class T, class R, class C>
+void Attribute<T,R,C>::recalculateFromScratch()
+{
+    m_cacheInitialized = false;
+    calculateASync(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
+}
+
+template<class T, class R, class C>
+bool Attribute<T,R,C>::isCalculating()
+{
+    m_lock.lock();
+    if(m_calculatingMutex.tryLock())
+    {
+        m_calculatingMutex.unlock();
+        m_lock.unlock();
+        return false;
+    }
+    m_lock.unlock();
+    return true;
+}
+
+template<class T, class R, class C>
+bool Attribute<T,R,C>::waitForCalculationOrGetLock()
+{
+    QMutexLocker locker(&m_waitingMutex);
+    (void) locker;
+
+    if(!m_calculatingMutex.tryLock() && m_currentTask != 0)
+    {
+        m_currentTask->increasePriority();
+        QThreadPool::globalInstance()->releaseThread();
+        m_waitCondition.wait(&m_waitingMutex);
+        QThreadPool::globalInstance()->reserveThread();
+        return false;
+    }
+
+    return true;
+}
+
+template<class T, class R, class C>
+void Attribute<T,R,C>::returnLock()
+{
+    m_waitingMutex.lock();
+    m_waitCondition.wakeAll();
+    m_calculatingMutex.unlock();
+    m_waitingMutex.unlock();
+}
+
+template<class T, class R, class C>
+AttributeFutureWatcher* Attribute<T,R,C>::calculateASync()
+{
+    if(waitForCalculationOrGetLock())
+    {
+        if(!m_cacheInitialized)
+        {
+            m_currentTask = new RecalculationTask<Attribute<T,R,C>, T>(this);
+            TaskScheduler::instance()->schedule(m_currentTask);
+        }
+        else
+        {
+            returnLock();
+        }
+    }
+
+    return futureWatcher();
+}
+
+template<class T, class R, class C>
+T& Attribute<T,R,C>::value()
+{
+    if(waitForCalculationOrGetLock())
+    {
+        if(!m_cacheInitialized)
+        {
+            m_value = calculate();
+            m_cacheInitialized = true;
+        }
+        returnLock();
+    }
+
+    return m_value;
+}
+
+template<class T, class R, class C>
+void Attribute<T,R,C>::changeValue(const QVariant& value)
+{
+    changeValue(value.value<T>());
+}
 
 template<class T, class R, class C>
 void Attribute<T,R,C>::changeValue(const T &value)
 {
-    m_lock.lockForWrite();
     bool change = true;
     if(m_checkChange)
     {
@@ -582,37 +647,17 @@ void Attribute<T,R,C>::changeValue(const T &value)
     m_cacheInitialized = true;
     if(change)
     {
-	m_value = value;
+        m_value = value;
 
-        m_lock.unlock();
-	emit changed();
+        returnLock();
+        emit changed();
     }
     else
     {
-        m_lock.unlock();
+        returnLock();
     }
 }
 
-template<class T, class R, class C>
-void Attribute<T,R,C>::changeValue(const QVariant& value)
-{
-    changeValue(value.value<T>());
-}
-
-template<class T, class R, class C>
-AttributeFutureWatcher<T,R,C> *Attribute<T,R,C>::calculateASync()
-{
-    m_lock.lockForWrite();
-    if(!m_cacheInitialized && !futureWatcher()->isRunning())
-    {
-        emit aboutToChange();
-	QFuture<T> future = QtConcurrent::run(this, &Attribute<T,R,C>::calculate);
-        futureWatcher()->setFuture(future);
-    }
-    m_lock.unlock();
-
-    return futureWatcher();
-}
 
 template<class T, class R, class C>
 QString Attribute<T,R,C>::sqlType() const
@@ -624,7 +669,7 @@ QString Attribute<T,R,C>::sqlType() const
 template<class T, class R, class C>
 void Attribute<T,R,C>::setCalculationFunction(C* calculator, CalculateFunction calculateFuntion)
 {
-    m_lock.lockForWrite();
+    m_lock.lock();
     m_calculateFunction = calculateFuntion;
     m_calculator = calculator;
     m_lock.unlock();
@@ -633,7 +678,7 @@ void Attribute<T,R,C>::setCalculationFunction(C* calculator, CalculateFunction c
 template<class T, class R, class C>
 void Attribute<T,R,C>::setUpdateFunction(C* calculator, UpdateFunction updateFunction)
 {
-    m_lock.lockForWrite();
+    m_lock.lock();
     m_updateFunction = updateFunction;
     m_calculator = calculator;
     m_lock.unlock();
@@ -642,177 +687,33 @@ void Attribute<T,R,C>::setUpdateFunction(C* calculator, UpdateFunction updateFun
 template<class T, class R, class C>
 void Attribute<T,R,C>::setUpdateFunction(AttributeBase *attribute, AttributeSpecificUpdateFunction updateFunction)
 {
-    m_lock.lockForWrite();
+    m_lock.lock();
     m_updateFunctions.insert(attribute->name(), updateFunction);
     m_lock.unlock();
-}
-
-template<class T, class R, class C>
-T Attribute<T,R,C>::calculate() const
-{
-    if(m_calculateFunction == 0)
-    {
-	return T();
-    }
-
-    T newValue = CALL_MEMBER_FN(static_cast<C*>(m_calculator),m_calculateFunction)();
-
-    return newValue;
-}
-
-template<class T, class R, class C>
-void Attribute<T,R,C>::update()
-{
-    m_lock.lockForWrite();
-
-    if(!m_cacheInitialized)
-    {
-        recalculate();
-        m_lock.unlock();
-	return;
-    }
-
-    AttributeBase *dependentAttribute = static_cast<AttributeBase*>(sender());
-    AttributeSpecificUpdateFunction updateFunction = m_updateFunctions.value(dependentAttribute->name(), 0);
-    QFuture<T> future;
-
-    if(updateFunction != 0)
-    {
-        futureWatcher()->m_mutex.lock();
-	future = QtConcurrent::run(static_cast<C*>(m_calculator), updateFunction);
-    }
-    else
-    {
-	if(m_updateFunction == 0)
-        {
-            recalculate();
-            m_lock.unlock();
-	    return;
-	}
-
-        futureWatcher()->m_mutex.lock();
-	future = CALL_MEMBER_FN(static_cast<C*>(m_calculator),m_updateFunction)(dependentAttribute);
-    }
-
-    if(future.isRunning() || future.isResultReadyAt(0))
-    {
-	futureWatcher()->setFuture(future);
-        futureWatcher()->m_mutex.unlock();
-    }
-    else
-    {
-	recalculate(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
-    }
-    m_lock.unlock();
-}
-
-template<class T, class R, class C>
-void Attribute<T,R,C>::recalculate()
-{
-    m_cacheInitialized = false;
-    calculateASync(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
 }
 
 template<class T, class R, class C>
 void Attribute<T,R,C>::addDependingAttribute(AttributeBase *dependingAttribute)
 {
     m_dependingAttributes.append(dependingAttribute);
-    connect(this,SIGNAL(changed()),dependingAttribute,SLOT(update()));
+    connect(this,SIGNAL(changed()),dependingAttribute,SLOT(updateFromDependency()));
     //connect(this,SIGNAL(changed()),this,SLOT(onChange()));
 }
 
-template<class T, class R, class C>
-AttributeFutureWatcher<T,R,C>::AttributeFutureWatcher(Attribute<T,R,C> *parent) :
-    AttributeFutureWatcherBase(),
-    m_attribute(parent),
-    m_futureWatcher(new QFutureWatcher<T>()),
-    m_mutex(QMutex::NonRecursive),
-    m_waitMutex(QMutex::NonRecursive)
+template<class AttributeType, class ValueType>
+RecalculationTask<AttributeType,ValueType>::RecalculationTask(AttributeType* attribute, int priority) :
+    Task(priority),
+    m_attribute(attribute)
 {
-    connect(m_futureWatcher,SIGNAL(finished()),this,SLOT(updateFromFutureWatcher()));
-    connect(m_attribute,SIGNAL(changed()),this,SLOT(updateFromAttribute()));
-    connect(m_attribute,SIGNAL(aboutToChange()),this,SLOT(on_attributeAboutToChange()));
 }
 
-template<class T, class R, class C>
-void AttributeFutureWatcher<T,R,C>::setFuture(QFuture<T> future)
+template<class AttributeType, class ValueType>
+void RecalculationTask<AttributeType,ValueType>::execute()
 {
-    if(m_futureWatcher->isRunning())
-    {
-        qDebug() << "AttributeFutureWatcher<T,R,C>::setFuture: m_futureWatcher->isRunning()";
-        return;
-    }
-    m_futureWatcher->setFuture(future);
-
-    if(m_futureWatcher->isFinished())
-    {
-        updateFromFutureWatcher();
-    }
+    ValueType value = m_attribute->calculate();
+    m_attribute->changeValue(value);
+    m_attribute->m_currentTask = 0;
 }
-template<class T, class R, class C>
-QFutureWatcher<T> *AttributeFutureWatcher<T,R,C>::futureWatcher() const
-{
-    return m_futureWatcher;
-}
-
-template<class T, class R, class C>
-void AttributeFutureWatcher<T,R,C>::waitForFinished()
-{
-    m_waitMutex.lock();
-    if(m_futureWatcher->isRunning())
-    {
-        qDebug() << "Starting to wait for" << m_attribute;
-        QThreadPool::globalInstance()->releaseThread();
-        m_waitCondition2.wait(&m_waitMutex);
-        m_waitCondition.wait(&m_mutex);
-        QThreadPool::globalInstance()->reserveThread();
-    }
-    m_waitMutex.unlock();
-}
-
-template<class T, class R, class C>
-void AttributeFutureWatcher<T,R,C>::updateFromFutureWatcher()
-{
-    m_waitCondition2.wakeAll();
-    m_mutex.lock();
-    if(m_futureWatcher->future().isResultReadyAt(0))
-    {
-        T value = m_futureWatcher->future().result();
-        m_attribute->changeValue(value);
-    }
-    qDebug() << m_attribute << "finished updateFromFutureWatcher";
-    m_waitCondition.wakeAll();
-    m_mutex.unlock();
-}
-
-
-template<class T, class R, class C>
-void AttributeFutureWatcher<T,R,C>::updateFromAttribute()
-{
-    qDebug() << m_attribute << "finished updateFromAttribute";
-    QVariant v;
-    v.setValue(m_attribute->m_value);
-    emit valueChanged(v.toString());
-}
-
-template<class T, class R, class C>
-bool AttributeFutureWatcher<T,R,C>::isRunning()
-{
-    return m_futureWatcher->isRunning();
-}
-
-template<class T, class R, class C>
-QString AttributeFutureWatcher<T,R,C>::toString()
-{
-    AttributeVariant v;
-    v.setValue(m_attribute->value());
-    QVariant display = v.displayVariant();
-    if(display.isNull()){
-        return v.toString();
-    }
-    return display.toString();
-}
-
 
 } // namespace Database
 

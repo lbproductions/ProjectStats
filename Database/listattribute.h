@@ -10,33 +10,6 @@
 namespace Database {
 
 template<class V, class R, class C>
-class AttributeFutureWatcher;
-
-template<class V, class R, class C>
-class ListAttributeFutureWatcher : public AttributeFutureWatcher<AttributeList<V>,R,C>
-{
-public:
-
-    ListAttributeFutureWatcher(Attribute<AttributeList<V>,R,C>* parent);
-
-    /*!
-      Verbindet diesen FutureWatcher mit dem Label \p label.<br>
-      Alle zukünftigen Änderungen werden dem Label mitgeteilt, sodass es sich automatisch anpassen kann.
-      */
-    void connectTo(QLabel *label, V value);
-
- protected:
-    /*!
-      Wird für das Update eines Values aus einer Map oder List benötigt, um das richtige Element und dessen verknüpfte Labels zu aktualisieren.
-      */
-    void updateKey(QVariant variant);
-
-    QMap<QLabel*,V> m_labels; //!< Speichert alle Labels, die mit dem Attribut verbunden wurden, sowie dessen Value.
-
-
-};
-
-template<class V, class R, class C>
 class ListAttribute : public Attribute<AttributeList<V>,R,C>
 {
 public:
@@ -48,17 +21,11 @@ public:
     const V value(int pos);
 
     AttributeList<V>& value();
-
-    ListAttributeFutureWatcher<V,R,C> *listFutureWatcher();
-
-protected:
-    ListAttributeFutureWatcher<V,R,C>* m_attributeFutureWatcher;
 };
 
 template<class V, class R, class C>
 ListAttribute<V,R,C>::ListAttribute(const QString &name, const QString &displayName, AttributeOwner *owner):
-    Attribute<AttributeList<V>,R,C>(name,displayName,owner),
-    m_attributeFutureWatcher(0)
+    Attribute<AttributeList<V>,R,C>(name,displayName,owner)
 {
 }
 
@@ -67,7 +34,6 @@ const V ListAttribute<V,R,C>::value(int pos){
     return Attribute<AttributeList<V>,R,C>::m_value.at(pos);
 }
 
-
 template<class V, class R, class C>
 AttributeList<V>& ListAttribute<V,R,C>::value(){
     disconnect(&this->m_value);
@@ -75,65 +41,6 @@ AttributeList<V>& ListAttribute<V,R,C>::value(){
      connect(&this->m_value,SIGNAL(changed()),this,SIGNAL(changed()));
      return Attribute<AttributeList<V>,R,C>::m_value;
 }
-
-template<class V, class R, class C>
-ListAttributeFutureWatcher<V,R,C>::ListAttributeFutureWatcher(Attribute<AttributeList<V>,R,C>* parent):
-    AttributeFutureWatcher<AttributeList<V>,R,C>(parent)
-{
-}
-
-template<class V, class R, class C>
-void ListAttributeFutureWatcher<V,R,C>::connectTo(QLabel* label, V value)
-{
-    if(AttributeFutureWatcher<AttributeList<V>,R,C>::isRunning())
-    {
-        label->setText("Loading...");
-    }
-    else
-    {
-        AttributeVariant variant;
-        variant.setValue(value);
-        QVariant display = variant.displayVariant();
-        if (!display.isNull()){
-            label->setText(display.toString());
-        }
-        else{
-            label->setText(QVariant::fromValue<V>(value).toString());
-        }
-    }
-    m_labels.insert(label,value);
-
-    //connect(pointer->value(),SIGNAL(changed(QVariant)),this,SLOT(updateKey(QVariant)));
-}
-
-template<class V, class R, class C>
-void ListAttributeFutureWatcher<V,R,C>::updateKey(QVariant variant){
-    V value = variant.value<V>();
-    AttributeVariant var;
-    var.setValue(value);
-    QVariant display = var.displayVariant();
-    foreach(QLabel* label, m_labels.keys()){
-        if (!display.isNull()){
-            label->setText(display.toString());
-        }
-        else{
-            label->setText(QVariant::fromValue<V>(value).toString());
-        }
-    }
-}
-
-template<class V, class R, class C>
-ListAttributeFutureWatcher<V,R,C> *ListAttribute<V,R,C>::listFutureWatcher()
-{
-    if(m_attributeFutureWatcher == 0)
-    {
-        m_attributeFutureWatcher = new ListAttributeFutureWatcher<V,R,C>(this);
-        //m_attributeFutureWatcher->moveToThread(this->thread());
-        //m_attributeFutureWatcher->setParent(this);
-    }
-    return m_attributeFutureWatcher;
-}
-
 
 } // namespace Database
 

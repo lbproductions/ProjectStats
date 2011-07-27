@@ -9,13 +9,24 @@
 
 namespace Database {
 
-AttributeOwner::AttributeOwner(QObject *parent) :
+
+Changeable::Changeable(QObject *parent) :
     QObject(parent)
 {
 }
 
+QString Changeable::toString()
+{
+    return QString();
+}
+
+AttributeOwner::AttributeOwner(QObject *parent) :
+    Changeable(parent)
+{
+}
+
 AttributeBase::AttributeBase() :
-    QObject(),
+    Changeable(),
     m_owner(0),
     m_name(QString()),
     m_displayName(QString()),
@@ -25,7 +36,7 @@ AttributeBase::AttributeBase() :
 }
 
 AttributeBase::AttributeBase(const QString &name, const QString &displayName, AttributeOwner *row) :
-    QObject(row),
+    Changeable(row),
     m_owner(row),
     m_name(name),
     m_displayName(displayName),
@@ -96,40 +107,47 @@ AttributeVariant::DisplayRole AttributeBase::displayRole(){
     return m_displayRole;
 }
 
-AttributeFutureWatcherBase::AttributeFutureWatcherBase() :
-    QObject()
+AttributeFutureWatcher::AttributeFutureWatcher(AttributeBase* attribute) :
+    QObject(attribute),
+    m_attribute(attribute)
 {
+    connect(m_attribute,SIGNAL(changed()),this,SLOT(on_attribute_changed()));
+    connect(m_attribute,SIGNAL(aboutToChange()),this,SLOT(on_attribute_aboutToChange()));
 }
 
-void AttributeFutureWatcherBase::on_attributeAboutToChange()
+void AttributeFutureWatcher::on_attribute_aboutToChange()
 {
     emit valueChanged("Loading...");
 }
 
-void AttributeFutureWatcherBase::connectTo(QLabel *label)
+void AttributeFutureWatcher::on_attribute_changed()
 {
-    if(isRunning())
+    emit valueChanged(m_attribute->toString());
+}
+
+void AttributeFutureWatcher::connectTo(QLabel *label)
+{
+    if(m_attribute->isCalculating())
     {
 	label->setText("Loading...");
     }
     else
     {
-	label->setText(toString());
+        label->setText(m_attribute->toString());
     }
 
-    //connect(this,SIGNAL(valueChanged(QString)),label,SLOT(setText(QString)));
-    connect(this,SIGNAL(valueChanged(QString)),this,SLOT(check(QString)));
+    connect(this,SIGNAL(valueChanged(QString)),label,SLOT(setText(QString)));
 }
 
-void AttributeFutureWatcherBase::connectTo(QLineEdit *lineEdit)
+void AttributeFutureWatcher::connectTo(QLineEdit *lineEdit)
 {
-    if(isRunning())
+    if(m_attribute->isCalculating())
     {
 	lineEdit->setText("Loading...");
     }
     else
     {
-	lineEdit->setText(toString());
+        lineEdit->setText(m_attribute->toString());
     }
 
     connect(this,SIGNAL(valueChanged(QString)),lineEdit,SLOT(setText(QString)));
@@ -139,14 +157,5 @@ void AttributeBase::emitChanged()
 {
     emit changed();
 }
-
-void AttributeFutureWatcherBase::check(QString a){
-    qDebug() << a;
-}
-
-void AttributeFutureWatcherBase::updateKey(QVariant variant){
-
-}
-
 
 } // namespace Database
