@@ -21,8 +21,6 @@
 
 #include <Database/database.h>
 #include <Database/attribute.h>
-#include <Database/attributehash.h>
-#include <Database/attributelist.h>
 #include <Database/player.h>
 #include <Database/drink.h>
 #include <Database/place.h>

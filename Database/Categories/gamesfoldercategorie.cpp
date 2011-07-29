@@ -24,9 +24,9 @@ QIcon GamesFolderCategorie::icon() const
 
 }
 
-AttributeList<Game*> GamesFolderCategorie::calculate_games()
+QList<Game*> GamesFolderCategorie::calculate_games()
 {
-    AttributeList<Game*> games;
+    QList<Game*> games;
     foreach(int i, this->rows->value())
     {
         games.append(Games::instance()->rowById(i));

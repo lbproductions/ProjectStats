@@ -12,7 +12,7 @@ class SkatLiveGameCalculator : public LiveGameCalculator
 public:
     SkatLiveGameCalculator(SkatLiveGame* game);
 
-    AttributeHash<Player*,int> calculate_placement();
+    QMap<Player*,int> calculate_placement();
 
 private:
     QPointer<SkatLiveGame> m_skatlivegame;

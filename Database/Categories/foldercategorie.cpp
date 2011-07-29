@@ -12,9 +12,9 @@ START_ROW_IMPLEMENTATION(FolderCategorie, Categorie, ChildCategorie)
     IMPLEMENT_LISTATTRIBUTE(int,FolderCategorie,rows,tr("Rows"))
 }
 
-AttributeList<int> FolderCategorie::calculate_rows()
+QList<int> FolderCategorie::calculate_rows()
 {
-    AttributeList<int> list;
+    QList<int> list;
     for(int i = 0; i<CategorieAssignments::instance()->allRows().size();i++){
         if(CategorieAssignments::instance()->allRows().at(i)->categorieId->value() == m_id){
             list.append(CategorieAssignments::instance()->allRows().at(i)->elementId->value());

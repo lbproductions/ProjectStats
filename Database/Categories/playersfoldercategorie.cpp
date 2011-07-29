@@ -23,9 +23,9 @@ QIcon PlayersFolderCategorie::icon() const
         return QIcon(":/graphics/icons/mac/sidebar/sidebar_folder_players");
 }
 
-AttributeList<Player*> PlayersFolderCategorie::calculate_players()
+QList<Player*> PlayersFolderCategorie::calculate_players()
 {
-    AttributeList<Player*> players;
+    QList<Player*> players;
     foreach(int i, this->rows->value())
     {
         players.append(Players::instance()->rowById(i));

@@ -25,7 +25,7 @@ START_ROW_DECLARATION(LiveGame, Game)
     DECLARE_LISTATTRIBUTE_IN_CALC(LiveGameDrink*,LiveGame,LiveGameCalculator,drinks)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Drink*,int,LiveGame,LiveGameCalculator,drinkCount)
 
-    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,AttributeList<LiveGameDrink*>,LiveGame,LiveGameCalculator,drinksPerPlayer)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,QList<LiveGameDrink*>,LiveGame,LiveGameCalculator,drinksPerPlayer)
     DECLARE_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,playersSortedByAlcPegel)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,rounds)
@@ -57,6 +57,6 @@ private:
 
 END_ROW_DECLARATION(LiveGame)
 
-Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA Database::AttributeList<Database::LiveGameDrink*> >)
+Q_DECLARE_METATYPE(QMap<Database::Player* COMMA QList<Database::LiveGameDrink*> >)
 
 #endif // DATABASE_LIVEGAME_H

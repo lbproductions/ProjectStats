@@ -1,8 +1,6 @@
 #ifndef OFFLINEGAMECALCULATOR_H
 #define OFFLINEGAMECALCULATOR_H
 
-#include <Database/attributehash.h>
-
 #include <Database/Calculator/gamecalculator.h>
 
 namespace Database{
@@ -15,9 +13,9 @@ class OfflineGameCalculator : public GameCalculator
 public:
     OfflineGameCalculator(OfflineGame* game);
 
-    AttributeHash<Player*,int> calculate_placement();
+    QMap<Player*,int> calculate_placement();
 
-    AttributeHash<Player*,int> calculate_points();
+    QMap<Player*,int> calculate_points();
 
     QTime calculate_length();
 

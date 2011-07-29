@@ -24,9 +24,9 @@ QIcon PlacesFolderCategorie::icon() const
 
 }
 
-AttributeList<Place*> PlacesFolderCategorie::calculate_places()
+QList<Place*> PlacesFolderCategorie::calculate_places()
 {
-    AttributeList<Place*> places;
+    QList<Place*> places;
     foreach(int i, this->rows->value())
     {
         places.append(Places::instance()->rowById(i));

@@ -5,8 +5,6 @@
 #include <QPointer>
 #include <QPair>
 
-#include <Database/attributelist.h>
-#include <Database/attributehash.h>
 #include <Database/round.h>
 
 #include <Database/Calculator/gamecalculator.h>
@@ -26,25 +24,25 @@ class LiveGameCalculator : public GameCalculator
 public:
     explicit LiveGameCalculator(LiveGame* livegame, QObject *parent = 0);
 
-    AttributeList<Player*> calculate_playersSortedByPosition();
+    QList<Player*> calculate_playersSortedByPosition();
 
-    AttributeList<Player*> calculate_playersSortedByPlacement();
+    QList<Player*> calculate_playersSortedByPlacement();
 
-    AttributeList<Player*> calculate_currentPlayingPlayers();
+    QList<Player*> calculate_currentPlayingPlayers();
 
-    AttributeList<LiveGameDrink*> calculate_drinks();
+    QList<LiveGameDrink*> calculate_drinks();
 
-    AttributeHash<Drink*,int> calculate_drinkCount();
+    QMap<Drink*,int> calculate_drinkCount();
 
-    AttributeHash<Player*, AttributeList<LiveGameDrink*> > calculate_drinksPerPlayer();
+    QMap<Player*, QList<LiveGameDrink*> > calculate_drinksPerPlayer();
 
-    AttributeList<Player*> calculate_playersSortedByAlcPegel();
+    QList<Player*> calculate_playersSortedByAlcPegel();
 
-    AttributeList<Round*> calculate_rounds();
+    QList<Round*> calculate_rounds();
 
-    AttributeHash<Player*,int> calculate_points();
+    QMap<Player*,int> calculate_points();
 
-    AttributeHash<Player*,int> calculate_placement();
+    QMap<Player*,int> calculate_placement();
 
     int calculate_roundCount();
 

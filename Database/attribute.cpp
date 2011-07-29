@@ -31,7 +31,7 @@ AttributeBase::AttributeBase() :
     m_name(QString()),
     m_displayName(QString()),
     m_role(Qt::DisplayRole),
-    m_checkChange(true)
+    m_emitChange(true)
 {
 }
 
@@ -41,7 +41,7 @@ AttributeBase::AttributeBase(const QString &name, const QString &displayName, At
     m_name(name),
     m_displayName(displayName),
     m_role(Qt::DisplayRole),
-    m_checkChange(true)
+    m_emitChange(true)
 {
 }
 
@@ -89,9 +89,9 @@ void AttributeBase::setDisplayRole(AttributeVariant::DisplayRole role){
     m_displayRole = role;
 }
 
-void AttributeBase::setCheckChange(bool check)
+void AttributeBase::setEmitChange(bool check)
 {
-    m_checkChange = check;
+    m_emitChange = check;
 }
 
 void AttributeBase::onChange()

@@ -5,7 +5,6 @@
 #include <Database/drink.h>
 #include <Database/livegame.h>
 #include <Database/livegamedrink.h>
-#include <Database/attributelist.h>
 
 #include <handler.h>
 #include <Database/database.h>

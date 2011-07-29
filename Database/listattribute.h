@@ -2,7 +2,6 @@
 #define DATABASE_LISTATTRIBUTE_H
 
 #include "attribute.h"
-#include "attributelist.h"
 #include "row.h"
 
 #include <QLabel>
@@ -10,7 +9,7 @@
 namespace Database {
 
 template<class V, class R, class C>
-class ListAttribute : public Attribute<AttributeList<V>,R,C>
+class ListAttribute : public Attribute<QList<V>,R,C>
 {
 public:
     ListAttribute(const QString &name, const QString &displayName, AttributeOwner *owner);
@@ -20,26 +19,23 @@ public:
     */
     const V value(int pos);
 
-    AttributeList<V>& value();
+    const QList<V>& value();
 };
 
 template<class V, class R, class C>
 ListAttribute<V,R,C>::ListAttribute(const QString &name, const QString &displayName, AttributeOwner *owner):
-    Attribute<AttributeList<V>,R,C>(name,displayName,owner)
+    Attribute<QList<V>,R,C>(name,displayName,owner)
 {
 }
 
 template<class V, class R, class C>
 const V ListAttribute<V,R,C>::value(int pos){
-    return Attribute<AttributeList<V>,R,C>::m_value.at(pos);
+    return value().at(pos);
 }
 
 template<class V, class R, class C>
-AttributeList<V>& ListAttribute<V,R,C>::value(){
-    disconnect(&this->m_value);
-     Attribute<AttributeList<V>,R,C>::value();
-     connect(&this->m_value,SIGNAL(changed()),this,SIGNAL(changed()));
-     return Attribute<AttributeList<V>,R,C>::m_value;
+const QList<V>& ListAttribute<V,R,C>::value(){
+     return Attribute<QList<V>,R,C>::value();
 }
 
 } // namespace Database
@@ -49,14 +45,14 @@ AttributeList<V>& ListAttribute<V,R,C>::value(){
 
 #define DECLARE_LISTATTRIBUTE(Value, RowClassname, Name) \
     ListAttribute<Value,RowClassname, RowClassname> *Name; \
-    AttributeList<Value> calculate_ ## Name();
+    QList<Value> calculate_ ## Name();
 
 #define DECLARE_LISTATTRIBUTE_IN_CALC(Value, RowClassname, CalcClassName, Name) \
     ListAttribute<Value,RowClassname, CalcClassName> *Name;
 
 #define DECLARE_VIRTUAL_LISTATTRIBUTE_IN_CALC(Value, RowClassname, CalcClassName, Name) \
 ListAttribute<Value,RowClassname, RowClassname> *Name; \
-AttributeList<Value> call_calculate_ ## Name(){ \
+QList<Value> call_calculate_ ## Name(){ \
     return m_calc->calculate_ ## Name(); \
 }
 

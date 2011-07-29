@@ -8,9 +8,6 @@
 
 #include <attributevariant.h>
 
-#include <Database/attributehash.h>
-#include <Database/attributelist.h>
-
 class MessageSystem;
 class QDateTime;
 
@@ -133,17 +130,17 @@ Q_DECLARE_METATYPE(QPointer<Database::Round>)
 Q_DECLARE_METATYPE(QPointer<Database::Game>)
 Q_DECLARE_METATYPE(QPointer<Database::ParentCategorie>)
 Q_DECLARE_METATYPE(QPair<Database::Player* COMMA Database::Player*>)
-Q_DECLARE_METATYPE(Database::AttributeHash<Database::LiveGame* COMMA double>)
-Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA bool>)
-Q_DECLARE_METATYPE(Database::AttributeHash<Database::Player* COMMA double>)
-Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA int>)
-Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA double>)
-Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA QDateTime>)
-Q_DECLARE_METATYPE(Database::AttributeHash<QPair<Database::Player* COMMA Database::Player*> COMMA int>)
-Q_DECLARE_METATYPE(Database::AttributeHash<int COMMA int>)
-Q_DECLARE_METATYPE(Database::AttributeHash<QString COMMA Gui::Details::AbstractPlayerStatsWidget*>)
-Q_DECLARE_METATYPE(Database::AttributeList<int>)
-Q_DECLARE_METATYPE(Database::AttributeList<QString>)
+Q_DECLARE_METATYPE(QMap<Database::LiveGame* COMMA double>)
+Q_DECLARE_METATYPE(QMap<Database::Player* COMMA bool>)
+Q_DECLARE_METATYPE(QMap<Database::Player* COMMA double>)
+Q_DECLARE_METATYPE(QMap<QString COMMA int>)
+Q_DECLARE_METATYPE(QMap<QString COMMA double>)
+Q_DECLARE_METATYPE(QMap<QString COMMA QDateTime>)
+Q_DECLARE_METATYPE(QMap<QPair<Database::Player* COMMA Database::Player*> COMMA int>)
+Q_DECLARE_METATYPE(QMap<int COMMA int>)
+Q_DECLARE_METATYPE(QMap<QString COMMA Gui::Details::AbstractPlayerStatsWidget*>)
+Q_DECLARE_METATYPE(QList<int>)
+Q_DECLARE_METATYPE(QList<QString>)
 
 
 #endif // HANDLER_H

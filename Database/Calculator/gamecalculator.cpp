@@ -13,8 +13,8 @@ GameCalculator::GameCalculator(Game* game, QObject *parent) :
 {
 }
 
-AttributeList<Player*> GameCalculator::calculate_players(){
-    AttributeList<Player*> list;
+QList<Player*> GameCalculator::calculate_players(){
+    QList<Player*> list;
     if (m_game->live->value()){
 	foreach(Position* p, Positions::instance()->allRows()){
 	    if(p->gameId->value() == m_game->id()){
@@ -38,21 +38,21 @@ AttributeList<Player*> GameCalculator::calculate_players(){
     return list;
 }
 
-AttributeHash<Player*,int> GameCalculator::calculate_placement(){
+QMap<Player*,int> GameCalculator::calculate_placement(){
     //qWarning() << "GameCalculator::calculate_placement() should not be executed";
-    return AttributeHash<Player*,int>();
+    return QMap<Player*,int>();
 }
 
-AttributeHash<Player*,int> GameCalculator::calculate_points(){
+QMap<Player*,int> GameCalculator::calculate_points(){
     //qWarning() << "GameCalculator::calculate_points() should not be executed";
-    return AttributeHash<Player*,int>();
+    return QMap<Player*,int>();
 }
 
-AttributeList<Player*> GameCalculator::calculate_playersSortedByPosition(){
+QList<Player*> GameCalculator::calculate_playersSortedByPosition(){
     return m_game->players->value();
 }
 
-AttributeList<Player*> GameCalculator::calculate_playersSortedByPlacement(){
+QList<Player*> GameCalculator::calculate_playersSortedByPlacement(){
     return m_game->players->value();
 }
 

@@ -6,7 +6,6 @@
 #include "attribute.h"
 #include "databaseattribute.h"
 #include "mappingattribute.h"
-#include "attributehash.h"
 #include "listattribute.h"
 
 #include "place.h"
@@ -61,7 +60,7 @@ START_TABLE_DECLARATION(Game)
     QStringList possibleTypes() const;
 
     ListAttribute<QString,Games, Games> *types;
-    AttributeList<QString> calculate_types();
+    QList<QString> calculate_types();
 
 END_TABLE_DECLARATION()
 

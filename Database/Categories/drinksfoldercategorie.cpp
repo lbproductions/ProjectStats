@@ -24,9 +24,9 @@ QIcon DrinksFolderCategorie::icon() const
 
 }
 
-AttributeList<Drink*> DrinksFolderCategorie::calculate_drinks()
+QList<Drink*> DrinksFolderCategorie::calculate_drinks()
 {
-    AttributeList<Drink*> drinks;
+    QList<Drink*> drinks;
     foreach(int i, this->rows->value())
     {
         drinks.append(Drinks::instance()->rowById(i));

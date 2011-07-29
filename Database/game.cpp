@@ -62,8 +62,8 @@ QStringList Games::possibleTypes() const
     return list;
 }
 
-AttributeList<QString> Games::calculate_types(){
-    AttributeList<QString> list;
+QList<QString> Games::calculate_types(){
+    QList<QString> list;
     foreach(Game* g, Games::instance()->allRows()){
         if(!list.contains(g->type->value())){
             list.append(g->type->value());

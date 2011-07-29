@@ -15,8 +15,8 @@ DokoLiveGameCalculator::DokoLiveGameCalculator(DokoLiveGame* game):
 {
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_re(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_re(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         DokoRound* round = static_cast<DokoRound*>(m_livegame->rounds->value(i));
         for(int j = 0; j<m_livegame->players->value().size();j++){
@@ -28,8 +28,8 @@ AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_re(){
     return hash;
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_reWins(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_reWins(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         DokoRound* round = static_cast<DokoRound*>(m_livegame->rounds->value(i));
         for(int j = 0; j<m_livegame->players->value().size();j++){
@@ -43,8 +43,8 @@ AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_reWins(){
     return hash;
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_contra(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_contra(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         DokoRound* round = static_cast<DokoRound*>(m_livegame->rounds->value(i));
 
@@ -59,8 +59,8 @@ AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_contra(){
     return hash;
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_contraWins(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_contraWins(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         DokoRound* round = static_cast<DokoRound*>(m_livegame->rounds->value(i));
         for(int j = 0; j<round->currentPlayingPlayers->value().size();j++){
@@ -74,8 +74,8 @@ AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_contraWins(){
     return hash;
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_hochzeit(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_hochzeit(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         DokoRound* round = static_cast<DokoRound*>(m_livegame->rounds->value(i));
         for(int j = 0; j<m_livegame->players->value().size();j++){
@@ -87,8 +87,8 @@ AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_hochzeit(){
     return hash;
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_solo(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_solo(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         DokoRound* round = static_cast<DokoRound*>(m_livegame->rounds->value(i));
         for(int j = 0; j<m_livegame->players->value().size();j++){
@@ -100,8 +100,8 @@ AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_solo(){
     return hash;
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_trumpfabgabe(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_trumpfabgabe(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         DokoRound* round = static_cast<DokoRound*>(m_livegame->rounds->value(i));
         for(int j = 0; j<m_livegame->players->value().size();j++){
@@ -113,8 +113,8 @@ AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_trumpfabgabe()
     return hash;
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_schweinerei(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_schweinerei(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         DokoRound* round = static_cast<DokoRound*>(m_livegame->rounds->value(i));
         for(int j = 0; j<m_livegame->players->value().size();j++){
@@ -126,8 +126,8 @@ AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_schweinerei(){
     return hash;
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_schmeisserei(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_schmeisserei(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         DokoRound* round = static_cast<DokoRound*>(m_livegame->rounds->value(i));
         for(int j = 0; j<m_livegame->players->value().size();j++){
@@ -141,8 +141,8 @@ AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_schmeisserei()
     return hash;
 }
 
-AttributeHash<Player*,bool> DokoLiveGameCalculator::calculate_doko_hasPflichtSolo(){
-    AttributeHash<Player*,bool> hash;
+QMap<Player*,bool> DokoLiveGameCalculator::calculate_doko_hasPflichtSolo(){
+    QMap<Player*,bool> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         DokoRound* round = static_cast<DokoRound*>(m_livegame->rounds->value(i));
         for(int j = 0; j<m_livegame->players->value().size();j++){
@@ -212,8 +212,8 @@ int DokoLiveGameCalculator::calculate_doko_schmeissereiCount(){
     return count;
 }
 
-AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_hochzeitCountAfterRounds(){
-    AttributeHash<int,int> hash;
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_hochzeitCountAfterRounds(){
+    QMap<int,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         if(static_cast<DokoRound*>(m_dokolivegame->rounds->value(i))->doko_hochzeitPlayerId->value() != -1){
             hash.insert(i,hash.value(i-1)+1);
@@ -225,8 +225,8 @@ AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_hochzeitCountAfter
     return hash;
 }
 
-AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_soloCountAfterRounds(){
-    AttributeHash<int,int> hash;
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_soloCountAfterRounds(){
+    QMap<int,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         if(static_cast<DokoRound*>(m_dokolivegame->rounds->value(i))->doko_soloPlayerId->value() != -1){
             hash.insert(i,hash.value(i-1)+1);
@@ -238,8 +238,8 @@ AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_soloCountAfterRoun
     return hash;
 }
 
-AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_pflichtSoloCountAfterRounds(){
-    AttributeHash<int,int> hash;
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_pflichtSoloCountAfterRounds(){
+    QMap<int,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         if(static_cast<DokoRound*>(m_dokolivegame->rounds->value(i))->doko_soloPlayerId->value() != -1 && static_cast<DokoRound*>(m_dokolivegame->rounds->value(i))->doko_soloPflicht->value()){
             hash.insert(i,hash.value(i-1)+1);
@@ -251,8 +251,8 @@ AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_pflichtSoloCountAf
     return hash;
 }
 
-AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_trumpfabgabeCountAfterRounds(){
-    AttributeHash<int,int> hash;
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_trumpfabgabeCountAfterRounds(){
+    QMap<int,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         if(static_cast<DokoRound*>(m_dokolivegame->rounds->value(i))->doko_trumpfabgabePlayerId->value() != -1){
             hash.insert(i,hash.value(i-1)+1);
@@ -264,8 +264,8 @@ AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_trumpfabgabeCountA
     return hash;
 }
 
-AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_schweinereiCountAfterRounds(){
-    AttributeHash<int,int> hash;
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_schweinereiCountAfterRounds(){
+    QMap<int,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         if(static_cast<DokoRound*>(m_dokolivegame->rounds->value(i))->doko_schweinereiPlayerId->value() != -1){
             hash.insert(i,hash.value(i-1)+1);
@@ -277,16 +277,16 @@ AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_schweinereiCountAf
     return hash;
 }
 
-AttributeHash<int,int> DokoLiveGameCalculator::calculate_doko_schmeissereiCountAfterRounds(){
-    AttributeHash<int,int> hash;
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_schmeissereiCountAfterRounds(){
+    QMap<int,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         hash.insert(i,hash.value(i-1)+static_cast<DokoRound*>(m_dokolivegame->rounds->value(i))->doko_schmeissereien->value().size());
     }
     return hash;
 }
 
-AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_gamesTogether(){
-    AttributeHash<QPair<Player*,Player*>,int> hash;
+QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_gamesTogether(){
+    QMap<QPair<Player*,Player*>,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         bool check = true;
         Round* r = m_dokolivegame->rounds->value(i);
@@ -407,8 +407,8 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
     return hash;
 }
 
-AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_winsTogether(){
-    AttributeHash<QPair<Player*,Player*>,int> hash;
+QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_winsTogether(){
+    QMap<QPair<Player*,Player*>,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         bool check = true;
         Round* r = m_dokolivegame->rounds->value(i);
@@ -534,8 +534,8 @@ AttributeHash<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko
     return hash;
 }
 
-AttributeHash<Player*,double> DokoLiveGameCalculator::calculate_doko_pointAveragePerWin(){
-    AttributeHash<Player*,double> hash;
+QMap<Player*,double> DokoLiveGameCalculator::calculate_doko_pointAveragePerWin(){
+    QMap<Player*,double> hash;
     for(int j = 0; j<m_dokolivegame->players->value().size();j++){
         int points = 0;
         for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
@@ -548,8 +548,8 @@ AttributeHash<Player*,double> DokoLiveGameCalculator::calculate_doko_pointAverag
     return hash;
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_rounds(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_rounds(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         for(int j = 0; j<m_dokolivegame->currentPlayingPlayers->value().size();j++){
             hash.insert(m_dokolivegame->currentPlayingPlayers->value(j),hash.value(m_dokolivegame->players->value(j))+1);
@@ -558,8 +558,8 @@ AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_rounds(){
     return hash;
 }
 
-AttributeHash<Player*,int> DokoLiveGameCalculator::calculate_doko_roundWins(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_roundWins(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         for(int j = 0; j<m_dokolivegame->currentPlayingPlayers->value().size();j++){
             if(m_dokolivegame->rounds->value(i)->points->value(m_dokolivegame->currentPlayingPlayers->value(j)) > 0){

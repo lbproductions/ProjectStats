@@ -13,8 +13,8 @@ OfflineGameCalculator::OfflineGameCalculator(OfflineGame* game):
 {
 }
 
-AttributeHash<Player*,int> OfflineGameCalculator::calculate_placement(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> OfflineGameCalculator::calculate_placement(){
+    QMap<Player*,int> hash;
 
     foreach(OfflineGameInformation* info, OfflineGameInformations::instance()->allRows()){
         for (int i = 0; i<m_game->players->value().size();i++){
@@ -26,8 +26,8 @@ AttributeHash<Player*,int> OfflineGameCalculator::calculate_placement(){
     return hash;
 }
 
-AttributeHash<Player*,int> OfflineGameCalculator::calculate_points(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> OfflineGameCalculator::calculate_points(){
+    QMap<Player*,int> hash;
 
     foreach(OfflineGameInformation* info, OfflineGameInformations::instance()->allRows()){
         for (int i = 0; i<m_game->players->value().size();i++){

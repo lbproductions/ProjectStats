@@ -21,8 +21,8 @@ LiveGameCalculator::LiveGameCalculator(LiveGame* livegame, QObject *parent) :
 {
 }
 
-AttributeList<LiveGameDrink*> LiveGameCalculator::calculate_drinks(){
-    AttributeList<LiveGameDrink*> list;
+QList<LiveGameDrink*> LiveGameCalculator::calculate_drinks(){
+    QList<LiveGameDrink*> list;
     foreach(LiveGameDrink* d, LiveGameDrinks::instance()->allRows()){
         if (Rounds::instance()->rowById(d->roundId->value())->game->value()->id() == m_livegame->id()){
             list.append(d);
@@ -31,14 +31,14 @@ AttributeList<LiveGameDrink*> LiveGameCalculator::calculate_drinks(){
     return list;
 }
 
-AttributeHash<Player*,AttributeList<LiveGameDrink*> > LiveGameCalculator::calculate_drinksPerPlayer()
+QMap<Player*,QList<LiveGameDrink*> > LiveGameCalculator::calculate_drinksPerPlayer()
 {
-    AttributeHash<Player*,AttributeList<LiveGameDrink*> > hash;
+    QMap<Player*,QList<LiveGameDrink*> > hash;
 
     foreach(LiveGameDrink* drink, m_livegame->drinks->value())
     {
         Player* player = Players::instance()->rowById(drink->playerId->value());
-        AttributeList<LiveGameDrink*> list = hash.value(player);
+        QList<LiveGameDrink*> list = hash.value(player);
         list.append(drink);
         hash.insert(player,list);
     }
@@ -46,8 +46,8 @@ AttributeHash<Player*,AttributeList<LiveGameDrink*> > LiveGameCalculator::calcul
     return hash;
 }
 
-AttributeList<Round*> LiveGameCalculator::calculate_rounds(){
-    AttributeList<Round*> list;
+QList<Round*> LiveGameCalculator::calculate_rounds(){
+    QList<Round*> list;
     foreach(Round* r, Rounds::instance()->allRows()){
         if(r->gameId->value() == m_livegame->id()){
             list.append(r);
@@ -56,8 +56,8 @@ AttributeList<Round*> LiveGameCalculator::calculate_rounds(){
     return list;
 }
 
-AttributeHash<Player*,int> LiveGameCalculator::calculate_points(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> LiveGameCalculator::calculate_points(){
+    QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         for(int j = 0; j<m_livegame->players->value().size();j++){
             hash.insert(m_livegame->players->value(j),
@@ -75,8 +75,8 @@ QTime LiveGameCalculator::calculate_length(){
     return time;
 }
 
-AttributeHash<Player*,int> LiveGameCalculator::calculate_placement(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> LiveGameCalculator::calculate_placement(){
+    QMap<Player*,int> hash;
 
     for (int i = 0; i<m_game->players->value().size();i++){
         Player* p = m_game->players->value(i);
@@ -119,8 +119,8 @@ bool sortPlayersByPosition(QPair<Player*,Game*> pair1, QPair<Player*,Game*> pair
     return false;
 }
 
-AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByPosition(){
-    AttributeList<Player*> alist;
+QList<Player*> LiveGameCalculator::calculate_playersSortedByPosition(){
+    QList<Player*> alist;
     QList<QPair<Player*,Game*> > list;
     for (int i = 0; i<m_game->players->value().size();i++){
         QPair<Player*,Game*> pair;
@@ -139,8 +139,8 @@ bool sortPlayersByPlacement(QPair<Player*,Game*> pair1, QPair<Player*,Game*> pai
     return pair1.second->placement->value(pair1.first) < pair2.second->placement->value(pair2.first);
 }
 
-AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByPlacement(){
-    AttributeList<Player*> alist;
+QList<Player*> LiveGameCalculator::calculate_playersSortedByPlacement(){
+    QList<Player*> alist;
     QList<QPair<Player*,Game*> > list;
     for (int i = 0; i<m_game->players->value().size();i++){
         QPair<Player*,Game*> pair;
@@ -155,19 +155,19 @@ AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByPlacement(){
     return alist;
 }
 
-AttributeList<Player*> LiveGameCalculator::calculate_currentPlayingPlayers(){
+QList<Player*> LiveGameCalculator::calculate_currentPlayingPlayers(){
     /*
     if(m_livegame->currentRound->value() != 0){
         return m_livegame->currentRound->value()->currentPlayingPlayers->value();
      }
     else{
         qDebug() << "currentRound = 0 in LiveGameCalculator::calculate_currentPlayingPlayers() from Game: " + m_livegame->name->value();
-        return AttributeList<Player*>();
+        return QList<Player*>();
     }
     */
     if(m_livegame->rounds->value().isEmpty())
     {
-        return AttributeList<Player*>();
+        return QList<Player*>();
     }
 
     return m_livegame->rounds->value().last()->currentPlayingPlayers->value();
@@ -244,8 +244,8 @@ bool sortPlayersByAlcPegel(QPair<Player*,LiveGame*> pair1, QPair<Player*,LiveGam
     return pair1.first->alcPegel->value(pair1.second) > pair2.first->alcPegel->value(pair2.second);
 }
 
-AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByAlcPegel(){
-    AttributeList<Player*> alist;
+QList<Player*> LiveGameCalculator::calculate_playersSortedByAlcPegel(){
+    QList<Player*> alist;
     if(m_livegame->drinks->value().size() > 0){
         QList<QPair<Player*,LiveGame*> > list;
         for (int i = 0; i<m_game->players->value().size();i++){
@@ -262,8 +262,8 @@ AttributeList<Player*> LiveGameCalculator::calculate_playersSortedByAlcPegel(){
     return alist;
 }
 
-AttributeHash<Drink*,int> LiveGameCalculator::calculate_drinkCount(){
-    AttributeHash<Drink*,int> hash;
+QMap<Drink*,int> LiveGameCalculator::calculate_drinkCount(){
+    QMap<Drink*,int> hash;
     foreach(LiveGameDrink* drink, m_livegame->drinks->value()){
         hash.insert(drink->drink->value(),hash.value(drink->drink->value())+1);
     }

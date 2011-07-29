@@ -4,7 +4,7 @@
 #include <QObject>
 
 #include "database.h"
-#include "attribute.h"
+#include "mappingattribute.h"
 #include "row.h"
 
 #include <Models/tablemodel.h>
@@ -148,7 +148,7 @@ public:
 
     Models::TableModel<RowType, Table<RowType> > *model() const;
 
-    Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> > *rows() const;
+    MappingAttribute<int, RowType*, Table<RowType>, Table<RowType> > *rows() const;
 
     static QMap<QString, AttributeBase*> *registeredAttributes();
 
@@ -167,7 +167,7 @@ protected:
       */
     virtual QPointer<RowType> createRowInstance(int id);
 
-    Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> > *m_rows; //!< Alle Rows gecacht
+    MappingAttribute<int, RowType*, Table<RowType>, Table<RowType> > *m_rows; //!< Alle Rows gecacht
     Models::TableModel<RowType, Table<RowType> > *m_model;
     static QMap<QString, AttributeBase*> *registeredDatabaseAttributes();
     bool m_cacheInitialized;
@@ -225,7 +225,7 @@ QMap<QString, AttributeBase*> *Table<RowType>::registeredAttributes()
 template<class RowType>
 Table<RowType>::Table(const QString &name) :
     TableBase(name),
-    m_rows(new Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> >("rows", "rows", this)),
+    m_rows(new MappingAttribute<int, RowType*, Table<RowType>, Table<RowType> >("rows", "rows", this)),
     m_model(0),
     m_cacheInitialized(false)
 {
@@ -238,7 +238,7 @@ Models::TableModel<RowType, Table<RowType> > *Table<RowType>::model() const
 }
 
 template<class RowType>
-Attribute<QMap<int, RowType* >, Table<RowType>, Table<RowType> > *Table<RowType>::rows() const
+MappingAttribute<int, RowType*, Table<RowType>, Table<RowType> > *Table<RowType>::rows() const
 {
     return m_rows;
 }
@@ -321,6 +321,7 @@ void Table<RowType>::initializeCache()
     }
 
     int id = 0;
+    m_rows->setEmitChange(false);
     while(select.next())
     {
 	id = select.value(0).toInt();
@@ -328,10 +329,11 @@ void Table<RowType>::initializeCache()
 
         if(rowInstance)
         {
-            m_rows->value().insert(id, rowInstance);
+            m_rows->setValue(id, rowInstance);
         }
     }
     select.finish();
+    m_rows->setEmitChange(true);
 
     initializeRowCaches();
 
@@ -459,7 +461,7 @@ void Table<RowType>::insertRow(Row *row)
     row->setId(id);
 
     m_model->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
-    m_rows->value().insert(id,static_cast<RowType*>(row));
+    m_rows->setValue(id,static_cast<RowType*>(row));
     m_rows->emitChanged();
 
     foreach(Row *childRow, row->childRows())

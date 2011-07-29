@@ -10,8 +10,8 @@ SkatLiveGameCalculator::SkatLiveGameCalculator(SkatLiveGame* game):
 {
 }
 
-AttributeHash<Player*,int> SkatLiveGameCalculator::calculate_placement(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> SkatLiveGameCalculator::calculate_placement(){
+    QMap<Player*,int> hash;
 
     for (int i = 0; i<m_game->players->value().size();i++){
         Player* p = m_game->players->value(i);

@@ -2,7 +2,6 @@
 #define DATABASE_MAPPINGATTRIBUTE_H
 
 #include "attribute.h"
-#include "attributehash.h"
 #include "handler.h"
 
 #include <QDebug>
@@ -20,7 +19,7 @@ template<class K, class V, class R, class C>
 class MappingAttributeFutureWatcher : public AttributeFutureWatcher
 {
 public:
-    MappingAttributeFutureWatcher(Attribute<AttributeHash<K,V>,R,C>* parent);
+    MappingAttributeFutureWatcher(Attribute<QMap<K,V>,R,C>* parent);
 
     /*!
       Verbindet diesen FutureWatcher mit dem Label \p label.<br>
@@ -38,13 +37,13 @@ public:
 };
 
 template<class K, class V, class R, class C>
-class MappingAttribute : public Attribute<AttributeHash<K,V>,R,C>
+class MappingAttribute : public Attribute<QMap<K,V>,R,C>
 {
 public:
     /*!
       Erstellt ein Mappingattribut mit dem Namen \p name, das zur Row \p row gehört.
       */
-    MappingAttribute(const QString &name, const QString &displayName, Row *row);
+    MappingAttribute(const QString &name, const QString &displayName, AttributeOwner *row);
 
     /*!
       Darf nicht aufgerufen werden!
@@ -62,7 +61,7 @@ public:
     */
     const V value(K key);
 
-    AttributeHash<K,V>& value();
+    const QMap<K,V>& value();
 
     MappingAttributeFutureWatcher<K,V,R,C> *mappingFutureWatcher();
 
@@ -71,8 +70,8 @@ protected:
 };
 
 template<class K, class V, class R, class C>
-MappingAttribute<K,V,R,C>::MappingAttribute(const QString &name, const QString &displayName, Row *row):
-    Attribute<AttributeHash<K,V> ,R,C>(name,displayName,row),
+MappingAttribute<K,V,R,C>::MappingAttribute(const QString &name, const QString &displayName, AttributeOwner *row):
+    Attribute<QMap<K,V> ,R,C>(name,displayName,row),
     m_attributeFutureWatcher(0)
 {
 }
@@ -84,38 +83,41 @@ void MappingAttribute<K,V,R,C>::setValue(V value){
 
 template<class K, class V, class R, class C>
 void MappingAttribute<K,V,R,C>::setValue(K key, V value){
-    Attribute<AttributeHash<K,V>,R,C>::m_lock.lock();
+    Attribute<QMap<K,V>,R,C>::m_lock.lock();
     QVariant v1;
-    v1.setValue(Attribute<AttributeHash<K,V>,R,C>::m_value.value(key));
+    v1.setValue(Attribute<QMap<K,V>,R,C>::m_value.value(key));
     QVariant v2;
     v2.setValue(value);
     bool change = v1 != v2;
-    Attribute<AttributeHash<K,V>,R,C>::m_cacheInitialized = true;
+    Attribute<QMap<K,V>,R,C>::m_cacheInitialized = true;
     if(change)
     {
-	Attribute<AttributeHash<K,V>,R,C>::m_value.insert(key,value);
+        Attribute<QMap<K,V>,R,C>::m_value.insert(key,value);
 
-	emit Attribute<AttributeHash<K,V>,R,C>::changed();
+        if(Attribute<QMap<K,V>,R,C>::m_emitChange)
+        {
+            emit Attribute<QMap<K,V>,R,C>::changed();
+        }
     }
-    Attribute<AttributeHash<K,V>,R,C>::m_lock.unlock();
+    Attribute<QMap<K,V>,R,C>::m_lock.unlock();
 }
 
 template<class K, class V, class R, class C>
 const V MappingAttribute<K,V,R,C>::value(K key){
-    return Attribute<AttributeHash<K,V>,R,C>::value().value(key);
+    Attribute<QMap<K,V>,R,C>::m_lock.lock();
+    V v = value().value(key);
+    Attribute<QMap<K,V>,R,C>::m_lock.unlock();
+    return v;
 }
 
 template<class K, class V, class R, class C>
-AttributeHash<K,V>& MappingAttribute<K,V,R,C>::value()
+const QMap<K,V>& MappingAttribute<K,V,R,C>::value()
 {
-     disconnect(&this->m_value);
-     Attribute<AttributeHash<K,V>,R,C>::value();
-     connect(&this->m_value,SIGNAL(changed()),this,SIGNAL(changed()));
-     return Attribute<AttributeHash<K,V>,R,C>::m_value;
+     return Attribute<QMap<K,V>,R,C>::value();
 }
 
 template<class K, class V, class R, class C>
-MappingAttributeFutureWatcher<K,V,R,C>::MappingAttributeFutureWatcher(Attribute<AttributeHash<K,V>,R,C>* parent):
+MappingAttributeFutureWatcher<K,V,R,C>::MappingAttributeFutureWatcher(Attribute<QMap<K,V>,R,C>* parent):
     AttributeFutureWatcher(parent)
 {
 }
@@ -182,14 +184,14 @@ MappingAttributeFutureWatcher<K,V,R,C> *MappingAttribute<K,V,R,C>::mappingFuture
 
 #define DECLARE_MAPPINGATTRIBUTE(Key, Value, RowClassname, Name) \
     MappingAttribute<Key,Value,RowClassname, RowClassname> *Name; \
-    AttributeHash<Key,Value> calculate_ ## Name();
+    QMap<Key,Value> calculate_ ## Name();
 
 #define DECLARE_MAPPINGATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, Name) \
     MappingAttribute<Key,Value,RowClassname, CalcClassName> *Name;
 
 #define DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Key, Value, RowClassname, CalcClassName, Name) \
     MappingAttribute<Key,Value,RowClassname, RowClassname> *Name; \
-    AttributeHash<Key,Value> call_calculate_ ## Name(){ \
+    QMap<Key,Value> call_calculate_ ## Name(){ \
         return m_calc->calculate_ ## Name(); \
     }
 

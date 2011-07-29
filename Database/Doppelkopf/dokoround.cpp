@@ -41,7 +41,7 @@ void DokoRound::addSchmeisserei(Player* player, const QString& type)
     Schmeisserei* schmeisserei = new Schmeisserei(player,this,type);
     addChildRow(schmeisserei);
 
-    doko_schmeissereien->value().append(schmeisserei);
+    Schmeissereis::instance()->insertRow(schmeisserei);
 }
 
 END_ROW_IMPLEMENTATION()

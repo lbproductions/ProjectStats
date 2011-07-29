@@ -2,7 +2,7 @@
 
 START_ROW_IMPLEMENTATION(RuleConnective, Rule, Rule)
 {
-    IMPLEMENT_ATTRIBUTE(QList<Rule*>,RuleConnective,rules, tr("Rules"))
+    IMPLEMENT_LISTATTRIBUTE(Rule*,RuleConnective,rules, tr("Rules"))
 }
 
 QString RuleConnective::mimeType() const
@@ -12,13 +12,19 @@ QString RuleConnective::mimeType() const
 
 QList<Rule*> RuleConnective::calculate_rules()
 {
-    return Rules::instance()->rowsBySqlCondition(" WHERE parentRuleId = "+m_id);
+    QList<Rule*> list;
+    foreach(Rule* rule, Rules::instance()->rowsBySqlCondition(" WHERE parentRuleId = "+m_id))
+    {
+        list.append(rule);
+    }
+
+    return list;
 }
 
 void RuleConnective::addRule(Rule *rule)
 {
     addChildRow(rule);
-    rules->value().append(rule);
+    //rules->append(rule);
 }
 
 END_ROW_IMPLEMENTATION()

@@ -5,8 +5,6 @@
 #include <QPointer>
 #include <QTime>
 
-#include <Database/attributehash.h>
-#include <Database/attributelist.h>
 #include <Database/round.h>
 
 namespace Database {
@@ -20,17 +18,17 @@ class GameCalculator : public QObject
 public:
     explicit GameCalculator(Game* game, QObject *parent = 0);
 
-    AttributeList<Player*> calculate_players();
+    QList<Player*> calculate_players();
 
     virtual QTime calculate_length();
 
-    virtual AttributeList<Player*> calculate_playersSortedByPosition();
+    virtual QList<Player*> calculate_playersSortedByPosition();
 
-    virtual AttributeList<Player*> calculate_playersSortedByPlacement();
+    virtual QList<Player*> calculate_playersSortedByPlacement();
 
-    virtual AttributeHash<Player*,int> calculate_placement();
+    virtual QMap<Player*,int> calculate_placement();
 
-    virtual AttributeHash<Player*,int> calculate_points();
+    virtual QMap<Player*,int> calculate_points();
 
     virtual int calculate_totalPoints();
 

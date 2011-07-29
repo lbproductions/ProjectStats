@@ -15,8 +15,8 @@ RoundCalculator::RoundCalculator(Round* round):
 {
 }
 
-AttributeHash<Player*,int> RoundCalculator::calculate_points(){
-    AttributeHash<Player*,int> hash;
+QMap<Player*,int> RoundCalculator::calculate_points(){
+    QMap<Player*,int> hash;
     foreach(Point* p,Points::instance()->allRows()){
         if(p->roundId->value() == m_round->id()){
             hash.insert(Players::instance()->rowById(p->playerId->value()),
@@ -37,7 +37,7 @@ int RoundCalculator::calculate_cardmixerPosition(){
     return (m_round->number->value()) % game->playersSortedByPosition->value().size();
 }
 
-AttributeList<Player*> RoundCalculator::calculate_currentPlayingPlayers(){
+QList<Player*> RoundCalculator::calculate_currentPlayingPlayers(){
     return m_round->game->value()->playersSortedByPosition->value();
 }
 

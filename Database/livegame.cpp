@@ -24,7 +24,7 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Drink*,int,LiveGame,LiveGameCalculator,calc,drinkCount,tr("DrinkCount"))
     drinks->addDependingAttribute(drinkCount);
 
-    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,AttributeList<LiveGameDrink*>,LiveGame,LiveGameCalculator,calc,drinksPerPlayer,tr("Drinks per Player"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,QList<LiveGameDrink*>,LiveGame,LiveGameCalculator,calc,drinksPerPlayer,tr("Drinks per Player"))
     drinks->addDependingAttribute(drinksPerPlayer);
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,calc,playersSortedByAlcPegel,tr("PlayersSortedByAlcPegel"))
@@ -117,8 +117,7 @@ Round* LiveGame::startNextRound()
 
 void LiveGame::finishGame()
 {
-    Round* round = rounds->value().takeLast();
-
+    Round* round = rounds->value().last();
     Rounds::instance()->deleteRow(round);
 }
 

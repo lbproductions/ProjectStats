@@ -55,10 +55,8 @@ SOURCES += main.cpp\
     Database/Calculator/drinkcalculator.cpp \
     Database/Calculator/livegamecalculator.cpp \
     Database/mappingattribute.cpp \
-    Database/attributehash.cpp \
     handler.cpp \
     messagesystem.cpp \
-    Database/attributelist.cpp \
     Database/listattribute.cpp \
     global.cpp \
     Database/Calculator/roundcalculator.cpp \
@@ -216,10 +214,8 @@ HEADERS  += \
     Database/Calculator/drinkcalculator.h \
     Database/Calculator/livegamecalculator.h \
     Database/mappingattribute.h \
-    Database/attributehash.h \
     handler.h \
     messagesystem.h \
-    Database/attributelist.h \
     Database/listattribute.h \
     Updater/Updater.h \
     Updater/sparkleupdater.h \
@@ -404,3 +400,7 @@ OTHER_FILES += \
 
 RESOURCES += \
     Ressources/Ressources.qrc
+
+
+
+

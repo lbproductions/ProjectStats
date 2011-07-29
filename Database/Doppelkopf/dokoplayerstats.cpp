@@ -57,8 +57,8 @@ AttributeBase *DokoPlayerStats::attribute(const QString &/*name*/) const
     return 0;
 }
 
-AttributeList<Game*> DokoPlayerStats::calculate_dokoGames(){
-    AttributeList<Game*>  list;
+QList<Game*> DokoPlayerStats::calculate_dokoGames(){
+    QList<Game*>  list;
     foreach(Game* g, m_player->games->value()){
         if(g->type->value() == "Doppelkopf"){
           list.append(g);

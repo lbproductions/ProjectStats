@@ -206,7 +206,7 @@ int TableModel<RowType, Owner>::columnCount(const QModelIndex &parent) const
 }
 
 template<class RowType, class Owner>
-QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) const
+QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int /*role*/) const
 {
     if(!index.isValid() || index.row() >=  m_data.size())
     {
@@ -229,24 +229,23 @@ QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) co
 
     attribute->startCalculateASync();
 
-    QVariant value;
     if(!attribute->isCalculating())
     {
-        value = attribute->displayVariant();
+        return QVariant(attribute->displayVariant());
     }
     else
     {
-        value = "Loading...";
+        return "Loading...";
     }
 
-    if( (role == Qt::DisplayRole && attribute->role() == Qt::DisplayRole) || role == Qt::EditRole)
-    {
-        return value;
-    }
-    if(role == Qt::DecorationRole &&  attribute->role() == Qt::DecorationRole)
-    {
-        return value;
-    }
+//    if( (role == Qt::DisplayRole && attribute->role() == Qt::DisplayRole) || role == Qt::EditRole)
+//    {
+//        return value;
+//    }
+//    if(role == Qt::DecorationRole &&  attribute->role() == Qt::DecorationRole)
+//    {
+//        return value;
+//    }
 
     return QVariant();
 }

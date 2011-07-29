@@ -10,9 +10,6 @@
 #include <QPointer>
 #include <QSqlQuery>
 
-#include <Database/attributelist.h>
-#include <Database/attributehash.h>
-
 namespace Gui{
     namespace Details{
         class DetailsWidget;
@@ -188,8 +185,7 @@ private:
     } \
     Q_DECLARE_METATYPE(Database::RowClassname) \
     Q_DECLARE_METATYPE(Database::RowClassname*) \
-    Q_DECLARE_METATYPE(Database::AttributeList<Database::RowClassname*>) \
-    Q_DECLARE_METATYPE(Database::AttributeHash<Database::RowClassname* COMMA int>) \
+    Q_DECLARE_METATYPE(QMap<Database::RowClassname* COMMA int>) \
     Q_DECLARE_METATYPE(QList<Database::RowClassname*>) \
     Q_DECLARE_METATYPE(QMap<int COMMA Database::RowClassname*>)
 

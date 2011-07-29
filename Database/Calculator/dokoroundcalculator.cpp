@@ -13,10 +13,10 @@ DokoRoundCalculator::DokoRoundCalculator(DokoRound* round):
 {
 }
 
-AttributeList<Player*> DokoRoundCalculator::calculate_currentPlayingPlayers(){
+QList<Player*> DokoRoundCalculator::calculate_currentPlayingPlayers(){
     QPointer<DokoLiveGame> game = (DokoLiveGame*)m_dokoround->game->value().data();
 
-        AttributeList<Player*> players;
+        QList<Player*> players;
         if(game->playersSortedByPosition->value().isEmpty())
         {
             return players;
@@ -55,8 +55,8 @@ int DokoRoundCalculator::calculate_roundPoints(){
     return 0;
 }
 
-AttributeList<Schmeisserei*> DokoRoundCalculator::calculate_doko_schmeissereien(){
-    AttributeList<Schmeisserei*> list;
+QList<Schmeisserei*> DokoRoundCalculator::calculate_doko_schmeissereien(){
+    QList<Schmeisserei*> list;
     foreach(Schmeisserei* s, Schmeissereis::instance()->allRows()){
         if(s->roundId->value() == m_dokoround->id()){
             list.append(s);
@@ -65,8 +65,8 @@ AttributeList<Schmeisserei*> DokoRoundCalculator::calculate_doko_schmeissereien(
     return list;
 }
 
-AttributeHash<Player*,bool> DokoRoundCalculator::calculate_doko_re(){
-    AttributeHash<Player*,bool> hash;
+QMap<Player*,bool> DokoRoundCalculator::calculate_doko_re(){
+    QMap<Player*,bool> hash;
     for(int i = 0; i<m_dokoround->currentPlayingPlayers->value().size();i++){
         if(m_dokoround->currentPlayingPlayers->value(i)->id() == m_dokoround->doko_re1PlayerId->value() ||
                 m_dokoround->currentPlayingPlayers->value(i)->id() == m_dokoround->doko_re2PlayerId->value()){

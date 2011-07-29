@@ -3,9 +3,6 @@
 
 #include <QPointer>
 #include <Database/attribute.h>
-#include <Database/attributelist.h>
-#include <Database/attributehash.h>
-
 class QDateTime;
 
 namespace Gui{
@@ -27,25 +24,25 @@ class PlayerCalculator : public QObject
 public:
     PlayerCalculator(QPointer<Player> player, QObject *parent = 0);
 
-    AttributeList<Game*> calculate_games();
+    QList<Game*> calculate_games();
 
-    AttributeHash<QString,int> calculate_points();
+    QMap<QString,int> calculate_points();
 
-    AttributeList<Place*> calculate_places();
+    QList<Place*> calculate_places();
 
-    AttributeHash<QString,double> calculate_average();
+    QMap<QString,double> calculate_average();
 
-    AttributeHash<QString,int> calculate_wins();
+    QMap<QString,int> calculate_wins();
 
-    AttributeHash<QString,int> calculate_losses();
+    QMap<QString,int> calculate_losses();
 
-    AttributeHash<QString,int> calculate_gameCount();
+    QMap<QString,int> calculate_gameCount();
 
-    AttributeHash<QString,QDateTime> calculate_lastGame();
+    QMap<QString,QDateTime> calculate_lastGame();
 
-    AttributeHash<QString,QDateTime> calculate_lastWin();
+    QMap<QString,QDateTime> calculate_lastWin();
 
-    AttributeHash<LiveGame*,double> calculate_alcPegel();
+    QMap<LiveGame*,double> calculate_alcPegel();
 
 private:
 

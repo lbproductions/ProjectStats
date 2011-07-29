@@ -14,10 +14,10 @@ QString ParentCategorie::mimeType() const
     return "application/projectstats.parentCategorie";
 }
 
-AttributeList<ChildCategorie*> ParentCategorie::calculate_childCategories()
+QList<ChildCategorie*> ParentCategorie::calculate_childCategories()
 {
     QList<Categorie*> qlist = Categories::instance()->rowsBySqlCondition("WHERE parentId = "+QString::number(m_id)+" ORDER BY orderIndicator ASC");
-    AttributeList<ChildCategorie*> list;
+    QList<ChildCategorie*> list;
     foreach(Categorie* c, qlist){
         if(c)
         {

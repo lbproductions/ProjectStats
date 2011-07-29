@@ -129,7 +129,7 @@ public:
 
     AttributeVariant::DisplayRole displayRole();
 
-    void setCheckChange(bool check);
+    void setEmitChange(bool check);
 
 public slots:
     virtual void changeValue(const QVariant& value) = 0;
@@ -173,7 +173,7 @@ protected:
     QList<AttributeBase*> m_dependingAttributes;
 
     AttributeVariant::DisplayRole m_displayRole;
-    bool m_checkChange;
+    bool m_emitChange;
 };
 
 class AttributeFutureWatcher;
@@ -223,7 +223,7 @@ public:
 
       \return der Wert des Attributs.
       */
-    virtual T& value();
+    virtual const T& value();
 
     QString toString();
 
@@ -451,9 +451,11 @@ AttributeVariant Attribute<T,R,C>::toVariant()
 template<class T, class R, class C>
 QVariant Attribute<T,R,C>::displayVariant()
 {
+    m_lock.lock();
     AttributeVariant display = toVariant();
     display.setDisplayRole(AttributeVariant::MainWindow);
     QVariant variant = display.displayVariant();
+    m_lock.unlock();
     if (!variant.isNull()){
         return variant;
     }
@@ -546,7 +548,9 @@ void Attribute<T,R,C>::updateFromDependency()
 template<class T, class R, class C>
 void Attribute<T,R,C>::recalculateFromScratch()
 {
+    m_lock.lock();
     m_cacheInitialized = false;
+    m_lock.unlock();
     calculateASync(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
 }
 
@@ -596,6 +600,7 @@ AttributeFutureWatcher* Attribute<T,R,C>::calculateASync()
 {
     if(waitForCalculationOrGetLock())
     {
+        m_lock.lock();
         if(!m_cacheInitialized)
         {
             m_currentTask = new RecalculationTask<Attribute<T,R,C>, T>(this);
@@ -605,21 +610,24 @@ AttributeFutureWatcher* Attribute<T,R,C>::calculateASync()
         {
             returnLock();
         }
+        m_lock.unlock();
     }
 
     return futureWatcher();
 }
 
 template<class T, class R, class C>
-T& Attribute<T,R,C>::value()
+const T& Attribute<T,R,C>::value()
 {
     if(waitForCalculationOrGetLock())
     {
+        m_lock.lock();
         if(!m_cacheInitialized)
         {
             m_value = calculate();
             m_cacheInitialized = true;
         }
+        m_lock.unlock();
         returnLock();
     }
 
@@ -635,8 +643,9 @@ void Attribute<T,R,C>::changeValue(const QVariant& value)
 template<class T, class R, class C>
 void Attribute<T,R,C>::changeValue(const T &value)
 {
+    m_lock.lock();
     bool change = true;
-    if(m_checkChange)
+    if(m_emitChange)
     {
         QVariant v1;
         v1.setValue(m_value);
@@ -656,6 +665,7 @@ void Attribute<T,R,C>::changeValue(const T &value)
     {
         returnLock();
     }
+    m_lock.unlock();
 }
 
 
