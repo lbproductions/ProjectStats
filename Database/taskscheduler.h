@@ -2,9 +2,10 @@
 #define TASKSCHEDULER_H
 
 #include <QObject>
-#include <QRunnable>
 #include <QThread>
 #include <QQueue>
+#include <QFuture>
+#include <QWaitCondition>
 
 #include <singleton.h>
 
@@ -13,11 +14,11 @@ class QThreadPool;
 namespace Database
 {
 
-class Task : public QObject, public QRunnable
+class Task : public QObject
 {
     Q_OBJECT
 public:
-    explicit Task(int priority = QThread::InheritPriority);
+    explicit Task(int priority = QThread::InheritPriority, QObject* parent = 0);
 
     void run();
 
@@ -29,11 +30,27 @@ public:
 
     void decreasePriority();
 
+    void setFuture(QFuture<void> future);
+
+    QFuture<void> future() const;
+
+    void waitForFinished();
+
+    void lock();
+    void unlock();
+
 signals:
     void finished();
 
+private slots:
+    void on_finished();
+
 private:
     int m_priority;
+    QFuture<void> m_future;
+    QMutex m_mutex;
+    QWaitCondition m_waitCondition;
+    bool m_finished;
 };
 
 class TaskScheduler : public QObject

@@ -95,15 +95,16 @@ void DatabaseAttribute<T,R,C>::changeValue(QVariant value, bool updateDatabase)
     QVariant v;
     v.setValue(Attribute<T,R,C>::m_value);
 
-    Attribute<T,R,C>::changeValue(value.value<T>());
-
     if(updateDatabase)
     {
+        Attribute<T,R,C>::changeValue(value.value<T>());
         updateDatabase = value != v;
-    }
-    if(updateDatabase)
-    {
         QtConcurrent::run(static_cast<Row*>(Attribute<T,R,C>::m_owner), &Row::set, Attribute<T,R,C>::m_name, value);
+    }
+    else
+    {
+        Attribute<T,R,C>::m_cacheInitialized = true;
+        Attribute<T,R,C>::m_value = value.value<T>();
     }
     //Attribute<T,R>::m_row->set(Attribute<T,R>::m_name, value);
 }

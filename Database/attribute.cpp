@@ -15,7 +15,7 @@ Changeable::Changeable(QObject *parent) :
 {
 }
 
-QString Changeable::toString()
+const QString Changeable::toString()
 {
     return QString();
 }

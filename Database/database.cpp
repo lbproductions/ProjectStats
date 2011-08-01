@@ -82,8 +82,19 @@ void Database::createTables()
 
         table->initializeCache();
 
-        qDebug() << "Database::createTables: Initializing caches for" <<  table->name() << "took" << timer.restart() << "ms";
+        qDebug() << "Database::createTables: Initializing cache for" <<  table->name() << "took" << timer.restart() << "ms";
     }
+
+    foreach(QPointer<TableBase> table, m_tables)
+    {
+        Q_ASSERT(!table.isNull());
+
+        table->initializeRowCaches();
+
+        qDebug() << "Database::createTables: Initializing attributes for" <<  table->name() << "took" << timer.restart() << "ms";
+    }
+
+
 }
 
 void Database::registerTable(TableBase *table)

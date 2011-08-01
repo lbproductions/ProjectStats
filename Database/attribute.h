@@ -35,7 +35,7 @@ class Changeable : public QObject
 public:
     explicit Changeable(QObject *parent = 0);
 
-    virtual QString toString();
+    virtual const QString toString();
 
 signals:
     void changed();
@@ -44,6 +44,7 @@ signals:
 class Player;
 
 class AttributeBase;
+class AttributeFutureWatcher;
 
 class AttributeOwner : public Changeable
 {
@@ -114,12 +115,12 @@ public:
       */
     virtual QString sqlType() const = 0;
 
-    virtual QString toString() = 0;
-    virtual AttributeVariant toVariant() = 0;
-    virtual QVariant displayVariant() = 0;
+    virtual const AttributeVariant toVariant() = 0;
+    virtual const QString toString() = 0;
+    virtual const QVariant displayVariant() = 0;
     virtual void changeValue(QVariant value, bool updateDatabase);
 
-    virtual void startCalculateASync() = 0;
+    virtual AttributeFutureWatcher* startCalculationTask() = 0;
 
     virtual bool isCalculating() = 0;
 
@@ -151,6 +152,8 @@ protected slots:
 
     virtual void onChange();
 
+    virtual void endCalculation() = 0;
+
 signals:
     /*!
       Wird gesendet, sobald sich das Attribut geändert hat.
@@ -175,8 +178,6 @@ protected:
     AttributeVariant::DisplayRole m_displayRole;
     bool m_emitChange;
 };
-
-class AttributeFutureWatcher;
 
 template<class AttributeType, class ValueType>
 class RecalculationTask;
@@ -223,20 +224,20 @@ public:
 
       \return der Wert des Attributs.
       */
-    virtual const T& value();
+    virtual const T value();
 
-    QString toString();
+    const AttributeVariant toVariant();
 
-    AttributeVariant toVariant();
+    const QString toString();
 
-    QVariant displayVariant();
+    const QVariant displayVariant();
     /*!
       Startet im Hintergrund eine Neuberechnung des Attributs und
       gibt den AttributeFutureWatcher dieses Attributs zurück.
 
       \return der AttributeFutureWatcher dieses Attributs.
       */
-    AttributeFutureWatcher* calculateASync();
+    AttributeFutureWatcher* startCalculationTask();
 
     /*!
       Gibt den AttributeFutureWatcher dieses Attributs zurück.
@@ -285,8 +286,6 @@ public:
       */
     void addDependingAttribute(AttributeBase *dependingAttribute);
 
-    void startCalculateASync();
-
     bool isCalculating();
 
     /*!
@@ -297,10 +296,11 @@ protected:
     friend class TableModel<R, Table<R> >;
     friend class RecalculationTask<Attribute<T,R,C>,T>;
 
+
     /*!
       Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
       */
-    virtual void changeValue(const T &value);
+    virtual void changeValue(const T value);
 
     /*!
       Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
@@ -315,15 +315,17 @@ protected:
       */
     void updateFromDependency();
 
-    bool waitForCalculationOrGetLock();
-
-    void returnLock();
+    void waitForCalculationTask();
 
     /*!
       Ist eine Calculationfunction gesetzt, wird diese aufgerufen um den Wert des Attributs zu berechnen. Sonst wird ein leeres T() zurückgegeben.<br>
       Die Calculationfunction sollte den Wert nur berechnen und zurückgeben, ohne dabei schreibend auf irgendetwas zuzugreifen.
       */
     virtual T calculate() const;
+
+    void setFuture(QFuture<T> future);
+
+    void endCalculation();
 
     bool m_cacheInitialized; //!< true, wenn der Cache den korrekten Wert enthält.
     T m_value; //!< Der Cache für den Wert des Attributs.
@@ -334,11 +336,11 @@ protected:
     UpdateFunction m_updateFunction; //!< Die Funktion zum Updaten des Attributs.
     QHash<QString,AttributeSpecificUpdateFunction> m_updateFunctions;
 
-    QMutex m_lock; //!< Ein Mutex um die Klasse Threadsicher zu machen.
-    QMutex m_calculatingMutex;
+    QMutex m_mutex; //!< Ein Mutex zum Threadsicher machen...
     QMutex m_waitingMutex;
     QWaitCondition m_waitCondition;
     RecalculationTask<Attribute<T,R,C>, T>* m_currentTask;
+    bool m_isCalculating;
 };
 
 //! Dieses Interface dient dazu, der template-Klasse AttributeFutureWatcher signals und slots, sowie ein Dasein als QObject zu ermöglichen.
@@ -406,11 +408,9 @@ Attribute<T,R,C>::Attribute() :
     m_calculateFunction(0),
     m_updateFunction(0),
     m_updateFunctions(QHash<QString,AttributeSpecificUpdateFunction>()),
-    m_lock(QMutex::Recursive),
-    m_calculatingMutex(QMutex::Recursive),
-    m_waitingMutex(QMutex::NonRecursive),
-    m_waitCondition(),
-    m_currentTask(0)
+    m_mutex(QMutex::Recursive),
+    m_currentTask(0),
+    m_isCalculating(false)
 {
 }
 
@@ -423,11 +423,9 @@ Attribute<T,R,C>::Attribute(const QString &name, const QString &displayName, Att
     m_calculateFunction(0),
     m_updateFunction(0),
     m_updateFunctions(QHash<QString,AttributeSpecificUpdateFunction>()),
-    m_lock(QMutex::Recursive),
-    m_calculatingMutex(QMutex::Recursive),
-    m_waitingMutex(QMutex::NonRecursive),
-    m_waitCondition(),
-    m_currentTask(0)
+    m_mutex(QMutex::Recursive),
+    m_currentTask(0),
+    m_isCalculating(false)
 {
 }
 
@@ -441,7 +439,7 @@ Attribute<T,R,C>::~Attribute()
 }
 
 template<class T, class R, class C>
-AttributeVariant Attribute<T,R,C>::toVariant()
+const AttributeVariant Attribute<T,R,C>::toVariant()
 {
     AttributeVariant v;
     v.setValue(value());
@@ -449,13 +447,18 @@ AttributeVariant Attribute<T,R,C>::toVariant()
 }
 
 template<class T, class R, class C>
-QVariant Attribute<T,R,C>::displayVariant()
+const QVariant Attribute<T,R,C>::displayVariant()
 {
-    m_lock.lock();
+    QMutexLocker locker(&m_mutex); (void) locker;
+
+    if(m_isCalculating) {
+        return "Loading...";
+    }
+
     AttributeVariant display = toVariant();
     display.setDisplayRole(AttributeVariant::MainWindow);
     QVariant variant = display.displayVariant();
-    m_lock.unlock();
+
     if (!variant.isNull()){
         return variant;
     }
@@ -465,20 +468,20 @@ QVariant Attribute<T,R,C>::displayVariant()
 }
 
 template<class T, class R, class C>
-QString Attribute<T,R,C>::toString()
+const QString Attribute<T,R,C>::toString()
 {
-  return toVariant().toString();
+    return toVariant().toString();
 }
 
 template<class T, class R, class C>
 AttributeFutureWatcher* Attribute<T,R,C>::futureWatcher()
 {
-    m_lock.lock();
+    QMutexLocker locker(&m_mutex); (void) locker;
+
     if(m_futureWatcher == 0)
     {
         m_futureWatcher = new AttributeFutureWatcher(this);
     }
-    m_lock.unlock();
     return m_futureWatcher;
 }
 
@@ -496,23 +499,17 @@ T Attribute<T,R,C>::calculate() const
 }
 
 template<class T, class R, class C>
-void Attribute<T,R,C>::startCalculateASync()
-{
-    calculateASync();
-}
-
-
-template<class T, class R, class C>
 void Attribute<T,R,C>::updateFromDependency()
 {
-//    m_lock.lock();
+    recalculateFromScratch();
+
+/*    m_lock.lock();
 //    if(!m_cacheInitialized)
 //    {
-        recalculateFromScratch();
 //    }
 //    m_lock.unlock();
 
-    /*m_lock.lockForWrite();
+    m_lock.lockForWrite();
     AttributeBase *dependentAttribute = static_cast<AttributeBase*>(sender());
     AttributeSpecificUpdateFunction updateFunction = m_updateFunctions.value(dependentAttribute->name(), 0);
     QFuture<T> future;
@@ -548,88 +545,98 @@ void Attribute<T,R,C>::updateFromDependency()
 template<class T, class R, class C>
 void Attribute<T,R,C>::recalculateFromScratch()
 {
-    m_lock.lock();
     m_cacheInitialized = false;
-    m_lock.unlock();
-    calculateASync(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
+    startCalculationTask(); // ungefaehr: if(!m_cacheInitialized) m_value = calculate();
 }
 
 template<class T, class R, class C>
 bool Attribute<T,R,C>::isCalculating()
 {
-    m_lock.lock();
-    if(m_calculatingMutex.tryLock())
-    {
-        m_calculatingMutex.unlock();
-        m_lock.unlock();
-        return false;
-    }
-    m_lock.unlock();
-    return true;
+    QMutexLocker locker(&m_mutex); (void) locker;
+    return m_isCalculating;
 }
 
 template<class T, class R, class C>
-bool Attribute<T,R,C>::waitForCalculationOrGetLock()
+void Attribute<T,R,C>::endCalculation()
 {
-    QMutexLocker locker(&m_waitingMutex);
-    (void) locker;
+    m_mutex.lock();
+    m_waitingMutex.lock();
+    m_waitCondition.wakeAll();
+    m_waitingMutex.unlock();
+    m_isCalculating = false;
+    m_mutex.unlock();
+}
 
-    if(!m_calculatingMutex.tryLock() && m_currentTask != 0)
+template<class T, class R, class C>
+void Attribute<T,R,C>::waitForCalculationTask()
+{
+    m_mutex.lock();
+    if(m_isCalculating)
     {
         m_currentTask->increasePriority();
+        m_waitingMutex.lock();
+        m_mutex.unlock();
+
         QThreadPool::globalInstance()->releaseThread();
         m_waitCondition.wait(&m_waitingMutex);
         QThreadPool::globalInstance()->reserveThread();
-        return false;
+
+        m_mutex.lock();
+        m_waitingMutex.unlock();
     }
-
-    return true;
+    m_mutex.unlock();
 }
 
 template<class T, class R, class C>
-void Attribute<T,R,C>::returnLock()
+AttributeFutureWatcher* Attribute<T,R,C>::startCalculationTask()
 {
-    m_waitingMutex.lock();
-    m_waitCondition.wakeAll();
-    m_calculatingMutex.unlock();
-    m_waitingMutex.unlock();
-}
-
-template<class T, class R, class C>
-AttributeFutureWatcher* Attribute<T,R,C>::calculateASync()
-{
-    if(waitForCalculationOrGetLock())
+    m_mutex.lock();
+    if(!m_cacheInitialized && !m_isCalculating)
     {
-        m_lock.lock();
-        if(!m_cacheInitialized)
-        {
-            m_currentTask = new RecalculationTask<Attribute<T,R,C>, T>(this);
-            TaskScheduler::instance()->schedule(m_currentTask);
-        }
-        else
-        {
-            returnLock();
-        }
-        m_lock.unlock();
+        m_isCalculating = true;
+        m_currentTask = new RecalculationTask<Attribute<T,R,C>, T>(this);
+        connect(m_currentTask,SIGNAL(finished()),this,SLOT(endCalculation()));
+        TaskScheduler::instance()->schedule(m_currentTask);
     }
+    m_mutex.unlock();
 
     return futureWatcher();
 }
 
-template<class T, class R, class C>
-const T& Attribute<T,R,C>::value()
+template<class AttributeType, class ValueType>
+void RecalculationTask<AttributeType,ValueType>::execute()
 {
-    if(waitForCalculationOrGetLock())
+    unlock();
+
+    const ValueType value = m_attribute->calculate();
+
+    m_attribute->m_mutex.lock();
+    m_attribute->m_isCalculating = false;
+    m_attribute->m_currentTask = 0;
+    m_attribute->m_mutex.unlock();
+    m_attribute->changeValue(value);
+    lock();
+}
+
+template<class T, class R, class C>
+const T Attribute<T,R,C>::value()
+{
+    Task* task = m_currentTask;
+    if(task)
     {
-        m_lock.lock();
-        if(!m_cacheInitialized)
-        {
-            m_value = calculate();
-            m_cacheInitialized = true;
-        }
-        m_lock.unlock();
-        returnLock();
+        QThreadPool::globalInstance()->releaseThread();
+        task->waitForFinished();
+        QThreadPool::globalInstance()->reserveThread();
     }
+    m_mutex.lock();
+    if(!m_cacheInitialized && !m_isCalculating)
+    {
+        m_isCalculating = true;
+        m_value = calculate();
+        m_isCalculating = false;
+        m_cacheInitialized = true;
+    }
+     m_mutex.unlock();
 
     return m_value;
 }
@@ -641,31 +648,31 @@ void Attribute<T,R,C>::changeValue(const QVariant& value)
 }
 
 template<class T, class R, class C>
-void Attribute<T,R,C>::changeValue(const T &value)
+void Attribute<T,R,C>::changeValue(const T value)
 {
-    m_lock.lock();
+    m_mutex.lock();
+
     bool change = true;
-    if(m_emitChange)
-    {
-        QVariant v1;
-        v1.setValue(m_value);
-        QVariant v2;
-        v2.setValue(value);
-        change = v1 != v2;
-    }
+    QVariant v1;
+    v1.setValue(m_value);
+    QVariant v2;
+    v2.setValue(value);
+    change = v1 != v2;
+
     m_cacheInitialized = true;
     if(change)
     {
         m_value = value;
-
-        returnLock();
-        emit changed();
+        m_mutex.unlock();
+        if(m_emitChange)
+        {
+            emit changed();
+        }
     }
     else
     {
-        returnLock();
+        m_mutex.unlock();
     }
-    m_lock.unlock();
 }
 
 
@@ -679,27 +686,27 @@ QString Attribute<T,R,C>::sqlType() const
 template<class T, class R, class C>
 void Attribute<T,R,C>::setCalculationFunction(C* calculator, CalculateFunction calculateFuntion)
 {
-    m_lock.lock();
+    m_mutex.lock();
     m_calculateFunction = calculateFuntion;
     m_calculator = calculator;
-    m_lock.unlock();
+    m_mutex.unlock();
 }
 
 template<class T, class R, class C>
 void Attribute<T,R,C>::setUpdateFunction(C* calculator, UpdateFunction updateFunction)
 {
-    m_lock.lock();
+    m_mutex.lock();
     m_updateFunction = updateFunction;
     m_calculator = calculator;
-    m_lock.unlock();
+    m_mutex.unlock();
 }
 
 template<class T, class R, class C>
 void Attribute<T,R,C>::setUpdateFunction(AttributeBase *attribute, AttributeSpecificUpdateFunction updateFunction)
 {
-    m_lock.lock();
+    m_mutex.lock();
     m_updateFunctions.insert(attribute->name(), updateFunction);
-    m_lock.unlock();
+    m_mutex.unlock();
 }
 
 template<class T, class R, class C>
@@ -715,14 +722,6 @@ RecalculationTask<AttributeType,ValueType>::RecalculationTask(AttributeType* att
     Task(priority),
     m_attribute(attribute)
 {
-}
-
-template<class AttributeType, class ValueType>
-void RecalculationTask<AttributeType,ValueType>::execute()
-{
-    ValueType value = m_attribute->calculate();
-    m_attribute->changeValue(value);
-    m_attribute->m_currentTask = 0;
 }
 
 } // namespace Database

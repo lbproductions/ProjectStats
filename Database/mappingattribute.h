@@ -46,22 +46,11 @@ public:
     MappingAttribute(const QString &name, const QString &displayName, AttributeOwner *row);
 
     /*!
-      Darf nicht aufgerufen werden!
-      */
-    void setValue(V value);
-
-    /*!
-      Setzt für \p key den Wert \p value.
-      */
-    void setValue(K key, V value);
-
-
-    /*!
     Gibt für \p key den richtigen Wert zurück.
     */
     const V value(K key);
 
-    const QMap<K,V>& value();
+    const QMap<K,V> value();
 
     MappingAttributeFutureWatcher<K,V,R,C> *mappingFutureWatcher();
 
@@ -77,41 +66,12 @@ MappingAttribute<K,V,R,C>::MappingAttribute(const QString &name, const QString &
 }
 
 template<class K, class V, class R, class C>
-void MappingAttribute<K,V,R,C>::setValue(V value){
-    qWarning() << "MappingAttribute<T>::setValue(): You may not invoke this method on a MappingAttribute!";
-}
-
-template<class K, class V, class R, class C>
-void MappingAttribute<K,V,R,C>::setValue(K key, V value){
-    Attribute<QMap<K,V>,R,C>::m_lock.lock();
-    QVariant v1;
-    v1.setValue(Attribute<QMap<K,V>,R,C>::m_value.value(key));
-    QVariant v2;
-    v2.setValue(value);
-    bool change = v1 != v2;
-    Attribute<QMap<K,V>,R,C>::m_cacheInitialized = true;
-    if(change)
-    {
-        Attribute<QMap<K,V>,R,C>::m_value.insert(key,value);
-
-        if(Attribute<QMap<K,V>,R,C>::m_emitChange)
-        {
-            emit Attribute<QMap<K,V>,R,C>::changed();
-        }
-    }
-    Attribute<QMap<K,V>,R,C>::m_lock.unlock();
-}
-
-template<class K, class V, class R, class C>
 const V MappingAttribute<K,V,R,C>::value(K key){
-    Attribute<QMap<K,V>,R,C>::m_lock.lock();
-    V v = value().value(key);
-    Attribute<QMap<K,V>,R,C>::m_lock.unlock();
-    return v;
+    return value().value(key);
 }
 
 template<class K, class V, class R, class C>
-const QMap<K,V>& MappingAttribute<K,V,R,C>::value()
+const QMap<K,V> MappingAttribute<K,V,R,C>::value()
 {
      return Attribute<QMap<K,V>,R,C>::value();
 }

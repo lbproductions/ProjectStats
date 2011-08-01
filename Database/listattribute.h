@@ -19,7 +19,7 @@ public:
     */
     const V value(int pos);
 
-    const QList<V>& value();
+    const QList<V> value();
 };
 
 template<class V, class R, class C>
@@ -34,7 +34,7 @@ const V ListAttribute<V,R,C>::value(int pos){
 }
 
 template<class V, class R, class C>
-const QList<V>& ListAttribute<V,R,C>::value(){
+const QList<V> ListAttribute<V,R,C>::value(){
      return Attribute<QList<V>,R,C>::value();
 }
 

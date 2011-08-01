@@ -184,10 +184,10 @@ void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
             {
                 points = -points;
 	    }
-            round->points->setValue(re1,3*points);
-            round->points->setValue(contra1,-points);
-            round->points->setValue(contra2,-points);
-            round->points->setValue(contra3,-points);
+            round->addPoints(re1,3*points);
+            round->addPoints(contra1,-points);
+            round->addPoints(contra2,-points);
+            round->addPoints(contra3,-points);
 	}
         round->comment->setValue(ui->lineEditComment->text());
         m_livegame->startNextRound();

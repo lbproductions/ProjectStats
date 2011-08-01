@@ -35,12 +35,6 @@ START_ROW_IMPLEMENTATION(Drink, Drink, Row)
     icon->setRole(Qt::DecorationRole);
 
     IMPLEMENT_ATTRIBUTE_IN_CALC(int,Drink,DrinkCalculator,calc,drinkCount,"DrinkCount")
-    foreach(Game* g, Games::instance()->allRows()){
-        if(g->live->value()){
-            LiveGame* l = static_cast<LiveGame*>(g);
-            l->drinks->addDependingAttribute(drinkCount);
-        }
-    }
 }
 
 QString Drink::mimeType() const

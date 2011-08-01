@@ -97,7 +97,7 @@ void Round::addPoints(Player* player, int points)
     Point* point = new Point(this,player,points);
     addChildRow(point);
 
-    this->points->setValue(player,points);
+    Points::instance()->insertRow(point);
 }
 
 END_ROW_IMPLEMENTATION()

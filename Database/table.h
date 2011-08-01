@@ -103,8 +103,13 @@ protected:
       */
     virtual void initializeCache() = 0;
 
+    virtual void initializeRowCaches() = 0;
+
     QString m_name; //!< Der Name der Tabelle.
 };
+
+template<class RowType>
+class TableCache;
 
 //! Repräsentiert eine Tabelle in der Datenbank.
 /*!
@@ -167,7 +172,7 @@ protected:
       */
     virtual QPointer<RowType> createRowInstance(int id);
 
-    MappingAttribute<int, RowType*, Table<RowType>, Table<RowType> > *m_rows; //!< Alle Rows gecacht
+    TableCache<RowType> *m_rows; //!< Alle Rows gecacht
     Models::TableModel<RowType, Table<RowType> > *m_model;
     static QMap<QString, AttributeBase*> *registeredDatabaseAttributes();
     bool m_cacheInitialized;
@@ -186,6 +191,15 @@ private:
     void initializeCache();
 
     void initializeRowCaches();
+};
+
+template<class RowType>
+class TableCache : public MappingAttribute<int, RowType*, Table<RowType>, Table<RowType> >
+{
+public:
+    TableCache(Table<RowType>* table);
+
+    friend class Table<RowType>;
 };
 
 //! Diese Klasse wird vom Macro REGISTER_ASROWTYPE() verwendet um Rows (bzw. deren Attribute) bei einer Tabelle zu registrieren.
@@ -225,7 +239,7 @@ QMap<QString, AttributeBase*> *Table<RowType>::registeredAttributes()
 template<class RowType>
 Table<RowType>::Table(const QString &name) :
     TableBase(name),
-    m_rows(new MappingAttribute<int, RowType*, Table<RowType>, Table<RowType> >("rows", "rows", this)),
+    m_rows(new TableCache<RowType>(this)),
     m_model(0),
     m_cacheInitialized(false)
 {
@@ -322,6 +336,7 @@ void Table<RowType>::initializeCache()
 
     int id = 0;
     m_rows->setEmitChange(false);
+    m_rows->value();
     while(select.next())
     {
 	id = select.value(0).toInt();
@@ -329,13 +344,11 @@ void Table<RowType>::initializeCache()
 
         if(rowInstance)
         {
-            m_rows->setValue(id, rowInstance);
+            m_rows->m_value.insert(id, rowInstance);
         }
     }
     select.finish();
     m_rows->setEmitChange(true);
-
-    initializeRowCaches();
 
     m_model = new Models::TableModel<RowType, Table<RowType> >(this);
     m_cacheInitialized = true;
@@ -461,7 +474,7 @@ void Table<RowType>::insertRow(Row *row)
     row->setId(id);
 
     m_model->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
-    m_rows->setValue(id,static_cast<RowType*>(row));
+    m_rows->m_value.insert(id,static_cast<RowType*>(row));
     m_rows->emitChanged();
 
     foreach(Row *childRow, row->childRows())
@@ -507,6 +520,11 @@ void Table<RowType>::addDependingAttributeToRows(AttributeBase* parent, Attribut
     foreach(RowType* type,this->allRows()){
 	//type->parent->addDependingAttribute(child);
     }
+}
+template<class RowType>
+TableCache<RowType>::TableCache(Table<RowType>* table) :
+    MappingAttribute<int, RowType*, Table<RowType>, Table<RowType> >("rows","rows",table)
+{
 }
 
 } // namespace Database
