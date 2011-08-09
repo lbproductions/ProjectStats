@@ -17,6 +17,9 @@ public:
     LiveGameSummaryWidget(Database::LiveGame* game, QWidget *parent = 0);
 
 protected:
+    void setupDrinkTab();
+    void setupGeneralTab();
+
     QPointer<Database::LiveGame> m_livegame;
 };
 

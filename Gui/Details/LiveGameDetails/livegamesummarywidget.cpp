@@ -15,13 +15,18 @@ LiveGameSummaryWidget::LiveGameSummaryWidget(Database::LiveGame* game, QWidget *
     GameSummaryWidget(game,parent),
     m_livegame(game)
 {
+    setupDrinkTab();
+    setupGeneralTab();
+}
+
+void LiveGameSummaryWidget::setupDrinkTab(){
     if(!m_livegame->drinks->value().isEmpty()){
         QWidget* drinkwidget = new QWidget(this);
         QGridLayout* drinklayout = new QGridLayout();
         drinklayout->addWidget(new QLabel(tr("Drunken Drinks:")),0,0);
 
         QGridLayout* useddrinks = new QGridLayout();
-        if (game->drinks->value().isEmpty()){
+        if (m_livegame->drinks->value().isEmpty()){
             QLabel* label = new QLabel(tr("Nothing was drunk."));
             useddrinks->addWidget(label,0,0);
         }
@@ -40,7 +45,7 @@ LiveGameSummaryWidget::LiveGameSummaryWidget(Database::LiveGame* game, QWidget *
 
         drinklayout->addWidget(new QLabel(tr("Drunken players:")),1,0);
 
-        if (!game->drinks->value().isEmpty()){
+        if (!m_livegame->drinks->value().isEmpty()){
             QGridLayout* layout = new QGridLayout();
             for(int i = 0; i<m_livegame->playersSortedByAlcPegel->value().size();i++){
                 if(m_livegame->playersSortedByAlcPegel->value(i)->alcPegel->value(m_livegame) > 0.0){
@@ -61,20 +66,28 @@ LiveGameSummaryWidget::LiveGameSummaryWidget(Database::LiveGame* game, QWidget *
         drinkwidget->setLayout(drinklayout);
         ui->tabWidget->addTab(drinkwidget,tr("Drinks"));
     }
+}
 
+void LiveGameSummaryWidget::setupGeneralTab(){
     for(int i = 0; i<m_livegame->playersSortedByPlacement->value().size();i++){
-            QLabel* points = new QLabel(QString::number(m_livegame->points->value(m_livegame->playersSortedByPlacement->value(i))));
-            points->setAlignment(Qt::AlignCenter);
+        QLabel* points = new QLabel(QString::number(m_livegame->points->value(m_livegame->playersSortedByPlacement->value(i))));
+        points->setAlignment(Qt::AlignCenter);
 
-            if(i<3){
-                QFont font = points->font();
-                font.setBold(true);
-                font.setPointSize(14);
-                points->setFont(font);
-            }
+        double perc = 100* (double)m_livegame->leadingRounds->value(m_livegame->playersSortedByPlacement->value(i)) / (double)m_livegame->roundCount->value();
+        QLabel* leadPercentage = new QLabel(QString::number((int)perc)+"%");
+        leadPercentage->setAlignment(Qt::AlignCenter);
 
-            static_cast<QGridLayout*>(ui->tab->layout())->addWidget(points,i,2);
+        if(i<3){
+            QFont font = points->font();
+            font.setBold(true);
+            font.setPointSize(14);
+            points->setFont(font);
+            leadPercentage->setFont(font);
         }
+
+        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(points,i,2);
+        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(leadPercentage,i,3);
+    }
 }
 
 } // namespace LiveGameDetails

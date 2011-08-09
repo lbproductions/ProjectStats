@@ -573,14 +573,14 @@ QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_roundWins(){
 QMap<int,QMap<Player*,int> > DokoLiveGameCalculator::calculate_placementAfterRounds(){
     QMap<int,QMap<Player*,int> > hash;
 
-    QMap<Player*,int> points;
     QMap<Player*,int> placement;
+    QMap<Player*,int> points;
     int count = 1;
     foreach(Round* r, m_livegame->rounds->value()){
-        foreach(Player* p, r->currentPlayingPlayers->value()){
+        foreach(Player* p, m_livegame->players->value()){
             points.insert(p,points.value(p)+r->points->value(p));
         }
-        foreach(Player* p, r->currentPlayingPlayers->value()){
+        foreach(Player* p, m_livegame->players->value()){
             int place = 1;
             foreach(Player* q, r->currentPlayingPlayers->value()){
                 if(p->id() != q->id()){
