@@ -114,7 +114,7 @@ void TaskScheduler::schedule(Task* task)
 
 bool priorityIsHigher(Task* t1, Task* t2)
 {
-    return t1->priority() < t2->priority();
+    return t1->priority() > t2->priority();
 }
 
 ExecuteQueueHelper::ExecuteQueueHelper(TaskScheduler *parent) :

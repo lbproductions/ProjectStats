@@ -49,16 +49,25 @@ void DokoLiveGameRowWindow::showNewSchmeissereiDialog()
 
 void DokoLiveGameRowWindow::reflectState()
 {
-    m_actionSchmeisserei->setEnabled(true);
+    if(m_dokolivegame->doko_mitSchmeisserei->value())
+    {
+        m_actionSchmeisserei->setEnabled(true);
+    }
 
     switch(m_livegame->state->value())
     {
     case Database::Round::PausedState:
-        m_actionSchmeisserei->setEnabled(false);
+        if(m_dokolivegame->doko_mitSchmeisserei->value())
+        {
+            m_actionSchmeisserei->setEnabled(false);
+        }
         break;
 
     case Database::Round::FinishedState:
-        m_actionSchmeisserei->setEnabled(false);
+        if(m_dokolivegame->doko_mitSchmeisserei->value())
+        {
+            m_actionSchmeisserei->setEnabled(false);
+        }
         break;
 
     case Database::Round::RunningState:

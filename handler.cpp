@@ -76,6 +76,8 @@ Handler::~Handler()
     if (m_messagesystem){
 	delete m_messagesystem;
     }
+
+    Database::TaskScheduler::instance()->quit();
 }
 
 Handler* const Handler::getInstance() {

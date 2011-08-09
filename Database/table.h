@@ -193,6 +193,18 @@ private:
     void initializeRowCaches();
 };
 
+template<class TableType>
+class AttributeInitilizerTask : public Task
+{
+public:
+    explicit AttributeInitilizerTask(TableType* parent);
+
+    void execute();
+
+private:
+    TableType* m_parent;
+};
+
 template<class RowType>
 class TableCache : public MappingAttribute<int, RowType*, Table<RowType>, Table<RowType> >
 {
@@ -377,24 +389,46 @@ void Table<RowType>::initializeRowCaches()
 	qWarning() << "Table::initializeRowCaches: " << select.lastQuery();
     }
 
+    QList<AttributeBase*> databaseAttributes = registeredDatabaseAttributes()->values();
+    QList<AttributeBase*> attributes = registeredAttributes()->values();
     while(select.next())
     {
-	QList<AttributeBase*> databaseAttributes = registeredDatabaseAttributes()->values();
-	for(int i = 0; i < databaseAttributes.size(); ++i)
-	{
-	    AttributeBase *attribute = databaseAttributes.at(i);
-	    Row *row = m_rows->value().value(select.value(0).toInt());
+        Row *row = m_rows->value().value(select.value(0).toInt());
 
-            if(attribute && row)
+        if(row)
+        {
+            for(int i = 0; i < databaseAttributes.size(); ++i)
             {
-                QString name = attribute->name();
-                AttributeBase *rowAttribute = row->attribute(name);
-                if(rowAttribute != 0)
+                AttributeBase* rowAttribute = row->attribute(databaseAttributes.at(i)->name());
+                if(rowAttribute)
                 {
                     rowAttribute->changeValue(select.value(i+1),false);
                 }
             }
-	}
+
+        }
+    }
+
+    AttributeInitilizerTask<Table<RowType> >* task = new AttributeInitilizerTask<Table<RowType> >(this);
+    TaskScheduler::instance()->schedule(task);
+}
+
+template<class TableType>
+AttributeInitilizerTask<TableType>::AttributeInitilizerTask(TableType* parent) :
+    Task(QThread::LowestPriority,parent),
+    m_parent(parent)
+{
+}
+
+template<class TableType>
+void AttributeInitilizerTask<TableType>::execute()
+{
+    foreach(Row* row, m_parent->allRows())
+    {
+        foreach(AttributeBase* attribute, row->attributes())
+        {
+            attribute->startCalculationTask();
+        }
     }
 }
 

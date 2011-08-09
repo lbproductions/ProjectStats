@@ -478,7 +478,7 @@ AttributeFutureWatcher* Attribute<T,R,C>::futureWatcher()
 {
     QMutexLocker locker(&m_mutex); (void) locker;
 
-    if(m_futureWatcher == 0)
+    if(m_futureWatcher == 0 && Handler::getInstance() && Handler::getInstance()->isMainThread())
     {
         m_futureWatcher = new AttributeFutureWatcher(this);
     }
