@@ -68,7 +68,7 @@ void PlacesFolderCategorie::dropMimeData(const QMimeData *data)
 	stream >> id;
 
         Place *p = Places::instance()->rowById(id);
-        if(p != 0 && p->isValid())
+        if(p)
 	{
 	    insertRow(p);
 	}

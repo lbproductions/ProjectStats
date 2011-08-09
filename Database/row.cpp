@@ -19,13 +19,6 @@ Row::Row(int id, TableBase *table) :
 {
 }
 
-void Row::checkId()
-{
-    if(!get("id").isValid()) {
-	m_id = 0;
-    }
-}
-
 int Row::id() const
 {
     return m_id;
@@ -37,10 +30,6 @@ void Row::setId(int id)
     emit idChanged(id);
 }
 
-bool Row::isValid(){
-    return true;
-}
-
 QSqlQuery Row::query(const QString &queryString) const
 {
     return m_table->query(queryString);
@@ -48,15 +37,18 @@ QSqlQuery Row::query(const QString &queryString) const
 
 bool Row::set(const QString &key, const QVariant &value)
 {
-    return set(key,value,"id = "+QString::number(m_id));
+    return set(key,value,QLatin1String("id = ")+QString::number(m_id));
 }
-
 
 bool Row::set(const QString &key, const QVariant &value, const QString &condition)
 {
-    if(m_id != 0)
+    if(m_id > 0)
     {
-	QSqlQuery q = query("UPDATE "+m_table->name()+" SET "+key+" = '"+value.toString()+"' WHERE "+condition+";");
+        QSqlQuery q = query(QLatin1String("UPDATE ")+m_table->name()+
+                            QLatin1String(" SET ")+key+
+                            QLatin1String(" = '")+value.toString()+
+                            QLatin1String("' WHERE ")+condition+
+                            QLatin1String(";"));
 	q.finish();
 	return q.isValid();
     }
@@ -66,7 +58,7 @@ bool Row::set(const QString &key, const QVariant &value, const QString &conditio
 
 QVariant Row::get(const QString &key) const
 {
-    QVariant value = get(key, "id = "+QString::number(m_id));
+    QVariant value = get(key, QLatin1String("id = ")+QString::number(m_id));
     return value;
 }
 
@@ -97,7 +89,10 @@ void Row::registerAttribute(AttributeBase *attribute)
 
 QVariant Row::get(const QString &key, const QString &condition) const
 {
-    QSqlQuery select = query("SELECT "+key+" FROM "+m_table->name()+" WHERE "+condition+";");
+    QSqlQuery select = query(QLatin1String("SELECT ")+key+
+                             QLatin1String(" FROM ")+m_table->name()+
+                             QLatin1String(" WHERE ")+condition+
+                             QLatin1String(";"));
 
     select.first();
     if(select.isValid())
@@ -138,19 +133,23 @@ Gui::Details::DetailsWidget* Row::detailsWidget()
     return 0;
 }
 
-Gui::Details::RowWidget* Row::rowWidget(){
+Gui::Details::RowWidget* Row::rowWidget()
+{
     return new Gui::Details::RowWidget(this);
 }
 
-Gui::Details::RowWindow* Row::rowWindow(){
+Gui::Details::RowWindow* Row::rowWindow()
+{
     return new Gui::Details::RowWindow(this);
 }
 
-Gui::Details::StatsWidget* Row::statsWidget(){
+Gui::Details::StatsWidget* Row::statsWidget()
+{
     return 0;
 }
 
-Gui::Details::SummaryWidget* Row::summaryWidget(){
+Gui::Details::SummaryWidget* Row::summaryWidget()
+{
     return 0;
 }
 

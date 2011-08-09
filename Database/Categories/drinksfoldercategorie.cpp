@@ -69,7 +69,7 @@ void DrinksFolderCategorie::dropMimeData(const QMimeData *data)
 	stream >> id;
 
         Drink *d = Drinks::instance()->rowById(id);
-	if(d != 0 && d->isValid())
+        if(d)
 	{
 	    insertRow(d);
 	}

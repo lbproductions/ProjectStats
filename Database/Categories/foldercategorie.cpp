@@ -30,7 +30,7 @@ QString FolderCategorie::mimeType() const
 
 void FolderCategorie::insertRow(Row *row)
 {
-    if(row == 0 || !row->isValid())
+    if(!row)
     {
         return;
     }

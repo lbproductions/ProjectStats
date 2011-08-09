@@ -68,7 +68,7 @@ void GamesFolderCategorie::dropMimeData(const QMimeData *data)
 	stream >> id;
 
         Game *g = Games::instance()->rowById(id);
-	if(g != 0 && g->isValid())
+        if(g)
 	{
 	    insertRow(g);
 	}

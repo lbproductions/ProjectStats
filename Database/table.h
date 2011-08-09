@@ -68,14 +68,22 @@ public:
     void addColumn(AttributeBase * attribute);
 
     /*!
-        Gibt alle Attribute, irgendein Typ, der in dieser Tabelle gespeichert
-        ist, haben kann zurück.
+        Jeder AttributeOwner muss attributes() implementieren.
+
+        Von einer Tabelle wird diese Information jedoch nicht benötigt, daher
+        wird hier eine leere Liste zurückgegeben.
+
+        \warning Nicht benutzen!
       */
     QList<AttributeBase*> attributes() const;
 
     /*!
-        Gibt das Attribut mit dem Namen \p name oder \c 0 zurück, falls es
-        ein solches nicht gibt.
+        Jeder AttributeOwner muss attributes() implementieren.
+
+        Von einer Tabelle wird diese Information jedoch nicht benötigt, daher
+        wird hier \c 0 zurückgegeben.
+
+        \warning Nicht benutzen!
       */
     AttributeBase *attribute(const QString &name) const;
 

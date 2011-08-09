@@ -25,123 +25,214 @@ namespace Database {
 class TableBase;
 class AttributeBase;
 
-//! Repräsentiert eine Row einer Tabelle.
+//! Repräsentiert eine Reihe in einer Tabelle.
 /*!
-  Alle Reihen wie z.B. Player oder Game erben von dieser Klasse. Sie bietet ihnen durch set() und get() eine einfache Schnittstelle zu ihren Daten.
+    Alle Reihen wie z.B. Player oder Game erben von dieser Klasse. Row ist
+    selbstverständlich ein AttributeOwner, wodurch es Attribute enthalten kann,
+    was eine Row schließlich ausmacht ;-)
+
+    Man erbt eigentlich nicht "von Hand" von dieser Klasse sondern durch die
+    Nutzung der Macros in diesem Header.
+
+    Hier gehört viel mehr Doku hin (Macrobenutzung etc).
   */
 class Row : public AttributeOwner
 {
     Q_OBJECT
 public:
+    /*!
+        \internal
+
+        Dieser Standardkonstruktor wird benötigt damit Row ein QMetaType sein
+        kann.
+      */
     Row() : AttributeOwner(Database::instance()), m_id(0) {}
+    /*!
+        \internal
+
+        Dieser Standardkonstruktor wird benötigt damit Row ein QMetaType sein
+        kann.
+      */
     Row(const Row &other) : AttributeOwner(other.parent()), m_id(0) {}
 
     /*!
-      \return Die ID der Reihe.
+      Gibit die ID der Reihe zurück.
       */
     int id() const;
 
-    bool isValid();
-
     /*!
-      Löscht diese Row aus der Datenbank. Das Objekt selber wird nicht gelöscht sondern nur mit der ID -1 invalidiert.
+      Setzt die ID dieser Reihe auf \a id.
+
+      \warning Darf nur von Table<RowType>::insertRow() aufgerufen werden!
       */
-    void deleteFromDatabase();
+    void setId(int id);
 
     /*!
-      Liest den Wert \p key  dieser Reihe aus der Datenbank aus.
+        Liest den Wert \p key  dieser Reihe aus der Datenbank aus und gibt ihn
+        zurück.
 
-      \param key Die Spalte, die ausgelesen werden soll.
-      \return Den Wert, den die Spalte \p key  in dieser Reihe hat.
+        Sollte eigentlich nur von DatabaseAttribute<T,R,C>::calculate()
+        verwendet werden.
       */
     QVariant get(const QString &key) const;
 
     /*!
-      Setzt den Wert \p key  dieser Reihe auf \p value .
+        Setzt den Wert \p key  dieser Reihe auf \p value.
 
-      \param key Der zu ändernde Wert.
-      \param value Der Wert auf den \p key  gesetzt werden soll.
-      \return true, wenn die Operation erfolgreich in die Datenbank eingetragen wurde.
+        Sollte eigentlich nur von DatabaseAttribute<T,R,C>::setValue()
+        verwendet werden.
       */
     bool set(const QString &key, const QVariant &value);
 
-    /*!
-      Gibt alle Attribute dieser Row zurück.
-
-      \return Alle Attribute dieser Row
-      */
     QList<AttributeBase*> attributes() const;
 
     /*!
-      Gibt alle Datenbankattribute dieser Row zurück.
-
-      \return Alle Datenbankattribute dieser Row
+        Gibt alle Datenbankattribute dieser Row zurück.
       */
     QList<AttributeBase*> databaseAttributes() const;
 
-    /*!
-      Gibt das Attribut mit dem Namen \p name oder 0 zurück, falls es dieses nicht gibt.
-
-      \return das Attribut mit dem Namen \p name oder 0, falls es dieses nicht gibt.
-      */
     AttributeBase *attribute(const QString &name) const;
 
-    void setId(int id);
+    /*!
+        Gibt dem MIME-Type dieser Reihe zurück.
 
+        Dieser sollte die Form \p application/projectstats.rowname haben.
+
+        Wird benötigt um drag and drop uz ermöglichen.
+      */
     virtual QString mimeType() const = 0;
 
+    /*!
+        Gibt eine Liste aller Kinder dieser Reihe zurück.
+
+        Dies können zum Beispiel die Runden eines Spiels sein.
+      */
     QList<Row*> childRows() const;
 
+    /*!
+        Gibt das Gui::Details::DetailsWidget dieser Reihe zurück.
+
+        Das DetailsWidget ist der linke Teil des RowWidget, wird aber auch an
+        anderen Stellen verwendet (z.B. LeagueView)
+      */
     virtual Gui::Details::DetailsWidget* detailsWidget();
 
+    /*!
+        Gibt die Tabelle zurück, in der diese Reihe liegt.
+      */
     TableBase *table() const;
 
+    /*!
+        Gibt das Gui::Details::RowWidget dieser Reihe zurück.
+
+        Das RowWidget wird zum Beispiel im im Hauptfenster angezeigt, wenn die
+        Reihe angeklickt wurde und kein SummaryWidget zur Verfüngung steht.
+
+        Es besteht standardmäßig aus links dem DetailsWidget und rechts dem
+        StatsWidget.
+      */
     virtual Gui::Details::RowWidget* rowWidget();
 
+    /*!
+        Gibt das Gui::Details::RowWindow dieser Reihe zurück.
+
+        Das RowWindow wird angezeigt, wenn die Reihe doppelt geklickt wurde.
+
+        Es ist standardmäßig ein einfaches Fenster, welches das RowWidget
+        enthält.
+      */
     virtual Gui::Details::RowWindow* rowWindow();
 
+    /*!
+        Gibt das Gui::Details::StatsWidget dieser Reihe zurück.
+
+        Es wird recht im RowWidget angezeigt.
+      */
     virtual Gui::Details::StatsWidget* statsWidget();
 
+    /*!
+        Gibt Gui::Details::SummaryWidget dieser Reihe zurück.
+
+        Es wird zum Beispiel im im Hauptfenster angezeigt, wenn die
+        Reihe angeklickt wurde.
+      */
     virtual Gui::Details::SummaryWidget* summaryWidget();
 
 signals:
+    /*!
+        Wird gesendet, wenn sich die ID der Reihe ändert.
+
+        Dies geschieht nur dann, wenn die Reihe in die Datenbank eingefügt, oder
+        daraus gelöscht wurde.
+      */
     void idChanged(int newId);
 
 protected:
     /*!
-      Erstellt ein Row Objekt, welches in der Tabelle \p table  die Daten mit der ID  \p id repräsentiert.
+        \internal
+
+        Erstellt ein Row Objekt, welches in der Tabelle \p table die Daten mit
+        der ID  \p id repräsentiert.
       */
     explicit Row(int id, TableBase *table);
 
     /*!
-      Setzt den Wert \p key  dieser Reihe auf \p value  für die Reihe, für die die SQL-Conditon \p condition ilt. Diese Methode wird nur von set(const QString &key, const QVariant &value) verwendet.
+        \internal
+
+        Setzt den Wert \p key  dieser Reihe auf \p value für die Reihe, für die
+        die SQL-Conditon \p condition gilt.
+
+        Diese Methode wird nur von
+        set(const QString &key, const QVariant &value) verwendet.
       */
     bool set(const QString &key, const QVariant &value, const QString &condition);
 
     /*!
-      Liest den Wert \p key  der Reihe, für die die SQL-Conditon \p condition gilt, aus der Datenbank aus. Diese Methode wird nur von get(const QString &key) verwendet.
+        \internal
+
+        Liest den Wert \p key  der Reihe, für die die SQL-Conditon \p condition
+        gilt, aus der Datenbank aus.
+
+        Diese Methode wird nur von get(const QString &key) verwendet.
       */
     QVariant get(const QString &key, const QString &condition) const;
 
     /*!
-      Führt den gegebenen Query \p queryString in der Datenbank aus, falls diese Reihe valid ist. In dem QSqlQuery Objekt wurde schon exec() ausgeführt und sollte auf jeden fall mit finish() beendet werden.
+        Führt den gegebenen Query \p queryString in der Datenbank aus.
 
-      \param queryString Der SQL-Query, der ausgeführt werden soll.
-      \return Ein QSqlQuery Objekt, welches den gegeben Query repräsentiert.
-      \see Table::query(const QString &queryString)
+        In dem QSqlQuery Objekt wurde schon exec() ausgeführt und sollte auf
+        jeden fall mit finish() beendet werden.
+
+        \see Table::query(const QString &queryString)
       */
     QSqlQuery query(const QString &queryString) const;
 
     /*!
-      Fügt das gegebene Attribut zu den Attributen der Row hinzu.<br>
-      Ist es ein Datenbankattribute wird es außerdem zusätzlich zu den Datenbankattributen hinzugefügt.
+        Fügt das gegebene Attribut zu den Attributen der Row hinzu.
 
-      \param attribute Das Attribut, das hinzugefügt werden soll.
+        Ist es ein Datenbankattribute wird es außerdem zusätzlich zu den
+        Datenbankattributen hinzugefügt.
+
+        Es sollte nie nötig sein, diese Methode "per Hand" aufzurufen. Das
+        übernehmen die Macros in attribute.h.
       */
     void registerAttribute(AttributeBase *attribute);
 
+    /*!
+        Fügt dieser Reihe das Kind \a row hinzu.
+
+        Dieses Kind wird dann beim einfügen in die oder löschen aus der
+        Datenbank mit hinzugefügt bzw. gelöscht.
+
+        Runden sind Beispiele für Kinder von Spielen.
+      */
     void addChildRow(Row *row);
 
+    /*!
+        Fügt alle Reihen in \a rows als Kind hinzu.
+
+        \see addChildRow()
+      */
     void addChildRows(QList<Row *> rows);
 
     int m_id; //!< Die ID dieser Row
@@ -150,15 +241,7 @@ protected:
     QList<AttributeBase*> m_databaseAttributes; //!< Alle Datenbankattribute
     QList<Row*> m_childRows; //!< Alle Rows, die logisch zu dieser Row gehören (z.B. Round gehört zu Game)
 
-private:
     friend class TableBase;
-
-    /*!
-      Überprueft, ob die eine Row mit dieser ID tatsächlich existiert.
-      Ist das nicht der Fall wird ID auf -1 gesetzt und die Row damit invalid.
-      Wird vom Konstruktor aufgerufen.
-      */
-    void checkId();
 };
 
 } // namespace Database

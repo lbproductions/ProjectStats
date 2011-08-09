@@ -91,7 +91,7 @@ void BeerPlayerWidget::dropEvent(QDropEvent *event)
     event->acceptProposedAction();
 
     Database::Drink *d = Database::Drinks::instance()->rowById(id);
-    if(d != 0 && d->isValid())
+    if(d)
     {
         ChooseDrinkCountDialog dialog(d,m_player,m_livegame);
         dialog.exec();

@@ -16,7 +16,7 @@ QString TableBase::name() const
 
 int TableBase::rowCount() const
 {
-    QSqlQuery q = query("SELECT COUNT(id) FROM "+m_name);
+    QSqlQuery q = query(QLatin1String("SELECT COUNT(id) FROM ") + m_name);
     q.first();
     int count = q.value(0).toInt();
     q.finish();
@@ -25,12 +25,14 @@ int TableBase::rowCount() const
 
 QList<AttributeBase*> TableBase::attributes() const
 {
+    qWarning() << "TableBase::attributes sollte nie aufgerufen werden!";
     return QList<AttributeBase*>();
 }
 
 
 AttributeBase *TableBase::attribute(const QString &/*name*/) const
 {
+    qWarning() << "TableBase::attribute sollte nie aufgerufen werden!";
     return 0;
 }
 
@@ -56,7 +58,7 @@ void TableBase::createTableIfNotExists()
     QSqlQuery select(Database::instance()->sqlDatabaseLocked());
 
     //Prüfe, ob der Name dieser Tabelle in der Datenbank existiert...
-    QString query = "SELECT name FROM sqlite_master WHERE name='" + m_name + "';";
+    QString query = QLatin1String("SELECT name FROM sqlite_master WHERE name='") + m_name + QLatin1String("';");
     select.exec(query);
     Database::instance()->releaseDatabaseLock();
 
@@ -76,7 +78,9 @@ void TableBase::addColumn(AttributeBase * attribute)
     qDebug() << "TableInterface::addcolumn: Adding new column" << attribute->name() << "to table" << m_name;
     QSqlQuery alter(Database::instance()->sqlDatabaseLocked());
 
-    QString query = "ALTER TABLE " + m_name + " ADD " + attribute->name() + " " + attribute->sqlType();
+    QString query = QLatin1String("ALTER TABLE ") + m_name +
+                    QLatin1String(" ADD ") + attribute->name() +
+                    QLatin1String(" ") + attribute->sqlType();
     alter.exec(query);
     Database::instance()->releaseDatabaseLock();
 
@@ -91,11 +95,13 @@ void TableBase::addColumn(AttributeBase * attribute)
 
 void TableBase::deleteRow(Row *row)
 {
+    //Zunächst alle Kinder löschen
     foreach(Row* row, row->childRows())
     {
 	deleteRow(row);
     }
 
+    //Dann die Reihe selber
     qDebug() << "Deleting row id "+QString::number(row->id())+" from "+m_name+".";
     QSqlQuery deletion = query(QString("DELETE FROM %1 WHERE id = %2").arg(m_name).arg(row->id()));
 
@@ -105,7 +111,9 @@ void TableBase::deleteRow(Row *row)
     }
 
     deletion.finish();
-    row->m_id = -1;
+
+    //und invalid machen
+    row->setId(-1);
 }
 
 RowRegistrar::RowRegistrar(TableBase* table, Row *row)
