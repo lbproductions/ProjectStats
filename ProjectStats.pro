@@ -8,7 +8,7 @@ QT       += core gui sql webkit network xml
 
 TARGET = ProjectStats
 TEMPLATE = app
-
+DEFINES *= QT_USE_QSTRINGBUILDER
 
 SOURCES += main.cpp\
     Database/table.cpp \
