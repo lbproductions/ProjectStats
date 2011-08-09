@@ -31,10 +31,12 @@
 #include <Database/Categories/childcategorie.h>
 #include <Database/Categories/parentcategorie.h>
 #include <Database/livegamedrink.h>
+#include <Database/taskscheduler.h>
 
 Handler::Handler(int argc, char *argv[])
     : QApplication(argc,argv),
-      m_updater(0)
+      m_updater(0),
+      m_mainThread(QThread::currentThread())
 {
     setOrganizationName("LB Productions");
     setApplicationName("ProjectStats");
@@ -53,6 +55,8 @@ Handler::Handler(int argc, char *argv[])
     if (m_updater) {
         m_updater->checkForUpdatesInBackground();
     }
+
+    Database::TaskScheduler::instance()->start(QThread::HighestPriority);
 }
 
 Handler::~Handler()
@@ -201,4 +205,9 @@ int Handler::getDesktopHeight(){
 
 MessageSystem* Handler::messageSystem(){
     return m_messagesystem;
+}
+
+bool Handler::isMainThread() const
+{
+    return m_mainThread == QThread::currentThread();
 }

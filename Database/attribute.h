@@ -552,39 +552,38 @@ void Attribute<T,R,C>::recalculateFromScratch()
 template<class T, class R, class C>
 bool Attribute<T,R,C>::isCalculating()
 {
-    QMutexLocker locker(&m_mutex); (void) locker;
     return m_isCalculating;
 }
 
 template<class T, class R, class C>
 void Attribute<T,R,C>::endCalculation()
 {
-    m_mutex.lock();
-    m_waitingMutex.lock();
-    m_waitCondition.wakeAll();
-    m_waitingMutex.unlock();
-    m_isCalculating = false;
-    m_mutex.unlock();
+//    m_mutex.lock();
+//    m_waitingMutex.lock();
+//    m_waitCondition.wakeAll();
+//    m_waitingMutex.unlock();
+//    m_isCalculating = false;
+//    m_mutex.unlock();
 }
 
 template<class T, class R, class C>
 void Attribute<T,R,C>::waitForCalculationTask()
 {
-    m_mutex.lock();
-    if(m_isCalculating)
-    {
-        m_currentTask->increasePriority();
-        m_waitingMutex.lock();
-        m_mutex.unlock();
+//    m_mutex.lock();
+//    if(m_isCalculating)
+//    {
+//        m_currentTask->increasePriority();
+//        m_waitingMutex.lock();
+//        m_mutex.unlock();
 
-        QThreadPool::globalInstance()->releaseThread();
-        m_waitCondition.wait(&m_waitingMutex);
-        QThreadPool::globalInstance()->reserveThread();
+//        QThreadPool::globalInstance()->releaseThread();
+//        m_waitCondition.wait(&m_waitingMutex);
+//        QThreadPool::globalInstance()->reserveThread();
 
-        m_mutex.lock();
-        m_waitingMutex.unlock();
-    }
-    m_mutex.unlock();
+//        m_mutex.lock();
+//        m_waitingMutex.unlock();
+//    }
+//    m_mutex.unlock();
 }
 
 template<class T, class R, class C>
@@ -595,7 +594,7 @@ AttributeFutureWatcher* Attribute<T,R,C>::startCalculationTask()
     {
         m_isCalculating = true;
         m_currentTask = new RecalculationTask<Attribute<T,R,C>, T>(this);
-        connect(m_currentTask,SIGNAL(finished()),this,SLOT(endCalculation()));
+//        connect(m_currentTask,SIGNAL(finished()),this,SLOT(endCalculation()));
         TaskScheduler::instance()->schedule(m_currentTask);
     }
     m_mutex.unlock();
@@ -606,37 +605,45 @@ AttributeFutureWatcher* Attribute<T,R,C>::startCalculationTask()
 template<class AttributeType, class ValueType>
 void RecalculationTask<AttributeType,ValueType>::execute()
 {
-    unlock();
-
     const ValueType value = m_attribute->calculate();
 
     m_attribute->m_mutex.lock();
+    m_attribute->changeValue(value);
     m_attribute->m_isCalculating = false;
     m_attribute->m_currentTask = 0;
     m_attribute->m_mutex.unlock();
-    m_attribute->changeValue(value);
-    lock();
 }
 
 template<class T, class R, class C>
 const T Attribute<T,R,C>::value()
 {
+    m_mutex.lock();
     Task* task = m_currentTask;
     if(task)
     {
-        QThreadPool::globalInstance()->releaseThread();
+        m_mutex.unlock();
         task->waitForFinished();
+        QWaitCondition w;
+        QMutex m;
+        m.lock();
+        QThreadPool::globalInstance()->releaseThread();
+        while(m_isCalculating && !m_cacheInitialized)
+        {
+            w.wait(&m,1);
+        }
         QThreadPool::globalInstance()->reserveThread();
+        m_mutex.lock();
     }
-    m_mutex.lock();
+    bool change = false;
     if(!m_cacheInitialized && !m_isCalculating)
     {
         m_isCalculating = true;
         m_value = calculate();
         m_isCalculating = false;
         m_cacheInitialized = true;
+        change = true;
     }
-     m_mutex.unlock();
+    m_mutex.unlock();
 
     return m_value;
 }

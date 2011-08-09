@@ -6,6 +6,7 @@
 #include <QQueue>
 #include <QFuture>
 #include <QWaitCondition>
+#include <QTimer>
 
 #include <singleton.h>
 
@@ -42,18 +43,34 @@ public:
 signals:
     void finished();
 
-private slots:
-    void on_finished();
-
 private:
     int m_priority;
     QFuture<void> m_future;
     QMutex m_mutex;
     QWaitCondition m_waitCondition;
+    QMutex m_waitingMutex;
     bool m_finished;
 };
 
-class TaskScheduler : public QObject
+class TaskScheduler;
+
+class ExecuteQueueHelper : public QObject
+{
+    Q_OBJECT
+
+public:
+    friend class TaskScheduler;
+
+    explicit ExecuteQueueHelper(TaskScheduler* parent = 0);
+
+public slots:
+    void executeQueue();
+
+private:
+    TaskScheduler* m_taskScheduler;
+};
+
+class TaskScheduler : public QThread
 {
     Q_OBJECT
     DECLARE_SINGLETON(TaskScheduler)
@@ -64,12 +81,20 @@ public:
 
     void schedule(Task* task);
 
+    void run();
+
 private:
     QQueue<Task*> m_queue;
     QMutex m_mutex;
+    QTimer* m_timer;
 
-private slots:
-    void executeQueue();
+signals:
+    void newTaskScheduled();
+
+private:
+    ExecuteQueueHelper* m_executeQueueHelper;
+
+    friend class ExecuteQueueHelper;
 };
 
 }

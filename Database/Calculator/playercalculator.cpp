@@ -75,8 +75,11 @@ QMap<QString,double> PlayerCalculator::calculate_average(){
             hash.insert(type,0);
         }
     }
-    if(m_player->gameCount->value("General") > 0){
-        hash.insert("General",(double)m_player->points->value("General") / (double)m_player->gameCount->value("General"));
+    double gameCount = m_player->gameCount->value("General");
+    if(gameCount > 0){
+        double points = m_player->points->value("General");
+
+        hash.insert("General",points / gameCount);
     }
     return hash;
 }

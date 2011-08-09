@@ -106,6 +106,7 @@ public:
 
     Gui::MainWindow::MainWindow *mainWindow() const;
 
+    bool isMainThread() const;
 
 private:
     /*!
@@ -119,8 +120,7 @@ private:
     MessageSystem* m_messagesystem; //! Das MessageSystem-Objekt
     Updater *m_updater;
 
-
-
+    QThread* m_mainThread;
 };
 
 #define COMMA ,

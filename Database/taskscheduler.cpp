@@ -1,6 +1,7 @@
 #include "taskscheduler.h"
 
 #include <QtConcurrentRun>
+#include <handler.h>
 
 using namespace Database;
 
@@ -8,7 +9,7 @@ using namespace Database;
 Task::Task(int priority, QObject* parent) :
     QObject(parent),
     m_priority(priority),
-    m_mutex(QMutex::Recursive),
+    m_mutex(QMutex::NonRecursive),
     m_finished(false)
 {
     if(m_priority == QThread::InheritPriority)
@@ -29,9 +30,7 @@ void Task::unlock()
 
 void Task::setFuture(QFuture<void> future)
 {
-    lock();
     m_future = future;
-    unlock();
 }
 
 QFuture<void> Task::future() const
@@ -60,36 +59,50 @@ void Task::decreasePriority()
 
 void Task::run()
 {
-    connect(this,SIGNAL(finished()),this,SLOT(on_finished()));
     lock();
     execute();
+    m_waitCondition.wakeAll();
+    m_finished = true;
     unlock();
     emit finished();
 }
 
 void Task::waitForFinished()
 {
-    m_future.waitForFinished();
-}
-
-void Task::on_finished()
-{
-    lock();
-    m_finished = true;
-    unlock();
+    ++m_priority;
+    QThreadPool::globalInstance()->releaseThread();
+    if(m_finished)
+    {
+        m_waitingMutex.lock();
+        m_waitCondition.wait(&m_waitingMutex);
+        m_waitingMutex.unlock();
+    }
+    QThreadPool::globalInstance()->reserveThread();
 }
 
 IMPLEMENT_SINGLETON(TaskScheduler)
 
 TaskScheduler::TaskScheduler() :
-    QObject(),
+    QThread(),
     m_queue(QQueue<Task*>()),
     m_mutex(QMutex::Recursive)
 {
 }
 
+void TaskScheduler::run()
+{
+    m_executeQueueHelper = new ExecuteQueueHelper(this);
+    connect(this,SIGNAL(newTaskScheduled()),m_executeQueueHelper,SLOT(executeQueue()));
+    m_timer = new QTimer();
+    connect(m_timer,SIGNAL(timeout()),m_executeQueueHelper,SLOT(executeQueue()));
+    m_timer->start(10);
+    exec();
+}
+
 TaskScheduler::~TaskScheduler()
 {
+    m_executeQueueHelper->deleteLater();
+    m_timer->deleteLater();
     QThreadPool::globalInstance()->waitForDone();
 }
 
@@ -97,9 +110,9 @@ void TaskScheduler::schedule(Task* task)
 {
     m_mutex.lock();
     m_queue.enqueue(task);
-    connect(task,SIGNAL(finished()),this,SLOT(executeQueue()));
-    executeQueue();
+    connect(task,SIGNAL(finished()),m_executeQueueHelper,SLOT(executeQueue()));
     m_mutex.unlock();
+    emit newTaskScheduled();
 }
 
 bool priorityIsHigher(Task* t1, Task* t2)
@@ -107,17 +120,23 @@ bool priorityIsHigher(Task* t1, Task* t2)
     return t1->priority() < t2->priority();
 }
 
-void TaskScheduler::executeQueue()
+ExecuteQueueHelper::ExecuteQueueHelper(TaskScheduler *parent) :
+    QObject(),
+    m_taskScheduler(parent)
 {
-    m_mutex.lock();
-    qSort(m_queue.begin(),m_queue.end(),priorityIsHigher);
-    while(!m_queue.isEmpty() && QThreadPool::globalInstance()->activeThreadCount() < QThreadPool::globalInstance()->maxThreadCount())
+}
+
+void ExecuteQueueHelper::executeQueue()
+{
+    m_taskScheduler->m_mutex.lock();
+    qSort(m_taskScheduler->m_queue.begin(),m_taskScheduler->m_queue.end(),priorityIsHigher);
+    while(!m_taskScheduler->m_queue.isEmpty() && QThreadPool::globalInstance()->activeThreadCount() < QThreadPool::globalInstance()->maxThreadCount())
     {
-        Task* task = m_queue.dequeue();
+        Task* task = m_taskScheduler->m_queue.dequeue();
         task->lock();
         QFuture<void> future = QtConcurrent::run(task, &Task::run);
         task->setFuture(future);
         task->unlock();
     }
-    m_mutex.unlock();
+    m_taskScheduler->m_mutex.unlock();
 }
