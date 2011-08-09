@@ -71,7 +71,7 @@ void Task::waitForFinished()
 {
     ++m_priority;
     QThreadPool::globalInstance()->releaseThread();
-    if(m_finished)
+    if(!m_finished)
     {
         m_waitingMutex.lock();
         m_waitCondition.wait(&m_waitingMutex);
@@ -93,9 +93,6 @@ void TaskScheduler::run()
 {
     m_executeQueueHelper = new ExecuteQueueHelper(this);
     connect(this,SIGNAL(newTaskScheduled()),m_executeQueueHelper,SLOT(executeQueue()));
-    m_timer = new QTimer();
-    connect(m_timer,SIGNAL(timeout()),m_executeQueueHelper,SLOT(executeQueue()));
-    m_timer->start(10);
     exec();
 }
 
