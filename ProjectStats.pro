@@ -18,8 +18,6 @@ SOURCES += main.cpp\
     Database/row.cpp \
     Database/attribute.cpp \
     Database/databaseattribute.cpp \
-    Database/samplerow.cpp \
-    Database/samplerowchild.cpp \
     Models/tablemodel.cpp \
     Gui/Misc/rowlist.cpp \
     Database/player.cpp \
@@ -177,8 +175,6 @@ HEADERS  += \
     Database/row.h \
     Database/attribute.h \
     Database/databaseattribute.h \
-    Database/samplerow.h \
-    Database/samplerowchild.h \
     Models/tablemodel.h \
     Gui/Misc/rowlist.h \
     Database/player.h \
@@ -400,6 +396,10 @@ OTHER_FILES += \
 
 RESOURCES += \
     Ressources/Ressources.qrc
+
+
+
+
 
 
 

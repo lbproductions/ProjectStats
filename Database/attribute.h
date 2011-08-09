@@ -623,15 +623,15 @@ const T Attribute<T,R,C>::value()
     {
         m_mutex.unlock();
         task->waitForFinished();
-        QWaitCondition w;
-        QMutex m;
-        m.lock();
-        QThreadPool::globalInstance()->releaseThread();
-        while(m_isCalculating && !m_cacheInitialized)
-        {
-            w.wait(&m,1);
-        }
-        QThreadPool::globalInstance()->reserveThread();
+//        QWaitCondition w;
+//        QMutex m;
+//        m.lock();
+//        QThreadPool::globalInstance()->releaseThread();
+//        while(m_isCalculating && !m_cacheInitialized)
+//        {
+//            w.wait(&m,1);
+//        }
+//        QThreadPool::globalInstance()->reserveThread();
         m_mutex.lock();
     }
     bool change = false;

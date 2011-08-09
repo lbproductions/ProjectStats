@@ -3,7 +3,6 @@
 #include "rowlistheader.h"
 
 #include <Models/tablemodel.h>
-#include <Database/samplerow.h>
 
 #include <QSortFilterProxyModel>
 #include <QSettings>
