@@ -36,6 +36,10 @@ public:
 
     QMap<Player*, QList<LiveGameDrink*> > calculate_drinksPerPlayer();
 
+    virtual QMap<Player*,int> calculate_leadingRounds();
+
+    virtual QMap<int,QMap<Player*,int> > calculate_placementAfterRounds();
+
     QList<Player*> calculate_playersSortedByAlcPegel();
 
     QList<Round*> calculate_rounds();

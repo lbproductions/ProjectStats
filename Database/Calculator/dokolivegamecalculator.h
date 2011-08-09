@@ -55,6 +55,8 @@ public:
 
     QMap<Player*,int> calculate_doko_roundWins();
 
+    QMap<int,QMap<Player*,int> > calculate_placementAfterRounds();
+
     int calculate_doko_hochzeitCount();
 
     int calculate_doko_soloCount();

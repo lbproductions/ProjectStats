@@ -38,6 +38,16 @@ QList<Player*> GameCalculator::calculate_players(){
     return list;
 }
 
+QMap<Player*,int> GameCalculator::calculate_leadingRounds(){
+    QMap<Player*,int> hash;
+    return hash;
+}
+
+QMap<int,QMap<Player*,int> > GameCalculator::calculate_placementAfterRounds(){
+    QMap<int,QMap<Player*,int> > hash;
+    return hash;
+}
+
 QMap<Player*,int> GameCalculator::calculate_placement(){
     //qWarning() << "GameCalculator::calculate_placement() should not be executed";
     return QMap<Player*,int>();

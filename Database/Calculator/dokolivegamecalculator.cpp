@@ -570,4 +570,32 @@ QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_roundWins(){
     return hash;
 }
 
+QMap<int,QMap<Player*,int> > DokoLiveGameCalculator::calculate_placementAfterRounds(){
+    QMap<int,QMap<Player*,int> > hash;
+
+    QMap<Player*,int> points;
+    QMap<Player*,int> placement;
+    int count = 1;
+    foreach(Round* r, m_livegame->rounds->value()){
+        foreach(Player* p, r->currentPlayingPlayers->value()){
+            points.insert(p,points.value(p)+r->points->value(p));
+        }
+        foreach(Player* p, r->currentPlayingPlayers->value()){
+            int place = 1;
+            foreach(Player* q, r->currentPlayingPlayers->value()){
+                if(p->id() != q->id()){
+                    if(points.value(p) < points.value(q)){
+                        place++;
+                    }
+                }
+            }
+            placement.insert(p,place);
+        }
+        hash.insert(count,placement);
+        count++;
+    }
+
+    return hash;
+}
+
 } // namespace Database

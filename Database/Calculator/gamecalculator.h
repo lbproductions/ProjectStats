@@ -34,6 +34,10 @@ public:
 
     virtual Round::RoundState calculate_state();
 
+    virtual QMap<Player*,int> calculate_leadingRounds();
+
+    virtual QMap<int,QMap<Player*,int> > calculate_placementAfterRounds();
+
 signals:
 
 public slots:

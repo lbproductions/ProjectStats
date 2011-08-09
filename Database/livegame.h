@@ -40,6 +40,9 @@ START_ROW_DECLARATION(LiveGame, Game)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Player*,LiveGame,LiveGameCalculator,currentPlayingPlayers)
 
+    DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,LiveGame,LiveGameCalculator,leadingRounds)
+    DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(int,QMap<Player* COMMA int>,LiveGame,LiveGameCalculator,placementAfterRounds)
+
     void addPlayer(Player* player);
 
     void addDrink(Player* player, Drink* drink);
