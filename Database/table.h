@@ -309,7 +309,7 @@ void Table<RowType>::alterTableToContainAllAttributes()
 
     while(pragma.next())
     {
-	unknownAttributes.remove(pragma.value(1).toString());
+        unknownAttributes.remove(pragma.value(1).toString());
     }
 
     foreach(AttributeBase * attribute, unknownAttributes.values())

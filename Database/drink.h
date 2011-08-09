@@ -20,11 +20,6 @@ START_ROW_DECLARATION(Drink, Row)
     DECLARE_DATABASEATTRIBUTE(QString,Drink,iconPath)
     DECLARE_DATABASEATTRIBUTE(double,Drink,alc)
 
-    DECLARE_ATTRIBUTE_WITH_UPDATEFUNCTION(QString, Drink, test)
-
-    DECLARE_ATTRIBUTE(QString, Drink, test2)
-    QString update_test2_test();
-
     DECLARE_ATTRIBUTE(QImage,Drink,icon)
 
     DECLARE_ATTRIBUTE_IN_CALC(int,Drink,DrinkCalculator,drinkCount)

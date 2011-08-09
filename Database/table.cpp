@@ -77,7 +77,6 @@ void TableBase::addColumn(AttributeBase * attribute)
     QSqlQuery alter(Database::instance()->sqlDatabaseLocked());
 
     QString query = "ALTER TABLE " + m_name + " ADD " + attribute->name() + " " + attribute->sqlType();
-    qDebug() << query;
     alter.exec(query);
     Database::instance()->releaseDatabaseLock();
 
