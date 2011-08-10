@@ -138,6 +138,7 @@ void TaskScheduler::run()
 {
     m_executeQueueHelper = new ExecuteQueueHelper(this);
     connect(this,SIGNAL(newTaskScheduled()),m_executeQueueHelper,SLOT(executeQueue()));
+    QThreadPool::globalInstance()->releaseThread();
     exec();
 }
 
@@ -150,10 +151,12 @@ TaskScheduler::~TaskScheduler()
 
 void TaskScheduler::schedule(Task* task)
 {
+    QThreadPool::globalInstance()->reserveThread();
     m_mutex.lock();
     m_queue.enqueue(task);
     connect(task,SIGNAL(finished()),m_executeQueueHelper,SLOT(executeQueue()));
     connect(task,SIGNAL(waiting()),m_executeQueueHelper,SLOT(executeQueue()));
     m_mutex.unlock();
     emit newTaskScheduled();
+    QThreadPool::globalInstance()->releaseThread();
 }

@@ -19,7 +19,7 @@ Row::Row(int id, TableBase *table) :
 {
 }
 
-int Row::id() const
+const int& Row::id() const
 {
     return m_id;
 }

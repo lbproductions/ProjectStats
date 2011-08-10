@@ -56,9 +56,9 @@ public:
     Row(const Row &other) : AttributeOwner(other.parent()), m_id(0) {}
 
     /*!
-      Gibit die ID der Reihe zurück.
+      Gibt die ID der Reihe zurück.
       */
-    int id() const;
+    const int& id() const;
 
     /*!
       Setzt die ID dieser Reihe auf \a id.
