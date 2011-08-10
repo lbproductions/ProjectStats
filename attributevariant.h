@@ -14,7 +14,7 @@ public:
 
     void setDisplayRole(DisplayRole role);
 
-    QVariant displayVariant();
+    QVariant displayVariant() const;
 
 signals:
 

@@ -19,7 +19,8 @@ void AttributeVariant::setDisplayRole(DisplayRole role){
     m_currentRole = role;
 }
 
-QVariant AttributeVariant::displayVariant(){
+QVariant AttributeVariant::displayVariant() const
+{
     QVariant variant;
 
     if(this->type() == QVariant::Double)
@@ -262,7 +263,6 @@ QVariant AttributeVariant::displayVariant(){
         }
         variant.setValue(string);
     }
-
 
     return variant;
 }

@@ -472,7 +472,13 @@ const QVariant Attribute<T,R,C>::displayVariant()
 template<class T, class R, class C>
 const QString Attribute<T,R,C>::toString()
 {
-    return toVariant().toString();
+    AttributeVariant variant = toVariant();
+    QString string = variant.toString();
+    if(string.isNull() || string.isEmpty())
+    {
+        string = variant.displayVariant().toString();
+    }
+    return string;
 }
 
 template<class T, class R, class C>
