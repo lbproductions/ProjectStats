@@ -40,6 +40,8 @@ public:
 
     virtual QMap<int,QMap<Player*,int> > calculate_placementAfterRounds();
 
+    virtual QMap<Player*,double> calculate_averagePlacement();
+
     QList<Player*> calculate_playersSortedByAlcPegel();
 
     QList<Round*> calculate_rounds();

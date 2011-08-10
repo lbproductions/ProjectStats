@@ -72,10 +72,16 @@ void LiveGameSummaryWidget::setupGeneralTab(){
     for(int i = 0; i<m_livegame->playersSortedByPlacement->value().size();i++){
         QLabel* points = new QLabel(QString::number(m_livegame->points->value(m_livegame->playersSortedByPlacement->value(i))));
         points->setAlignment(Qt::AlignCenter);
+        m_labelList.append(points);
 
         double perc = 100* (double)m_livegame->leadingRounds->value(m_livegame->playersSortedByPlacement->value(i)) / (double)m_livegame->roundCount->value();
         QLabel* leadPercentage = new QLabel(QString::number((int)perc)+"%");
         leadPercentage->setAlignment(Qt::AlignCenter);
+        m_labelList.append(leadPercentage);
+
+        QLabel* averagePos = new QLabel(QString::number(m_livegame->averagePlacement->value(m_livegame->playersSortedByPlacement->value(i))));
+        averagePos->setAlignment(Qt::AlignCenter);
+        m_labelList.append(averagePos);
 
         if(i<3){
             QFont font = points->font();
@@ -83,11 +89,32 @@ void LiveGameSummaryWidget::setupGeneralTab(){
             font.setPointSize(14);
             points->setFont(font);
             leadPercentage->setFont(font);
+            averagePos->setFont(font);
         }
-
-        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(points,i,2);
-        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(leadPercentage,i,3);
+        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(points,i+1,2);
+        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(leadPercentage,i+1,3);
+        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(averagePos,i+1,4);
     }
+
+    QLabel* pointsHeader = new QLabel(tr("Points"));
+    pointsHeader->setAlignment(Qt::AlignCenter);
+    QFont font = pointsHeader->font();
+    font.setPointSize(9);
+    pointsHeader->setFont(font);
+    m_labelList.append(pointsHeader);
+    static_cast<QGridLayout*>(ui->tab->layout())->addWidget(pointsHeader,0,2);
+
+    QLabel* leadHeader = new QLabel(tr("Leadership"));
+    leadHeader->setAlignment(Qt::AlignCenter);
+    leadHeader->setFont(font);
+    m_labelList.append(leadHeader);
+    static_cast<QGridLayout*>(ui->tab->layout())->addWidget(leadHeader,0,3);
+
+    QLabel* averageHeader = new QLabel(tr("AveragePosition"));
+    averageHeader->setAlignment(Qt::AlignCenter);
+    averageHeader->setFont(font);
+    m_labelList.append(averageHeader);
+    static_cast<QGridLayout*>(ui->tab->layout())->addWidget(averageHeader,0,4);
 }
 
 } // namespace LiveGameDetails

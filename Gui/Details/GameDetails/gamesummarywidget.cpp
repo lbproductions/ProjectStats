@@ -66,10 +66,17 @@ GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
                 break;
 
         }
-
-        ui->gridLayout->addWidget(position, i, 0);
-        ui->gridLayout->addWidget(name, i, 1);
+        ui->gridLayout->addWidget(position, i+1, 0);
+        ui->gridLayout->addWidget(name, i+1, 1);
     }
+
+    QLabel* nameHeader = new QLabel(tr("Name"));
+    nameHeader->setAlignment(Qt::AlignCenter);
+    font.setBold(false);
+    font.setPointSize(9);
+    nameHeader->setFont(font);
+    m_labelList.append(nameHeader);
+    ui->gridLayout->addWidget(nameHeader,0,1);
 }
 
 GameSummaryWidget::~GameSummaryWidget()

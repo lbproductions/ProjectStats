@@ -289,4 +289,18 @@ QMap<int,QMap<Player*,int> > LiveGameCalculator::calculate_placementAfterRounds(
     return hash;
 }
 
+QMap<Player*,double> LiveGameCalculator::calculate_averagePlacement(){
+    QMap<Player*,double> hash;
+    foreach(Player* p, m_livegame->players->value()){
+        double count = 0;
+        double value = 0.0;
+        for(int i = 0; i<m_livegame->rounds->value().size();i++){
+            count++;
+            value += (double)(hash.value(p) + m_livegame->placementAfterRounds->value(i).value(p));
+        }
+        hash.insert(p,value/count);
+    }
+    return hash;
+}
+
 } // namespace Database
