@@ -15,61 +15,145 @@ class QThreadPool;
 namespace Database
 {
 
+//! Ein Task ist ein einfaches Objekt, dass vom TaskScheduler ausgeführt werden
+//! kann.
+/*!
+    Um einen Task auszuführen, muss eine Kindklasse davon erben und execute()
+    imeplementieren.
+
+    Anschließend kann er mit TaskScheduler::schedule() im Hintergrund ausgeführt
+    werden.
+  */
 class Task : public QObject
 {
     Q_OBJECT
 public:
-    explicit Task(int priority = QThread::InheritPriority, QObject* parent = 0);
+    /*!
+        Erstellt einen neuen Task mit der Priorität \a priority.
 
-    void run();
+        Die Priorität sagt dabei nicht wirklich aus, welche Priorität der Thread
+        tatsächlich erhält, sondern nur, in welcher Reihenfolge die Tasks
+        gestartet werden.
+      */
+    explicit Task(QThread::Priority priority = QThread::LowPriority, QObject* parent = 0);
 
+    /*!
+        Wird ausgeführt sobald dieser Task an der Reihe ist.
+      */
     virtual void execute() = 0;
 
-    int priority();
+    /*!
+        Gibt die aktuelle Priorität des Tasks zurück.
 
+        \see increasePriority()
+        \see decreasePriority()
+      */
+    QThread::Priority priority();
+
+    /*!
+        Erhöht die Priorität des Tasks um \c 1.
+
+        Die Priorität kann nicht größer als QThread::TimeCriticalPriority
+        werden.
+      */
     void increasePriority();
 
+    /*!
+        Erniedrigt die Priorität des Tasks um \c 1.
+
+        Die Priorität kann nicht kleiner als QThread::IdlePriority werden.
+      */
     void decreasePriority();
 
-    void setFuture(QFuture<void> future);
-
+    /*!
+        Gibt die QFuture dieses Tasks zurück, falls er bereits gestartet wurde,
+        oder eine leere QFuture, falls er noch wartet.
+      */
     QFuture<void> future() const;
 
+    /*!
+        Wartet bis der Task beendet wurde. Das gilt natürlich auch, falls er
+        noch gar nicht gestartet wurde.
+
+        Während des Wartens wird die Priorität des Tasks erhöht, sodass gilt:
+        Je mehr andere Threads auf den Task warten, desto höher ist seine
+        Priorität.
+
+        Außerdem werden mit Hilfe von QThreadPool::releaseThread() der Thread
+        freigegeben, sodass die Resourcen genutzt werden können.
+
+        Tut nichts, falls der Task schon beendet wurde.
+      */
     void waitForFinished();
 
-    void lock();
-    void unlock();
-
 signals:
+    /*!
+        Wird gesendet, sobald execute() verlassen wurde und alle wartenden
+        Threads geweckt wurden.
+      */
     void finished();
 
-private:
-    int m_priority;
-    QFuture<void> m_future;
-    QMutex m_mutex;
-    QWaitCondition m_waitCondition;
-    QMutex m_waitingMutex;
-    bool m_finished;
-};
-
-class TaskScheduler;
-
-class ExecuteQueueHelper : public QObject
-{
-    Q_OBJECT
-
-public:
-    friend class TaskScheduler;
-
-    explicit ExecuteQueueHelper(TaskScheduler* parent = 0);
-
-public slots:
-    void executeQueue();
+    /*!
+        Wird gesendet, sobald ein anderer Thread auf diesen Task wartet.
+      */
+    void waiting();
 
 private:
-    TaskScheduler* m_taskScheduler;
+    //damit setFuture(), run(), lock() und unlock() zur Verfügung stehen:
+    friend class ExecuteQueueHelper;
+
+    /*!
+        Setzt die QFuture des Tasks auf \a future
+      */
+    void setFuture(QFuture<void> future);
+
+    /*!
+        Führt den Task aus.
+
+        Sperrt zunächst alle weiteren Zugriffe mit lock() und startet dann
+        execute().
+
+        Anschließend werden alle dann wartenden Tasks geweckt und finished()
+        gesendet.
+      */
+    void run();
+
+    /*!
+        Sperrt den Mutex des Tasks.
+      */
+    void lock();
+
+    /*!
+        Entsperrt den Mutex des Tasks.
+      */
+    void unlock();
+
+    QThread::Priority m_priority; //!< Die Priorität des Tasks
+    QFuture<void> m_future; //!< Die QFuture des Tasks, sobald er gestartet wurde
+    QMutex m_mutex; //!< Dieser Mutex sperrt alle Methoden des Tasks.
+    QWaitCondition m_waitCondition; //!< Diese QWaitCondition wartet bis der Tasks beendet wurde
+    QMutex m_waitingMutex; //!< Unterstützt m_waitCondition
+    bool m_finished; //!< \c true, sobald der Task beendet wurde
 };
 
+class ExecuteQueueHelper;
+
+//! Der TaskScheduler ist für das Ausführen von Tasks verantwortlich.
+/*!
+    Ein Task kann an die Methode schedule() übergeben werden und reiht sich dann
+    in eine Warteschlange ein, die Regelmäßig nach den Prioritäten der Tasks
+    sortiert wird.
+
+    Werden Resourcen (sprich Threads) frei, startet der TaskScheduler weitere
+    Tasks aus seiner Warteschlange, solange bis keine Threads mehr zur Verfügung
+    stehen, oder keine Tasks mehr vorhanden sind.
+
+    Der TaskScheduler ist dabei ein eigener Thread, sodass er nicht warten muss,
+    falls die GUI gerade auf irgendetwas wartet.
+
+    Außerdem ist TaskScheduler ein Singleton, sodass von überall aus auf ihn
+    zugegriffen werden kann.
+  */
 class TaskScheduler : public QThread
 {
     Q_OBJECT
@@ -95,6 +179,25 @@ private:
     ExecuteQueueHelper* m_executeQueueHelper;
 
     friend class ExecuteQueueHelper;
+};
+
+class ExecuteQueueHelper : public QObject
+{
+    Q_OBJECT
+
+public:
+    friend class TaskScheduler;
+
+    explicit ExecuteQueueHelper(TaskScheduler* parent = 0);
+
+public slots:
+    void executeQueue();
+
+private:
+    TaskScheduler* m_taskScheduler;
+
+    int m_startedTasks;
+    static const int m_sortAfterCount = 10;
 };
 
 }

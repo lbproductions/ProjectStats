@@ -391,7 +391,7 @@ template<class AttributeType, class ValueType>
 class RecalculationTask : public Task
 {
 public:
-    explicit RecalculationTask(AttributeType* m_attribute, int priority = QThread::InheritPriority);
+    explicit RecalculationTask(AttributeType* m_attribute, QThread::Priority priority = QThread::InheritPriority);
 
     void execute();
 
@@ -725,7 +725,7 @@ void Attribute<T,R,C>::addDependingAttribute(AttributeBase *dependingAttribute)
 }
 
 template<class AttributeType, class ValueType>
-RecalculationTask<AttributeType,ValueType>::RecalculationTask(AttributeType* attribute, int priority) :
+RecalculationTask<AttributeType,ValueType>::RecalculationTask(AttributeType* attribute, QThread::Priority priority) :
     Task(priority),
     m_attribute(attribute)
 {

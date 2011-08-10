@@ -272,6 +272,7 @@ protected:
     virtual QPointer<RowType> createRowInstance(int id);
 
     TableCache<RowType> *m_rows; //!< Alle Rows gecacht
+    QList<RowType*> m_allRows;
     Models::TableModel<RowType, Table<RowType> > *m_model; //!< Das Modell, das alle Reihen enthält
     static QMap<QString, AttributeBase*> *registeredDatabaseAttributes(); //!< Alle bei dieser Tabelle registrierten Attribute
     bool m_cacheInitialized; //!< \c true, falls initializeCache() aufgerufen wurde
@@ -371,6 +372,7 @@ template<class RowType>
 Table<RowType>::Table(const QString &name) :
     TableBase(name),
     m_rows(new TableCache<RowType>(this)),
+    m_allRows(QList<RowType*>()),
     m_model(0),
     m_cacheInitialized(false)
 {
@@ -473,6 +475,7 @@ void Table<RowType>::initializeCache()
     m_rows->setEmitChange(false); // Beim initialisieren soll noch nicht
                                   // Row::change() emittet werden.
     m_rows->value(); // Den Cache einmal initialisieren (ist dann leer)
+    m_allRows.reserve(select.size());
 
     // Zu allen IDs eine Instanz erzeugen und dem Cache hinzufügen.
     int id = 0;
@@ -485,6 +488,7 @@ void Table<RowType>::initializeCache()
                         // zu der ID keine Reihe erzeugen will
         {
             m_rows->m_value.insert(id, rowInstance);
+            m_allRows.append(rowInstance);
         }
     }
     select.finish();
@@ -579,7 +583,7 @@ QPointer<RowType> Table<RowType>::createRowInstance(int id)
 template<class RowType>
 QList<RowType*> Table<RowType>::allRows()
 {
-    return m_rows->value().values();
+    return m_allRows;
 }
 
 template<class RowType>
@@ -660,7 +664,9 @@ void Table<RowType>::insertRow(Row *row)
     m_model->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
 
     //Reihe dem Cache hinzufügen
-    m_rows->m_value.insert(id,static_cast<RowType*>(row));
+    RowType* r = static_cast<RowType*>(row);
+    m_rows->m_value.insert(id,r);
+    m_allRows.append(r);
     m_rows->emitChanged();
 
     //Alle Kinder der Reihe ihrer Tabelle hinuzfügen

@@ -53,6 +53,8 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
     db_state->addDependingAttribute(state);
     state->setRole(Qt::DecorationRole);
 
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Point*,Round,RoundCalculator,m_calc,pointInstances,tr("Point Instances"))
+
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,m_calc,points,tr("Points"))
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,cardmixerPosition,tr("Cardmixer Position"))

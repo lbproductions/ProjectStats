@@ -38,6 +38,8 @@ START_ROW_DECLARATION(Round, Row)
     DECLARE_ATTRIBUTE(QPointer<Game>,Round,game)
     DECLARE_ATTRIBUTE(RoundState,Round,state)
 
+    DECLARE_LISTATTRIBUTE_IN_CALC(Point*,Round,RoundCalculator,pointInstances)
+
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,points)
 
     DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,cardmixerPosition)

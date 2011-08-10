@@ -15,13 +15,18 @@ RoundCalculator::RoundCalculator(Round* round):
 {
 }
 
+QList<Point*> RoundCalculator::calculate_pointInstances()
+{
+    return Points::instance()->rowsBySqlCondition(QLatin1String("WHERE roundId = ")+QString::number(m_round->id()));
+}
+
 QMap<Player*,int> RoundCalculator::calculate_points(){
     QMap<Player*,int> hash;
-    foreach(Point* p,Points::instance()->allRows()){
-        if(p->roundId->value() == m_round->id()){
-            hash.insert(Players::instance()->rowById(p->playerId->value()),
-                        p->points->value());
-        }
+    QList<Point*> points = m_round->pointInstances->value();
+    foreach(Point* p, points)
+    {
+        hash.insert(Players::instance()->rowById(p->playerId->value()),
+                    p->points->value());
     }
     return hash;
 }

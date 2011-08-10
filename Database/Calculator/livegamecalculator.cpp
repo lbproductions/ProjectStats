@@ -104,9 +104,11 @@ int LiveGameCalculator::calculate_percComplete(){
     return 0;
 }
 
-bool sortPlayersByPosition(QPair<Player*,Game*> pair1, QPair<Player*,Game*> pair2){
-    foreach(Position* p, Positions::instance()->allRows()){
-        foreach(Position* o, Positions::instance()->allRows()){
+bool sortPlayersByPosition(QPair<Player*,Game*> pair1, QPair<Player*,Game*> pair2)
+{
+    QList<Position*> positions = Positions::instance()->allRows();
+    foreach(Position* p, positions){
+        foreach(Position* o, positions){
             if(o->id() != p->id()){
                 if (p->gameId->value() == pair1.second->id() && o->gameId->value() == pair2.second->id()){
                     if(p->playerId->value() == pair1.first->id() && o->playerId->value() == pair2.first->id()){
