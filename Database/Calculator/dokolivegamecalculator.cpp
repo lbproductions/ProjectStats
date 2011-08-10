@@ -606,7 +606,7 @@ QString DokoLiveGameCalculator::calculate_doko_hochzeitStats()
     int countAfterRounds = m_dokolivegame->doko_hochzeitCountAfterRounds->value(roundCount);
     if(roundCount > 0)
     {
-        qDebug() << countAfterRounds << " / " << roundCount;
+        //qDebug() << countAfterRounds << " / " << roundCount;
         int percentage = countAfterRounds * 100 / roundCount;
         return "(" + QString::number(percentage) + "%)";
     }

@@ -118,5 +118,7 @@
     <qresource prefix="/graphics/styles/mac/scrollbar/fullscreen">
         <file alias="scrollbar_arrowdown_fullscreen">graphics/styles/mac/scrollbar/fullscreen/scrollbar_fullscreen_arrow_down.png</file>
         <file alias="scrollbar_arrowup_fullscreen">graphics/styles/mac/scrollbar/fullscreen/scrollbar_fullscreen_arrow_up.png</file>
+        <file alias="scrollbar_background_fullscreen">graphics/styles/mac/scrollbar/fullscreen/scrollbar_fullscreen_background.png</file>
+        <file alias="scrollbar_handle_fullscreen">graphics/styles/mac/scrollbar/fullscreen/scrollbar_fullscreen_handle.png</file>
     </qresource>
 </RCC>
