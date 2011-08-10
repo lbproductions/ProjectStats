@@ -33,8 +33,14 @@ QString Drink::mimeType() const
     return "application/projectstats.drink";
 }
 
-QImage Drink::calculate_icon(){
-    return QImage(iconPath->value()).scaledToHeight(40);
+QImage Drink::calculate_icon()
+{
+    QImage image(iconPath->value());
+    if(!image.isNull())
+    {
+        return image.scaledToHeight(40);
+    }
+    return QImage();
 }
 
 Gui::Details::DetailsWidget* Drink::detailsWidget(){

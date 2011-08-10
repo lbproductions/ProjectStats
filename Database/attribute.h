@@ -160,6 +160,8 @@ signals:
       */
     void changed();
 
+    void changed(::Database::AttributeBase*);
+
     /*!
       Wird gesendet, kurz bevor ein Hintergrundtask für die Berechnung oder Update dieses Attributs gestartet wird.<br>
       Ist der Task beendet wird changed() gesendet.
@@ -673,7 +675,7 @@ void Attribute<T,R,C>::changeValue(const T value)
         m_mutex.unlock();
         if(m_emitChange)
         {
-            emit changed();
+            emit changed(this);
         }
     }
     else

@@ -82,8 +82,14 @@ QString Player::mimeType() const
     return "application/projectstats.player";
 }
 
-QImage Player::calculate_avatar(){
-    return QImage(avatarPath->value()).scaledToHeight(30);
+QImage Player::calculate_avatar()
+{
+    QImage image(avatarPath->value());
+    if(!image.isNull())
+    {
+        return image.scaledToHeight(30);
+    }
+    return QImage();
 }
 
 Gui::Details::DetailsWidget* Player::detailsWidget(){

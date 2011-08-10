@@ -43,6 +43,7 @@ AttributeBase::AttributeBase(const QString &name, const QString &displayName, At
     m_role(Qt::DisplayRole),
     m_emitChange(true)
 {
+    connect(this,SIGNAL(changed(::Database::AttributeBase*)),this,SIGNAL(changed()));
 }
 
 AttributeOwner *AttributeBase::owner() const
@@ -155,7 +156,7 @@ void AttributeFutureWatcher::connectTo(QLineEdit *lineEdit)
 
 void AttributeBase::emitChanged()
 {
-    emit changed();
+    emit changed(this);
 }
 
 } // namespace Database

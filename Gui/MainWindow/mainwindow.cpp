@@ -89,7 +89,6 @@ void MainWindow::restoreSettings()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    qDebug() << QThread::currentThread()->priority();
     QSettings settings;
     if(settings.value("MainWindow/confirmClose",true).toBool())
     {

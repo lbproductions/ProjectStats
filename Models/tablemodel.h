@@ -28,7 +28,7 @@ public:
 
     virtual void updateData() = 0;
 private slots:
-    virtual void on_attribute_changed() = 0;
+    virtual void on_attribute_changed(::Database::AttributeBase *attribute) = 0;
 
 };
 
@@ -55,7 +55,7 @@ public:
 private:
     friend class Database::Table<RowType>;
 
-    void on_attribute_changed();
+    void on_attribute_changed(::Database::AttributeBase *attribute);
 
     QList<RowType*> m_data;
     Owner *m_owner;
@@ -73,7 +73,8 @@ TableModel<RowType, Owner>::TableModel(QList<RowType*> data, Owner *parent) :
     {
         foreach(Database::AttributeBase *attribute, owner->attributes())
         {
-            connect(attribute,SIGNAL(changed()),this,SLOT(on_attribute_changed()));
+            connect(attribute,SIGNAL(changed(::Database::AttributeBase *)),
+                    this,SLOT(on_attribute_changed(::Database::AttributeBase *)));
         }
     }
 }
@@ -90,7 +91,8 @@ TableModel<RowType, Owner>::TableModel(Owner *parent) :
     {
         foreach(Database::AttributeBase *attribute, owner->attributes())
         {
-            connect(attribute,SIGNAL(changed()),this,SLOT(on_attribute_changed()));
+            connect(attribute,SIGNAL(changed(::Database::AttributeBase *)),
+                    this,SLOT(on_attribute_changed(::Database::AttributeBase *)));
         }
     }
 }
@@ -102,9 +104,8 @@ void TableModel<RowType, Owner>::updateData()
 }
 
 template<class RowType, class Owner>
-void TableModel<RowType, Owner>::on_attribute_changed()
+void TableModel<RowType, Owner>::on_attribute_changed(::Database::AttributeBase *attribute)
 {
-    Database::AttributeBase *attribute = static_cast<Database::AttributeBase*>(sender());
     Database::Row *row = static_cast<Database::Row*>(attribute->owner());
 
     int size = m_data.size();
