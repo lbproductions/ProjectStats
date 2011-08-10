@@ -86,6 +86,7 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_rounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_roundWins)
 
+
     virtual Gui::Details::DetailsWidget* detailsWidget();
 
     virtual Gui::Details::RowWindow* rowWindow();

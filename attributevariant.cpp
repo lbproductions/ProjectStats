@@ -95,7 +95,7 @@ QVariant AttributeVariant::displayVariant(){
         }
     }
 
-    else if(QString(this->typeName()) == "Database::AttributeList<Database::Place*>"){
+    else if(QString(this->typeName()) == "QList<Database::Place*>"){
         QList<Database::Place*> list = this->value<QList<Database::Place*> >();
         QString string = "";
         for (int i = 0; i<list.size();i++){
@@ -107,7 +107,7 @@ QVariant AttributeVariant::displayVariant(){
         variant.setValue(string);
     }
 
-    else if(QString(this->typeName()) == "Database::AttributeList<Database::Drink*>"){
+    else if(QString(this->typeName()) == "QList<Database::Drink*>"){
         QList<Database::Drink*> list = this->value<QList<Database::Drink*> >();
         QHash<Database::Drink*,int> hash;
         for(int i = 0; i<list.size();i++){
@@ -123,17 +123,17 @@ QVariant AttributeVariant::displayVariant(){
         variant.setValue(string);
     }
 
-    else if(QString(this->typeName()) == "Database::AttributeList<Database::Game*>"){
+    else if(QString(this->typeName()) == "QList<Database::Game*>"){
         QList<Database::Game*> list = this->value<QList<Database::Game*> >();
         variant.setValue(list.size());
     }
 
-    else if(QString(this->typeName()) == "Database::AttributeList<Database::Round*>"){
+    else if(QString(this->typeName()) == "QList<Database::Round*>"){
         QList<Database::Round*> list = this->value<QList<Database::Round*> >();
         variant.setValue(list.size());
     }
 
-    else if(QString(this->typeName()) == "Database::AttributeList<Database::Player*>"){
+    else if(QString(this->typeName()) == "QList<Database::Player*>"){
         QList<Database::Player*> list = this->value<QList<Database::Player*> >();
         QString string = "";
         for (int i = 0; i<list.size();i++){
@@ -145,7 +145,7 @@ QVariant AttributeVariant::displayVariant(){
         variant.setValue(string);
     }
 
-    else if(QString(this->typeName()) == "Database::AttributeList<Database::Schmeisserei*>"){
+    else if(QString(this->typeName()) == "QList<Database::Schmeisserei*>"){
         QList<Database::Schmeisserei*> list = this->value<QList<Database::Schmeisserei*> >();
         QString string = "";
         for (int i = 0; i<list.size();i++){

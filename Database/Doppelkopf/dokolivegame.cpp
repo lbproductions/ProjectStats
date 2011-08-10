@@ -77,11 +77,17 @@ START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
     doko_schmeissereiCount->addDependingAttribute(doko_schmeissereiCountAfterRounds);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QPair<Player* COMMA Player*>,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_gamesTogether,tr("Doko_GamesTogether"))
+    rounds->addDependingAttribute(doko_gamesTogether);
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QPair<Player* COMMA Player*>,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_winsTogether,tr("Doko_WinsTogether"))
+    rounds->addDependingAttribute(doko_winsTogether);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,double,DokoLiveGame,DokoLiveGameCalculator,calc,doko_pointAveragePerWin,tr("Doko_PointAveragePerWin"))
+    rounds->addDependingAttribute(doko_pointAveragePerWin);
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_rounds,tr("Doko_Rounds"))
+    rounds->addDependingAttribute(doko_rounds);
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_roundWins,tr("Doko_RoundWins"))
+    rounds->addDependingAttribute(doko_roundWins);
+
 }
 
 DokoLiveGame::DokoLiveGame(bool mitHochzeit,

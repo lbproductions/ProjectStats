@@ -272,4 +272,21 @@ QMap<Drink*,int> LiveGameCalculator::calculate_drinkCount(){
     return hash;
 }
 
+QMap<Player*,int> LiveGameCalculator::calculate_leadingRounds(){
+    QMap<Player*,int> hash;
+    foreach(Player* p, m_livegame->players->value()){
+        for(int i = 0; i<m_livegame->rounds->value().size();i++){
+            if(m_livegame->placementAfterRounds->value(i).value(p) == 1){
+                hash.insert(p,hash.value(p)+1);
+            }
+        }
+    }
+    return hash;
+}
+
+QMap<int,QMap<Player*,int> > LiveGameCalculator::calculate_placementAfterRounds(){
+    QMap<int,QMap<Player*,int> > hash;
+    return hash;
+}
+
 } // namespace Database
