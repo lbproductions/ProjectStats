@@ -62,11 +62,18 @@ void LiveGameDetailsWidget::setupWidget()
     centralSplitter->addWidget(m_playerTotalPointsTable);
     centralSplitter->addWidget(m_graph);
 
+    QWidget* centralWidget = new QWidget();
+    QLayout* centralLayout = new QVBoxLayout(this);
+    centralLayout->setSpacing(0);
+    centralLayout->setContentsMargins(12,12,12,12);
+    centralLayout->addWidget(centralSplitter);
+    centralWidget->setLayout(centralLayout);
+
     Gui::Misc::Splitter* leftSplitter = new Gui::Misc::Splitter(Qt::Horizontal);
     leftSplitter->setFullscreen(true);
     leftSplitter->setLeftToRight(true);
     leftSplitter->addWidget(new BeerWidget(m_livegame,leftSplitter));
-    leftSplitter->addWidget(centralSplitter);
+    leftSplitter->addWidget(centralWidget);
 
     Gui::Misc::Splitter* rightSplitter = new Gui::Misc::Splitter(Qt::Horizontal);
     rightSplitter->setFullscreen(true);

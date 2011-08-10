@@ -50,7 +50,7 @@ DokoLiveGameRoundTable::DokoLiveGameRoundTable(Database::DokoLiveGame* livegame,
     fillWidget();
 }
 
-void DokoLiveGameRoundTable::addRound(Database::Round* round)
+void DokoLiveGameRoundTable::addRound(::Database::Round* round)
 {
     Database::DokoRound* dokoround = static_cast<Database::DokoRound*>(round);
 

@@ -360,13 +360,13 @@ public:
       Verbindet diesen FutureWatcher mit dem Label \p label.<br>
       Alle zukünftigen Änderungen werden dem Label mitgeteilt, sodass es sich automatisch anpassen kann.
       */
-    void connectTo(QLabel *label);
+    virtual void connectTo(QLabel *label);
 
     /*!
       Verbindet diesen FutureWatcher mit der LineEdit \p lineEdit.<br>
       Alle zukünftigen Änderungen werden der LineEdit mitgeteilt, sodass es sich automatisch anpassen kann.
       */
-    void connectTo(QLineEdit *lineEdit);
+    virtual void connectTo(QLineEdit *lineEdit);
 
 signals:
     /*!
@@ -383,7 +383,7 @@ protected slots:
       */
     void on_attribute_aboutToChange();
 
-    void on_attribute_changed();
+    virtual void on_attribute_changed();
 
 protected:
     AttributeBase* m_attribute;

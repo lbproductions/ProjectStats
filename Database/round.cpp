@@ -100,6 +100,8 @@ void Round::addPoints(Player* player, int points)
     addChildRow(point);
 
     Points::instance()->insertRow(point);
+    this->pointInstances->recalculateFromScratch();
+    this->points->recalculateFromScratch();
 }
 
 END_ROW_IMPLEMENTATION()

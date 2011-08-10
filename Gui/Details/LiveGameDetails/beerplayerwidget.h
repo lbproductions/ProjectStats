@@ -53,8 +53,8 @@ private:
     Database::Player* m_player;
 
 public slots:
-    void on_livegame_drinkAdded(::Database::LiveGameDrink*);
-    void on_drink_doubleClicked(::Database::LiveGameDrink*);
+    void onlivegamedrinkAdded(::Database::LiveGameDrink*);
+    void ondrinkdoubleClicked(::Database::LiveGameDrink*);
 };
 
 class DrinkLabel : public Gui::Misc::ClickableLabel

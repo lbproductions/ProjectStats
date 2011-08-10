@@ -25,7 +25,7 @@ GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
     for(int i = 0; i < size; i++) {
         position = new QLabel(this);
         position->setAlignment(Qt::AlignCenter);
-        m_game->placement->mappingFutureWatcher()->connectTo(position, m_game->playersSortedByPlacement->value().at(i));
+        m_game->placement->mappingFutureWatcher(m_game->playersSortedByPlacement->value().at(i))->connectTo(position);
         m_labelList.append(position);
 
         name = new QLabel(this);

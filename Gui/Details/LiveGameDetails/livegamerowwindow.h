@@ -29,6 +29,7 @@ class LiveGameRowWindow : public RowWindow
     Q_OBJECT
 public:
     LiveGameRowWindow(Database::LiveGame* livegame, QWidget *parent = 0);
+    ~LiveGameRowWindow();
 
 protected:
     QPointer<Database::LiveGame> m_livegame;

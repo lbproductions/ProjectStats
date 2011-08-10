@@ -18,7 +18,6 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
     m_calc = calc;
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(LiveGameDrink*,LiveGame,LiveGameCalculator,calc,drinks,tr("Drinks"))
-    LiveGameDrinks::instance()->rows()->addDependingAttribute(drinks);
     //drinks->setCheckChange(false);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Drink*,int,LiveGame,LiveGameCalculator,calc,drinkCount,tr("DrinkCount"))
@@ -31,7 +30,6 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
     drinksPerPlayer->addDependingAttribute(playersSortedByAlcPegel);
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Round*,LiveGame,LiveGameCalculator,calc,rounds,tr("Rounds"))
-    Rounds::instance()->rows()->addDependingAttribute(rounds);
 
     rounds->addDependingAttribute(length);
 
@@ -89,6 +87,7 @@ void LiveGame::addDrink(Player* player, Drink* drink)
 
     LiveGameDrink* liveGameDrink = new LiveGameDrink(player,round,drink);
     addChildRow(liveGameDrink);
+    this->drinks->recalculateFromScratch();
     emit drinkAdded(liveGameDrink);
 }
 
@@ -118,6 +117,10 @@ Round* LiveGame::startNextRound()
     {
         lastRound->db_state->setValue(Round::FinishedState);
     }
+
+    this->rounds->recalculateFromScratch();
+
+    emit roundAdded(lastRound);
 
     return newround;
 }

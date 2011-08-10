@@ -17,7 +17,7 @@ DokoPlayerStatsWidget::DokoPlayerStatsWidget(Database::Player* player, QWidget *
     player->dokoStats()->trumpfabgaben->futureWatcher()->connectTo(uiDoko->labelTrumpfabgaben);
     player->dokoStats()->schmeissereien->futureWatcher()->connectTo(uiDoko->labelSchmeissereien);
     player->dokoStats()->schweinereien->futureWatcher()->connectTo(uiDoko->labelSchweinereien);
-    player->gameCount->mappingFutureWatcher()->connectTo(uiDoko->labelGames,"Doppelkopf");
+    player->gameCount->mappingFutureWatcher("Doppelkopf")->connectTo(uiDoko->labelGames);
     player->dokoStats()->liveGames->futureWatcher()->connectTo(uiDoko->labelLiveGames);
     player->dokoStats()->offlineGames->futureWatcher()->connectTo(uiDoko->labelOfflineGames);
     player->dokoStats()->points->futureWatcher()->connectTo(uiDoko->labelPoints);

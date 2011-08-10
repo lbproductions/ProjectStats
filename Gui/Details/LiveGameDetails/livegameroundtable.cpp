@@ -31,7 +31,7 @@ LiveGameRoundTable::LiveGameRoundTable(Database::LiveGame* livegame, QWidget *pa
     markCardMixer();
 
     connect(livegame->cardmixer,SIGNAL(changed()),this,SLOT(markCardMixer()));
-    connect(livegame->currentRound,SIGNAL(changed()),this,SLOT(addCurrentRound()));
+    connect(livegame,SIGNAL(roundAdded(::Database::Round*)),this,SLOT(addRound(::Database::Round*)));
 }
 
 void LiveGameRoundTable::fillWidget()
@@ -50,7 +50,7 @@ void LiveGameRoundTable::addCurrentRound()
     addRound(m_livegame->currentRound->value());
 }
 
-void LiveGameRoundTable::addRound(Database::Round* /*round*/)
+void LiveGameRoundTable::addRound(::Database::Round* /*round*/)
 {
 }
 

@@ -24,7 +24,7 @@ void LiveGamePlayerPointsGraph::setupGraph(){
     addPoint(QPoint(0,0));
     readPlayerPoints();
 
-    connect(m_liveGame,SIGNAL(roundFinished(::Database::Round*)),this,SLOT(addRound(::Database::Round*)));
+    connect(m_liveGame,SIGNAL(roundAdded(::Database::Round*)),this,SLOT(addRound(::Database::Round*)));
 }
 
 void LiveGamePlayerPointsGraph::readPlayerPoints()

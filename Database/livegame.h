@@ -68,6 +68,8 @@ class LiveGame : public Game
 signals:
     void drinkAdded(::Database::LiveGameDrink*);
 
+    void roundAdded(::Database::Round*);
+
 private:
     virtual Round *createRound();
 

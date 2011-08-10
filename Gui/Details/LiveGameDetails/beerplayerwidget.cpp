@@ -51,13 +51,13 @@ BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, Database::LiveGame*
     ui->setupUi(this);
 
     player->name->futureWatcher()->connectTo(ui->labelName);
-    player->alcPegel->mappingFutureWatcher()->connectTo(ui->labelAlc,livegame);
+    player->alcPegel->mappingFutureWatcher(livegame)->connectTo(ui->labelAlc);
 
     int drinks = 0;
     foreach(Database::LiveGameDrink* lgdrink, livegame->drinksPerPlayer->value(player))
     {
         DrinkLabel* drinkIcon = new DrinkLabel(lgdrink,this);
-        connect(drinkIcon,SIGNAL(drinkDoubleClicked(::Database::LiveGameDrink*)),this,SLOT(on_drink_doubleClicked(::Database::LiveGameDrink*)));
+        connect(drinkIcon,SIGNAL(drinkDoubleClicked(::Database::LiveGameDrink*)),this,SLOT(ondrinkdoubleClicked(::Database::LiveGameDrink*)));
 	ui->gridLayoutDrinks->addWidget(drinkIcon,(drinks/5),drinks%5,Qt::AlignCenter);
         drinks++;
     }
@@ -67,17 +67,17 @@ BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, Database::LiveGame*
     this->setStyleSheet("QFrame{background: black; color: white; border-radius: 10px;}");
     ui->line->setStyleSheet("QFrame{background-color:gray;}");
 
-    connect(m_livegame,SIGNAL(drinkAdded(::Database::LiveGameDrink*)),this,SLOT(on_livegame_drinkAdded(::Database::LiveGameDrink*)));
+    connect(m_livegame,SIGNAL(drinkAdded(::Database::LiveGameDrink*)),this,SLOT(onlivegamedrinkAdded(::Database::LiveGameDrink*)));
 }
 
-void BeerPlayerWidget::on_livegame_drinkAdded(::Database::LiveGameDrink* drink)
+void BeerPlayerWidget::onlivegamedrinkAdded(::Database::LiveGameDrink* drink)
 {
     if(drink->playerId->value() == m_player->id())
     {
         int drinks = ui->gridLayoutDrinks->count();
 
         DrinkLabel* drinkIcon = new DrinkLabel(drink,this);
-        connect(drinkIcon,SIGNAL(drinkDoubleClicked(::Database::LiveGameDrink*)),this,SLOT(on_drink_doubleClicked(::Database::LiveGameDrink*)));
+        connect(drinkIcon,SIGNAL(drinkDoubleClicked(::Database::LiveGameDrink*)),this,SLOT(ondrinkdoubleClicked(::Database::LiveGameDrink*)));
         ui->gridLayoutDrinks->addWidget(drinkIcon,(drinks/5),drinks%5,Qt::AlignCenter);
     }
 }
@@ -116,7 +116,7 @@ void BeerPlayerWidget::dropEvent(QDropEvent *event)
     this->repaint();
 }
 
-void BeerPlayerWidget::on_drink_doubleClicked(::Database::LiveGameDrink* drink)
+void BeerPlayerWidget::ondrinkdoubleClicked(::Database::LiveGameDrink* drink)
 {
     m_livegame->addDrink(m_player,drink->drink->value());
 }

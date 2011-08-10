@@ -32,11 +32,6 @@ public:
     */
     explicit LiveGameRoundTable(Database::LiveGame* livegame, QWidget *parent = 0);
 
-    /**
-    * Fügt zur Tabelle eine neue Runde hinzu. Für diese wird eine neue Reihe erstellt und mit den Daten aus der Runde befüllt.
-    */
-    virtual void addRound(Database::Round *round);
-
     void updateSizes();
 
 protected slots:
@@ -46,6 +41,11 @@ protected slots:
     void markCardMixer();
 
     void addCurrentRound();
+
+    /**
+    * Fügt zur Tabelle eine neue Runde hinzu. Für diese wird eine neue Reihe erstellt und mit den Daten aus der Runde befüllt.
+    */
+    virtual void addRound(::Database::Round *round);
 
     void resizeEvent(QResizeEvent *event);
 

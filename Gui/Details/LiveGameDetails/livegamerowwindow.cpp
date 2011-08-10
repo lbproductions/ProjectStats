@@ -28,6 +28,14 @@ LiveGameRowWindow::LiveGameRowWindow(Database::LiveGame* livegame, QWidget* widg
 #endif
 }
 
+LiveGameRowWindow::~LiveGameRowWindow()
+{
+    if(m_livegame->state->value() == Database::Round::RunningState)
+    {
+        m_livegame->setState(Database::Round::PausedState);
+    }
+}
+
 void LiveGameRowWindow::setupToolBar()
 {
     m_toolbar = new QToolBar(tr("Live Game"));

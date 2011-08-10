@@ -25,8 +25,11 @@ QMap<Player*,int> RoundCalculator::calculate_points(){
     QList<Point*> points = m_round->pointInstances->value();
     foreach(Point* p, points)
     {
-        hash.insert(Players::instance()->rowById(p->playerId->value()),
-                    p->points->value());
+        if(p)
+        {
+            hash.insert(Players::instance()->rowById(p->playerId->value()),
+                        p->points->value());
+        }
     }
     return hash;
 }

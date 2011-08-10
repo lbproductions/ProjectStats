@@ -20,15 +20,15 @@ PlayerStatsWidget::PlayerStatsWidget(Database::Player* player, QWidget *parent) 
         ui->tabWidget->addTab(player->typeStatsWidget(s),s);
     }
 
-    player->average->mappingFutureWatcher()->connectTo(ui->labelAverageValue,"General");
-    player->gameCount->mappingFutureWatcher()->connectTo(ui->labelGamesValue,"General");
-    player->losses->mappingFutureWatcher()->connectTo(ui->labelLossesValue,"General");
-    player->points->mappingFutureWatcher()->connectTo(ui->labelPointsValue,"General");
-    player->wins->mappingFutureWatcher()->connectTo(ui->labelWinsValue,"General");
+    player->average->mappingFutureWatcher("General")->connectTo(ui->labelAverageValue);
+    player->gameCount->mappingFutureWatcher("General")->connectTo(ui->labelGamesValue);
+    player->losses->mappingFutureWatcher("General")->connectTo(ui->labelLossesValue);
+    player->points->mappingFutureWatcher("General")->connectTo(ui->labelPointsValue);
+    player->wins->mappingFutureWatcher("General")->connectTo(ui->labelWinsValue);
 
     if(player->lastGame->value("General") != QDateTime())
     {
-        player->lastGame->mappingFutureWatcher()->connectTo(ui->labelLastGameValue,"General");
+        player->lastGame->mappingFutureWatcher("General")->connectTo(ui->labelLastGameValue);
     }
     else
     {
@@ -37,7 +37,7 @@ PlayerStatsWidget::PlayerStatsWidget(Database::Player* player, QWidget *parent) 
 
     if(player->lastWin->value("General") != QDateTime())
     {
-        player->lastWin->mappingFutureWatcher()->connectTo(ui->labelLastWinValue,"General");
+        player->lastWin->mappingFutureWatcher("General")->connectTo(ui->labelLastWinValue);
     }
     else
     {
