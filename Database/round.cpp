@@ -99,7 +99,6 @@ void Round::addPoints(Player* player, int points)
     Point* point = new Point(this,player,points);
     addChildRow(point);
 
-    Points::instance()->insertRow(point);
     this->pointInstances->recalculateFromScratch();
     this->points->recalculateFromScratch();
 }

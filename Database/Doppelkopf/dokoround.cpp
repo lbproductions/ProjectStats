@@ -20,7 +20,6 @@ START_ROW_IMPLEMENTATION(DokoRound, Round, Round)
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoRound,doko_soloPflicht,tr("Doko_SoloPflicht"))
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Schmeisserei*,DokoRound,DokoRoundCalculator,calc,doko_schmeissereien,tr("Schmeissereien"))
-    Schmeissereis::instance()->rows()->addDependingAttribute(doko_schmeissereien);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,bool,DokoRound,DokoRoundCalculator,calc,doko_re,tr("Doko_Re"))
 }
@@ -40,8 +39,7 @@ void DokoRound::addSchmeisserei(Player* player, const QString& type)
 {
     Schmeisserei* schmeisserei = new Schmeisserei(player,this,type);
     addChildRow(schmeisserei);
-
-    Schmeissereis::instance()->insertRow(schmeisserei);
+    this->doko_schmeissereien->recalculateFromScratch();
 }
 
 END_ROW_IMPLEMENTATION()
