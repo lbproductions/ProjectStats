@@ -84,10 +84,24 @@ void LiveGameSummaryWidget::setupGeneralTab(){
             points->setFont(font);
             leadPercentage->setFont(font);
         }
-
-        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(points,i,2);
-        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(leadPercentage,i,3);
+        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(points,i+1,2);
+        static_cast<QGridLayout*>(ui->tab->layout())->addWidget(leadPercentage,i+1,3);
     }
+
+    QLabel* pointsHeader = new QLabel(tr("Points"));
+    pointsHeader->setAlignment(Qt::AlignCenter);
+    QFont font = pointsHeader->font();
+    font.setPointSize(9);
+    //font.setBold(true);
+    pointsHeader->setFont(font);
+    m_labelList.append(pointsHeader);
+    static_cast<QGridLayout*>(ui->tab->layout())->addWidget(pointsHeader,0,2);
+
+    QLabel* leadHeader = new QLabel(tr("Leadership"));
+    leadHeader->setAlignment(Qt::AlignCenter);
+    leadHeader->setFont(font);
+    m_labelList.append(leadHeader);
+    static_cast<QGridLayout*>(ui->tab->layout())->addWidget(leadHeader,0,3);
 }
 
 } // namespace LiveGameDetails
