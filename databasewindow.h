@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DATABASEWINDOW_H
+#define DATABASEWINDOW_H
 
 #include <QMainWindow>
 
@@ -30,4 +30,4 @@ private:
     QList<QWidget*> m_openWindows;
 };
 
-#endif // MAINWINDOW_H
+#endif // DATABASEWINDOW_H

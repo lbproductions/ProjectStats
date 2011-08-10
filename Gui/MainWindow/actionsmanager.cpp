@@ -7,6 +7,7 @@
 #include <Gui/Details/DrinkDetails/DrinkDetailsWidget.h>
 #include <Gui/Filter/newleaguedialog.h>
 #include <handler.h>
+#include <databasewindow.h>
 #include <Database/player.h>
 #include <Database/place.h>
 #include <Database/drink.h>
@@ -74,6 +75,9 @@ void ActionsManager::createActions()
     actionCopy->setEnabled(false);
     actionPaste = constructAction(tr("Paste"),"",QKeySequence(QKeySequence::Paste));
     actionPaste->setEnabled(false);
+
+    actionShowDatabase = constructAction(tr("Show Database"),"");
+    connect(actionShowDatabase,SIGNAL(triggered()), this, SLOT(showDatabase()));
 }
 
 QAction *ActionsManager::constructAction(const QString &name, const QString &iconPath, const QKeySequence &shortcut)
@@ -138,8 +142,14 @@ void ActionsManager::newDrinksFolder()
     //Handler::getInstance()->database()->categories()->createFolderCategorie(Database::ChildCategorie::DrinksCategorieContentType);
 }
 
-void ActionsManager::newLeagueFolder(){
+void ActionsManager::newLeagueFolder()
+{
     NewLeagueDialog* leaguedialog = new NewLeagueDialog(m_mainWindow);
     leaguedialog->show();
 }
 
+void ActionsManager::showDatabase()
+{
+    DatabaseWindow* databaseWindow = new DatabaseWindow(m_mainWindow);
+    databaseWindow->show();
+}

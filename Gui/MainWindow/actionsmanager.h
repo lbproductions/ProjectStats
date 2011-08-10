@@ -75,6 +75,8 @@ public:
     QAction * actionCopy;
     QAction * actionPaste;
 
+    QAction * actionShowDatabase;
+
 public slots:
     /*!
       Wird von der Action actionGameWizard() aufgerufen.
@@ -108,6 +110,8 @@ public slots:
     void newPlacesFolder();
     void newDrinksFolder();
     void newLeagueFolder();
+
+    void showDatabase();
 
 private:
     /*!
