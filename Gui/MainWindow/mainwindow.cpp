@@ -46,8 +46,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     restoreSettings();
 
-    Handler::getInstance()->messageSystem()->showWelcomeMessage();
-
 #ifdef Q_WS_MAC
     setUpFullScreenButton(this);
 #endif

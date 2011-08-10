@@ -141,7 +141,7 @@ void LiveGameDetailsWidget::updateSizes()
     if (m_playerTotalPointsTable){
         for (int i = 0; i < m_playerTotalPointsTable->columnCount();i++)
         {
-             m_playerTotalPointsTable->setColumnWidth(i, m_roundTable->columnWidth(0));
+             m_playerTotalPointsTable->setColumnWidth(i, m_roundTable->columnWidth(i));
         }
     }
 }

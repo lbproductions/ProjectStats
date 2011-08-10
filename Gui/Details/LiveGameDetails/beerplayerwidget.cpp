@@ -79,6 +79,8 @@ void BeerPlayerWidget::onlivegamedrinkAdded(::Database::LiveGameDrink* drink)
         DrinkLabel* drinkIcon = new DrinkLabel(drink,this);
         connect(drinkIcon,SIGNAL(drinkDoubleClicked(::Database::LiveGameDrink*)),this,SLOT(ondrinkdoubleClicked(::Database::LiveGameDrink*)));
         ui->gridLayoutDrinks->addWidget(drinkIcon,(drinks/5),drinks%5,Qt::AlignCenter);
+
+        this->parentWidget()->update();
     }
 }
 
