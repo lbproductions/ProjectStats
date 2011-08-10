@@ -150,6 +150,6 @@ void ActionsManager::newLeagueFolder()
 
 void ActionsManager::showDatabase()
 {
-    DatabaseWindow* databaseWindow = new DatabaseWindow(m_mainWindow);
+    DatabaseWindow* databaseWindow = new DatabaseWindow();
     databaseWindow->show();
 }

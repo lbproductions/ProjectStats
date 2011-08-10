@@ -98,12 +98,10 @@ void LiveGameGeneralOptionsWidget::setupWidget()
 
 QList<Database::Player*> LiveGameGeneralOptionsWidget::selectedPlayers()
 {
-    QListIterator<QListWidgetItem *> it(ui->listWidgetSelectedPlayers->selectedItems());
     QList<Database::Player*> list;
-
-    while (it.hasNext())
+    for(int i = 0; i < ui->listWidgetSelectedPlayers->count(); ++i)
     {
-        list.append(Database::Players::instance()->playerByName(it.next()->text()));
+        list.append(Database::Players::instance()->playerByName(ui->listWidgetSelectedPlayers->item(i)->text()));
     }
 
     return list;
@@ -155,12 +153,25 @@ void LiveGameGeneralOptionsWidget::on_comboBoxGameType_currentIndexChanged(int /
 
 void LiveGameGeneralOptionsWidget::on_pushButtonSelect_clicked()
 {
+    if(ui->listWidgetAllPlayers->selectedItems().isEmpty())
+    {
+        return;
+    }
+
+    int row = ui->listWidgetAllPlayers->selectionModel()->selectedRows().at(0).row();
+
     QListIterator<QListWidgetItem *> it(ui->listWidgetAllPlayers->selectedItems());
 
     while (it.hasNext())
     {
         ui->listWidgetSelectedPlayers->addItem(ui->listWidgetAllPlayers->takeItem(ui->listWidgetAllPlayers->row(it.next())));
     }
+
+    QAbstractItemModel * model = ui->listWidgetAllPlayers->model();
+
+    ui->listWidgetAllPlayers->selectionModel()->setCurrentIndex(
+            model->index(row,0,model->index(0,0,QModelIndex()))
+            ,QItemSelectionModel::Select);
 }
 
 void LiveGameGeneralOptionsWidget::on_pushButtonDeselect_clicked()

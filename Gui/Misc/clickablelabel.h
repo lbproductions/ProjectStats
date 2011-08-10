@@ -17,10 +17,11 @@ public:
 
 signals:
     void clicked();
+    void doubleClicked();
 
 protected:
-    void mouseReleaseEvent(QMouseEvent *event);
-
+    void mouseReleaseEvent(QMouseEvent* event);
+    void mouseDoubleClickEvent(QMouseEvent* event);
 };
 
 }

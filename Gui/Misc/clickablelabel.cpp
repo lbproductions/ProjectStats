@@ -18,3 +18,13 @@ void ClickableLabel::mouseReleaseEvent(QMouseEvent *event)
 	emit clicked();
     }
 }
+
+void ClickableLabel::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    QLabel::mouseReleaseEvent(event);
+
+    if(event->button() == Qt::LeftButton)
+    {
+        emit doubleClicked();
+    }
+}

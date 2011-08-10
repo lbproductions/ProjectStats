@@ -11,13 +11,23 @@
 
 #include <Database/Calculator/livegamecalculator.h>
 
-namespace Database{
+namespace Database
+{
     class Drink;
 }
 
 class QTime;
 
-START_ROW_DECLARATION(LiveGame, Game)
+namespace Database
+{
+
+template<class RowType>
+class Table;
+
+class LiveGame : public Game
+{
+    Q_OBJECT
+
     DECLARE_ROW_CONSTRUCTORS(LiveGame, Game)
 
     LiveGame(QString type);
@@ -55,10 +65,20 @@ START_ROW_DECLARATION(LiveGame, Game)
 
     Gui::Details::SummaryWidget* summaryWidget();
 
+signals:
+    void drinkAdded(::Database::LiveGameDrink*);
+
 private:
     virtual Round *createRound();
 
-END_ROW_DECLARATION(LiveGame)
+};
+
+}
+Q_DECLARE_METATYPE(Database::LiveGame)
+Q_DECLARE_METATYPE(Database::LiveGame*)
+Q_DECLARE_METATYPE(QMap<Database::LiveGame* COMMA int>)
+Q_DECLARE_METATYPE(QList<Database::LiveGame*>)
+Q_DECLARE_METATYPE(QMap<int COMMA Database::LiveGame*>)
 
 Q_DECLARE_METATYPE(QMap<Database::Player* COMMA QList<Database::LiveGameDrink*> >)
 

@@ -30,6 +30,8 @@ DatabaseWindow::DatabaseWindow(QWidget *parent) :
     connect(m_button,SIGNAL(clicked()), this,SLOT(on_button_clicked()));
     w->setLayout(layout);
     setCentralWidget(w);
+
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 DatabaseWindow::~DatabaseWindow()

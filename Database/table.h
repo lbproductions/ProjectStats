@@ -681,7 +681,7 @@ void Table<RowType>::insertRow(Row *row)
     //Alle Attribute mit dem Modell verknüpfen
     foreach(AttributeBase *attribute, row->attributes())
     {
-	connect(attribute,SIGNAL(changed()),m_model,SLOT(on_attribute_changed()));
+        connect(attribute,SIGNAL(changed(::Database::AttributeBase*)),m_model,SLOT(on_attribute_changed(::Database::AttributeBase*)));
     }
 
     //und die Änderung abschließen

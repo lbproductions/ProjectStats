@@ -89,6 +89,7 @@ void LiveGame::addDrink(Player* player, Drink* drink)
 
     LiveGameDrink* liveGameDrink = new LiveGameDrink(player,round,drink);
     addChildRow(liveGameDrink);
+    emit drinkAdded(liveGameDrink);
 }
 
 void LiveGame::setState(Round::RoundState state)

@@ -10,7 +10,7 @@
 #include <Database/database.h>
 #include <Gui/Details/LiveGameDetails/beerwidget.h>
 
-#include <Gui/Misc/draggablelabel.h>
+#include <Gui/Misc/clickablelabel.h>
 #include <Gui/Details/LiveGameDetails/choosedrinkcountdialog.h>
 
 #include <QMimeData>
@@ -21,6 +21,26 @@
  #include <QGraphicsColorizeEffect>
 
 using namespace Gui::Details::LiveGameDetails;
+
+DrinkLabel::DrinkLabel(Database::LiveGameDrink *drink, QWidget *parent) :
+    Gui::Misc::ClickableLabel(parent),
+    m_drink(drink)
+{
+    Database::Drink* d = drink->drink->value();
+    QImage image = d->icon->value();
+    if(image.isNull())
+    {
+        image = QImage(":graphics/drinks/default");
+    }
+    setPixmap(QPixmap::fromImage(image.scaled(20,45,Qt::KeepAspectRatio,Qt::SmoothTransformation)));
+    setToolTip(d->name->value() + QLatin1String(" ") + QString::number(d->size->value()) + tr("l - doubleclick to drink another"));
+    connect(this,SIGNAL(doubleClicked()),this,SLOT(on_doubleClicked()));
+}
+
+void DrinkLabel::on_doubleClicked()
+{
+    emit drinkDoubleClicked(m_drink);
+}
 
 BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, Database::LiveGame* livegame, QWidget *parent) :
     AbstractLiveGameWidget(parent),
@@ -36,9 +56,8 @@ BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, Database::LiveGame*
     int drinks = 0;
     foreach(Database::LiveGameDrink* lgdrink, livegame->drinksPerPlayer->value(player))
     {
-        Database::Drink* drink = lgdrink->drink->value();
-        DraggableLabel* drinkIcon = new DraggableLabel(drink,this);
-        drinkIcon->setPixmap(QPixmap::fromImage(drink->icon->value().scaled(20,45,Qt::KeepAspectRatio,Qt::SmoothTransformation)));
+        DrinkLabel* drinkIcon = new DrinkLabel(lgdrink,this);
+        connect(drinkIcon,SIGNAL(drinkDoubleClicked(::Database::LiveGameDrink*)),this,SLOT(on_drink_doubleClicked(::Database::LiveGameDrink*)));
 	ui->gridLayoutDrinks->addWidget(drinkIcon,(drinks/5),drinks%5,Qt::AlignCenter);
         drinks++;
     }
@@ -48,22 +67,19 @@ BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, Database::LiveGame*
     this->setStyleSheet("QFrame{background: black; color: white; border-radius: 10px;}");
     ui->line->setStyleSheet("QFrame{background-color:gray;}");
 
-    connect(Database::LiveGameDrinks::instance()->rows(),SIGNAL(changed()),this,SLOT(update()));
+    connect(m_livegame,SIGNAL(drinkAdded(::Database::LiveGameDrink*)),this,SLOT(on_livegame_drinkAdded(::Database::LiveGameDrink*)));
 }
 
-void BeerPlayerWidget::update()
+void BeerPlayerWidget::on_livegame_drinkAdded(::Database::LiveGameDrink* drink)
 {
-    int drinks = m_livegame->drinksPerPlayer->value(m_player).size() - 1;
-
-    if(drinks >= 0)
+    if(drink->playerId->value() == m_player->id())
     {
-        Database::Drink* drink = m_livegame->drinksPerPlayer->value(m_player).last()->drink->value();
-        DraggableLabel* drinkIcon = new DraggableLabel(drink,this);
-        drinkIcon->setPixmap(QPixmap::fromImage(drink->icon->value().scaled(20,45,Qt::KeepAspectRatio,Qt::SmoothTransformation)));
+        int drinks = ui->gridLayoutDrinks->count();
+
+        DrinkLabel* drinkIcon = new DrinkLabel(drink,this);
+        connect(drinkIcon,SIGNAL(drinkDoubleClicked(::Database::LiveGameDrink*)),this,SLOT(on_drink_doubleClicked(::Database::LiveGameDrink*)));
         ui->gridLayoutDrinks->addWidget(drinkIcon,(drinks/5),drinks%5,Qt::AlignCenter);
     }
-
-    this->repaint();
 }
 
 BeerPlayerWidget::~BeerPlayerWidget()
@@ -98,6 +114,11 @@ void BeerPlayerWidget::dropEvent(QDropEvent *event)
     }
     this->setStyleSheet("QFrame{background: black; color: white; border-radius: 10px;}");
     this->repaint();
+}
+
+void BeerPlayerWidget::on_drink_doubleClicked(::Database::LiveGameDrink* drink)
+{
+    m_livegame->addDrink(m_player,drink->drink->value());
 }
 
 void BeerPlayerWidget::dragMoveEvent(QDragMoveEvent * /*event*/)

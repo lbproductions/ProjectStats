@@ -6,6 +6,7 @@
 #include <QFrame>
 
 #include <Gui/Details/LiveGameDetails/abstractlivegamewidget.h>
+#include <Gui/Misc/clickablelabel.h>
 
 namespace Ui {
     class BeerPlayerWidget;
@@ -16,6 +17,7 @@ namespace Database
     class Player;
     class Drink;
     class LiveGame;
+    class LiveGameDrink;
 }
 
 namespace Gui
@@ -50,8 +52,25 @@ private:
     Database::LiveGame* m_livegame;
     Database::Player* m_player;
 
+public slots:
+    void on_livegame_drinkAdded(::Database::LiveGameDrink*);
+    void on_drink_doubleClicked(::Database::LiveGameDrink*);
+};
+
+class DrinkLabel : public Gui::Misc::ClickableLabel
+{
+    Q_OBJECT
+public:
+    explicit DrinkLabel(Database::LiveGameDrink* drink, QWidget* parent);
+
+signals:
+    void drinkDoubleClicked(::Database::LiveGameDrink*);
+
 private slots:
-    void update();
+    void on_doubleClicked();
+
+private:
+    Database::LiveGameDrink* m_drink;
 };
 
 }

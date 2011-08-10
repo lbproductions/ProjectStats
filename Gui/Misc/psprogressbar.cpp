@@ -21,7 +21,6 @@ PSProgressBar::PSProgressBar(QWidget *parent) :
 void PSProgressBar::paintEvent(QPaintEvent *event){
     QProgressBar::paintEvent(event);
     QPainter* painter = new QPainter();
-    painter->begin(this);
     QFont font = this->font();
     double ratio = 1/((double)m_text.length()/4.0);
     if (ratio > 0 && ratio <= 1){
