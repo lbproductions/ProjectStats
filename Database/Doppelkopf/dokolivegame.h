@@ -72,12 +72,20 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,doko_schweinereiCount)
     DECLARE_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,doko_schmeissereiCount)
 
+
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_hochzeitCountAfterRounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_soloCountAfterRounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_pflichtSoloCountAfterRounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_trumpfabgabeCountAfterRounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_schweinereiCountAfterRounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_schmeissereiCountAfterRounds)
+
+    DECLARE_ATTRIBUTE_IN_CALC(QString,DokoLiveGame,DokoLiveGameCalculator,doko_hochzeitStats)
+    DECLARE_ATTRIBUTE_IN_CALC(QString,DokoLiveGame,DokoLiveGameCalculator,doko_soloStats)
+    DECLARE_ATTRIBUTE_IN_CALC(QString,DokoLiveGame,DokoLiveGameCalculator,doko_pflichtSoloStats)
+    DECLARE_ATTRIBUTE_IN_CALC(QString,DokoLiveGame,DokoLiveGameCalculator,doko_trumpfabgabeStats)
+    DECLARE_ATTRIBUTE_IN_CALC(QString,DokoLiveGame,DokoLiveGameCalculator,doko_schweinereiStats)
+    DECLARE_ATTRIBUTE_IN_CALC(QString,DokoLiveGame,DokoLiveGameCalculator,doko_schmeissereiStats)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QPair<Player* COMMA Player*> ,int,DokoLiveGame,DokoLiveGameCalculator,doko_gamesTogether)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QPair<Player* COMMA Player*> ,int,DokoLiveGame,DokoLiveGameCalculator,doko_winsTogether)

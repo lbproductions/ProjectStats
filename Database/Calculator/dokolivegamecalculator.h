@@ -71,6 +71,12 @@ public:
 
     int calculate_totalPoints();
 
+    QString calculate_doko_hochzeitStats();
+    QString calculate_doko_soloStats();
+    QString calculate_doko_pflichtSoloStats();
+    QString calculate_doko_trumpfabgabeStats();
+    QString calculate_doko_schweinereiStats();
+    QString calculate_doko_schmeissereiStats();
 private:
     QPointer<DokoLiveGame> m_dokolivegame;
 };

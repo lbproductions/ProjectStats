@@ -6,6 +6,7 @@
 #include <Gui/Misc/headerlabel.h>
 
 #include <QSpacerItem>
+#include <QHBoxLayout>
 
 #include "handler.h"
 
@@ -15,117 +16,101 @@ DokoLiveGameInfoGroupBox::DokoLiveGameInfoGroupBox(Database::DokoLiveGame* dokog
     LiveGameInfoGroupBox(dokogame,parent),
     m_dokogame(dokogame)
 {
+    if (m_dokogame->doko_mitHochzeit->value())
+    {
+        m_layout->addWidget(new Misc::HeaderLabel(tr("Hochzeiten"),this));
 
-//    if (m_dokogame->doko_mitHochzeit->value()){
-//        m_layout->addWidget(new Misc::HeaderLabel(tr("Hochzeiten"),this));
-//        QHBoxLayout* layout = new QHBoxLayout();
-//        layout->addWidget(new Misc::ValueLabel(QString::number(m_dokogame->doko_hochzeitCount->value()),this));
-//        layout->addItem(new QSpacerItem(20,20,QSizePolicy::Expanding, QSizePolicy::Expanding));
-//        if (m_dokogame->isFinished->value() || m_dokogame->rounds->value().size() <= 1){
-//            layout->addWidget(new Misc::ValueLabel(" (" + QString::number(Handler::getInstance()->stats()->dokoStats()->hochzeitPlacementAfterRounds(m_dokogame,m_dokogame->rounds().size())) +
-//                                         ". | "+ QString::number(m_dokogame->hochzeitCount()*100/m_dokogame->rounds->value().size())+ "%)",this));
-//        }
-//        else{
-//            layout->addWidget(new Misc::ValueLabel(" (" + QString::number(Handler::getInstance()->stats()->dokoStats()->hochzeitPlacementAfterRounds(m_dokogame,m_dokogame->rounds().size())) +
-//                                         ". | "+ QString::number(m_dokogame->doko_hochzeitCount->value()*100/(m_dokogame->rounds->value().size()-1))+ "%)",this));
-//        }
-//        m_layout->addLayout(layout);
-//    }
-//    else{
-//        m_layout->addWidget(new Misc::HeaderLabel("",this));
-//        m_layout->addWidget(new Misc::ValueLabel("",this));
-//    }
+        QHBoxLayout* layout = new QHBoxLayout();
+        Misc::ValueLabel* hochzeitCountLabel = new Misc::ValueLabel("-", this);
+        m_dokogame->doko_hochzeitCount->futureWatcher()->connectTo(hochzeitCountLabel);
+        layout->addWidget(hochzeitCountLabel);
 
-//    if (m_dokogame->mitSolo()){
-//        m_layout->addWidget(new Misc::HeaderLabel(tr("Soli"),this));
-//        QHBoxLayout* layout = new QHBoxLayout();
-//        layout->addWidget(new Misc::ValueLabel(QString::number(m_dokogame->doko_soloCount->value()),this));
-//        layout->addItem(new QSpacerItem(20,20,QSizePolicy::Expanding, QSizePolicy::Expanding));
-//        if (m_dokogame->isFinished()|| m_dokogame->rounds->value().size() <= 1){
-//            layout->addWidget(new Misc::ValueLabel(" (" + QString::number(Handler::getInstance()->stats()->dokoStats()->soliPlacementAfterRounds(m_dokogame,m_dokogame->rounds().size())) +
-//                                                   ".|"+ QString::number(m_dokogame->doko_soloCount->value()*100/m_dokogame->rounds->value().size())+ "%)",this));
-//        }
-//        else{
-//            layout->addWidget(new Misc::ValueLabel(" (" + QString::number(Handler::getInstance()->stats()->dokoStats()->soliPlacementAfterRounds(m_dokogame,m_dokogame->rounds().size())) +
-//                                                   ".|"+ QString::number(m_dokogame->doko_soloCount->value()*100/(m_dokogame->rounds->value().size()-1))+ "%)",this));
-//        }
-//        m_layout->addLayout(layout);
-//    }
-//    else{
-//        m_layout->addWidget(new Misc::HeaderLabel("",this));
-//        m_layout->addWidget(new Misc::ValueLabel("",this));
-//    }
+        //Misc::ValueLabel* hochzeitStatsLabel = new Misc::ValueLabel("-", this);
+        //m_dokogame->doko_hochzeitStats->futureWatcher()->connectTo(hochzeitStatsLabel);
+        //layout->addWidget(hochzeitStatsLabel);
 
-//    if (m_dokogame->mitPflichtsolo()){
-//        m_layout->addWidget(new Misc::HeaderLabel(tr("Pflicht-Soli"),this));
-//        QHBoxLayout* layout = new QHBoxLayout();
-//        layout->addWidget(new Misc::ValueLabel(QString::number(m_dokogame->doko_pflichtSoloCount->value())+"/"+QString::number(m_dokogame->playersSortedByPosition->value().size()),this));
-//        m_layout->addLayout(layout);
-//    }
-//    else{
-//        m_layout->addWidget(new Misc::HeaderLabel("",this));
-//        m_layout->addWidget(new Misc::ValueLabel("",this));
-//    }
+        m_layout->addLayout(layout);
+    }
 
-//    if (m_dokogame->mitTrumpfabgabe()){
-//        m_layout->addWidget(new Misc::HeaderLabel(tr("Trumpfabgaben"),this));
-//        QHBoxLayout* layout = new QHBoxLayout();
-//        layout->addWidget(new Misc::ValueLabel(QString::number(m_dokogame->doko_trumpfabgabeCount->value()),this));
-//        layout->addItem(new QSpacerItem(20,20,QSizePolicy::Expanding, QSizePolicy::Expanding));
-//        if (m_dokogame->isFinished()|| m_dokogame->rounds().size() <= 1){
-//            layout->addWidget(new Misc::ValueLabel(" (" + QString::number(Handler::getInstance()->stats()->dokoStats()->trumpfabgabenPlacementAfterRounds(m_dokogame,m_dokogame->rounds().size())) +
-//                                                   ".|"+ QString::number(m_dokogame->doko_trumpfabgabeCount->value()*100/m_dokogame->rounds->value().size())+ "%)",this));
-//        }
-//        else{
-//            layout->addWidget(new Misc::ValueLabel(" (" + QString::number(Handler::getInstance()->stats()->dokoStats()->trumpfabgabenPlacementAfterRounds(m_dokogame,m_dokogame->rounds().size())) +
-//                                                   ".|"+ QString::number(m_dokogame->doko_trumpfabgabeCount->value()*100/(m_dokogame->rounds->value().size()-1))+ "%)",this));
-//        }
-//        m_layout->addLayout(layout);
-//    }
-//    else{
-//        m_layout->addWidget(new Misc::HeaderLabel("",this));
-//        m_layout->addWidget(new Misc::ValueLabel("",this));
-//    }
+    if (m_dokogame->doko_mitSolo->value())
+    {
+        m_layout->addWidget(new Misc::HeaderLabel(tr("Soli"),this));
 
-//    if (m_dokogame->mitSchmeisserei()){
-//        m_layout->addWidget(new Misc::HeaderLabel(tr("Schmeissereien"),this));
-//        QHBoxLayout* layout = new QHBoxLayout();
-//        layout->addWidget(new Misc::ValueLabel(QString::number(m_dokogame->doko_schmeissereiCount->value()),this));
-//        layout->addItem(new QSpacerItem(20,20,QSizePolicy::Expanding, QSizePolicy::Expanding));
-//        if (m_dokogame->isFinished() || m_dokogame->rounds().size() <= 1){
-//            layout->addWidget(new Misc::ValueLabel(" (" + QString::number(Handler::getInstance()->stats()->dokoStats()->schmeissereienPlacementAfterRounds(m_dokogame,m_dokogame->rounds().size())) +
-//                                                   ".|"+ QString::number(m_dokogame->doko_schmeissereiCount->value()*100/m_dokogame->rounds->value().size())+ "%)",this));
-//        }
-//        else{
-//            layout->addWidget(new Misc::ValueLabel(" (" + QString::number(Handler::getInstance()->stats()->dokoStats()->schmeissereienPlacementAfterRounds(m_dokogame,m_dokogame->rounds().size())) +
-//                                                   ".|"+ QString::number(m_dokogame->doko_schmeissereiCount->value()*100/(m_dokogame->rounds->value().size()-1))+ "%)",this));
-//        }
-//        m_layout->addLayout(layout);
-//    }
-//    else{
-//        m_layout->addWidget(new Misc::HeaderLabel("",this));
-//        m_layout->addWidget(new Misc::ValueLabel("",this));
-//    }
+        QHBoxLayout* layout = new QHBoxLayout();
+        Misc::ValueLabel* soliCountLabel = new Misc::ValueLabel("-", this);
+        m_dokogame->doko_soloCount->futureWatcher()->connectTo(soliCountLabel);
+        layout->addWidget(soliCountLabel);
 
-//    if (m_dokogame->mitSchweinerei()){
-//        m_layout->addWidget(new Misc::HeaderLabel(tr("Schweinereien"),this));
-//        QHBoxLayout* layout = new QHBoxLayout();
-//        layout->addWidget(new Misc::ValueLabel(QString::number(m_dokogame->doko_schweinereiCount->value()),this));
-//        layout->addItem(new QSpacerItem(20,20,QSizePolicy::Expanding, QSizePolicy::Expanding));
-//        if (m_dokogame->isFinished() || m_dokogame->rounds().size() <= 1){
-//            layout->addWidget(new Misc::ValueLabel(" (" + QString::number(Handler::getInstance()->stats()->dokoStats()->schweinereienPlacementAfterRounds(m_dokogame,m_dokogame->rounds().size())) +
-//                                                   ".|"+ QString::number(m_dokogame->doko_schweinereiCount->value()*100/m_dokogame->rounds->value().size())+ "%)",this));
-//        }
-//        else{
-//            layout->addWidget(new Misc::ValueLabel(" (" + QString::number(Handler::getInstance()->stats()->dokoStats()->schweinereienPlacementAfterRounds(m_dokogame,m_dokogame->rounds().size())) +
-//                                                   ".|"+ QString::number(m_dokogame->doko_schweinereiCount->value()*100/(m_dokogame->rounds->value().size()-1))+ "%)",this));
-//        }
-//        m_layout->addLayout(layout);
-//    }
-//    else{
-//        m_layout->addWidget(new Misc::HeaderLabel("",this));
-//        m_layout->addWidget(new Misc::ValueLabel("",this));
-//    }
+        //Misc::ValueLabel* hochzeitStatsLabel = new Misc::ValueLabel("-", this);
+        //m_dokogame->doko_hochzeitStats->futureWatcher()->connectTo(hochzeitStatsLabel);
+        //layout->addWidget(hochzeitStatsLabel);
+
+        m_layout->addLayout(layout);
+    }
+
+    if (m_dokogame->doko_mitPflichtsolo->value())
+    {
+        m_layout->addWidget(new Misc::HeaderLabel(tr("Pflichtsoli"),this));
+
+        QHBoxLayout* layout = new QHBoxLayout();
+        Misc::ValueLabel* pflichtSoliCountLabel = new Misc::ValueLabel("-", this);
+        m_dokogame->doko_pflichtSoloCount->futureWatcher()->connectTo(pflichtSoliCountLabel);
+        layout->addWidget(pflichtSoliCountLabel);
+
+        //Misc::ValueLabel* hochzeitStatsLabel = new Misc::ValueLabel("-", this);
+        //m_dokogame->doko_hochzeitStats->futureWatcher()->connectTo(hochzeitStatsLabel);
+        //layout->addWidget(hochzeitStatsLabel);
+
+        m_layout->addLayout(layout);
+    }
+
+    if (m_dokogame->doko_mitTrumpfabgabe->value())
+    {
+        m_layout->addWidget(new Misc::HeaderLabel(tr("Trumpfabgaben"),this));
+
+        QHBoxLayout* layout = new QHBoxLayout();
+        Misc::ValueLabel* trumpfabgabeCountLabel = new Misc::ValueLabel("-", this);
+        m_dokogame->doko_trumpfabgabeCount->futureWatcher()->connectTo(trumpfabgabeCountLabel);
+        layout->addWidget(trumpfabgabeCountLabel);
+
+        //Misc::ValueLabel* hochzeitStatsLabel = new Misc::ValueLabel("-", this);
+        //m_dokogame->doko_hochzeitStats->futureWatcher()->connectTo(hochzeitStatsLabel);
+        //layout->addWidget(hochzeitStatsLabel);
+
+        m_layout->addLayout(layout);
+    }
+
+    if (m_dokogame->doko_mitSchmeisserei->value())
+    {
+        m_layout->addWidget(new Misc::HeaderLabel(tr("Schmeissereien"),this));
+
+        QHBoxLayout* layout = new QHBoxLayout();
+        Misc::ValueLabel* schmeissereienCountLabel = new Misc::ValueLabel("-", this);
+        m_dokogame->doko_schmeissereiCount->futureWatcher()->connectTo(schmeissereienCountLabel);
+        layout->addWidget(schmeissereienCountLabel);
+
+        //Misc::ValueLabel* hochzeitStatsLabel = new Misc::ValueLabel("-", this);
+        //m_dokogame->doko_hochzeitStats->futureWatcher()->connectTo(hochzeitStatsLabel);
+        //layout->addWidget(hochzeitStatsLabel);
+
+        m_layout->addLayout(layout);
+    }
+
+    if (m_dokogame->doko_mitSchweinerei->value())
+    {
+        m_layout->addWidget(new Misc::HeaderLabel(tr("Schweinereien"),this));
+
+        QHBoxLayout* layout = new QHBoxLayout();
+        Misc::ValueLabel* schweinereienCountLabel = new Misc::ValueLabel("-", this);
+        m_dokogame->doko_schweinereiCount->futureWatcher()->connectTo(schweinereienCountLabel);
+        layout->addWidget(schweinereienCountLabel);
+
+        //Misc::ValueLabel* hochzeitStatsLabel = new Misc::ValueLabel("-", this);
+        //m_dokogame->doko_hochzeitStats->futureWatcher()->connectTo(hochzeitStatsLabel);
+        //layout->addWidget(hochzeitStatsLabel);
+
+        m_layout->addLayout(layout);
+    }
 }
 
 void DokoLiveGameInfoGroupBox::updateWidget(QString lengthText){

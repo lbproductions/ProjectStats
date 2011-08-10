@@ -2,10 +2,12 @@
 #define DOKOLIVEGAMEINFOGROUPBOX_H
 
 #include <Gui/Details/LiveGameDetails/livegameinfogroupbox.h>
+#include <Gui/Misc/valuelabel.h>
 
 namespace Database
 {
     class DokoLiveGame;
+    class AttributeBase;
 }
 
 namespace Gui
@@ -17,7 +19,8 @@ namespace Details
 namespace LiveGameDetails
 {
 
-namespace DokoLiveGameDetails{
+namespace DokoLiveGameDetails
+{
 
 class DokoLiveGameInfoGroupBox : public LiveGameInfoGroupBox
 {
@@ -27,7 +30,6 @@ public:
     void updateWidget(QString lengthText);
 
 private:
-
     Database::DokoLiveGame* m_dokogame;
 };
 

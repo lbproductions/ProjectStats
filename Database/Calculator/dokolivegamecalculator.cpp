@@ -599,4 +599,89 @@ QMap<int,QMap<Player*,int> > DokoLiveGameCalculator::calculate_placementAfterRou
     return hash;
 }
 
+QString DokoLiveGameCalculator::calculate_doko_hochzeitStats()
+{
+//    int count = m_dokolivegame->doko_hochzeitCount->value();
+    int roundCount = m_dokolivegame->roundCount->value();
+    int countAfterRounds = m_dokolivegame->doko_hochzeitCountAfterRounds->value(roundCount);
+    if(roundCount > 0)
+    {
+        qDebug() << countAfterRounds << " / " << roundCount;
+        int percentage = countAfterRounds * 100 / roundCount;
+        return "(" + QString::number(percentage) + "%)";
+    }
+
+    return QString();
+}
+
+QString DokoLiveGameCalculator::calculate_doko_soloStats()
+{
+    //    int count = m_dokolivegame->doko_hochzeitCount->value();
+    int roundCount = m_dokolivegame->roundCount->value();
+    int countAfterRounds = m_dokolivegame->doko_soloCountAfterRounds->value(roundCount);
+    if(roundCount > 0)
+    {
+        int percentage = countAfterRounds * 100 / roundCount;
+        return "(" + QString::number(percentage) + "%)";
+    }
+
+    return QString();
+}
+QString DokoLiveGameCalculator::calculate_doko_pflichtSoloStats()
+{
+    //    int count = m_dokolivegame->doko_hochzeitCount->value();
+    int roundCount = m_dokolivegame->roundCount->value();
+    int countAfterRounds = m_dokolivegame->doko_pflichtSoloCountAfterRounds->value(roundCount);
+    if(roundCount > 0)
+    {
+        int percentage = countAfterRounds * 100 / roundCount;
+        return "(" + QString::number(percentage) + "%)";
+    }
+
+    return QString();
+}
+
+QString DokoLiveGameCalculator::calculate_doko_trumpfabgabeStats()
+{
+    //    int count = m_dokolivegame->doko_hochzeitCount->value();
+    int roundCount = m_dokolivegame->roundCount->value();
+    int countAfterRounds = m_dokolivegame->doko_trumpfabgabeCountAfterRounds->value(roundCount);
+    if(roundCount > 0)
+    {
+        int percentage = countAfterRounds * 100 / roundCount;
+        return "(" + QString::number(percentage) + "%)";
+    }
+
+    return QString();
+}
+
+QString DokoLiveGameCalculator::calculate_doko_schweinereiStats()
+{
+    //    int count = m_dokolivegame->doko_hochzeitCount->value();
+    int roundCount = m_dokolivegame->roundCount->value();
+    int countAfterRounds = m_dokolivegame->doko_schweinereiCountAfterRounds->value(roundCount);
+    if(roundCount > 0)
+    {
+        int percentage = countAfterRounds * 100 / roundCount;
+        return "(" + QString::number(percentage) + "%)";
+    }
+
+    return QString();
+}
+
+QString DokoLiveGameCalculator::calculate_doko_schmeissereiStats()
+{
+    //    int count = m_dokolivegame->doko_hochzeitCount->value();
+    int roundCount = m_dokolivegame->roundCount->value();
+    int countAfterRounds = m_dokolivegame->doko_schmeissereiCountAfterRounds->value(roundCount);
+    if(roundCount > 0)
+    {
+        int percentage = countAfterRounds * 100 / roundCount;
+        return "(" + QString::number(percentage) + "%)";
+    }
+
+    return QString();
+}
+
+
 } // namespace Database
