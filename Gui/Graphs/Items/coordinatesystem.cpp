@@ -53,15 +53,15 @@ void CoordinateSystem::updateDimensions(const QPoint &point)
 void CoordinateSystem::updateScales(int height, int width)
 {
     qreal xRange = qAbs(m_xMax) + qAbs(m_xMin) + 2;
-    qreal yRange = qAbs(m_yMax) + qAbs(m_yMin) + 4;
+    qreal yRange = qAbs(m_yMax) + qAbs(m_yMin) + 5;
     if(xRange > 0)
     {
-	m_xScale = ((qreal)width) / xRange;
+        m_xScale = ((qreal)width) / xRange;
     }
 
     if(yRange > 0)
     {
-	m_yScale = ((qreal)height) / yRange;
+        m_yScale = ((qreal)height) / yRange - 0.1;
     }
 }
 

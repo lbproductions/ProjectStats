@@ -23,10 +23,15 @@ public:
 
     explicit GraphView(QWidget *parent = 0);
 
+    bool isFullscreen() const;
+
 public slots:
     void setFullscreen();
 
     void setNormalMode();
+
+protected:
+    bool m_isFullscreen;
 };
 
 }

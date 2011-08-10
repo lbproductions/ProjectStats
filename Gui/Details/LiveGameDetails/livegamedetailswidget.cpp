@@ -52,6 +52,7 @@ void LiveGameDetailsWidget::initializeItems()
     {
         m_graph = new Gui::Graphs::LiveGameGraphView(this);
         m_graph->setLiveGame(m_livegame);
+        m_graph->setFullscreen();
     }
 }
 
@@ -74,11 +75,15 @@ void LiveGameDetailsWidget::setupWidget()
     leftSplitter->setLeftToRight(true);
     leftSplitter->addWidget(new BeerWidget(m_livegame,leftSplitter));
     leftSplitter->addWidget(centralWidget);
+    leftSplitter->setStretchFactor(0,0);
+    leftSplitter->setStretchFactor(1,1);
 
     Gui::Misc::Splitter* rightSplitter = new Gui::Misc::Splitter(Qt::Horizontal);
     rightSplitter->setFullscreen(true);
     rightSplitter->addWidget(leftSplitter);
     rightSplitter->addWidget(m_infoBox);
+    rightSplitter->setStretchFactor(0,1);
+    rightSplitter->setStretchFactor(1,0);
 
     QLayout* l = new QVBoxLayout(this);
     l->setSpacing(0);
@@ -87,6 +92,7 @@ void LiveGameDetailsWidget::setupWidget()
     setLayout(l);
 
     m_playerTotalPointsTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_playerTotalPointsTable->setGridStyle(Qt::NoPen);
     for (int i = 0; i<m_playerTotalPointsTable->columnCount();i++)
     {
          m_playerTotalPointsTable->setColumnWidth(i, ((double)m_roundTable->columnWidth(0)));
@@ -100,6 +106,7 @@ void LiveGameDetailsWidget::setupWidget()
          item = new QTableWidgetItem("");
          item->setTextAlignment(Qt::AlignCenter);
          item->setFont(QFont("Lucia Grande",30,QFont::Bold,false));
+         item->setFlags(item->flags() & ~Qt::ItemIsEditable & ~Qt::ItemIsSelectable);
          m_playerTotalPointsTable->setItem(0,i,item);
     }
     m_playerTotalPointsTable->setRowHeight(0,50);

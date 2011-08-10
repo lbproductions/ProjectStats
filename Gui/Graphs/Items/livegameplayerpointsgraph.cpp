@@ -21,6 +21,10 @@ LiveGamePlayerPointsGraph::LiveGamePlayerPointsGraph(Database::Player *player, D
 
 void LiveGamePlayerPointsGraph::setupGraph(){
     m_pen.setColor(m_player->color->value());
+    if(m_player->color->value() == QColor())
+    {
+        m_pen.setColor(QColor(255,255,255));
+    }
     addPoint(QPoint(0,0));
     readPlayerPoints();
 

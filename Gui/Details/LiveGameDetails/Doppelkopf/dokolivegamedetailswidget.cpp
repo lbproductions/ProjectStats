@@ -43,10 +43,12 @@ void DokoLiveGameDetailsWidget::initializeItems(){
     {
         m_graph = new Gui::Graphs::DokoLiveGameGraphView(this);
         m_graph->setLiveGame(m_livegame);
+        m_graph->setFullscreen();
     }
     else
     {
         m_graph->setLiveGame(m_livegame);
+        m_graph->setFullscreen();
     }
 
     LiveGameDetailsWidget::initializeItems();

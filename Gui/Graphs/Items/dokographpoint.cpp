@@ -51,6 +51,6 @@ void DokoGraphPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem * /
         text = "-";
     }
 
-    painter->drawText(QPointF(  (m_point.x()*m_graph->coordinateSystem()->xScale())-2,
-                              (-m_point.y()*m_graph->coordinateSystem()->yScale())+2),text);
+    painter->drawText(QPointF(  (m_point.x()*m_graph->coordinateSystem()->xScale())-3,
+                              (-m_point.y()*m_graph->coordinateSystem()->yScale())+3),text);
 }
