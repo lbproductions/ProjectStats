@@ -59,10 +59,12 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
 
     IMPLEMENT_ATTRIBUTE_IN_CALC(bool,LiveGame,LiveGameCalculator,calc,isFinished,tr("Finished"))
 
-    IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,LiveGame,LiveGameCalculator,leadingRounds,tr("LeadingRounds"))
-    rounds->addDependingAttribute(leadingRounds);
     IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(int,QMap<Player* COMMA int>,LiveGame,LiveGameCalculator,placementAfterRounds,tr("PlacementAfterRounds"))
     rounds->addDependingAttribute(placementAfterRounds);
+    IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,LiveGame,LiveGameCalculator,leadingRounds,tr("LeadingRounds"))
+    placementAfterRounds->addDependingAttribute(leadingRounds);
+    IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,double,LiveGame,LiveGameCalculator,averagePlacement,tr("AveragePlacement"))
+    placementAfterRounds->addDependingAttribute(averagePlacement);
 
 }
 

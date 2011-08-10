@@ -48,6 +48,11 @@ QMap<int,QMap<Player*,int> > GameCalculator::calculate_placementAfterRounds(){
     return hash;
 }
 
+QMap<Player*,double> GameCalculator::calculate_averagePlacement(){
+    QMap<Player*,double> hash;
+    return hash;
+}
+
 QMap<Player*,int> GameCalculator::calculate_placement(){
     //qWarning() << "GameCalculator::calculate_placement() should not be executed";
     return QMap<Player*,int>();

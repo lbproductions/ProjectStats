@@ -14,6 +14,8 @@ public:
 
     QMap<Player*,int> calculate_placement();
 
+    QMap<int,QMap<Player*,int> > calculate_placementAfterRounds();
+
 private:
     QPointer<SkatLiveGame> m_skatlivegame;
 };

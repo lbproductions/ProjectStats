@@ -36,6 +36,8 @@ public:
 
     virtual QMap<Player*,int> calculate_leadingRounds();
 
+    virtual QMap<Player*,double> calculate_averagePlacement();
+
     virtual QMap<int,QMap<Player*,int> > calculate_placementAfterRounds();
 
 signals:
