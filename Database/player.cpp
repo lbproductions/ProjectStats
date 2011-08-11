@@ -75,6 +75,11 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(LiveGame*,double,Player,PlayerCalculator,calc,alcPegel,tr("AlcPegel"))
 
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,calc,averagePlacement,tr("LiveAveragePlacement"))
+
+    IMPLEMENT_ATTRIBUTE_IN_CALC(double,Player,PlayerCalculator,calc,liveAverage,tr("LiveAverage"))
+    average->addDependingAttribute(liveAverage);
+
 }
 
 QString Player::mimeType() const

@@ -38,6 +38,9 @@ QMap<QString,int> PlayerCalculator::calculate_gameCount(){
     foreach(Game* g,m_player->games->value()){
         hash.insert("General",hash.value("General")+1);
         hash.insert(g->type->value(),hash.value(g->type->value())+1);
+        if(g->live->value()){
+            hash.insert("Live",hash.value("Live")+1);
+        }
     }
     return hash;
 }
@@ -61,6 +64,9 @@ QMap<QString,int> PlayerCalculator::calculate_points(){
         double nenner = (double)g->players->value().size()-1;
         hash.insert("General",hash.value("General") + (int)(100* (zaehler / nenner)));
         hash.insert(g->type->value(),hash.value(g->type->value()) + (int)(100* (zaehler / nenner)));
+        if(g->live->value()){
+            hash.insert("Live",hash.value("Live") + (int)(100* (zaehler / nenner)));
+        }
     }
     return hash;
 }
@@ -80,6 +86,10 @@ QMap<QString,double> PlayerCalculator::calculate_average(){
         double points = m_player->points->value("General");
 
         hash.insert("General",points / gameCount);
+    }
+
+    if(m_player->gameCount->value("Live") > 0){
+        hash.insert("Live",(double)m_player->points->value("Live")/(double)m_player->gameCount->value("Live"));
     }
     return hash;
 }
@@ -200,6 +210,24 @@ QMap<LiveGame*,double> PlayerCalculator::calculate_alcPegel(){
     }
 
     return hash;
+}
+
+QMap<QString,double> PlayerCalculator::calculate_averagePlacement(){
+    QMap<QString,double> hash;
+    int livegamecount = 0;
+    for(int i = 0; i<m_player->games->value().size();i++){
+        if(m_player->games->value(i)->live->value()){
+            livegamecount++;
+            LiveGame* game = static_cast<LiveGame*>(m_player->games->value(i));
+            hash.insert("General",(hash.value("General")*(livegamecount-1)+game->averagePlacement->value(m_player))/(double)(livegamecount));
+            hash.insert(m_player->games->value(i)->type->value(),(hash.value(m_player->games->value(i)->type->value())*(livegamecount-1)+game->averagePlacement->value(m_player))/(double)(livegamecount));
+        }
+    }
+    return hash;
+}
+
+double PlayerCalculator::calculate_liveAverage(){
+    return m_player->average->value("Live");
 }
 
 } // namespace Database
