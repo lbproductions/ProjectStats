@@ -6,6 +6,7 @@
 
 #include "game.h"
 #include "place.h"
+#include "livegamedrink.h"
 
 #include <Gui/Details/PlayerDetails/playerdetailswidget.h>
 #include <Gui/Details/PlayerDetails/playerstatswidget.h>
@@ -74,11 +75,10 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     wins->addDependingAttribute(lastWin);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(LiveGame*,double,Player,PlayerCalculator,calc,alcPegel,tr("AlcPegel"))
+    LiveGameDrinks::instance()->rows()->addDependingAttribute(alcPegel);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,calc,averagePlacement,tr("LiveAveragePlacement"))
-
-    IMPLEMENT_ATTRIBUTE_IN_CALC(double,Player,PlayerCalculator,calc,liveAverage,tr("LiveAverage"))
-    average->addDependingAttribute(liveAverage);
+    games->addDependingAttribute(averagePlacement);
 
 }
 

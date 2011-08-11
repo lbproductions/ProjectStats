@@ -76,6 +76,12 @@ public:
     QAction * actionPaste;
 
     QAction * actionShowDatabase;
+    QAction * actionPlayersShowGeneral;
+    QAction * actionPlayersShowDoppelkopf;
+    QAction * actionPlayersShowSkat;
+    QAction * actionPlayersShowPrognose;
+    QAction * actionPlayersShowHearts;
+    QAction * actionPlayersShowPoker;
 
 public slots:
     /*!
@@ -112,6 +118,13 @@ public slots:
     void newLeagueFolder();
 
     void showDatabase();
+
+    void playersShowGeneral();
+    void playersShowDoppelkopf();
+    void playersShowSkat();
+    void playersShowPrognose();
+    void playersShowPoker();
+    void playersShowHearts();
 
 private:
     /*!

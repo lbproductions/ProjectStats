@@ -27,6 +27,14 @@ public:
     virtual Database::Row *row(const QModelIndex &index) = 0;
 
     virtual void updateData() = 0;
+
+    void setDisplayRole(AttributeVariant::DisplayRole role);
+
+    AttributeVariant::DisplayRole displayRole();
+
+protected:
+    AttributeVariant::DisplayRole m_displayRole;
+
 private slots:
     virtual void on_attribute_changed(::Database::AttributeBase *attribute) = 0;
 
@@ -229,6 +237,7 @@ QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) co
     }
 
     attribute->startCalculationTask();
+    attribute->setDisplayRole(m_displayRole);
     QVariant value = attribute->displayVariant();
 
     if( (role == Qt::DisplayRole && attribute->role() == Qt::DisplayRole) || role == Qt::EditRole)

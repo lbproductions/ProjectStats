@@ -46,6 +46,7 @@ private:
     QMenu *m_viewMenu;
 
     QMenu *m_viewGames;
+    QMenu *m_viewPlayers;
 
 };
 

@@ -56,5 +56,13 @@ void MenuBar::setupHelpMenu()
 void MenuBar::setupViewMenu(){
     m_viewMenu = addMenu(tr("&View"));
     m_viewMenu->addAction(m_actionsManager->actionShowDatabase);
+    m_viewPlayers = m_viewMenu->addMenu(tr("&Players"));
     m_viewGames = m_viewMenu->addMenu(tr("&Games"));
+    m_viewPlayers->addAction(m_actionsManager->actionPlayersShowGeneral);
+    m_viewPlayers->addAction(m_actionsManager->actionPlayersShowDoppelkopf);
+    m_viewPlayers->addAction(m_actionsManager->actionPlayersShowHearts);
+    m_viewPlayers->addAction(m_actionsManager->actionPlayersShowPoker);
+    m_viewPlayers->addAction(m_actionsManager->actionPlayersShowPrognose);
+    m_viewPlayers->addAction(m_actionsManager->actionPlayersShowSkat);
+    m_actionsManager->actionPlayersShowGeneral->setChecked(true);
 }

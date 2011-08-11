@@ -31,7 +31,8 @@ AttributeBase::AttributeBase() :
     m_name(QString()),
     m_displayName(QString()),
     m_role(Qt::DisplayRole),
-    m_emitChange(true)
+    m_emitChange(true),
+    m_displayRole(AttributeVariant::MainWindow)
 {
 }
 
@@ -41,7 +42,8 @@ AttributeBase::AttributeBase(const QString &name, const QString &displayName, At
     m_name(name),
     m_displayName(displayName),
     m_role(Qt::DisplayRole),
-    m_emitChange(true)
+    m_emitChange(true),
+    m_displayRole(AttributeVariant::MainWindow)
 {
     connect(this,SIGNAL(changed(::Database::AttributeBase*)),this,SIGNAL(changed()));
 }

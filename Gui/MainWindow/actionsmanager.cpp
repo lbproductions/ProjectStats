@@ -78,6 +78,25 @@ void ActionsManager::createActions()
 
     actionShowDatabase = constructAction(tr("Show Database"),"");
     connect(actionShowDatabase,SIGNAL(triggered()), this, SLOT(showDatabase()));
+
+    actionPlayersShowGeneral = constructAction(tr("General"),"");
+    actionPlayersShowGeneral->setCheckable(true);
+    connect(actionPlayersShowGeneral,SIGNAL(triggered()),this,SLOT(playersShowGeneral()));
+    actionPlayersShowDoppelkopf = constructAction(tr("Doppelkopf"),"");
+    actionPlayersShowDoppelkopf->setCheckable(true);
+    connect(actionPlayersShowDoppelkopf,SIGNAL(triggered()),this,SLOT(playersShowDoppelkopf()));
+    actionPlayersShowSkat = constructAction(tr("Skat"),"");
+    actionPlayersShowSkat->setCheckable(true);
+    connect(actionPlayersShowSkat,SIGNAL(triggered()),this,SLOT(playersShowSkat()));
+    actionPlayersShowHearts = constructAction(tr("Hearts"),"");
+    actionPlayersShowHearts->setCheckable(true);
+    connect(actionPlayersShowHearts,SIGNAL(triggered()),this,SLOT(playersShowHearts()));
+    actionPlayersShowPrognose = constructAction(tr("Prognose"),"");
+    actionPlayersShowPrognose->setCheckable(true);
+    connect(actionPlayersShowPrognose,SIGNAL(triggered()),this,SLOT(playersShowPrognose()));
+    actionPlayersShowPoker = constructAction(tr("Poker"),"");
+    actionPlayersShowPoker->setCheckable(true);
+    connect(actionPlayersShowPoker,SIGNAL(triggered()),this,SLOT(playersShowPoker()));
 }
 
 QAction *ActionsManager::constructAction(const QString &name, const QString &iconPath, const QKeySequence &shortcut)
@@ -152,4 +171,69 @@ void ActionsManager::showDatabase()
 {
     DatabaseWindow* databaseWindow = new DatabaseWindow();
     databaseWindow->show();
+}
+
+void ActionsManager::playersShowGeneral(){
+    if(actionPlayersShowGeneral->isChecked()){
+        Database::Players::instance()->model()->setDisplayRole(AttributeVariant::MainWindow);
+        actionPlayersShowDoppelkopf->setChecked(false);
+        actionPlayersShowHearts->setChecked(false);
+        actionPlayersShowPoker->setChecked(false);
+        actionPlayersShowPrognose->setChecked(false);
+        actionPlayersShowSkat->setChecked(false);
+     }
+}
+void ActionsManager::playersShowDoppelkopf(){
+    if(actionPlayersShowDoppelkopf->isChecked()){
+        Database::Players::instance()->model()->setDisplayRole(AttributeVariant::DoppelkopfWindow);
+        actionPlayersShowGeneral->setChecked(false);
+        actionPlayersShowHearts->setChecked(false);
+        actionPlayersShowPoker->setChecked(false);
+        actionPlayersShowPrognose->setChecked(false);
+        actionPlayersShowSkat->setChecked(false);
+    }
+}
+
+void ActionsManager::playersShowPoker(){
+    if(actionPlayersShowPoker->isChecked()){
+        Database::Players::instance()->model()->setDisplayRole(AttributeVariant::PokerWindow);
+        actionPlayersShowGeneral->setChecked(false);
+        actionPlayersShowDoppelkopf->setChecked(false);
+        actionPlayersShowHearts->setChecked(false);
+        actionPlayersShowPrognose->setChecked(false);
+        actionPlayersShowSkat->setChecked(false);
+    }
+}
+
+void ActionsManager::playersShowHearts(){
+    if(actionPlayersShowHearts->isChecked()){
+        Database::Players::instance()->model()->setDisplayRole(AttributeVariant::HeartsWindow);
+        actionPlayersShowGeneral->setChecked(false);
+        actionPlayersShowDoppelkopf->setChecked(false);
+        actionPlayersShowPoker->setChecked(false);
+        actionPlayersShowPrognose->setChecked(false);
+        actionPlayersShowSkat->setChecked(false);
+    }
+}
+
+void ActionsManager::playersShowSkat(){
+    if(actionPlayersShowSkat->isChecked()){
+        Database::Players::instance()->model()->setDisplayRole(AttributeVariant::SkatWindow);
+        actionPlayersShowGeneral->setChecked(false);
+        actionPlayersShowDoppelkopf->setChecked(false);
+        actionPlayersShowHearts->setChecked(false);
+        actionPlayersShowPoker->setChecked(false);
+        actionPlayersShowPrognose->setChecked(false);
+    }
+}
+
+void ActionsManager::playersShowPrognose(){
+    if(actionPlayersShowPrognose->isChecked()){
+        Database::Players::instance()->model()->setDisplayRole(AttributeVariant::PrognoseWindow);
+        actionPlayersShowGeneral->setChecked(false);
+        actionPlayersShowDoppelkopf->setChecked(false);
+        actionPlayersShowHearts->setChecked(false);
+        actionPlayersShowPoker->setChecked(false);
+        actionPlayersShowSkat->setChecked(false);
+    }
 }

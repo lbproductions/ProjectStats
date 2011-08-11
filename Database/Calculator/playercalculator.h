@@ -46,8 +46,6 @@ public:
 
     QMap<QString,double> calculate_averagePlacement();
 
-    double calculate_liveAverage();
-
 private:
 
     QPointer<Player> m_player;

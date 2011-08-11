@@ -226,8 +226,4 @@ QMap<QString,double> PlayerCalculator::calculate_averagePlacement(){
     return hash;
 }
 
-double PlayerCalculator::calculate_liveAverage(){
-    return m_player->average->value("Live");
-}
-
 } // namespace Database
