@@ -13,7 +13,7 @@ GraphView::GraphView(QWidget *parent) :
 }
 
 void GraphView::setFullscreen(){
-    this->setStyleSheet("QWidget{background-color:black; color:white; border-radius: 10px; margin-bottom: 10px; border:1px solid black;}");
+    this->setStyleSheet("QWidget{background: transparent; color:white; border: none;}");
     m_isFullscreen = true;
 }
 

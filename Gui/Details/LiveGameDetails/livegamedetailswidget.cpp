@@ -7,6 +7,7 @@
 #include <Database/livegame.h>
 #include <Database/player.h>
 #include <Gui/Misc/splitter.h>
+#include <Gui/Misc/groupbox.h>
 #include <Gui/Graphs/livegamegraphview.h>
 
 #include <global.h>
@@ -30,7 +31,7 @@ LiveGameDetailsWidget::LiveGameDetailsWidget(Database::LiveGame* livegame, QWidg
     this->setAutoFillBackground(true);
     this->setBackgroundRole(QPalette::Background);
     QPalette p(this->palette());
-    p.setColor(QPalette::Background, QColor(51,51,51));
+    p.setColor(QPalette::Background, QColor(55,55,55));
     this->setPalette(p);
 
     connect(livegame->currentRound,SIGNAL(changed()),this,SLOT(on_currentRoundChanged()));
@@ -59,9 +60,14 @@ void LiveGameDetailsWidget::initializeItems()
 void LiveGameDetailsWidget::setupWidget()
 {
     QSplitter* centralSplitter = new QSplitter(Qt::Vertical,this);
-    centralSplitter->addWidget(m_roundTable);
-    centralSplitter->addWidget(m_playerTotalPointsTable);
-    centralSplitter->addWidget(m_graph);
+    centralSplitter->addWidget(new Gui::Misc::GroupBox(m_roundTable));
+    Gui::Misc::GroupBox* totalPointsGroupBox = new Gui::Misc::GroupBox(m_playerTotalPointsTable);
+    totalPointsGroupBox->setMaximumHeight(60);
+    centralSplitter->addWidget(totalPointsGroupBox);
+    centralSplitter->addWidget(new Gui::Misc::GroupBox(m_graph));
+    centralSplitter->setStretchFactor(0,1);
+    centralSplitter->setStretchFactor(1,0);
+    centralSplitter->setStretchFactor(2,2);
 
     QWidget* centralWidget = new QWidget();
     QLayout* centralLayout = new QVBoxLayout(this);
@@ -100,24 +106,23 @@ void LiveGameDetailsWidget::setupWidget()
          QTableWidgetItem* item = new QTableWidgetItem("");
          item->setSizeHint(QSize(0,0));
          item->setTextAlignment(Qt::AlignCenter);
-         item->setFont(QFont("Lucia Grande",30,QFont::Bold,false));
+         item->setFont(QFont("Lucia Grande",35,QFont::Bold,false));
          m_playerTotalPointsTable->setHorizontalHeaderItem(i,item);
 
          item = new QTableWidgetItem("");
          item->setTextAlignment(Qt::AlignCenter);
-         item->setFont(QFont("Lucia Grande",30,QFont::Bold,false));
+         item->setFont(QFont("Lucia Grande",35,QFont::Bold,false));
          item->setFlags(item->flags() & ~Qt::ItemIsEditable & ~Qt::ItemIsSelectable);
          m_playerTotalPointsTable->setItem(0,i,item);
     }
-    m_playerTotalPointsTable->setRowHeight(0,50);
+    m_playerTotalPointsTable->setRowHeight(0,40);
     m_playerTotalPointsTable->setMaximumHeight(m_playerTotalPointsTable->rowHeight(0));
     QTableWidgetItem* item = new QTableWidgetItem("0");
     item->setSizeHint(QSize(0,0));
     item->setTextAlignment(Qt::AlignCenter);
-    item->setFont(QFont("Lucia Grande",30,QFont::Bold,false));
+    item->setFont(QFont("Lucia Grande",35,QFont::Bold,false));
     m_playerTotalPointsTable->setVerticalHeaderItem(0,item);
-    m_playerTotalPointsTable->setStyleSheet("QWidget{background-color:black; color: white; border-radius: 10px;}");
-
+    m_playerTotalPointsTable->setStyleSheet("QWidget{margin: 0px; padding: 0px; background:transparent; color: white;}");
     updateSizes();
 }
 

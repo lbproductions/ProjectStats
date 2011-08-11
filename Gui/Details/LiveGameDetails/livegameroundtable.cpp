@@ -16,20 +16,22 @@ LiveGameRoundTable::LiveGameRoundTable(Database::LiveGame* livegame, QWidget *pa
 {
     setStyleSheet(QString(
                     "Gui--Details--LiveGameDetails--LiveGameRoundTable {"
-                        "background-color:black;"
+                        "background:transparent;"
                         "color: white;"
-                        "border-radius: 10px;"
-                        "margin-top: 10px;"
+                        "border: none;"
+                        "margin: 0px;"
                         "font-weight: bold;"
                         "font-size: 20px;"
                     "}"
+                      "QHeaderView {"
+                          "background: transparent;"
+                      "}"
 
                     "QHeaderView::section {"
                         "background: transparent;"
-                        "background-color: black;"
-                        "font-size: 30px;"
+                        "font-size: 40px;"
                         "padding:2px;"
-                        "border-radius: 5px; "
+                        "border: none; "
                         "margin-bottom: 2px; "
                         "height: 55px;"
                     "}"
@@ -94,7 +96,6 @@ LiveGameRoundTable::LiveGameRoundTable(Database::LiveGame* livegame, QWidget *pa
     this->setHorizontalHeaderItem(this->columnCount()-1,new QTableWidgetItem(tr("")));
 
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->horizontalHeader()->setIconSize(QSize(140,140));
 
     updateSizes();
 

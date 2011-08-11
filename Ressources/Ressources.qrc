@@ -121,4 +121,7 @@
         <file alias="scrollbar_background_fullscreen">graphics/styles/mac/scrollbar/fullscreen/scrollbar_fullscreen_background.png</file>
         <file alias="scrollbar_handle_fullscreen">graphics/styles/mac/scrollbar/fullscreen/scrollbar_fullscreen_handle.png</file>
     </qresource>
+    <qresource prefix="/graphics/styles/mac/groupbox/fullscreen">
+        <file alias="background">graphics/styles/mac/groupbox/fullscreen/background.png</file>
+    </qresource>
 </RCC>

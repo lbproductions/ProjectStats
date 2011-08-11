@@ -26,15 +26,21 @@
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>2</number>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="margin">
+       <number>0</number>
+      </property>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="labelName">
           <property name="styleSheet">
-           <string notr="true"/>
+           <string notr="true">font-weight: bold;</string>
           </property>
           <property name="text">
            <string>Player-Name</string>
@@ -46,6 +52,9 @@
         </item>
         <item>
          <widget class="QLabel" name="labelAlc">
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold;</string>
+          </property>
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -58,6 +67,9 @@
       </item>
       <item>
        <widget class="Line" name="line">
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>

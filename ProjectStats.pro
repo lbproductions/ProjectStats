@@ -165,7 +165,8 @@ SOURCES += main.cpp\
     Gui/MainWindow/Views/LeagueView/leagueview.cpp \
     Gui/MainWindow/Views/LeagueView/leaguestatswidget.cpp \
     Gui/MainWindow/Views/LeagueView/leagueoverviewwidget.cpp \
-    Gui/MainWindow/Views/LeagueView/leaguegraphwidget.cpp
+    Gui/MainWindow/Views/LeagueView/leaguegraphwidget.cpp \
+    Gui/Misc/groupbox.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -345,7 +346,8 @@ HEADERS  += \
     Gui/MainWindow/Views/LeagueView/leagueview.h \
     Gui/MainWindow/Views/LeagueView/leaguestatswidget.h \
     Gui/MainWindow/Views/LeagueView/leagueoverviewwidget.h \
-    Gui/MainWindow/Views/LeagueView/leaguegraphwidget.h
+    Gui/MainWindow/Views/LeagueView/leaguegraphwidget.h \
+    Gui/Misc/groupbox.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -396,6 +398,8 @@ OTHER_FILES += \
 
 RESOURCES += \
     Ressources/Ressources.qrc
+
+
 
 
 

@@ -6,6 +6,8 @@
 #include <Database/player.h>
 #include <Database/drink.h>
 
+#include <Gui/Misc/groupbox.h>
+
 #include <QGridLayout>
 #include <QLabel>
 
@@ -30,7 +32,7 @@ BeerWidget::BeerWidget(Database::LiveGame* livegame, QWidget *parent) :
     foreach(Database::Player* p, livegame->playersSortedByPosition->value())
     {
         layout->addStretch();
-        layout->addWidget(new BeerPlayerWidget(p,livegame,this));
+        layout->addWidget(new Gui::Misc::GroupBox(new BeerPlayerWidget(p,livegame,this)));
         layout->addStretch();
     }
 
