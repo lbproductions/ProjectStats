@@ -136,9 +136,10 @@ void LiveGameRoundTable::updateSizes()
     this->setColumnWidth(this->columnCount()-1, width / 3);
 }
 
-void LiveGameRoundTable::resizeEvent(QResizeEvent* /*event*/)
+void LiveGameRoundTable::resizeEvent(QResizeEvent* event)
 {
     updateSizes();
+    QTableWidget::resizeEvent(event);
 }
 
 void LiveGameRoundTable::markCardMixer()
