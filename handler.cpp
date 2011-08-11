@@ -4,8 +4,6 @@
 #include <Database/Doppelkopf/dokolivegame.h>
 */
 
-#include <Database/Filters/rules.h>
-
 #include <QDebug>
 #include <QPointer>
 #include <QDesktopWidget>

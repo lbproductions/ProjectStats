@@ -7,8 +7,7 @@
 #include <Database/categorie.h>
 #include <Database/Categories/childcategorie.h>
 #include <Database/Categories/leaguefoldercategorie.h>
-#include <Database/Filters/leaguefilter.h>
-#include <Database/Filters/rules.h>
+//#include <Database/Filters/rules.h>
 
 #include <QListWidgetItem>
 
@@ -37,26 +36,21 @@ NewLeagueDialog::~NewLeagueDialog()
 void NewLeagueDialog::on_pushButtonOkay_clicked()
 {
     QPointer<Database::LeagueFolderCategorie> league = new Database::LeagueFolderCategorie();
-            //(Database::LeagueFolderCategorie*)Handler::getInstance()->database()->categories()->createLeagueCategorie().data();
-    //league->setName(ui->lineEditName->text());
 
-    QPointer<Database::Filters::LeagueFilter> filter = league->createFilter();
-    filter->setPeriod(ui->dateEditFrom->date(),ui->dateEditTo->date());
+//    QList<Database::Player*> list;
+//    for (int i = 0; i<ui->listWidgetLeaguePlayers->count();i++){
+//        filter->addPlayer(Database::Players::instance()->playerByName(
+//                                (ui->listWidgetLeaguePlayers->item(i)->text())));
+//        list.append(Database::Players::instance()->playerByName
+//                    (ui->listWidgetLeaguePlayers->item(i)->text()));
+//    }
 
-    QList<Database::Player*> list;
-    for (int i = 0; i<ui->listWidgetLeaguePlayers->count();i++){
-        filter->addPlayer(Database::Players::instance()->playerByName(
-                                (ui->listWidgetLeaguePlayers->item(i)->text())));
-        list.append(Database::Players::instance()->playerByName
-                    (ui->listWidgetLeaguePlayers->item(i)->text()));
-    }
+//    league->setPlayers(list);
 
-    league->setPlayers(list);
+//    Database::Categories::instance()->insertRow(league);
+//    Database::Rules::instance()->insertRow(filter->conjunction());
 
-    Database::Categories::instance()->insertRow(league);
-    Database::Rules::instance()->insertRow(filter->conjunction());
-
-    this->reject();
+    this->accept();
 }
 
 void NewLeagueDialog::on_pushButtonCancel_clicked()

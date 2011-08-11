@@ -48,6 +48,7 @@ QPointer<Game> Games::createRowInstance(int id)
 
     if(row2 != 0)
     {
+        row->deleteLater();
 	return row2;
     }
 

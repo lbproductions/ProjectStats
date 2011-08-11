@@ -1,5 +1,5 @@
-#ifndef DATABASE_CONSTRAINTS_H
-#define DATABASE_CONSTRAINTS_H
+#ifndef CONSTRAINTS_H
+#define CONSTRAINTS_H
 
 #include <QVariant>
 
@@ -12,10 +12,9 @@ public:
         DateIsBefore,
         DateIsAfter,
         DateIsEqual,
-        StringIsEqual
+        StringIsEqual,
+        IsEqual
     };
-
-    Constraints();
 
     static bool appliesTo(const QVariant& value, Constraint constraint, const QVariant& parameter);
 };

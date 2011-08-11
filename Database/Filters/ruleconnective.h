@@ -1,5 +1,5 @@
-#ifndef DATABASE_RULECONNECTIVE_H
-#define DATABASE_RULECONNECTIVE_H
+#ifndef RULECONNECTIVE_H
+#define RULECONNECTIVE_H
 
 #include "rule.h"
 
@@ -10,9 +10,8 @@ START_ROW_DECLARATION(RuleConnective, Rule)
 
     void addRule(Rule *rule);
 
-protected:
     DECLARE_LISTATTRIBUTE(Rule*, RuleConnective, rules)
 
 END_ROW_DECLARATION(RuleConnective)
 
-#endif // DATABASE_RULECONNECTIVE_H
+#endif // RULECONNECTIVE_H

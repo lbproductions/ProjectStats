@@ -1,5 +1,5 @@
-#ifndef DATABASE_RULE_H
-#define DATABASE_RULE_H
+#ifndef RULE_H
+#define RULE_H
 
 #include "../row.h"
 #include "../attribute.h"
@@ -9,14 +9,22 @@
 START_ROW_DECLARATION(Rule, Row)
     DECLARE_ROW_CONSTRUCTORS(Rule, Rule)
 
-    virtual bool appliesTo(::Database::Row* row);
+//    enum RuleType {
+//        RuleConjunctionType,
+//        RuleDisjunctionType,
+//        AtomicRuleType,
+//        EnoughLeaguePlayersRuleType
+//    };
 
-private:
+    virtual bool appliesTo(Row* row);
+
     DECLARE_DATABASEATTRIBUTE(int, Rule, parentRuleId)
+    DECLARE_DATABASEATTRIBUTE(int, Rule, type)
 
 END_ROW_DECLARATION(Rule)
 
 START_TABLE_DECLARATION(Rule)
+//    QPointer<Rule> createRowInstance(int id);
 END_TABLE_DECLARATION()
 
-#endif // DATABASE_RULE_H
+#endif // RULE_H

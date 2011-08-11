@@ -6,10 +6,10 @@ START_ROW_IMPLEMENTATION(RuleDisjunction, Rule, RuleConnective)
 
 QString RuleDisjunction::mimeType() const
 {
-    return "application/projectstats.rule";
+    return Rule::mimeType();
 }
 
-bool RuleDisjunction::appliesTo(::Database::Row *row)
+bool RuleDisjunction::appliesTo(Row *row)
 {
     foreach(Rule* rule, rules->value())
     {

@@ -1,35 +1,24 @@
 #ifndef ENOUGHLEAGUEPLAYERSRULE_H
 #define ENOUGHLEAGUEPLAYERSRULE_H
 
-#include "rule.h"
+#include "ruleconnective.h"
 
 #include <QPointer>
 
 namespace Database
 {
+    class Game;
+    class Player;
+}
 
-class Game;
-class Player;
-
-namespace Filters
-{
-
-class Filter;
-
-class EnoughLeaguePlayersRule : public Rule
-{
-    Q_OBJECT
-public:
-    explicit EnoughLeaguePlayersRule(Filter *parent = 0);
-
-    bool appliesTo(::Database::Row* row);
+START_ROW_DECLARATION(EnoughLeaguePlayersRule, RuleConnective)
+    DECLARE_ROW_CONSTRUCTORS(EnoughLeaguePlayersRule, RuleConnective)
 
     void addPlayer(Player *player);
-    void addPlayers(QList<QPointer<Player> > players);
-private:
-    QList<QPointer<Player> > m_players;
-};
+    void addPlayers(QList<Player*> players);
 
-}
-}
+    bool appliesTo(Row* row);
+
+END_ROW_DECLARATION(EnoughLeaguePlayersRule)
+
 #endif // ENOUGHLEAGUEPLAYERSRULE_H

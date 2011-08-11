@@ -6,13 +6,14 @@
 #include <Database/database.h>
 #include <Database/game.h>
 #include <Database/player.h>
-#include <Database/Filters/leaguefilter.h>
 
 #include <QIcon>
 
 START_ROW_IMPLEMENTATION(LeagueFolderCategorie, Categorie, FolderCategorie)
 {
-    m_filter = new Filters::LeagueFilter();
+    type->setValue(Categorie::FolderCategorieType);
+    contentType->setValue(ChildCategorie::LeagueCategorieContentType);
+    parentId->setValue(6);
 }
 
 QString LeagueFolderCategorie::mimeType() const
@@ -57,7 +58,7 @@ Gui::MainWindow::Views::View *LeagueFolderCategorie::view()
 
 Models::TableModelBase* LeagueFolderCategorie::gamesModel(){
     if(m_gameModel.isNull()){
-       m_gameModel = new Models::TableModel<Game,Games>(m_filter->games(),Games::instance());
+       //m_gameModel = new Models::TableModel<Game,Games>(m_filter->games(),Games::instance());
     }
     return m_gameModel;
 }
@@ -73,9 +74,8 @@ void LeagueFolderCategorie::setPlayers(QList<Player*> players){
     m_players = players;
 }
 
-void LeagueFolderCategorie::setFilter(QPointer<Filters::LeagueFilter> filter){
-    m_filter = filter;
-    QList<Game*> list = m_filter->games();
+void LeagueFolderCategorie::setFilter(){
+    //QList<Game*> list = m_filter->games();
 
     /*
     for(int i = 0; i<list.size();i++){
@@ -149,9 +149,9 @@ int LeagueFolderCategorie::placementOfPlayer(Player* p){
     return 0;
 }
 
-Filters::LeagueFilter* LeagueFolderCategorie::createFilter(){
-    m_filter = new Filters::LeagueFilter();
-    return m_filter;
-}
+//Filters::LeagueFilter* LeagueFolderCategorie::createFilter(){
+//    //m_filter = new Filters::LeagueFilter();
+//    return m_filter;
+//}
 
 END_ROW_IMPLEMENTATION()

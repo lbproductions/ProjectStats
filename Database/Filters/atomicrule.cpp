@@ -11,10 +11,10 @@ START_ROW_IMPLEMENTATION(AtomicRule, Rule, Rule)
 
 QString AtomicRule::mimeType() const
 {
-    return "application/projectstats.rule";
+    return Rule::mimeType();
 }
 
-bool AtomicRule::appliesTo(::Database::Row* row)
+bool AtomicRule::appliesTo(Row* row)
 {
     QVariant value = row->attribute(attributeName->value())->toVariant();
     QVariant para = QVariant(parameter->value());

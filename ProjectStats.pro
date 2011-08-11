@@ -159,8 +159,6 @@ SOURCES += main.cpp\
     Gui/Details/PlayerDetails/dokoplayerstatswidget.cpp \
     Gui/Details/LiveGameDetails/livegamesummarywidget.cpp \
     Database/Categories/leaguefoldercategorie.cpp \
-    Database/Filters/leaguefilter.cpp \
-    Database/Filters/filter.cpp \
     Database/Filters/enoughleagueplayersrule.cpp \
     Gui/MainWindow/Views/LeagueView/leagueview.cpp \
     Gui/MainWindow/Views/LeagueView/leaguestatswidget.cpp \
@@ -340,8 +338,6 @@ HEADERS  += \
     Gui/Details/PlayerDetails/dokoplayerstatswidget.h \
     Gui/Details/LiveGameDetails/livegamesummarywidget.h \
     Database/Categories/leaguefoldercategorie.h \
-    Database/Filters/leaguefilter.h \
-    Database/Filters/filter.h \
     Database/Filters/enoughleagueplayersrule.h \
     Gui/MainWindow/Views/LeagueView/leagueview.h \
     Gui/MainWindow/Views/LeagueView/leaguestatswidget.h \
@@ -398,6 +394,10 @@ OTHER_FILES += \
 
 RESOURCES += \
     Ressources/Ressources.qrc
+
+
+
+
 
 
 

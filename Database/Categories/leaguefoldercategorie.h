@@ -13,10 +13,6 @@ class Categories;
 class Games;
 class Players;
 
-namespace Filters{
-    class LeagueFilter;
-}
-
 }
 
 
@@ -37,13 +33,13 @@ START_ROW_DECLARATION(LeagueFolderCategorie, FolderCategorie)
 
     void setPlayers(QList<Player*> players);
 
-    void setFilter(QPointer<Filters::LeagueFilter> filter);
+    void setFilter();
 
     QPixmap placeChangeOfPlayer(Player* p);
 
     int placementOfPlayer(Player* p);
 
-    Filters::LeagueFilter* createFilter();
+    //Filters::LeagueFilter* createFilter();
 
 private slots:
     void matchBack();
@@ -54,7 +50,7 @@ private:
     QList<Game*> m_games;
     QList<Player*> m_players;
 
-    QPointer<Filters::LeagueFilter> m_filter;
+    //QPointer<Filters::LeagueFilter> m_filter;
 
     QPointer<Models::TableModel<Game,Games> > m_gameModel;
     QPointer<Models::TableModel<Player,Players> > m_playerModel;

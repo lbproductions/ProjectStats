@@ -2,11 +2,7 @@
 
 #include <QDate>
 
-namespace Database {
-
-Constraints::Constraints()
-{
-}
+using namespace Database;
 
 bool Constraints::appliesTo(const QVariant &value, Database::Constraints::Constraint constraint, const QVariant &parameter)
 {
@@ -20,9 +16,9 @@ bool Constraints::appliesTo(const QVariant &value, Database::Constraints::Constr
         return value.toDate() == parameter.toDate();
     case StringIsEqual:
         return value.toString() == parameter.toString();
+    case IsEqual:
+        return value == parameter;
     default:
         return false;
     }
 }
-
-} // namespace Database

@@ -1,5 +1,5 @@
-#ifndef DATABASE_ATOMICRULE_H
-#define DATABASE_ATOMICRULE_H
+#ifndef ATOMICRULE_H
+#define ATOMICRULE_H
 
 #include "rule.h"
 
@@ -12,7 +12,7 @@ START_ROW_DECLARATION(AtomicRule, Rule)
     DECLARE_DATABASEATTRIBUTE(int, AtomicRule, constraintId)
     DECLARE_DATABASEATTRIBUTE(QString, AtomicRule, parameter)
 
-    bool appliesTo(::Database::Row* row);
+    bool appliesTo(Row* row);
 END_ROW_DECLARATION(AtomicRule)
 
-#endif // DATABASE_ATOMICRULE_H
+#endif // ATOMICRULE_H

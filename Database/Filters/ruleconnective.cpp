@@ -7,24 +7,20 @@ START_ROW_IMPLEMENTATION(RuleConnective, Rule, Rule)
 
 QString RuleConnective::mimeType() const
 {
-    return "application/projectstats.rule";
+    return Rule::mimeType();
 }
 
 QList<Rule*> RuleConnective::calculate_rules()
 {
-    QList<Rule*> list;
-    foreach(Rule* rule, Rules::instance()->rowsBySqlCondition(" WHERE parentRuleId = "+m_id))
-    {
-        list.append(rule);
-    }
-
-    return list;
+    return Rules::instance()->rowsBySqlCondition(QLatin1String(" WHERE parentRuleId = ")+QString::number(m_id));
 }
 
 void RuleConnective::addRule(Rule *rule)
 {
+    rule->parentRuleId->setValue(this->id());
+    connect(this,SIGNAL(idChanged(int)),rule->parentRuleId,SLOT(changeValue(int)));
     addChildRow(rule);
-    //rules->append(rule);
+    rules->recalculateFromScratch();
 }
 
 END_ROW_IMPLEMENTATION()
