@@ -55,6 +55,7 @@ void MenuBar::setupHelpMenu()
 
 void MenuBar::setupViewMenu(){
     m_viewMenu = addMenu(tr("&View"));
+
     m_viewMenu->addAction(m_actionsManager->actionShowDatabase);
     m_viewPlayers = m_viewMenu->addMenu(tr("&Players"));
     m_viewGames = m_viewMenu->addMenu(tr("&Games"));

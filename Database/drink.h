@@ -6,6 +6,7 @@
 #include "attribute.h"
 #include "databaseattribute.h"
 #include "listattribute.h"
+#include "mappingattribute.h"
 
 #include <Database/Calculator/drinkcalculator.h>
 
@@ -23,6 +24,8 @@ START_ROW_DECLARATION(Drink, Row)
     DECLARE_ATTRIBUTE(QImage,Drink,icon)
 
     DECLARE_ATTRIBUTE_IN_CALC(int,Drink,DrinkCalculator,drinkCount)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Drink,DrinkCalculator,countPerPlayer)
+    DECLARE_ATTRIBUTE_IN_CALC(QString,Drink,DrinkCalculator,mostDrinks)
 
     Gui::Details::DetailsWidget* detailsWidget();
 

@@ -25,7 +25,9 @@ START_ROW_IMPLEMENTATION(Drink, Drink, Row)
     iconPath->addDependingAttribute(icon);
     icon->setRole(Qt::DecorationRole);
 
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Drink,DrinkCalculator,calc,countPerPlayer,tr("CountPerPlayer"))
     IMPLEMENT_ATTRIBUTE_IN_CALC(int,Drink,DrinkCalculator,calc,drinkCount,"DrinkCount")
+    IMPLEMENT_ATTRIBUTE_IN_CALC(QString,Drink,DrinkCalculator,calc,mostDrinks,tr("Most Drinks"))
 }
 
 QString Drink::mimeType() const
