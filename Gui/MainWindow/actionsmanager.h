@@ -133,6 +133,7 @@ private:
     QAction *constructAction(const QString& name, const QString& iconPath, const QKeySequence &shortcut = QKeySequence());
 
     void createActions();
+    QList<QString> createDefaultColumns();
 
     QPointer<MainWindow> m_mainWindow; //!< Das MainWindow mit dem die Actions arbeiten.
 

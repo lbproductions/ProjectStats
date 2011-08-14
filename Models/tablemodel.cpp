@@ -22,4 +22,15 @@ void TableModelBase::setDisplayRole(AttributeVariant::DisplayRole role){
     this->reset();
 }
 
+void TableModelBase::setVisibleColumns(QList<int> list)
+{
+    m_visibleColumns = list;
+    emit visibleHeadersChanged();
+}
+
+QList<int> TableModelBase::visibleColumns()
+{
+    return m_visibleColumns;
+}
+
 }

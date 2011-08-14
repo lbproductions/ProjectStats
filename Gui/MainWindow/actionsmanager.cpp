@@ -173,10 +173,27 @@ void ActionsManager::showDatabase()
     databaseWindow->show();
 }
 
+QList<QString> ActionsManager::createDefaultColumns()
+{
+    QList<QString> list;
+    list.append("Name");
+    list.append("Games");
+    list.append("Points");
+    list.append("Wins");
+    list.append("Losses");
+    list.append("LastGame");
+    list.append("LastWin");
+    list.append("Avatar");
+    list.append("Color");
+    list.append("Average");
+    return list;
+}
+
 void ActionsManager::playersShowGeneral(){
     if(actionPlayersShowGeneral->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::MainWindow);
         Database::Players::instance()->model()->setData(Database::Players::instance()->allRows());
+        Database::Players::instance()->model()->setVisibleColumns(createDefaultColumns());
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
         actionPlayersShowPoker->setChecked(false);
@@ -188,6 +205,17 @@ void ActionsManager::playersShowDoppelkopf(){
     if(actionPlayersShowDoppelkopf->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::DoppelkopfWindow);
         Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Doppelkopf"));
+
+        QList<QString> list;
+        list.append(createDefaultColumns());
+        list.append("Hochzeiten");
+        list.append("Soli");
+        list.append("Trumpfabgaben");
+        list.append("Schweinereien");
+        list.append("Schmeissereien");
+        list.append("GamePoints");
+        Database::Players::instance()->model()->setVisibleColumns(list);
+
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
         actionPlayersShowPoker->setChecked(false);
@@ -200,6 +228,7 @@ void ActionsManager::playersShowPoker(){
     if(actionPlayersShowPoker->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::PokerWindow);
         Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Poker"));
+        Database::Players::instance()->model()->setVisibleColumns(createDefaultColumns());
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
@@ -212,6 +241,7 @@ void ActionsManager::playersShowHearts(){
     if(actionPlayersShowHearts->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::HeartsWindow);
         Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Hearts"));
+        Database::Players::instance()->model()->setVisibleColumns(createDefaultColumns());
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowPoker->setChecked(false);
@@ -224,6 +254,12 @@ void ActionsManager::playersShowSkat(){
     if(actionPlayersShowSkat->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::SkatWindow);
         Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Skat"));
+
+        QList<QString> list;
+        list.append(createDefaultColumns());
+        list.append("GamePoints");
+        Database::Players::instance()->model()->setVisibleColumns(list);
+
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
@@ -236,6 +272,7 @@ void ActionsManager::playersShowPrognose(){
     if(actionPlayersShowPrognose->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::PrognoseWindow);
         Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Prognose"));
+        Database::Players::instance()->model()->setVisibleColumns(createDefaultColumns());
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);

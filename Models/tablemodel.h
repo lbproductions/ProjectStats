@@ -32,8 +32,15 @@ public:
 
     AttributeVariant::DisplayRole displayRole();
 
+    void setVisibleColumns(QList<int> list);
+    QList<int> visibleColumns();
+
 protected:
     AttributeVariant::DisplayRole m_displayRole;
+    QList<int> m_visibleColumns;
+
+signals:
+    void visibleHeadersChanged();
 
 private slots:
     virtual void on_attribute_changed(::Database::AttributeBase *attribute) = 0;
@@ -58,6 +65,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     RowType *value(const QModelIndex &index);
     Database::Row *row(const QModelIndex &index);
+    void setVisibleColumns(QList<QString> list);
 
     void updateData();
 
@@ -327,6 +335,19 @@ Database::Row *TableModel<RowType, Owner>::row(const QModelIndex &index)
     }
 
     return m_data.at(index.row());
+}
+
+template<class RowType, class Owner>
+void TableModel<RowType, Owner>::setVisibleColumns(QList<QString> list){
+    QList<int> visible;
+    foreach(QString string, list){
+        for(int i = 0; i<m_owner->registeredAttributes()->size();i++){
+            if(string == this->headerData(i,Qt::Horizontal,Qt::DisplayRole).toString()){
+                visible.append(i);
+            }
+        }
+    }
+    TableModelBase::setVisibleColumns(visible);
 }
 
 }
