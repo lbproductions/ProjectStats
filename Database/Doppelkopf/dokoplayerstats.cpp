@@ -11,38 +11,30 @@ DokoPlayerStats::DokoPlayerStats(Player* player):
 {
     dokoGames = new ListAttribute<Game*,DokoPlayerStats, DokoPlayerStats>("dokoGames",tr("DokoGames"), this);
     dokoGames->setCalculationFunction(this,&DokoPlayerStats::calculate_dokoGames);
-    liveGames = new Attribute<int,DokoPlayerStats, DokoPlayerStats>("liveGames",tr("LiveGames"), this);
-    liveGames->setCalculationFunction(this,&DokoPlayerStats::calculate_liveGames);
-    dokoGames->addDependingAttribute(liveGames);
-    offlineGames = new Attribute<int,DokoPlayerStats, DokoPlayerStats>("offlineGames",tr("OfflineGames"), this);
-    offlineGames->setCalculationFunction(this,&DokoPlayerStats::calculate_offlineGames);
-    dokoGames->addDependingAttribute(offlineGames);
-    points = new Attribute<int,DokoPlayerStats, DokoPlayerStats>("points",tr("Points"), this);
-    points->setCalculationFunction(this,&DokoPlayerStats::calculate_points);
-    livePoints = new Attribute<int,DokoPlayerStats, DokoPlayerStats>("livePoints",tr("LivePoints"), this);
-    livePoints->setCalculationFunction(this,&DokoPlayerStats::calculate_livePoints);
-    liveGames->addDependingAttribute(livePoints);
-    livePoints->addDependingAttribute(points);
-    offlinePoints = new Attribute<int,DokoPlayerStats, DokoPlayerStats>("offlinePoints",tr("OfflinePoints"), this);
-    offlinePoints->setCalculationFunction(this,&DokoPlayerStats::calculate_offlinePoints);
-    offlineGames->addDependingAttribute(offlinePoints);
-    offlinePoints->addDependingAttribute(points);
-
 
     hochzeiten = new Attribute<int,DokoPlayerStats, DokoPlayerStats>("hochzeiten",tr("Hochzeiten"), this);
     hochzeiten->setCalculationFunction(this,&DokoPlayerStats::calculate_hochzeiten);
+    m_player->registerAttribute(hochzeiten);
     dokoGames->addDependingAttribute(hochzeiten);
+
     soli = new Attribute<int,DokoPlayerStats, DokoPlayerStats>("soli",tr("Soli"), this);
     soli->setCalculationFunction(this,&DokoPlayerStats::calculate_soli);
+    m_player->registerAttribute(soli);
     dokoGames->addDependingAttribute(soli);
+
     trumpfabgaben = new Attribute<int,DokoPlayerStats, DokoPlayerStats>("trumpfabgaben",tr("Trumpfabgaben"), this);
     trumpfabgaben->setCalculationFunction(this,&DokoPlayerStats::calculate_trumpfabgaben);
+    m_player->registerAttribute(trumpfabgaben);
     dokoGames->addDependingAttribute(trumpfabgaben);
+
     schweinereien = new Attribute<int,DokoPlayerStats, DokoPlayerStats>("schweinereien",tr("Schweinereien"), this);
     schweinereien->setCalculationFunction(this,&DokoPlayerStats::calculate_schweinereien);
+    m_player->registerAttribute(schweinereien);
     dokoGames->addDependingAttribute(schweinereien);
+
     schmeissereien = new Attribute<int,DokoPlayerStats, DokoPlayerStats>("schmeissereien",tr("Schmeissereien"), this);
     schmeissereien->setCalculationFunction(this,&DokoPlayerStats::calculate_schmeissereien);
+    m_player->registerAttribute(schmeissereien);
     dokoGames->addDependingAttribute(schmeissereien);
 }
 
@@ -136,49 +128,4 @@ int DokoPlayerStats::calculate_schweinereien(){
     }
     return count;
 }
-
-int DokoPlayerStats::calculate_liveGames(){
-    int count = 0;
-    foreach(Game* g, this->dokoGames->value()){
-        if(g->live->value()){
-            count++;
-        }
-    }
-    return count;
-}
-
-int DokoPlayerStats::calculate_offlineGames(){
-    int count = 0;
-    foreach(Game* g, this->dokoGames->value()){
-        if(!g->live->value()){
-            count++;
-        }
-    }
-    return count;
-}
-
-int DokoPlayerStats::calculate_livePoints(){
-    int count = 0;
-    foreach(Game* g, this->dokoGames->value()){
-        if(g->live->value()){
-            count += g->points->value(m_player);
-        }
-    }
-    return count;
-}
-
-int DokoPlayerStats::calculate_offlinePoints(){
-    int count = 0;
-    foreach(Game* g, this->dokoGames->value()){
-        if(!g->live->value()){
-            count += g->points->value(m_player);
-        }
-    }
-    return count;
-}
-
-int DokoPlayerStats::calculate_points(){
-    return offlinePoints->value() + livePoints->value();
-}
-
 

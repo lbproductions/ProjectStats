@@ -176,6 +176,7 @@ void ActionsManager::showDatabase()
 void ActionsManager::playersShowGeneral(){
     if(actionPlayersShowGeneral->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::MainWindow);
+        Database::Players::instance()->model()->setData(Database::Players::instance()->allRows());
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
         actionPlayersShowPoker->setChecked(false);
@@ -186,6 +187,7 @@ void ActionsManager::playersShowGeneral(){
 void ActionsManager::playersShowDoppelkopf(){
     if(actionPlayersShowDoppelkopf->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::DoppelkopfWindow);
+        Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Doppelkopf"));
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
         actionPlayersShowPoker->setChecked(false);
@@ -197,6 +199,7 @@ void ActionsManager::playersShowDoppelkopf(){
 void ActionsManager::playersShowPoker(){
     if(actionPlayersShowPoker->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::PokerWindow);
+        Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Poker"));
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
@@ -208,6 +211,7 @@ void ActionsManager::playersShowPoker(){
 void ActionsManager::playersShowHearts(){
     if(actionPlayersShowHearts->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::HeartsWindow);
+        Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Hearts"));
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowPoker->setChecked(false);
@@ -219,6 +223,7 @@ void ActionsManager::playersShowHearts(){
 void ActionsManager::playersShowSkat(){
     if(actionPlayersShowSkat->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::SkatWindow);
+        Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Skat"));
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
@@ -230,6 +235,7 @@ void ActionsManager::playersShowSkat(){
 void ActionsManager::playersShowPrognose(){
     if(actionPlayersShowPrognose->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::PrognoseWindow);
+        Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Prognose"));
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);

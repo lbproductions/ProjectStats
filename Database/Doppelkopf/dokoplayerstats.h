@@ -31,11 +31,6 @@ public:
     AttributeBase *attribute(const QString &name) const;
 
     DECLARE_LISTATTRIBUTE(Game*,DokoPlayerStats,dokoGames)
-    DECLARE_ATTRIBUTE(int,DokoPlayerStats,liveGames)
-    DECLARE_ATTRIBUTE(int,DokoPlayerStats,offlineGames)
-    DECLARE_ATTRIBUTE(int,DokoPlayerStats,points)
-    DECLARE_ATTRIBUTE(int,DokoPlayerStats,livePoints)
-    DECLARE_ATTRIBUTE(int,DokoPlayerStats,offlinePoints)
     DECLARE_ATTRIBUTE(int,DokoPlayerStats,hochzeiten)
     DECLARE_ATTRIBUTE(int,DokoPlayerStats,soli)
     DECLARE_ATTRIBUTE(int,DokoPlayerStats,trumpfabgaben)

@@ -54,6 +54,7 @@ public:
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
+    bool setData(QList<RowType*> list);
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     RowType *value(const QModelIndex &index);
     Database::Row *row(const QModelIndex &index);
@@ -109,6 +110,14 @@ template<class RowType, class Owner>
 void TableModel<RowType, Owner>::updateData()
 {
     m_data = m_owner->rows()->value().values();
+}
+
+template<class RowType, class Owner>
+bool TableModel<RowType, Owner>::setData(QList<RowType*> list)
+{
+    m_data = list;
+    this->reset();
+    return true;
 }
 
 template<class RowType, class Owner>

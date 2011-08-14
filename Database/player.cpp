@@ -13,7 +13,16 @@
 #include <Gui/Details/PlayerDetails/abstractplayerstatswidget.h>
 #include <Gui/Details/PlayerDetails/dokoplayerstatswidget.h>
 
-START_TABLE_IMPLEMENTATION(Player)
+namespace Database {
+IMPLEMENT_SINGLETON( Players )
+Players::Players() :
+    Table<Player>(QString("players"))
+{
+    playersOfType = new MappingAttribute<QString,QList<Player*>,Players, Players>("playersOfType",tr("PlayersOfType"), this);
+    playersOfType->setCalculationFunction(this,&Players::calculate_playersOfType);
+    this->rows()->addDependingAttribute(playersOfType);
+}
+REGISTER_TABLE(Players)
 
 Player* Players::playerByName(QString name)
 {
@@ -24,6 +33,20 @@ Player* Players::playerByName(QString name)
     }
 
     return 0;
+}
+
+QMap<QString,QList<Player*> > Players::calculate_playersOfType(){
+    QMap<QString,QList<Player*> > map;
+    foreach(QString type, Games::instance()->types->value()){
+        QList<Player*> list;
+        foreach(Player* p, Players::instance()->allRows()){
+            if(p->gameCount->value(type) > 0){
+               list.append(p);
+            }
+        }
+        map.insert(type,list);
+    }
+    return map;
 }
 
 END_TABLE_IMPLEMENTATION()
@@ -51,11 +74,27 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,gameCount,tr("Games"))
     games->addDependingAttribute(gameCount);
 
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,liveGameCount,tr("LiveGames"))
+    games->addDependingAttribute(liveGameCount);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,offlineGameCount,tr("OfflineGames"))
+    games->addDependingAttribute(offlineGameCount);
+
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,calc,places,tr("Places"))
     Places::instance()->rows()->addDependingAttribute(places);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,points,tr("Points"))
     games->addDependingAttribute(points);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,offlineGamePoints,tr("OfflineGamePoints"))
+    games->addDependingAttribute(offlineGamePoints);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,liveGamePoints,tr("LiveGamePoints"))
+    games->addDependingAttribute(liveGamePoints);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,gamePoints,tr("GamePoints"))
+    offlineGamePoints->addDependingAttribute(gamePoints);
+    liveGamePoints->addDependingAttribute(gamePoints);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,calc,average,tr("Average"))
     games->addDependingAttribute(average);
@@ -79,6 +118,8 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,calc,averagePlacement,tr("LiveAveragePlacement"))
     games->addDependingAttribute(averagePlacement);
+
+    m_dokoStats = new DokoPlayerStats(this);
 
 }
 
