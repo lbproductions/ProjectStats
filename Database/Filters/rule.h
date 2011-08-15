@@ -18,10 +18,28 @@ START_ROW_DECLARATION(Rule, Row)
 
     virtual bool appliesTo(Row* row);
 
+    template<class Type, class Table>
+    QList<Type*> getAll();
+
     DECLARE_DATABASEATTRIBUTE(int, Rule, parentRuleId)
     DECLARE_DATABASEATTRIBUTE(int, Rule, type)
 
 END_ROW_DECLARATION(Rule)
+
+template<class Type, class Table>
+QList<Type*> Database::Rule::getAll()
+{
+    QList<Type*> all = Table::instance()->allRows();
+    QList<Type*> filtered;
+    foreach(Type* row, all)
+    {
+        if(appliesTo(row))
+        {
+            filtered.append(row);
+        }
+    }
+    return filtered;
+}
 
 START_TABLE_DECLARATION(Rule)
 //    QPointer<Rule> createRowInstance(int id);
