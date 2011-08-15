@@ -205,6 +205,26 @@ QVariant AttributeVariant::displayVariant() const
             QMap<QString,int> hash = this->value<QMap<QString,int> >();
             variant.setValue(hash.value("General"));
         }
+        else if(m_currentRole == DoppelkopfWindow){
+            QMap<QString,int> hash = this->value<QMap<QString,int> >();
+            variant.setValue(hash.value("Doppelkopf"));
+        }
+        else if(m_currentRole == SkatWindow){
+            QMap<QString,int> hash = this->value<QMap<QString,int> >();
+            variant.setValue(hash.value("Skat"));
+        }
+        else if(m_currentRole == HeartsWindow){
+            QMap<QString,int> hash = this->value<QMap<QString,int> >();
+            variant.setValue(hash.value("Hearts"));
+        }
+        else if(m_currentRole == PokerWindow){
+            QMap<QString,int> hash = this->value<QMap<QString,int> >();
+            variant.setValue(hash.value("Poker"));
+        }
+        else if(m_currentRole == PrognoseWindow){
+            QMap<QString,int> hash = this->value<QMap<QString,int> >();
+            variant.setValue(hash.value("Prognose"));
+        }
         else{
             QString string = "";
             QMap<QString,int> hash = this->value<QMap<QString,int> >();
@@ -220,6 +240,26 @@ QVariant AttributeVariant::displayVariant() const
             QMap<QString,double> hash(this->value<QMap<QString,double> >());
             variant.setValue(hash.value("General"));
         }
+        else if(m_currentRole == DoppelkopfWindow){
+            QMap<QString,double> hash = this->value<QMap<QString,double> >();
+            variant.setValue(hash.value("Doppelkopf"));
+        }
+        else if(m_currentRole == SkatWindow){
+            QMap<QString,double> hash = this->value<QMap<QString,double> >();
+            variant.setValue(hash.value("Skat"));
+        }
+        else if(m_currentRole == HeartsWindow){
+            QMap<QString,double> hash = this->value<QMap<QString,double> >();
+            variant.setValue(hash.value("Hearts"));
+        }
+        else if(m_currentRole == PokerWindow){
+            QMap<QString,double> hash = this->value<QMap<QString,double> >();
+            variant.setValue(hash.value("Poker"));
+        }
+        else if(m_currentRole == PrognoseWindow){
+            QMap<QString,double> hash = this->value<QMap<QString,double> >();
+            variant.setValue(hash.value("Prognose"));
+        }
         else{
             QString string = "";
             QMap<QString,double> hash = this->value<QMap<QString,double> >();
@@ -233,6 +273,26 @@ QVariant AttributeVariant::displayVariant() const
         if(m_currentRole == MainWindow){
             QMap<QString,QDateTime> hash(this->value<QMap<QString,QDateTime> >());
             variant.setValue(hash.value("General"));
+        }
+        else if(m_currentRole == DoppelkopfWindow){
+            QMap<QString,QDateTime> hash(this->value<QMap<QString,QDateTime> >());
+            variant.setValue(hash.value("Doppelkopf"));
+        }
+        else if(m_currentRole == SkatWindow){
+            QMap<QString,QDateTime> hash = this->value<QMap<QString,QDateTime> >();
+            variant.setValue(hash.value("Skat"));
+        }
+        else if(m_currentRole == HeartsWindow){
+            QMap<QString,QDateTime> hash = this->value<QMap<QString,QDateTime> >();
+            variant.setValue(hash.value("Hearts"));
+        }
+        else if(m_currentRole == PokerWindow){
+            QMap<QString,QDateTime> hash = this->value<QMap<QString,QDateTime> >();
+            variant.setValue(hash.value("Poker"));
+        }
+        else if(m_currentRole == PrognoseWindow){
+            QMap<QString,QDateTime> hash = this->value<QMap<QString,QDateTime> >();
+            variant.setValue(hash.value("Prognose"));
         }
         else{
             QString string = "";

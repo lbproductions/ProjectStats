@@ -9,7 +9,7 @@ public:
     explicit AttributeVariant();
 
     enum DisplayRole{
-        MainWindow, DoppelkopfWindow
+        MainWindow, DoppelkopfWindow, SkatWindow, HeartsWindow, PrognoseWindow, PokerWindow
     };
 
     void setDisplayRole(DisplayRole role);

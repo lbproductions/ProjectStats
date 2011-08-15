@@ -28,6 +28,12 @@ public:
 
     QMap<QString,int> calculate_points();
 
+    QMap<QString,int> calculate_gamePoints();
+
+    QMap<QString,int> calculate_liveGamePoints();
+
+    QMap<QString,int> calculate_offlineGamePoints();
+
     QList<Place*> calculate_places();
 
     QMap<QString,double> calculate_average();
@@ -38,6 +44,10 @@ public:
 
     QMap<QString,int> calculate_gameCount();
 
+    QMap<QString,int> calculate_offlineGameCount();
+
+    QMap<QString,int> calculate_liveGameCount();
+
     QMap<QString,QDateTime> calculate_lastGame();
 
     QMap<QString,QDateTime> calculate_lastWin();
@@ -45,8 +55,6 @@ public:
     QMap<LiveGame*,double> calculate_alcPegel();
 
     QMap<QString,double> calculate_averagePlacement();
-
-    double calculate_liveAverage();
 
 private:
 

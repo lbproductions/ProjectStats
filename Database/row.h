@@ -94,6 +94,17 @@ public:
     AttributeBase *attribute(const QString &name) const;
 
     /*!
+        Fügt das gegebene Attribut zu den Attributen der Row hinzu.
+
+        Ist es ein Datenbankattribute wird es außerdem zusätzlich zu den
+        Datenbankattributen hinzugefügt.
+
+        Es sollte nie nötig sein, diese Methode "per Hand" aufzurufen. Das
+        übernehmen die Macros in attribute.h.
+      */
+    void registerAttribute(AttributeBase *attribute);
+
+    /*!
         Gibt dem MIME-Type dieser Reihe zurück.
 
         Dieser sollte die Form \p application/projectstats.rowname haben.
@@ -206,17 +217,6 @@ protected:
         \see Table::query(const QString &queryString)
       */
     QSqlQuery query(const QString &queryString) const;
-
-    /*!
-        Fügt das gegebene Attribut zu den Attributen der Row hinzu.
-
-        Ist es ein Datenbankattribute wird es außerdem zusätzlich zu den
-        Datenbankattributen hinzugefügt.
-
-        Es sollte nie nötig sein, diese Methode "per Hand" aufzurufen. Das
-        übernehmen die Macros in attribute.h.
-      */
-    void registerAttribute(AttributeBase *attribute);
 
     /*!
         Fügt dieser Reihe das Kind \a row hinzu.

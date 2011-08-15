@@ -14,7 +14,7 @@ using namespace Gui::Misc;
 RowList::RowList(Models::TableModelBase *model, QWidget *parent) :
     QTreeView(parent),
     m_proxyModel(0),
-    m_model(0)
+    m_model(model)
 {
 #ifdef Q_WS_MAC
     setRootIsDecorated(false);
@@ -31,6 +31,7 @@ RowList::RowList(Models::TableModelBase *model, QWidget *parent) :
 
     setModel(model);
 
+    connect(m_model,SIGNAL(visibleHeadersChanged()),this,SLOT(setupVisibleColumns()));
     connect(this,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(on_doubleClicked(QModelIndex)));
 
     setHeader(new RowListHeader(Qt::Horizontal));
@@ -87,4 +88,17 @@ void RowList::on_doubleClicked(QModelIndex index)
     {
 	emit rowDoubleClicked(selectedRow);
     }
+}
+
+void RowList::setupVisibleColumns()
+{
+    for(int i = 0; i<this->header()->count();i++){
+        if(m_model->visibleColumns().contains(i)){
+            this->setColumnHidden(i,false);
+        }
+        else{
+            this->setColumnHidden(i,true);
+        }
+    }
+    this->repaint();
 }

@@ -76,6 +76,12 @@ public:
     QAction * actionPaste;
 
     QAction * actionShowDatabase;
+    QAction * actionPlayersShowGeneral;
+    QAction * actionPlayersShowDoppelkopf;
+    QAction * actionPlayersShowSkat;
+    QAction * actionPlayersShowPrognose;
+    QAction * actionPlayersShowHearts;
+    QAction * actionPlayersShowPoker;
 
 public slots:
     /*!
@@ -113,6 +119,13 @@ public slots:
 
     void showDatabase();
 
+    void playersShowGeneral();
+    void playersShowDoppelkopf();
+    void playersShowSkat();
+    void playersShowPrognose();
+    void playersShowPoker();
+    void playersShowHearts();
+
 private:
     /*!
       Erstellt eine neue QAction mit Namen \p name, dem Icon \p iconPath und der optionalen Tastenkombination \p shortcut.
@@ -120,6 +133,7 @@ private:
     QAction *constructAction(const QString& name, const QString& iconPath, const QKeySequence &shortcut = QKeySequence());
 
     void createActions();
+    QList<QString> createDefaultColumns();
 
     QPointer<MainWindow> m_mainWindow; //!< Das MainWindow mit dem die Actions arbeiten.
 

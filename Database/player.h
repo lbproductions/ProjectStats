@@ -43,13 +43,16 @@ START_ROW_DECLARATION(Player, Row)
     DECLARE_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,places)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,gameCount)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,liveGameCount)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,offlineGameCount)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,points)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,gamePoints)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,liveGamePoints)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,offlineGamePoints)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,average)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,wins)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,losses)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,averagePlacement)
-
-    DECLARE_ATTRIBUTE_IN_CALC(double,Player,PlayerCalculator,liveAverage)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,QDateTime,Player,PlayerCalculator,lastGame)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(QString,QDateTime,Player,PlayerCalculator,lastWin)
@@ -73,6 +76,9 @@ END_ROW_DECLARATION(Player)
 
 START_TABLE_DECLARATION(Player)
     Player* playerByName(QString name);
+
+    MappingAttribute<QString,QList<Player*>,Players, Players> *playersOfType;
+    QMap<QString,QList<Player*> > calculate_playersOfType();
 END_TABLE_DECLARATION()
 
 #endif // DATABASE_PLAYER_H

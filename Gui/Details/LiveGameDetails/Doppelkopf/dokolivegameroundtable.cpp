@@ -22,24 +22,48 @@ void DokoLiveGameRoundTable::addRound(::Database::Round* round)
     {
         QTableWidgetItem* item = new QTableWidgetItem("");
         item->setFlags(item->flags() & ~Qt::ItemIsEditable & ~Qt::ItemIsSelectable);
-        if (dokoround->doko_re->value(p)){
-            QString text = QString::number(dokoround->points->value(p)) + " (R";
-            if(dokoround->doko_hochzeitPlayerId->value() == p->id())
-            {
-                text += ",H)";
+        QString text = QString::number(dokoround->points->value(p));
+        if(dokoround->doko_soloPlayerId->value() != 0){
+            if (dokoround->doko_re->value(p)){
+                text += " (S";
+                if(dokoround->doko_hochzeitPlayerId->value() == p->id())
+                {
+                    text += ",H)";
+                }
+                else if(dokoround->doko_trumpfabgabePlayerId->value() == p->id())
+                {
+                    text += ",T)";
+                }
+                else
+                {
+                    text += ")";
+                }
+                item->setText(text);
             }
-            else if(dokoround->doko_trumpfabgabePlayerId->value() == p->id())
-            {
-                text += ",T)";
+            else{
+                item->setText(QString::number(dokoround->points->value(p)) + " (C)");
             }
-            else
-            {
-                text += ")";
-            }
-            item->setText(text);
         }
         else{
-            item->setText(QString::number(dokoround->points->value(p)) + " (C)");
+            if (dokoround->doko_re->value(p)){
+                text += " (R";
+                if(dokoround->doko_hochzeitPlayerId->value() == p->id())
+                {
+                    text += ",H)";
+                }
+                else if(dokoround->doko_trumpfabgabePlayerId->value() == p->id())
+                {
+                    text += ",T)";
+                }
+                else
+                {
+                    text += ")";
+                }
+                item->setText(text);
+            }
+            else{
+                item->setText(QString::number(dokoround->points->value(p)) + " (C)");
+            }
         }
         if (dokoround->points->value(p) == 0){
             item->setBackgroundColor(QColor("lightGray"));

@@ -18,11 +18,11 @@ DokoPlayerStatsWidget::DokoPlayerStatsWidget(Database::Player* player, QWidget *
     player->dokoStats()->schmeissereien->futureWatcher()->connectTo(uiDoko->labelSchmeissereien);
     player->dokoStats()->schweinereien->futureWatcher()->connectTo(uiDoko->labelSchweinereien);
     player->gameCount->mappingFutureWatcher("Doppelkopf")->connectTo(uiDoko->labelGames);
-    player->dokoStats()->liveGames->futureWatcher()->connectTo(uiDoko->labelLiveGames);
-    player->dokoStats()->offlineGames->futureWatcher()->connectTo(uiDoko->labelOfflineGames);
-    player->dokoStats()->points->futureWatcher()->connectTo(uiDoko->labelPoints);
-    player->dokoStats()->livePoints->futureWatcher()->connectTo(uiDoko->labelPointsLive);
-    player->dokoStats()->offlinePoints->futureWatcher()->connectTo(uiDoko->labelPointsOffline);
+    player->liveGameCount->mappingFutureWatcher("Doppelkopf")->connectTo(uiDoko->labelLiveGames);
+    player->offlineGameCount->mappingFutureWatcher("Doppelkopf")->connectTo(uiDoko->labelOfflineGames);
+    player->gamePoints->mappingFutureWatcher("Doppelkopf")->connectTo(uiDoko->labelPoints);
+    player->liveGamePoints->mappingFutureWatcher("Doppelkopf")->connectTo(uiDoko->labelPointsLive);
+    player->offlineGamePoints->mappingFutureWatcher("Doppelkopf")->connectTo(uiDoko->labelPointsOffline);
 
     ui->tabWidget->addTab(uiDoko->tab_2,"Doko I");
     ui->tabWidget->addTab(uiDoko->tab,"Doko II");

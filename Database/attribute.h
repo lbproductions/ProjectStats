@@ -458,7 +458,7 @@ const QVariant Attribute<T,R,C>::displayVariant()
     }
 
     AttributeVariant display = toVariant();
-    display.setDisplayRole(AttributeVariant::MainWindow);
+    display.setDisplayRole(m_displayRole);
     QVariant variant = display.displayVariant();
 
     if (!variant.isNull()){

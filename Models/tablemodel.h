@@ -27,6 +27,21 @@ public:
     virtual Database::Row *row(const QModelIndex &index) = 0;
 
     virtual void updateData() = 0;
+
+    void setDisplayRole(AttributeVariant::DisplayRole role);
+
+    AttributeVariant::DisplayRole displayRole();
+
+    void setVisibleColumns(QList<int> list);
+    QList<int> visibleColumns();
+
+protected:
+    AttributeVariant::DisplayRole m_displayRole;
+    QList<int> m_visibleColumns;
+
+signals:
+    void visibleHeadersChanged();
+
 private slots:
     virtual void on_attribute_changed(::Database::AttributeBase *attribute) = 0;
 
@@ -46,9 +61,11 @@ public:
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
+    bool setData(QList<RowType*> list);
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     RowType *value(const QModelIndex &index);
     Database::Row *row(const QModelIndex &index);
+    void setVisibleColumns(QList<QString> list);
 
     void updateData();
 
@@ -101,6 +118,14 @@ template<class RowType, class Owner>
 void TableModel<RowType, Owner>::updateData()
 {
     m_data = m_owner->rows()->value().values();
+}
+
+template<class RowType, class Owner>
+bool TableModel<RowType, Owner>::setData(QList<RowType*> list)
+{
+    m_data = list;
+    this->reset();
+    return true;
 }
 
 template<class RowType, class Owner>
@@ -229,6 +254,7 @@ QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) co
     }
 
     attribute->startCalculationTask();
+    attribute->setDisplayRole(m_displayRole);
     QVariant value = attribute->displayVariant();
 
     if( (role == Qt::DisplayRole && attribute->role() == Qt::DisplayRole) || role == Qt::EditRole)
@@ -309,6 +335,19 @@ Database::Row *TableModel<RowType, Owner>::row(const QModelIndex &index)
     }
 
     return m_data.at(index.row());
+}
+
+template<class RowType, class Owner>
+void TableModel<RowType, Owner>::setVisibleColumns(QList<QString> list){
+    QList<int> visible;
+    foreach(QString string, list){
+        for(int i = 0; i<m_owner->registeredAttributes()->size();i++){
+            if(string == this->headerData(i,Qt::Horizontal,Qt::DisplayRole).toString()){
+                visible.append(i);
+            }
+        }
+    }
+    TableModelBase::setVisibleColumns(visible);
 }
 
 }

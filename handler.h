@@ -142,6 +142,7 @@ Q_DECLARE_METATYPE(QMap<QString COMMA Gui::Details::AbstractPlayerStatsWidget*>)
 Q_DECLARE_METATYPE(QList<int>)
 Q_DECLARE_METATYPE(QList<QString>)
 Q_DECLARE_METATYPE(QMap<int COMMA QMap<Database::Player* COMMA int> >)
+Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Player*> >)
 
 
 #endif // HANDLER_H

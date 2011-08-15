@@ -226,8 +226,54 @@ QMap<QString,double> PlayerCalculator::calculate_averagePlacement(){
     return hash;
 }
 
-double PlayerCalculator::calculate_liveAverage(){
-    return m_player->average->value("Live");
+QMap<QString,int> PlayerCalculator::calculate_offlineGameCount(){
+    QMap<QString,int> hash;
+    foreach(Game* g, m_player->games->value()){
+        if(!g->live->value()){
+            hash.insert("General",hash.value("General")+1);
+            hash.insert(g->type->value(),hash.value(g->type->value())+1);
+        }
+    }
+    return hash;
+}
+
+QMap<QString,int> PlayerCalculator::calculate_liveGameCount(){
+    QMap<QString,int> hash;
+    foreach(Game* g, m_player->games->value()){
+        if(g->live->value()){
+            hash.insert("General",hash.value("General")+1);
+            hash.insert(g->type->value(),hash.value(g->type->value())+1);
+        }
+    }
+    return hash;
+}
+
+QMap<QString,int> PlayerCalculator::calculate_gamePoints(){
+    QMap<QString,int> hash;
+    foreach(QString type, Games::instance()->types->value()){
+        hash.insert(type,m_player->liveGamePoints->value(type)+m_player->offlineGamePoints->value(type));
+    }
+    return hash;
+}
+
+QMap<QString,int> PlayerCalculator::calculate_liveGamePoints(){
+    QMap<QString,int> hash;
+    foreach(Game* g, m_player->games->value()){
+        if(g->live->value()){
+            hash.insert(g->type->value(),hash.value(g->type->value())+g->points->value(m_player));
+        }
+    }
+    return hash;
+}
+
+QMap<QString,int> PlayerCalculator::calculate_offlineGamePoints(){
+    QMap<QString,int> hash;
+    foreach(Game* g, m_player->games->value()){
+        if(!g->live->value()){
+            hash.insert(g->type->value(),hash.value(g->type->value())+g->points->value(m_player));
+        }
+    }
+    return hash;
 }
 
 } // namespace Database

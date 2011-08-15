@@ -3,11 +3,13 @@
 
 #include <QObject>
 #include <QPointer>
+#include <QMap>
 
 
 namespace Database {
 
 class Drink;
+class Player;
 
 class DrinkCalculator : public QObject
 {
@@ -15,7 +17,11 @@ class DrinkCalculator : public QObject
 public:
     explicit DrinkCalculator(Drink* drink, QObject *parent = 0);
 
+    QMap<Player*,int> calculate_countPerPlayer();
+
     int calculate_drinkCount();
+
+    QString calculate_mostDrinks();
 
 signals:
 
