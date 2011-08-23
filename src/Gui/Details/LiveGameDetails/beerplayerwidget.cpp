@@ -64,13 +64,12 @@ BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, Database::LiveGame*
 
     setAcceptDrops(true);
 
-    this->setStyleSheet("QFrame{margin: 0px; padding: 0px; background: transparent; color: white; border: none; font-weigt: bold;}");
+    this->setStyleSheet("QFrame{margin: 0px; padding: 0px; background: transparent; color: white; border: none; font-weight: bold;}");
     ui->line->setStyleSheet("QFrame{"
                             "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, "
                                               "stop:0 rgba(29, 29, 29, 255), "
-                                              "stop:1 rgba(100, 100, 100, 255))"
-                                                "}"
-                            "max-height: 1px;"
+                                              "stop:1 rgba(100, 100, 100, 255));"
+                            "max-height: 2px;"
                             "}");
 
     connect(m_livegame,SIGNAL(drinkAdded(::Database::LiveGameDrink*)),this,SLOT(onlivegamedrinkAdded(::Database::LiveGameDrink*)));
