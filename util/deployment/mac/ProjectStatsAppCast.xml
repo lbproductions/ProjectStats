@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+   <channel>
+      <title>ProjectStats Changelog</title>
+      <link>http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast.xml</link>
+      <description>Description</description>
+      <language>en</language>
+	 <item>
+	    <title>Version [VERSION]</title>
+						<sparkle:releaseNotesLink>
+							http://dl.dropbox.com/u/140012/ProjectStats/rnotes.html
+						</sparkle:releaseNotesLink>
+	    <pubDate>[DATE]</pubDate>
+	    <enclosure url="http://dl.dropbox.com/u/140012/ProjectStats/ProjectStats.zip" sparkle:version="[VERSION]" length="[LENGTH]" type="application/octet-stream" sparkle:dsaSignature="[DSASIGNATURE]" />
+	 </item>
+   </channel>
+</rss>

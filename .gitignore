@@ -1,2 +1,7 @@
 /.DS_Store
 /ProjectStats.pro.user
+/src/ProjectStats.pro.user.2.3pre1
+/src/ProjectStats.pro.user
+/build.debug/*
+
+/src/Makefile

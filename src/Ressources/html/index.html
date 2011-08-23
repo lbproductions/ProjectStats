@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google Maps JavaScript API Example</title>
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=GOOGLE_MAPS_KEY"
+      type="text/javascript"></script>
+	<script type="text/javascript"> 
+
+	var map;
+	
+	var initialLocation;
+	var siberia = new google.maps.LatLng(60, 105);
+	var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
+	var browserSupportFlag =  new Boolean();
+
+  
+	function initialize()
+	{
+		  if (GBrowserIsCompatible()) 
+		  {
+				map = new GMap2(document.getElementById("map"));
+				map.setCenter( new GLatLng(0,0),1 );
+		  }
+  
+    }
+
+	
+	function Open(x,y)
+	{
+	  map.setCenter( new GLatLng(x,y),13 );
+	  var point = new GLatLng(x,y);
+	  var marker = new GMarker(point);
+	  map.addOverlay(marker);
+	}
+	
+	function ShowMyLocation()
+	{
+		var myOptions = {
+    		zoom: 6,
+   			mapTypeId: google.maps.MapTypeId.ROADMAP
+  		};
+  		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+  
+  		// Try W3C Geolocation (Preferred)
+  		if(navigator.geolocation) {
+    		browserSupportFlag = true;
+    		navigator.geolocation.getCurrentPosition(function(position) {
+      			initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+      			map.setCenter(initialLocation);
+    			}, function() {
+      			handleNoGeolocation(browserSupportFlag);
+    	});
+  		// Try Google Gears Geolocation
+  		} else if (google.gears) {
+    		browserSupportFlag = true;
+    		var geo = google.gears.factory.create('beta.geolocation');
+    		geo.getCurrentPosition(function(position) {
+      			initialLocation = new google.maps.LatLng(position.latitude,position.longitude);
+      			map.setCenter(initialLocation);
+    			}, function() {
+      			handleNoGeoLocation(browserSupportFlag);
+    			});
+  		// Browser doesn't support Geolocation
+  		} else {
+   		 browserSupportFlag = false;
+    	 handleNoGeolocation(browserSupportFlag);
+  	}
+  }	
+  
+  function handleNoGeolocation(errorFlag) {
+    if (errorFlag == true) {
+      alert("Geolocation service failed.");
+      initialLocation = newyork;
+    } 
+    else {
+      alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+      initialLocation = siberia;
+    }
+    map.setCenter(initialLocation);
+  }
+
+    </script> 
+	 
+
+  </head>
+  <body onload="initialize()" onunload="GUnload()" topmargin="0" leftmargin="0">
+    <div id="map" style="width: 341px; height: 271px"></div>
+  </body>
+</html>
