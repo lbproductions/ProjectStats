@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Database::Database Klassenreferenz</title>
+<link href="qt.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class=header>
+<a class=headerImage href="http://www.doxygen.org/index.html"><img src="doxygen.png" alt="doxygen"/></a>
+<a class=headerLink  href="index.html"> Home</a> &middot;
+<a class=headerLink  href="annotated.html">All Classes</a> &middot;
+<a class=headerLink  href="functions.html">All Members</a>
+</div>
+<!-- Erzeugt von Doxygen 1.7.5.1 -->
+<script type="text/javascript" src="dynsections.js"></script>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>Database</b>      </li>
+      <li class="navelem"><a class="el" href="class_database_1_1_database.html">Database</a>      </li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Functions</a> &#124;
+<a href="#pri-methods">Private Functions</a> &#124;
+<a href="#pri-attribs">Private Members</a> &#124;
+<a href="#friends">Freundbeziehungen</a>  </div>
+  <div class="headertitle">
+<div class="title">Database::Database Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="Database::Database" --><!-- doxytag: inherits="QObject" -->
+<p><code>#include &quot;database.h&quot;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Klassendiagramm für Database::Database:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+ <div class="center">
+  <img src="class_database_1_1_database.png" usemap="#Database::Database_map" alt=""/>
+  <map id="Database::Database_map" name="Database::Database_map">
+<area doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qobject.html" alt="QObject" shape="rect" coords="0,0,124,24"/>
+</map>
+ </div></div>
+
+<p><a href="class_database_1_1_database-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Public Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_database.html#a52d0d890cef301f3dfb61121cf2c375b">~Database</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_database.html#ac67d7ac825cf46d4e1681d6cb77dbfed">initialize</a> (const <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfile.html">QFile</a> &amp;databaseFile)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_database.html#a13abe5f01140eb516aa04f6fd7554fc8">releaseDatabaseLock</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqldatabase.html">QSqlDatabase</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_database.html#a3533dde48801bd3f358cf8125a3b9da9">sqlDatabaseLocked</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a820c04f9f2fc61eb58ec7437c9e65faf"></a><!-- doxytag: member="Database::Database::tables" ref="a820c04f9f2fc61eb58ec7437c9e65faf" args="() const " -->
+<a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qlist.html">QList</a>&lt; <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qpointer.html">QPointer</a>&lt; <a class="el" href="class_database_1_1_table_base.html">TableBase</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>tables</b> () const </td></tr>
+<tr><td colspan="2"><h2><a name="pri-methods"></a>
+Private Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_database.html#ad533d43700e566f058fa5385fc370f24">createTables</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_database.html#a6c829b198c43c8fad2501c8e37a1c001">registerTable</a> (<a class="el" href="class_database_1_1_table_base.html">TableBase</a> *table)</td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Private Members</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_database.html#a6feb5df7877a789cf1f5304e339f2867">m_databaseFilename</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qmutex.html">QMutex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_database.html#a019e5e40b12962b7e056518737aba333">m_databaseLock</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqldatabase.html">QSqlDatabase</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_database.html#a3bc1a803bf22452b9192fefad0bfc6e4">m_sqlDatabase</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qlist.html">QList</a>&lt; <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qpointer.html">QPointer</a>&lt; <a class="el" href="class_database_1_1_table_base.html">TableBase</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_database.html#a519e75ad86ea15ae721e5507cf7a4741">m_tables</a></td></tr>
+<tr><td colspan="2"><h2><a name="friends"></a>
+Freundbeziehungen</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0a11dd0e99817db33c22802234a28a2"></a><!-- doxytag: member="Database::Database::TableRegistrar" ref="aa0a11dd0e99817db33c22802234a28a2" args="" -->
+class&#160;</td><td class="memItemRight" valign="bottom"><b>TableRegistrar</b></td></tr>
+</table>
+<hr/><a name="details" id="details"></a><h2>Ausführliche Beschreibung</h2>
+<div class="textblock"><p>Repräsentiert eine komplette Datenbank. </p>
+<p>Hier werden alle enthaltenen Tabellen verwaltet. Zu diesem Zweck müssen sich alle Tabellen bei der Datenbank registrieren.<br/>
+ Dabei geht es vor allem um das Erstellen der jeweiligen Table-Objekte und Aufrufen der zugehörigen Methoden Table::initializeTableIfNotExists() und Table::initializeData().<br/>
+ Anschließend wird durch diese Klasse nur noch einfacher Zugriff auf die Tabellen geboten. </p>
+</div><hr/><h2>Beschreibung der Konstruktoren und Destruktoren</h2>
+<a class="anchor" id="a52d0d890cef301f3dfb61121cf2c375b"></a><!-- doxytag: member="Database::Database::~Database" ref="a52d0d890cef301f3dfb61121cf2c375b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Database::Database::~Database </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Schließt die <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqldatabase.html">QSqlDatabase</a>. </p>
+
+</div>
+</div>
+<hr/><h2>Dokumentation der Elementfunktionen</h2>
+<a class="anchor" id="ad533d43700e566f058fa5385fc370f24"></a><!-- doxytag: member="Database::Database::createTables" ref="ad533d43700e566f058fa5385fc370f24" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Database::Database::createTables </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Erstellt alle Tabellen neu, falls sie nicht existieren und initialisiert ihre caches. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac67d7ac825cf46d4e1681d6cb77dbfed"></a><!-- doxytag: member="Database::Database::initialize" ref="ac67d7ac825cf46d4e1681d6cb77dbfed" args="(const QFile &amp;databaseFile)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Database::Database::initialize </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfile.html">QFile</a> &amp;&#160;</td>
+          <td class="paramname"><em>databaseFile</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Öffnet eine gegebene Datenbankdatei. Existiert die Datei nicht, wird die Datenbank und alle zugehoerigen Tabellen neu erstellt. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6c829b198c43c8fad2501c8e37a1c001"></a><!-- doxytag: member="Database::Database::registerTable" ref="a6c829b198c43c8fad2501c8e37a1c001" args="(TableBase *table)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Database::Database::registerTable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_database_1_1_table_base.html">TableBase</a> *&#160;</td>
+          <td class="paramname"><em>table</em></td><td>)</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Registriert die Tabelle <code>table</code> bei der Datenbank. Keine Tabelle muss diese Methode per Hand aufrufen, sondern stattdessen das Macro REGISTER_TABLE(Tabelle) verwenden. </p>
+
+</div>
+</div>
+<a class="anchor" id="a13abe5f01140eb516aa04f6fd7554fc8"></a><!-- doxytag: member="Database::Database::releaseDatabaseLock" ref="a13abe5f01140eb516aa04f6fd7554fc8" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Database::Database::releaseDatabaseLock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt die Datenbank wieder frei, falls diese gesperrt wurde. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3533dde48801bd3f358cf8125a3b9da9"></a><!-- doxytag: member="Database::Database::sqlDatabaseLocked" ref="a3533dde48801bd3f358cf8125a3b9da9" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqldatabase.html">QSqlDatabase</a> Database::Database::sqlDatabaseLocked </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt die zu Grunde liegende <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqldatabase.html">QSqlDatabase</a> zurueck und sperrt diese für weitere Zugriffe.<br/>
+ Muss später mit releaseDatabase() wieder freigegeben werden.</p>
+<dl class="return"><dt><b>Rückgabe:</b></dt><dd>die zu Grunde liegende <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqldatabase.html">QSqlDatabase</a>. </dd></dl>
+
+</div>
+</div>
+<hr/><h2>Dokumentation der Datenelemente</h2>
+<a class="anchor" id="a6feb5df7877a789cf1f5304e339f2867"></a><!-- doxytag: member="Database::Database::m_databaseFilename" ref="a6feb5df7877a789cf1f5304e339f2867" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a> <a class="el" href="class_database_1_1_database.html#a6feb5df7877a789cf1f5304e339f2867">Database::Database::m_databaseFilename</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die Datenbankdatei. </p>
+
+</div>
+</div>
+<a class="anchor" id="a019e5e40b12962b7e056518737aba333"></a><!-- doxytag: member="Database::Database::m_databaseLock" ref="a019e5e40b12962b7e056518737aba333" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qmutex.html">QMutex</a> <a class="el" href="class_database_1_1_database.html#a019e5e40b12962b7e056518737aba333">Database::Database::m_databaseLock</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Wird gesperrt, wenn jemand die Datenbank exklusiv haben will. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3bc1a803bf22452b9192fefad0bfc6e4"></a><!-- doxytag: member="Database::Database::m_sqlDatabase" ref="a3bc1a803bf22452b9192fefad0bfc6e4" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqldatabase.html">QSqlDatabase</a> <a class="el" href="class_database_1_1_database.html#a3bc1a803bf22452b9192fefad0bfc6e4">Database::Database::m_sqlDatabase</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die eigentliche Datenbank. </p>
+
+</div>
+</div>
+<a class="anchor" id="a519e75ad86ea15ae721e5507cf7a4741"></a><!-- doxytag: member="Database::Database::m_tables" ref="a519e75ad86ea15ae721e5507cf7a4741" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qlist.html">QList</a>&lt;<a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qpointer.html">QPointer</a>&lt;<a class="el" href="class_database_1_1_table_base.html">TableBase</a>&gt; &gt; <a class="el" href="class_database_1_1_database.html#a519e75ad86ea15ae721e5507cf7a4741">Database::Database::m_tables</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Alle registrierten Tabellen. </p>
+
+</div>
+</div>
+</div>
+<div class="footer" />Die Aug 23 2011 12:42:59 by <a href="http://www.doxygen.org/index.html">Doxygen</a> 1.7.5.1</div>
+</body>
+</html>

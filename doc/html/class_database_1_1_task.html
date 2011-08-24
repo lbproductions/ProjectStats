@@ -1,0 +1,430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Database::Task Klassenreferenz</title>
+<link href="qt.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class=header>
+<a class=headerImage href="http://www.doxygen.org/index.html"><img src="doxygen.png" alt="doxygen"/></a>
+<a class=headerLink  href="index.html"> Home</a> &middot;
+<a class=headerLink  href="annotated.html">All Classes</a> &middot;
+<a class=headerLink  href="functions.html">All Members</a>
+</div>
+<!-- Erzeugt von Doxygen 1.7.5.1 -->
+<script type="text/javascript" src="dynsections.js"></script>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>Database</b>      </li>
+      <li class="navelem"><a class="el" href="class_database_1_1_task.html">Task</a>      </li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Functions</a> &#124;
+<a href="#signals">Signals</a> &#124;
+<a href="#pri-methods">Private Functions</a> &#124;
+<a href="#pri-attribs">Private Members</a> &#124;
+<a href="#friends">Freundbeziehungen</a>  </div>
+  <div class="headertitle">
+<div class="title">Database::Task Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="Database::Task" --><!-- doxytag: inherits="QObject" -->
+<p><code>#include &quot;taskscheduler.h&quot;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Klassendiagramm für Database::Task:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+ <div class="center">
+  <img src="class_database_1_1_task.png" usemap="#Database::Task_map" alt=""/>
+  <map id="Database::Task_map" name="Database::Task_map">
+<area doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qobject.html" alt="QObject" shape="rect" coords="0,0,270,24"/>
+<area href="class_database_1_1_attribute_initilizer_task.html" title="Ein Task zum initialisieren aller Nicht-Datenbank-Attribute." alt="Database::AttributeInitilizerTask&lt; TableType &gt;" shape="rect" coords="0,112,270,136"/>
+</map>
+ </div></div>
+
+<p><a href="class_database_1_1_task-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Public Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#aed2a8d178532c18f415d4ba53ba079f7">Task</a> (QThread::Priority priority=QThread::LowPriority, <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qobject.html">QObject</a> *<a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qobject.html#parent">parent</a>=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#aca536afa394fcfa7a2b1c44c489d64ce">decreasePriority</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a6834026822ff1337aef9269960f5c915">execute</a> ()=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfuture.html">QFuture</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a8657c9d2aa08d5ea206b40a9b8070b2e">future</a> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a25c568e7a12384818d6465236703821c">increasePriority</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QThread::Priority&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a7337f2fa23fe432791a4208b91ca1ab9">priority</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a3f4018835689338372019d989418a464">waitForFinished</a> ()</td></tr>
+<tr><td colspan="2"><h2><a name="signals"></a>
+Signals</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#ab67d2690df5dd258e627d0b895a1cd54">finished</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#ac9ef0298909c2c645212dc1538b5a794">waiting</a> ()</td></tr>
+<tr><td colspan="2"><h2><a name="pri-methods"></a>
+Private Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#ad392c515d8f0e4802155a6b019bc361f">lock</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a034b41e0d81a3dc01804bbc3f73a25f2">run</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a77e75818e603da875cc9d0a04add54a9">setFuture</a> (<a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfuture.html">QFuture</a>&lt; void &gt; future)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#aa77d19544d880d1375e990398d8cd7be">unlock</a> ()</td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Private Members</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a303bd4e0aa5bd1823d2ce16712e019c5">m_finished</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfuture.html">QFuture</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a06d4888eadaca99cb9a4dc2f2c4e5a97">m_future</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qmutex.html">QMutex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a7137065cbe9195e57f33548bc2ab0cc2">m_mutex</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QThread::Priority&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a706dad735094a7922dd166d536f91c5c">m_priority</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qwaitcondition.html">QWaitCondition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#a2ed91ad62603c02313c7c3cf56d48daf">m_waitCondition</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qmutex.html">QMutex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_task.html#ae194eb6901202f5f13fba441013c1640">m_waitingMutex</a></td></tr>
+<tr><td colspan="2"><h2><a name="friends"></a>
+Freundbeziehungen</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb4f107aac80b276b159815dab6d4fe7"></a><!-- doxytag: member="Database::Task::ExecuteQueueHelper" ref="afb4f107aac80b276b159815dab6d4fe7" args="" -->
+class&#160;</td><td class="memItemRight" valign="bottom"><b>ExecuteQueueHelper</b></td></tr>
+</table>
+<hr/><a name="details" id="details"></a><h2>Ausführliche Beschreibung</h2>
+<div class="textblock"><p>Ein <a class="el" href="class_database_1_1_task.html">Task</a> ist ein einfaches Objekt, dass vom <a class="el" href="class_database_1_1_task_scheduler.html" title="Der TaskScheduler ist für das Ausführen von Tasks verantwortlich.">TaskScheduler</a> ausgeführt werden kann.</p>
+<p>Um einen <a class="el" href="class_database_1_1_task.html">Task</a> auszuführen, muss eine Kindklasse davon erben und <a class="el" href="class_database_1_1_task.html#a6834026822ff1337aef9269960f5c915">execute()</a> imeplementieren.</p>
+<p>Anschließend kann er mit TaskScheduler::schedule() im Hintergrund ausgeführt werden. </p>
+</div><hr/><h2>Beschreibung der Konstruktoren und Destruktoren</h2>
+<a class="anchor" id="aed2a8d178532c18f415d4ba53ba079f7"></a><!-- doxytag: member="Database::Task::Task" ref="aed2a8d178532c18f415d4ba53ba079f7" args="(QThread::Priority priority=QThread::LowPriority, QObject *parent=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task::Task </td>
+          <td>(</td>
+          <td class="paramtype">QThread::Priority&#160;</td>
+          <td class="paramname"><em>priority</em> = <code>QThread::LowPriority</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qobject.html">QObject</a> *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [explicit]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Erstellt einen neuen <a class="el" href="class_database_1_1_task.html">Task</a> mit der Priorität <em>priority</em>.</p>
+<p>Die Priorität sagt dabei nicht wirklich aus, welche Priorität der Thread tatsächlich erhält, sondern nur, in welcher Reihenfolge die Tasks gestartet werden. </p>
+
+</div>
+</div>
+<hr/><h2>Dokumentation der Elementfunktionen</h2>
+<a class="anchor" id="aca536afa394fcfa7a2b1c44c489d64ce"></a><!-- doxytag: member="Database::Task::decreasePriority" ref="aca536afa394fcfa7a2b1c44c489d64ce" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Task::decreasePriority </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Erniedrigt die Priorität des Tasks um <code>1</code>.</p>
+<p>Die Priorität kann nicht kleiner als QThread::IdlePriority werden. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6834026822ff1337aef9269960f5c915"></a><!-- doxytag: member="Database::Task::execute" ref="a6834026822ff1337aef9269960f5c915" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Database::Task::execute </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Wird ausgeführt sobald dieser <a class="el" href="class_database_1_1_task.html">Task</a> an der Reihe ist. </p>
+
+<p>Implementiert in <a class="el" href="class_database_1_1_attribute_initilizer_task.html#a291daf36e15ef5ef4c09a7c94ecd7fe2">Database::AttributeInitilizerTask&lt; TableType &gt;</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab67d2690df5dd258e627d0b895a1cd54"></a><!-- doxytag: member="Database::Task::finished" ref="ab67d2690df5dd258e627d0b895a1cd54" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Database::Task::finished </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Wird gesendet, sobald <a class="el" href="class_database_1_1_task.html#a6834026822ff1337aef9269960f5c915">execute()</a> verlassen wurde und alle wartenden Threads geweckt wurden. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8657c9d2aa08d5ea206b40a9b8070b2e"></a><!-- doxytag: member="Database::Task::future" ref="a8657c9d2aa08d5ea206b40a9b8070b2e" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfuture.html">QFuture</a>&lt; void &gt; Task::future </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt die <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfuture.html">QFuture</a> dieses Tasks zurück, falls er bereits gestartet wurde, oder eine leere <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfuture.html">QFuture</a>, falls er noch wartet. </p>
+
+</div>
+</div>
+<a class="anchor" id="a25c568e7a12384818d6465236703821c"></a><!-- doxytag: member="Database::Task::increasePriority" ref="a25c568e7a12384818d6465236703821c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Task::increasePriority </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Erhöht die Priorität des Tasks um <code>1</code>.</p>
+<p>Die Priorität kann nicht größer als QThread::TimeCriticalPriority werden. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad392c515d8f0e4802155a6b019bc361f"></a><!-- doxytag: member="Database::Task::lock" ref="ad392c515d8f0e4802155a6b019bc361f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Task::lock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Sperrt den Mutex des Tasks. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7337f2fa23fe432791a4208b91ca1ab9"></a><!-- doxytag: member="Database::Task::priority" ref="a7337f2fa23fe432791a4208b91ca1ab9" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QThread::Priority Task::priority </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt die aktuelle Priorität des Tasks zurück.</p>
+<dl class="see"><dt><b>Siehe auch:</b></dt><dd><a class="el" href="class_database_1_1_task.html#a25c568e7a12384818d6465236703821c">increasePriority()</a> </dd>
+<dd>
+<a class="el" href="class_database_1_1_task.html#aca536afa394fcfa7a2b1c44c489d64ce">decreasePriority()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a034b41e0d81a3dc01804bbc3f73a25f2"></a><!-- doxytag: member="Database::Task::run" ref="a034b41e0d81a3dc01804bbc3f73a25f2" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Task::run </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Führt den <a class="el" href="class_database_1_1_task.html">Task</a> aus.</p>
+<p>Sperrt zunächst alle weiteren Zugriffe mit <a class="el" href="class_database_1_1_task.html#ad392c515d8f0e4802155a6b019bc361f">lock()</a> und startet dann <a class="el" href="class_database_1_1_task.html#a6834026822ff1337aef9269960f5c915">execute()</a>.</p>
+<p>Anschließend werden alle dann wartenden Tasks geweckt und <a class="el" href="class_database_1_1_task.html#ab67d2690df5dd258e627d0b895a1cd54">finished()</a> gesendet. </p>
+
+</div>
+</div>
+<a class="anchor" id="a77e75818e603da875cc9d0a04add54a9"></a><!-- doxytag: member="Database::Task::setFuture" ref="a77e75818e603da875cc9d0a04add54a9" args="(QFuture&lt; void &gt; future)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Task::setFuture </td>
+          <td>(</td>
+          <td class="paramtype"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfuture.html">QFuture</a>&lt; void &gt;&#160;</td>
+          <td class="paramname"><em>future</em></td><td>)</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Setzt die <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfuture.html">QFuture</a> des Tasks auf <em>future</em> </p>
+
+</div>
+</div>
+<a class="anchor" id="aa77d19544d880d1375e990398d8cd7be"></a><!-- doxytag: member="Database::Task::unlock" ref="aa77d19544d880d1375e990398d8cd7be" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Task::unlock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Entsperrt den Mutex des Tasks. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3f4018835689338372019d989418a464"></a><!-- doxytag: member="Database::Task::waitForFinished" ref="a3f4018835689338372019d989418a464" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Task::waitForFinished </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Wartet bis der <a class="el" href="class_database_1_1_task.html">Task</a> beendet wurde. Das gilt natürlich auch, falls er noch gar nicht gestartet wurde.</p>
+<p>Während des Wartens wird die Priorität des Tasks erhöht, sodass gilt: Je mehr andere Threads auf den <a class="el" href="class_database_1_1_task.html">Task</a> warten, desto höher ist seine Priorität.</p>
+<p>Außerdem werden mit Hilfe von <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qthreadpool.html#releaseThread">QThreadPool::releaseThread()</a> der Thread freigegeben, sodass die Resourcen genutzt werden können.</p>
+<p>Tut nichts, falls der <a class="el" href="class_database_1_1_task.html">Task</a> schon beendet wurde. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac9ef0298909c2c645212dc1538b5a794"></a><!-- doxytag: member="Database::Task::waiting" ref="ac9ef0298909c2c645212dc1538b5a794" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Database::Task::waiting </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Wird gesendet, sobald ein anderer Thread auf diesen <a class="el" href="class_database_1_1_task.html">Task</a> wartet. </p>
+
+</div>
+</div>
+<hr/><h2>Dokumentation der Datenelemente</h2>
+<a class="anchor" id="a303bd4e0aa5bd1823d2ce16712e019c5"></a><!-- doxytag: member="Database::Task::m_finished" ref="a303bd4e0aa5bd1823d2ce16712e019c5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_database_1_1_task.html#a303bd4e0aa5bd1823d2ce16712e019c5">Database::Task::m_finished</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p><code>true</code>, sobald der <a class="el" href="class_database_1_1_task.html">Task</a> beendet wurde </p>
+
+</div>
+</div>
+<a class="anchor" id="a06d4888eadaca99cb9a4dc2f2c4e5a97"></a><!-- doxytag: member="Database::Task::m_future" ref="a06d4888eadaca99cb9a4dc2f2c4e5a97" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfuture.html">QFuture</a>&lt;void&gt; <a class="el" href="class_database_1_1_task.html#a06d4888eadaca99cb9a4dc2f2c4e5a97">Database::Task::m_future</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qfuture.html">QFuture</a> des Tasks, sobald er gestartet wurde. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7137065cbe9195e57f33548bc2ab0cc2"></a><!-- doxytag: member="Database::Task::m_mutex" ref="a7137065cbe9195e57f33548bc2ab0cc2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qmutex.html">QMutex</a> <a class="el" href="class_database_1_1_task.html#a7137065cbe9195e57f33548bc2ab0cc2">Database::Task::m_mutex</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Dieser Mutex sperrt alle Methoden des Tasks. </p>
+
+</div>
+</div>
+<a class="anchor" id="a706dad735094a7922dd166d536f91c5c"></a><!-- doxytag: member="Database::Task::m_priority" ref="a706dad735094a7922dd166d536f91c5c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QThread::Priority <a class="el" href="class_database_1_1_task.html#a706dad735094a7922dd166d536f91c5c">Database::Task::m_priority</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Die Priorität des Tasks. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2ed91ad62603c02313c7c3cf56d48daf"></a><!-- doxytag: member="Database::Task::m_waitCondition" ref="a2ed91ad62603c02313c7c3cf56d48daf" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qwaitcondition.html">QWaitCondition</a> <a class="el" href="class_database_1_1_task.html#a2ed91ad62603c02313c7c3cf56d48daf">Database::Task::m_waitCondition</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Diese <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qwaitcondition.html">QWaitCondition</a> wartet bis der Tasks beendet wurde. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae194eb6901202f5f13fba441013c1640"></a><!-- doxytag: member="Database::Task::m_waitingMutex" ref="ae194eb6901202f5f13fba441013c1640" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qmutex.html">QMutex</a> <a class="el" href="class_database_1_1_task.html#ae194eb6901202f5f13fba441013c1640">Database::Task::m_waitingMutex</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Unterstützt m_waitCondition. </p>
+
+</div>
+</div>
+</div>
+<div class="footer" />Die Aug 23 2011 12:42:59 by <a href="http://www.doxygen.org/index.html">Doxygen</a> 1.7.5.1</div>
+</body>
+</html>

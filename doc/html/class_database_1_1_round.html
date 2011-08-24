@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Database::Round Klassenreferenz</title>
+<link href="qt.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class=header>
+<a class=headerImage href="http://www.doxygen.org/index.html"><img src="doxygen.png" alt="doxygen"/></a>
+<a class=headerLink  href="index.html"> Home</a> &middot;
+<a class=headerLink  href="annotated.html">All Classes</a> &middot;
+<a class=headerLink  href="functions.html">All Members</a>
+</div>
+<!-- Erzeugt von Doxygen 1.7.5.1 -->
+<script type="text/javascript" src="dynsections.js"></script>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>Database</b>      </li>
+      <li class="navelem"><a class="el" href="class_database_1_1_round.html">Round</a>      </li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Functions</a> &#124;
+<a href="#pub-attribs">Public Members</a>  </div>
+  <div class="headertitle">
+<div class="title">Database::Round Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="Database::Round" --><!-- doxytag: inherits="Database::Row" --><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Klassendiagramm für Database::Round:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+ <div class="center">
+  <img src="class_database_1_1_round.png" usemap="#Database::Round_map" alt=""/>
+  <map id="Database::Round_map" name="Database::Round_map">
+<area href="class_database_1_1_row.html" title="Repräsentiert eine Reihe in einer Tabelle." alt="Database::Row" shape="rect" coords="0,0,107,24"/>
+</map>
+ </div></div>
+
+<p><a href="class_database_1_1_round-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_round.html#aec12fdda4861dd65ee2f53f8252ebe63">RoundState</a> { <a class="el" href="class_database_1_1_round.html#aec12fdda4861dd65ee2f53f8252ebe63a149b82fad5b31241fc928158f3795b9b">UnkownState</a>, 
+<a class="el" href="class_database_1_1_round.html#aec12fdda4861dd65ee2f53f8252ebe63a491cb3645814f6242da5e4026fd75b5a">RunningState</a>, 
+<a class="el" href="class_database_1_1_round.html#aec12fdda4861dd65ee2f53f8252ebe63a72f4621676ad963dc16e6af41b1cb6f6">PausedState</a>, 
+<a class="el" href="class_database_1_1_round.html#aec12fdda4861dd65ee2f53f8252ebe63a0d0f11da1eec8a945c1e67880c264b8c">FinishedState</a>
+ }</td></tr>
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Public Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a133a9ad6155143656a11dc55bb7db49d"></a><!-- doxytag: member="Database::Round::Round" ref="a133a9ad6155143656a11dc55bb7db49d" args="(const Round &amp;other)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>Round</b> (const <a class="el" href="class_database_1_1_round.html">Round</a> &amp;other)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01d7544defb354ed19e04a6291cb005f"></a><!-- doxytag: member="Database::Round::Round" ref="a01d7544defb354ed19e04a6291cb005f" args="(int id, TableBase *table)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>Round</b> (int id, <a class="el" href="class_database_1_1_table_base.html">TableBase</a> *table)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5d020548ffaf9b544959140b23cea6b"></a><!-- doxytag: member="Database::Round::Round" ref="af5d020548ffaf9b544959140b23cea6b" args="(Game *game, int number)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>Round</b> (<a class="el" href="class_database_1_1_game.html">Game</a> *game, int number)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c7d1a19ce7953687fe2144e0aa0c5e9"></a><!-- doxytag: member="Database::Round::addPoints" ref="a5c7d1a19ce7953687fe2144e0aa0c5e9" args="(Player *player, int points)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addPoints</b> (<a class="el" href="class_database_1_1_player.html">Player</a> *player, int points)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84735cb3f286b98c4c1adb552b7322f9"></a><!-- doxytag: member="Database::Round::call_calculate_currentPlayingPlayers" ref="a84735cb3f286b98c4c1adb552b7322f9" args="()" -->
+<a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qlist.html">QList</a>&lt; <a class="el" href="class_database_1_1_player.html">Player</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>call_calculate_currentPlayingPlayers</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d381d29d1795d543f151e18444c9f1e"></a><!-- doxytag: member="Database::Round::initializeAttributes" ref="a5d381d29d1795d543f151e18444c9f1e" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>initializeAttributes</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a38c523c2ac30764f51013b493275d8d5"></a><!-- doxytag: member="Database::Round::mimeType" ref="a38c523c2ac30764f51013b493275d8d5" args="() const " -->
+<a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mimeType</b> () const </td></tr>
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Public Members</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae628920b5606ec2a9b6ce85bbb52ae46"></a><!-- doxytag: member="Database::Round::comment" ref="ae628920b5606ec2a9b6ce85bbb52ae46" args="" -->
+<a class="el" href="class_database_1_1_database_attribute.html">DatabaseAttribute</a>&lt; <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a>, <br class="typebreak"/>
+<a class="el" href="class_database_1_1_round.html">Round</a>, <a class="el" href="class_database_1_1_round.html">Round</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>comment</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a683acf6cb0f9ffbab1f2f5f4155fa620"></a><!-- doxytag: member="Database::Round::currentPlayingPlayers" ref="a683acf6cb0f9ffbab1f2f5f4155fa620" args="" -->
+<a class="el" href="class_database_1_1_list_attribute.html">ListAttribute</a>&lt; <a class="el" href="class_database_1_1_player.html">Player</a> *, <a class="el" href="class_database_1_1_round.html">Round</a>, <br class="typebreak"/>
+<a class="el" href="class_database_1_1_round.html">Round</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>currentPlayingPlayers</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b902ee893e7be0a5cb24d320548bc2d"></a><!-- doxytag: member="Database::Round::db_state" ref="a3b902ee893e7be0a5cb24d320548bc2d" args="" -->
+<a class="el" href="class_database_1_1_database_attribute.html">DatabaseAttribute</a>&lt; int, <a class="el" href="class_database_1_1_round.html">Round</a>, <br class="typebreak"/>
+<a class="el" href="class_database_1_1_round.html">Round</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>db_state</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18b8c624bc0a0edab831cf3e8093b37b"></a><!-- doxytag: member="Database::Round::gameId" ref="a18b8c624bc0a0edab831cf3e8093b37b" args="" -->
+<a class="el" href="class_database_1_1_database_attribute.html">DatabaseAttribute</a>&lt; int, <a class="el" href="class_database_1_1_round.html">Round</a>, <br class="typebreak"/>
+<a class="el" href="class_database_1_1_round.html">Round</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>gameId</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2a5d0f55c47cb890ed2d6005deae026"></a><!-- doxytag: member="Database::Round::length" ref="ae2a5d0f55c47cb890ed2d6005deae026" args="" -->
+<a class="el" href="class_database_1_1_database_attribute.html">DatabaseAttribute</a>&lt; <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qtime.html">QTime</a>, <br class="typebreak"/>
+<a class="el" href="class_database_1_1_round.html">Round</a>, <a class="el" href="class_database_1_1_round.html">Round</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>length</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac70e6b8eb2f8f25e08ef42ed6ff54c96"></a><!-- doxytag: member="Database::Round::m_calc" ref="ac70e6b8eb2f8f25e08ef42ed6ff54c96" args="" -->
+<a class="el" href="class_database_1_1_round_calculator.html">RoundCalculator</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_calc</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee3f0e3b33a46e60fccac873bfe42ebf"></a><!-- doxytag: member="Database::Round::number" ref="aee3f0e3b33a46e60fccac873bfe42ebf" args="" -->
+<a class="el" href="class_database_1_1_database_attribute.html">DatabaseAttribute</a>&lt; int, <a class="el" href="class_database_1_1_round.html">Round</a>, <br class="typebreak"/>
+<a class="el" href="class_database_1_1_round.html">Round</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>number</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5068f34ec284b4a16c341280db15ec2"></a><!-- doxytag: member="Database::Round::pointInstances" ref="ab5068f34ec284b4a16c341280db15ec2" args="" -->
+<a class="el" href="class_database_1_1_list_attribute.html">ListAttribute</a>&lt; <a class="el" href="class_database_1_1_point.html">Point</a> *, <a class="el" href="class_database_1_1_round.html">Round</a>, <br class="typebreak"/>
+<a class="el" href="class_database_1_1_round_calculator.html">RoundCalculator</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>pointInstances</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a43a431c887835bd58623d97abe6a86"></a><!-- doxytag: member="Database::Round::points" ref="a7a43a431c887835bd58623d97abe6a86" args="" -->
+<a class="el" href="class_database_1_1_mapping_attribute.html">MappingAttribute</a>&lt; <a class="el" href="class_database_1_1_player.html">Player</a> <br class="typebreak"/>
+*, int, <a class="el" href="class_database_1_1_round.html">Round</a>, <a class="el" href="class_database_1_1_round_calculator.html">RoundCalculator</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>points</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a022fee760a513fd4e5b367d56d64a50c"></a><!-- doxytag: member="Database::Round::startTime" ref="a022fee760a513fd4e5b367d56d64a50c" args="" -->
+<a class="el" href="class_database_1_1_database_attribute.html">DatabaseAttribute</a>&lt; <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qdatetime.html">QDateTime</a>, <br class="typebreak"/>
+<a class="el" href="class_database_1_1_round.html">Round</a>, <a class="el" href="class_database_1_1_round.html">Round</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>startTime</b></td></tr>
+</table>
+<hr/><h2>Dokumentation der Aufzählungstypen</h2>
+<a class="anchor" id="aec12fdda4861dd65ee2f53f8252ebe63"></a><!-- doxytag: member="Database::Round::RoundState" ref="aec12fdda4861dd65ee2f53f8252ebe63" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="class_database_1_1_round.html#aec12fdda4861dd65ee2f53f8252ebe63">Database::Round::RoundState</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl><dt><b>Aufzählungswerte: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="aec12fdda4861dd65ee2f53f8252ebe63a149b82fad5b31241fc928158f3795b9b"></a><!-- doxytag: member="UnkownState" ref="aec12fdda4861dd65ee2f53f8252ebe63a149b82fad5b31241fc928158f3795b9b" args="" -->UnkownState</em>&nbsp;</td><td>
+<p>Wenn das Attribut noch nicht initialisiert wurde. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="aec12fdda4861dd65ee2f53f8252ebe63a491cb3645814f6242da5e4026fd75b5a"></a><!-- doxytag: member="RunningState" ref="aec12fdda4861dd65ee2f53f8252ebe63a491cb3645814f6242da5e4026fd75b5a" args="" -->RunningState</em>&nbsp;</td><td>
+<p>Die Runde läuft gerade. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="aec12fdda4861dd65ee2f53f8252ebe63a72f4621676ad963dc16e6af41b1cb6f6"></a><!-- doxytag: member="PausedState" ref="aec12fdda4861dd65ee2f53f8252ebe63a72f4621676ad963dc16e6af41b1cb6f6" args="" -->PausedState</em>&nbsp;</td><td>
+<p>Die Runde ist Pausiert. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="aec12fdda4861dd65ee2f53f8252ebe63a0d0f11da1eec8a945c1e67880c264b8c"></a><!-- doxytag: member="FinishedState" ref="aec12fdda4861dd65ee2f53f8252ebe63a0d0f11da1eec8a945c1e67880c264b8c" args="" -->FinishedState</em>&nbsp;</td><td>
+<p>Die Runde wurde beendet. </p>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+</div>
+</div>
+</div>
+<div class="footer" />Die Aug 23 2011 12:42:59 by <a href="http://www.doxygen.org/index.html">Doxygen</a> 1.7.5.1</div>
+</body>
+</html>

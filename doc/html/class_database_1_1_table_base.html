@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Database::TableBase Klassenreferenz</title>
+<link href="qt.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class=header>
+<a class=headerImage href="http://www.doxygen.org/index.html"><img src="doxygen.png" alt="doxygen"/></a>
+<a class=headerLink  href="index.html"> Home</a> &middot;
+<a class=headerLink  href="annotated.html">All Classes</a> &middot;
+<a class=headerLink  href="functions.html">All Members</a>
+</div>
+<!-- Erzeugt von Doxygen 1.7.5.1 -->
+<script type="text/javascript" src="dynsections.js"></script>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>Database</b>      </li>
+      <li class="navelem"><a class="el" href="class_database_1_1_table_base.html">TableBase</a>      </li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Functions</a> &#124;
+<a href="#pro-methods">Protected Functions</a> &#124;
+<a href="#pro-attribs">Protected Members</a> &#124;
+<a href="#friends">Freundbeziehungen</a>  </div>
+  <div class="headertitle">
+<div class="title">Database::TableBase Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="Database::TableBase" -->
+<p><code>#include &quot;table.h&quot;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Klassendiagramm für Database::TableBase:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+ <div class="center">
+  <img src="class_database_1_1_table_base.png" usemap="#Database::TableBase_map" alt=""/>
+  <map id="Database::TableBase_map" name="Database::TableBase_map">
+<area href="class_database_1_1_table.html" title="Repräsentiert eine Tabelle in der Datenbank." alt="Database::Table&lt; RowType &gt;" shape="rect" coords="0,56,178,80"/>
+</map>
+ </div></div>
+
+<p><a href="class_database_1_1_table_base-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Public Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#ad23effa1b60e6aa43dc0876225a9be76">TableBase</a> (const <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a> &amp;name)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afafc9a67256315dbdd0c2f33ea1b0d15"></a><!-- doxytag: member="Database::TableBase::addColumn" ref="afafc9a67256315dbdd0c2f33ea1b0d15" args="(AttributeBase *attribute)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addColumn</b> (AttributeBase *attribute)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">AttributeBase *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#a6aec1da4db5a56099c4ab40f888f034f">attribute</a> (const <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a> &amp;name) const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qlist.html">QList</a>&lt; AttributeBase * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#a992ff535fc79c9d640ae5795f54a7ee9">attributes</a> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#af09faf870b5d21ec11900e548aef586c">deleteRow</a> (<a class="el" href="class_database_1_1_row.html">Row</a> *row)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#ab00a753054ed3372dbc9aad316763e65">insertRow</a> (<a class="el" href="class_database_1_1_row.html">Row</a> *row)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_models_1_1_table_model_base.html">Models::TableModelBase</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#abefe93cb447da9df0895821092a0c794">model</a> () const =0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#a0bcf1f7248ccc4c205617fee24f82911">name</a> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqlquery.html">QSqlQuery</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#aa2e64ebf90e60ddf2c6d4603e79d1ad6">query</a> (const <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a> &amp;queryString) const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#afd11196863df5b94a444cebebb3de7fa">rowCount</a> () const </td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#a9d2602e3b5df4073af24eedd781215f1">alterTableToContainAllAttributes</a> ()=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#a34f8905a4ce6a29bb2fb4b512d3ef46a">createTable</a> ()=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#a3c13c1ddcccdf152641ff264f6e76380">createTableIfNotExists</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#adfe88509b2c769ff08380314c9d015e2">initializeCache</a> ()=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#a97ad02e12afc4ceaf03e13f0a1a42b33">initializeRowCaches</a> ()=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#a947444c476951903dea55f3486947184">registerRowType</a> (<a class="el" href="class_database_1_1_row.html">Row</a> *row)=0</td></tr>
+<tr><td colspan="2"><h2><a name="pro-attribs"></a>
+Protected Members</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database_1_1_table_base.html#af7cdb9de7d2aac49ee92ffa7d8ed96a0">m_name</a></td></tr>
+<tr><td colspan="2"><h2><a name="friends"></a>
+Freundbeziehungen</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6efef52d7a939622bbc934ff6b90ffe0"></a><!-- doxytag: member="Database::TableBase::Database" ref="a6efef52d7a939622bbc934ff6b90ffe0" args="" -->
+class&#160;</td><td class="memItemRight" valign="bottom"><b>Database</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4387c53caa3e46e3a809221dd96883ef"></a><!-- doxytag: member="Database::TableBase::RowRegistrar" ref="a4387c53caa3e46e3a809221dd96883ef" args="" -->
+class&#160;</td><td class="memItemRight" valign="bottom"><b>RowRegistrar</b></td></tr>
+</table>
+<hr/><a name="details" id="details"></a><h2>Ausführliche Beschreibung</h2>
+<div class="textblock"><p>Dieses Interface dient dazu, der template-Klasse <a class="el" href="class_database_1_1_table.html" title="Repräsentiert eine Tabelle in der Datenbank.">Table</a> signals und slots, sowie ein Dasein als <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qobject.html">QObject</a> zu ermöglichen.</p>
+<p>In Qt ist es nicht möglich dass template-Klassen QObjects sind oder mit Hilfe des Q_OBJECT Macros über signals und slots verfügen.</p>
+<p>Aus diesem Grund haben wir diese Elternklasse, von der <a class="el" href="class_database_1_1_table.html" title="Repräsentiert eine Tabelle in der Datenbank.">Table</a> erben kann, die diese Funktionalitäten enthält und damit auch für seine Kindklasse bereitstellt. </p>
+</div><hr/><h2>Beschreibung der Konstruktoren und Destruktoren</h2>
+<a class="anchor" id="ad23effa1b60e6aa43dc0876225a9be76"></a><!-- doxytag: member="Database::TableBase::TableBase" ref="ad23effa1b60e6aa43dc0876225a9be76" args="(const QString &amp;name)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Database::TableBase::TableBase </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a> &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Erstellt ein Tabellen-Objekt mit Namen <em>name</em>. </p>
+
+</div>
+</div>
+<hr/><h2>Dokumentation der Elementfunktionen</h2>
+<a class="anchor" id="a9d2602e3b5df4073af24eedd781215f1"></a><!-- doxytag: member="Database::TableBase::alterTableToContainAllAttributes" ref="a9d2602e3b5df4073af24eedd781215f1" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Database::TableBase::alterTableToContainAllAttributes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected, pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Fügt registrierte Spalten der Datenbank hinzu, die noch nicht in der Datenbank existieren.</p>
+<p>Wird von <a class="el" href="class_database_1_1_database.html#ad533d43700e566f058fa5385fc370f24">Database::createTables()</a> aufgerufen und verwendet addColumn(), um die Spalten zu erzeugen. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6aec1da4db5a56099c4ab40f888f034f"></a><!-- doxytag: member="Database::TableBase::attribute" ref="a6aec1da4db5a56099c4ab40f888f034f" args="(const QString &amp;name) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AttributeBase * Database::TableBase::attribute </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a> &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Jeder AttributeOwner muss <a class="el" href="class_database_1_1_table_base.html#a992ff535fc79c9d640ae5795f54a7ee9">attributes()</a> implementieren.</p>
+<p>Von einer Tabelle wird diese Information jedoch nicht benötigt, daher wird hier <code>0</code> zurückgegeben.</p>
+<dl class="warning"><dt><b>Warnung:</b></dt><dd>Nicht benutzen! </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a992ff535fc79c9d640ae5795f54a7ee9"></a><!-- doxytag: member="Database::TableBase::attributes" ref="a992ff535fc79c9d640ae5795f54a7ee9" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qlist.html">QList</a>&lt; AttributeBase * &gt; Database::TableBase::attributes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Jeder AttributeOwner muss <a class="el" href="class_database_1_1_table_base.html#a992ff535fc79c9d640ae5795f54a7ee9">attributes()</a> implementieren.</p>
+<p>Von einer Tabelle wird diese Information jedoch nicht benötigt, daher wird hier eine leere Liste zurückgegeben.</p>
+<dl class="warning"><dt><b>Warnung:</b></dt><dd>Nicht benutzen! </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a34f8905a4ce6a29bb2fb4b512d3ef46a"></a><!-- doxytag: member="Database::TableBase::createTable" ref="a34f8905a4ce6a29bb2fb4b512d3ef46a" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Database::TableBase::createTable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected, pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Erstellt die Tabelle in der Datenbank.</p>
+<p>Überprüft nicht, ob sie schon existiert, sondern führt schlicht den passenden SQL Befehl aus.</p>
+<p>Wird nur von <a class="el" href="class_database_1_1_table_base.html#a3c13c1ddcccdf152641ff264f6e76380">createTableIfNotExists()</a> aufgerufen. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3c13c1ddcccdf152641ff264f6e76380"></a><!-- doxytag: member="Database::TableBase::createTableIfNotExists" ref="a3c13c1ddcccdf152641ff264f6e76380" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Database::TableBase::createTableIfNotExists </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Erstellt die Tabelle in der Datenbank.</p>
+<p>Überprüft, ob die Tabelle in der Datenbank existiert, und falls das nicht der Fall ist, wird die Tabelle durch <a class="el" href="class_database_1_1_table_base.html#a34f8905a4ce6a29bb2fb4b512d3ef46a">createTable()</a> samt aller Spalten erstellt. </p>
+
+</div>
+</div>
+<a class="anchor" id="af09faf870b5d21ec11900e548aef586c"></a><!-- doxytag: member="Database::TableBase::deleteRow" ref="af09faf870b5d21ec11900e548aef586c" args="(Row *row)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Database::TableBase::deleteRow </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_database_1_1_row.html">Row</a> *&#160;</td>
+          <td class="paramname"><em>row</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Löscht die Reihe <em>row</em> aus der Datenbank.</p>
+<p>Zunächst werden alle Kinder (<a class="el" href="class_database_1_1_row.html#aa23c6938af717c648c51cfd849a192cd">Row::childRows()</a>) der Reihe gelöscht. Anschließend wird die Reihe selber aus der Datenbank und dem Cache der Tabelle gelöscht und ihre ID auf <code>-1</code> gesetzt.</p>
+<p><em>row</em> selber wird nicht gelöscht und verweilt im Speicher, bis dies entweder manuell geschieht, oder das Programm beendet wird.</p>
+<p>bleibt ein Kind dieser Tabelle.</p>
+<dl class="warning"><dt><b>Warnung:</b></dt><dd>Es wird nicht überprüft, ob <em>row</em> überhaupt in dieser Tabelle liegt, sondern schlicht die Reihe mit der ID der gegebenen Reihe aus dieser Tabelle gelöscht. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="adfe88509b2c769ff08380314c9d015e2"></a><!-- doxytag: member="Database::TableBase::initializeCache" ref="adfe88509b2c769ff08380314c9d015e2" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Database::TableBase::initializeCache </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected, pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Befüllt die Liste aller in der Tabelle enthaltenen Rows und erzeugt das Model dieser Tabelle.</p>
+<p>Wird nur von <a class="el" href="class_database_1_1_database.html#ad533d43700e566f058fa5385fc370f24">Database::createTables()</a> aufgerufen.</p>
+<p>Kann nur einmal aufgerufen werden. Alle weiteren Aufrufe haben keinen Effekt. </p>
+
+</div>
+</div>
+<a class="anchor" id="a97ad02e12afc4ceaf03e13f0a1a42b33"></a><!-- doxytag: member="Database::TableBase::initializeRowCaches" ref="a97ad02e12afc4ceaf03e13f0a1a42b33" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Database::TableBase::initializeRowCaches </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected, pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Initialisiert die Werte der Datenbankattribute aller Reihen dieser Tabelle.</p>
+<p>Im Anschluss wird ein Hintergrundtask mit niedrigster Priorität gestartet, der die Berechnung der restlichen <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qinputmethodevent-attribute.html">Attribute</a> beginnt.</p>
+<p>Wird nur von <a class="el" href="class_database_1_1_database.html#ad533d43700e566f058fa5385fc370f24">Database::createTables()</a> aufgerufen. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab00a753054ed3372dbc9aad316763e65"></a><!-- doxytag: member="Database::TableBase::insertRow" ref="ab00a753054ed3372dbc9aad316763e65" args="(Row *row)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Database::TableBase::insertRow </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_database_1_1_row.html">Row</a> *&#160;</td>
+          <td class="paramname"><em>row</em></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Fügt die Reihe <em>row</em> dieser Tabelle hinzu.</p>
+<p>Zu aller erst wird die Reihe in die Datenbank eingefügt, wobei schon alle Werte der <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qinputmethodevent-attribute.html">Attribute</a> korrekt gesetzt werden. Die dabei entstehende ID wird der Reihe zugewiesen.</p>
+<p>Anschließend wird die Reihe dem Cache dieser Tabelle hinzugefügt und alle Kinder (<a class="el" href="class_database_1_1_row.html#aa23c6938af717c648c51cfd849a192cd">Row::childRows()</a>) der Reihe in ihre jeweiligen Tabellen eingetragen.</p>
+<p>Alle diese Änderungen werden dann dem Modell dieser Tabelle mitgeteilt.</p>
+<p>Zuletzt werden alle <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qinputmethodevent-attribute.html">Attribute</a> der Reihe mit dem Modell der Tabelle verknüpft (via Row::changed() und Models::TableModelBase::on_attribute_changed()).</p>
+<dl class="warning"><dt><b>Warnung:</b></dt><dd>Gehört <em>row</em> nicht in diese Tabelle, fliegt uns alles um die Ohren! </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abefe93cb447da9df0895821092a0c794"></a><!-- doxytag: member="Database::TableBase::model" ref="abefe93cb447da9df0895821092a0c794" args="() const =0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_models_1_1_table_model_base.html">Models::TableModelBase</a>* Database::TableBase::model </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt das Modell, das alle Reihen dieser Tabelle enthält, zurück. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0bcf1f7248ccc4c205617fee24f82911"></a><!-- doxytag: member="Database::TableBase::name" ref="a0bcf1f7248ccc4c205617fee24f82911" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a> Database::TableBase::name </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt den Namen der Tabelle zurück. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa2e64ebf90e60ddf2c6d4603e79d1ad6"></a><!-- doxytag: member="Database::TableBase::query" ref="aa2e64ebf90e60ddf2c6d4603e79d1ad6" args="(const QString &amp;queryString) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqlquery.html">QSqlQuery</a> Database::TableBase::query </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a> &amp;&#160;</td>
+          <td class="paramname"><em>queryString</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Führt den Query <em>queryString</em> aus und gibt das entstehende <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqlquery.html">QSqlQuery</a> Objekt zurück.</p>
+<p>Diese Methode übernimmt lästige Überprüfungen beim Ausführen eines Queries in der Tabelle, wie das Checken, ob die Datenbank <code>null</code> ist.</p>
+<p>Anschließen wird ein <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qsqlquery.html">QSqlQuery</a> Objekt zurückgegeben, welches zuvor schon mit exec() ausgeführt wurde.</p>
+<p>Dieses Objekt sollte in jedem Fall nach Benutzung mit finish() beendet werden. </p>
+
+</div>
+</div>
+<a class="anchor" id="a947444c476951903dea55f3486947184"></a><!-- doxytag: member="Database::TableBase::registerRowType" ref="a947444c476951903dea55f3486947184" args="(Row *row)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Database::TableBase::registerRowType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_database_1_1_row.html">Row</a> *&#160;</td>
+          <td class="paramname"><em>row</em></td><td>)</td>
+          <td><code> [protected, pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Registriert einen neuen Typen bei dieser Tabelle. Dies fügt die <a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qinputmethodevent-attribute.html">Attribute</a> und Datenbankattribute der gegebenen <a class="el" href="class_database_1_1_row.html" title="Repräsentiert eine Reihe in einer Tabelle.">Row</a> zu den registrierten Attributen dieser Tabelle hinzu.</p>
+<p>Wird nur von <a class="el" href="class_database_1_1_row_registrar.html">RowRegistrar</a> beim Programmstart aufgerufen.</p>
+<dl class="see"><dt><b>Siehe auch:</b></dt><dd><a class="el" href="class_database_1_1_table.html#a1f638d34dd03c4671429c83630ca894d">Table&lt;RowType&gt;::registeredAttributes()</a> </dd>
+<dd>
+<a class="el" href="class_database_1_1_table.html#a27fe80edd34e4ea467579ad8e0bec127" title="Alle bei dieser Tabelle registrierten Attribute.">Table&lt;RowType&gt;::registeredDatabaseAttributes()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="afd11196863df5b94a444cebebb3de7fa"></a><!-- doxytag: member="Database::TableBase::rowCount" ref="afd11196863df5b94a444cebebb3de7fa" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Database::TableBase::rowCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Gibt die Anzahl der Reihen in der Tabelle zurück. </p>
+
+</div>
+</div>
+<hr/><h2>Dokumentation der Datenelemente</h2>
+<a class="anchor" id="af7cdb9de7d2aac49ee92ffa7d8ed96a0"></a><!-- doxytag: member="Database::TableBase::m_name" ref="af7cdb9de7d2aac49ee92ffa7d8ed96a0" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qstring.html">QString</a> <a class="el" href="class_database_1_1_table_base.html#af7cdb9de7d2aac49ee92ffa7d8ed96a0">Database::TableBase::m_name</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Der Name dieser Tabelle. </p>
+
+</div>
+</div>
+</div>
+<div class="footer" />Die Aug 23 2011 12:42:59 by <a href="http://www.doxygen.org/index.html">Doxygen</a> 1.7.5.1</div>
+</body>
+</html>

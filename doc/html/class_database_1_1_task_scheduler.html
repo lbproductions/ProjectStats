@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<title>Database::TaskScheduler Klassenreferenz</title>
+<link href="qt.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class=header>
+<a class=headerImage href="http://www.doxygen.org/index.html"><img src="doxygen.png" alt="doxygen"/></a>
+<a class=headerLink  href="index.html"> Home</a> &middot;
+<a class=headerLink  href="annotated.html">All Classes</a> &middot;
+<a class=headerLink  href="functions.html">All Members</a>
+</div>
+<!-- Erzeugt von Doxygen 1.7.5.1 -->
+<script type="text/javascript" src="dynsections.js"></script>
+  <div id="nav-path" class="navpath">
+    <ul>
+      <li class="navelem"><b>Database</b>      </li>
+      <li class="navelem"><a class="el" href="class_database_1_1_task_scheduler.html">TaskScheduler</a>      </li>
+    </ul>
+  </div>
+</div>
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Functions</a> &#124;
+<a href="#signals">Signals</a> &#124;
+<a href="#pri-attribs">Private Members</a> &#124;
+<a href="#friends">Freundbeziehungen</a>  </div>
+  <div class="headertitle">
+<div class="title">Database::TaskScheduler Klassenreferenz</div>  </div>
+</div>
+<div class="contents">
+<!-- doxytag: class="Database::TaskScheduler" --><!-- doxytag: inherits="QThread" -->
+<p><code>#include &quot;taskscheduler.h&quot;</code></p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Klassendiagramm für Database::TaskScheduler:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+ <div class="center">
+  <img src="class_database_1_1_task_scheduler.png" usemap="#Database::TaskScheduler_map" alt=""/>
+  <map id="Database::TaskScheduler_map" name="Database::TaskScheduler_map">
+<area doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qthread.html" alt="QThread" shape="rect" coords="0,0,155,24"/>
+</map>
+ </div></div>
+
+<p><a href="class_database_1_1_task_scheduler-members.html">Aufstellung aller Elemente</a></p>
+<table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Public Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b4b416f907d1c96a7ec080e5d745d47"></a><!-- doxytag: member="Database::TaskScheduler::run" ref="a7b4b416f907d1c96a7ec080e5d745d47" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3d8df87928416219813fdd7b99ce13d"></a><!-- doxytag: member="Database::TaskScheduler::schedule" ref="aa3d8df87928416219813fdd7b99ce13d" args="(Task *task)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>schedule</b> (<a class="el" href="class_database_1_1_task.html">Task</a> *task)</td></tr>
+<tr><td colspan="2"><h2><a name="signals"></a>
+Signals</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d037b4cc2bfe77968080179175f036e"></a><!-- doxytag: member="Database::TaskScheduler::newTaskScheduled" ref="a6d037b4cc2bfe77968080179175f036e" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>newTaskScheduled</b> ()</td></tr>
+<tr><td colspan="2"><h2><a name="pri-attribs"></a>
+Private Members</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1ef4f944a3787437ca549bdaddea19e"></a><!-- doxytag: member="Database::TaskScheduler::m_executeQueueHelper" ref="ac1ef4f944a3787437ca549bdaddea19e" args="" -->
+<a class="el" href="class_database_1_1_execute_queue_helper.html">ExecuteQueueHelper</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_executeQueueHelper</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac58ed86a2c3f9b7a07c99db04c155472"></a><!-- doxytag: member="Database::TaskScheduler::m_mutex" ref="ac58ed86a2c3f9b7a07c99db04c155472" args="" -->
+<a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qmutex.html">QMutex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m_mutex</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5fb7a9238c66277737a7952fc2f7cca9"></a><!-- doxytag: member="Database::TaskScheduler::m_queue" ref="a5fb7a9238c66277737a7952fc2f7cca9" args="" -->
+<a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qqueue.html">QQueue</a>&lt; <a class="el" href="class_database_1_1_task.html">Task</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_queue</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adde659ab79d579d87989639eeb6d76e1"></a><!-- doxytag: member="Database::TaskScheduler::m_timer" ref="adde659ab79d579d87989639eeb6d76e1" args="" -->
+<a class="elRef" doxygen="qt.tag:qthelp://com.trolltech.qt/qdoc//" href="qthelp://com.trolltech.qt/qdoc/qtimer.html">QTimer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>m_timer</b></td></tr>
+<tr><td colspan="2"><h2><a name="friends"></a>
+Freundbeziehungen</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb4f107aac80b276b159815dab6d4fe7"></a><!-- doxytag: member="Database::TaskScheduler::ExecuteQueueHelper" ref="afb4f107aac80b276b159815dab6d4fe7" args="" -->
+class&#160;</td><td class="memItemRight" valign="bottom"><b>ExecuteQueueHelper</b></td></tr>
+</table>
+<hr/><a name="details" id="details"></a><h2>Ausführliche Beschreibung</h2>
+<div class="textblock"><p>Der <a class="el" href="class_database_1_1_task_scheduler.html" title="Der TaskScheduler ist für das Ausführen von Tasks verantwortlich.">TaskScheduler</a> ist für das Ausführen von Tasks verantwortlich. </p>
+<p>Ein <a class="el" href="class_database_1_1_task.html">Task</a> kann an die Methode schedule() übergeben werden und reiht sich dann in eine Warteschlange ein, die Regelmäßig nach den Prioritäten der Tasks sortiert wird.</p>
+<p>Werden Resourcen (sprich Threads) frei, startet der <a class="el" href="class_database_1_1_task_scheduler.html" title="Der TaskScheduler ist für das Ausführen von Tasks verantwortlich.">TaskScheduler</a> weitere Tasks aus seiner Warteschlange, solange bis keine Threads mehr zur Verfügung stehen, oder keine Tasks mehr vorhanden sind.</p>
+<p>Der <a class="el" href="class_database_1_1_task_scheduler.html" title="Der TaskScheduler ist für das Ausführen von Tasks verantwortlich.">TaskScheduler</a> ist dabei ein eigener Thread, sodass er nicht warten muss, falls die GUI gerade auf irgendetwas wartet.</p>
+<p>Außerdem ist <a class="el" href="class_database_1_1_task_scheduler.html" title="Der TaskScheduler ist für das Ausführen von Tasks verantwortlich.">TaskScheduler</a> ein Singleton, sodass von überall aus auf ihn zugegriffen werden kann. </p>
+</div></div>
+<div class="footer" />Die Aug 23 2011 12:42:59 by <a href="http://www.doxygen.org/index.html">Doxygen</a> 1.7.5.1</div>
+</body>
+</html>
