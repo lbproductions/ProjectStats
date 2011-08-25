@@ -41,18 +41,15 @@ QList<Player*> DokoRoundCalculator::calculate_currentPlayingPlayers(){
         return players;
 }
 
-int DokoRoundCalculator::calculate_roundPoints(){
-    for(int i = 0; i<m_dokoround->game->value()->players->value().size();i++){
-        if(m_dokoround->points->value(m_dokoround->game->value()->players->value(i)) > 0){
-            if(m_dokoround->doko_soloPlayerId->value() != -1){
-                return m_dokoround->points->value(m_dokoround->game->value()->players->value(i)) / 3;
-            }
-            else{
-                return m_dokoround->points->value(m_dokoround->game->value()->players->value(i));
-            }
-        }
+int DokoRoundCalculator::calculate_roundPoints()
+{
+    int soloId = m_dokoround->doko_soloPlayerId->value();
+    if(soloId > 0)
+    {
+        return qAbs(m_dokoround->points->value(Players::instance()->rowById(soloId)) / 3);
     }
-    return 0;
+
+    return qAbs(m_dokoround->points->value(Players::instance()->rowById(m_dokoround->doko_re1PlayerId->value())));
 }
 
 QList<Schmeisserei*> DokoRoundCalculator::calculate_doko_schmeissereien(){

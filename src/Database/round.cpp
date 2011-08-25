@@ -63,6 +63,7 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
     IMPLEMENT_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Round,RoundCalculator,currentPlayingPlayers, tr("CurrentPlayingPlayers"))
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,roundPoints,tr("RoundPoints"))
+    points->addDependingAttribute(roundPoints);
 
     if(this->state->value() == Round::PausedState && !game->value().isNull())
     {
