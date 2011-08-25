@@ -98,8 +98,14 @@ QMap<Player*,int> LiveGameCalculator::calculate_placement(){
 }
 
 int LiveGameCalculator::calculate_percComplete(){
-    if(m_livegame->players->value().size() > 0){
-        return (m_livegame->rounds->value().size() * 100) / (m_livegame->players->value().size() * 6);
+    if(m_livegame->players->value().size() > 0)
+    {
+        int roundCount = m_livegame->rounds->value().size();
+        if(m_livegame->currentRound->value()->state->value() != Round::FinishedState)
+        {
+            --roundCount;
+        }
+        return qRound((double)(roundCount * 100) / (double)(m_livegame->players->value().size() * 6));
     }
     return 0;
 }
