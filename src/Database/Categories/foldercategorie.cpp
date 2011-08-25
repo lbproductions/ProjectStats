@@ -59,6 +59,11 @@ void FolderCategorie::removeRow(Row *row)
 
 bool FolderCategorie::acceptMimeTypes(const QStringList &mimeTypes)
 {
+    if(!model())
+    {
+        return false;
+    }
+
     foreach(QString s, model()->mimeTypes())
     {
         if(mimeTypes.contains(s))
