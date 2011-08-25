@@ -1,6 +1,7 @@
 #include "livegamerowwindow.h"
 
 #include "adddrinkwidget.h"
+#include "../rowwidget.h"
 
 #ifdef Q_WS_MAC
 #   include <Gui/Misc/macwindowcontroller.h>
@@ -34,6 +35,12 @@ LiveGameRowWindow::~LiveGameRowWindow()
     {
         m_livegame->setState(Database::Round::PausedState);
     }
+}
+
+void LiveGameRowWindow::show()
+{
+    RowWindow::show();
+    m_liveGameDetailsWidget->updateSizes();
 }
 
 void LiveGameRowWindow::setupToolBar()

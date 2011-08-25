@@ -31,6 +31,8 @@ public:
     LiveGameRowWindow(Database::LiveGame* livegame, QWidget *parent = 0);
     ~LiveGameRowWindow();
 
+    void show();
+
 protected:
     QPointer<Database::LiveGame> m_livegame;
     QPointer<LiveGameDetails::LiveGameDetailsWidget> m_liveGameDetailsWidget;

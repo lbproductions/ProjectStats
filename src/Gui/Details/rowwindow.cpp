@@ -34,3 +34,8 @@ RowWindow::RowWindow(Database::Row* row, QWidget *parent, bool setupCentralWidge
     setUpFullScreenButton(this);
 #endif
 }
+
+void RowWindow::show()
+{
+    QMainWindow::show();
+}

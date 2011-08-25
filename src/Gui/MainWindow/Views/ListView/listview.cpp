@@ -146,17 +146,18 @@ void ListView::on_rowList_rowDoubleClicked(Database::Row *row)
 	return;
     }
 
-    QWidget *newRowWindow = row->rowWindow();
-    if(newRowWindow == 0)
+    Details::RowWindow *newRowWindow = row->rowWindow();
+    if(newRowWindow)
     {
-        newRowWindow = row->rowWidget();
-    }
-    if(newRowWindow == 0)
-    {
-	return;
+        newRowWindow->show();
+        return;
     }
 
-    newRowWindow->show();
+    Details::RowWidget* newRowWidget = row->rowWidget();
+    if(newRowWidget)
+    {
+        newRowWidget->show();
+    }
 }
 
 void Gui::MainWindow::Views::ListView::updateStatusbar()

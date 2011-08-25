@@ -21,6 +21,8 @@ namespace Graphs
 namespace Details
 {
 
+class LiveGameRowWindow;
+
 namespace LiveGameDetails
 {
 
@@ -58,6 +60,8 @@ protected slots:
     void resizeEvent(QResizeEvent* /*event*/);
 
 protected:
+    friend class ::Gui::Details::LiveGameRowWindow;
+
     QPointer<Database::LiveGame> m_livegame;
 
     QPointer<LiveGameDetails::LiveGameInfoGroupBox> m_infoBox;
