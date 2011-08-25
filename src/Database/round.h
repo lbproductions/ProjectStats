@@ -10,11 +10,22 @@
 
 #include <Database/Calculator/roundcalculator.h>
 
+class QTimer;
+
 namespace Database{
     class Game;
 }
 
-START_ROW_DECLARATION(Round, Row)
+namespace Database
+{
+
+template<class RowType>
+class Table;
+
+class Round : public Row
+{
+    Q_OBJECT
+
     DECLARE_ROW_CONSTRUCTORS(Round, Round)
 
     Round(Game* game, int number);
@@ -46,9 +57,23 @@ START_ROW_DECLARATION(Round, Row)
     DECLARE_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Round,RoundCalculator,currentPlayingPlayers)
     DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,roundPoints)
 
+    void setState(RoundState state);
+
     void addPoints(Player* player, int points);
 
-END_ROW_DECLARATION(Round)
+private slots:
+    void updateLength();
+
+private:
+    QTimer* m_timer;
+};
+
+}
+Q_DECLARE_METATYPE(Database::Round)
+Q_DECLARE_METATYPE(Database::Round*)
+Q_DECLARE_METATYPE(QMap<Database::Round* COMMA int>)
+Q_DECLARE_METATYPE(QList<Database::Round*>)
+Q_DECLARE_METATYPE(QMap<int COMMA Database::Round*>)
 
 START_TABLE_DECLARATION(Round)
 QPointer<Round> createRowInstance(int id);

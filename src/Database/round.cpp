@@ -8,6 +8,7 @@
 
 #include <QDateTime>
 #include <QDebug>
+#include <QTimer>
 
 START_TABLE_IMPLEMENTATION(Round)
 
@@ -62,6 +63,13 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
     IMPLEMENT_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Round,RoundCalculator,currentPlayingPlayers, tr("CurrentPlayingPlayers"))
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,roundPoints,tr("RoundPoints"))
+
+    if(this->state->value() == Round::PausedState && !game->value().isNull())
+    {
+        length->addDependingAttribute(game->value()->length);
+    }
+
+    m_timer = 0;
 }
 
 Round::Round(Game* game, int number) :
@@ -101,6 +109,48 @@ void Round::addPoints(Player* player, int points)
 
     this->pointInstances->recalculateFromScratch();
     this->points->recalculateFromScratch();
+}
+
+void Round::setState(RoundState state)
+{
+    if(state == this->state->value())
+    {
+        return;
+    }
+
+    if(!m_timer)
+    {
+        m_timer = new QTimer(this);
+        connect(m_timer,SIGNAL(timeout()),this,SLOT(updateLength()));
+    }
+
+    switch(state)
+    {
+    case RunningState:
+        m_timer->start(1000);
+        break;
+    case PausedState:
+    case FinishedState:
+        m_timer->stop();
+        length->setValue(length->value());
+        break;
+    case UnkownState:
+    default:
+        break;
+    }
+
+    db_state->setValue(state);
+}
+
+void Round::updateLength()
+{
+    QTime time = length->value();
+    if(time.isNull())
+    {
+        time = QTime(0,0);
+    }
+    time = time.addSecs(1);
+    length->setValue(time, false);
 }
 
 END_ROW_IMPLEMENTATION()

@@ -42,6 +42,11 @@ public:
     void setValue(T value);
 
     /*!
+      Setzt den Wert des Attributs auf \p value. Der Wert wird in die Datenbank geschrieben, wenn \p updateDatabase \c true ist.
+      */
+    void setValue(T value, bool updateDatabase);
+
+    /*!
       Diese Funktion tut nichts außer eine Warning auszugeben.
       */
     void setCalculationFunction(CalculateFunction calculateFuntion);
@@ -84,9 +89,15 @@ DatabaseAttribute<T,R,C>::DatabaseAttribute(const QString &name, const QString &
 }
 
 template<class T, class R, class C>
+void DatabaseAttribute<T,R,C>::setValue(T value, bool updateDatabase)
+{
+    changeValue(value, updateDatabase);
+}
+
+template<class T, class R, class C>
 void DatabaseAttribute<T,R,C>::setValue(T value)
 {
-    changeValue(value, true);
+    setValue(value, true);
 }
 
 template<class T, class R, class C>
@@ -103,8 +114,9 @@ void DatabaseAttribute<T,R,C>::changeValue(QVariant value, bool updateDatabase)
     }
     else
     {
+        Attribute<T,R,C>::changeValue(value.value<T>());/*
         Attribute<T,R,C>::m_cacheInitialized = true;
-        Attribute<T,R,C>::m_value = value.value<T>();
+        Attribute<T,R,C>::m_value = value.value<T>();*/
     }
     //Attribute<T,R>::m_row->set(Attribute<T,R>::m_name, value);
 }

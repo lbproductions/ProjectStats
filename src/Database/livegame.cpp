@@ -95,7 +95,7 @@ void LiveGame::addDrink(Player* player, Drink* drink)
 
 void LiveGame::setState(Round::RoundState state)
 {
-    currentRound->value()->db_state->setValue(state);
+    currentRound->value()->setState(state);
 }
 
 Round* LiveGame::createRound()
@@ -109,7 +109,7 @@ Round* LiveGame::createRound()
 Round* LiveGame::startNextRound()
 {
     Round* lastRound = currentRound->value();
-    Round* newround = createRound();/*
+    Round* newRound = createRound();/*
     rounds->recalculate();
     rounds->futureWatcher()->futureWatcher()->waitForFinished();
     currentRound->recalculate();
@@ -117,14 +117,20 @@ Round* LiveGame::startNextRound()
     currentRound->emitChanged();*/
     if(lastRound)
     {
-        lastRound->db_state->setValue(Round::FinishedState);
+        lastRound->setState(Round::FinishedState);
     }
 
     this->rounds->recalculateFromScratch();
 
     emit roundAdded(lastRound);
 
-    return newround;
+    newRound->length->addDependingAttribute(length);
+
+    //Dieser Statuswechsel initialisiert den Timer, der die Length aktualisiert
+    newRound->setState(Round::PausedState);
+    newRound->setState(Round::RunningState);
+
+    return newRound;
 }
 
 void LiveGame::finishGame()
