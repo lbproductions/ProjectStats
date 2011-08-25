@@ -168,45 +168,40 @@ QMap<LiveGame*,double> PlayerCalculator::calculate_alcPegel(){
 
         http://de.wikipedia.org/wiki/Blutalkoholkonzentration#Berechnung_der_BAK
     */
-    for(int i = 0; i<m_player->games->value().size();i++){
+    foreach(Game* g, m_player->games->value())
+    {
 
-        double A = 0.0;
+        if(g->live->value())
+        {
+            double A = 0.0;
+            LiveGame* game = static_cast<LiveGame*>(g);
+            foreach(LiveGameDrink* lgdrink, game->drinksPerPlayer->value(m_player))
+            {
+                Drink* drink = lgdrink->drink->value();
+                A += drink->size->value()*100 /*in cl umrechnen*/
+                     * drink->alc->value() *0.08;
+            }
 
-        if(m_player->games->value(i)->live->value()){
-            LiveGame* game = static_cast<LiveGame*>(m_player->games->value(i));
-            for(int j = 0; j<game->drinksPerPlayer->value().size();j++){
-                {
-                    Drink* drink = Drinks::instance()->rowById(game->drinks->value(j)->drinkId->value());
-                    if(drink != 0)
-                    {
-                        A += drink->size->value()*100 /*in cl umrechnen*/
-                                * drink->alc->value() *0.08;
-                    }
-                }
+            double r = 0.0;
 
-                double r = 0.0;
+            if(m_player->gender->value() == "male")
+            {
+                r = 0.31233 - 0.006446 * m_player->weight->value() + 0.004466 * m_player->size->value();
+            }
+            else if(m_player->gender->value() == "female")
+            {
+                r = 0.31608 - 0.004821 * m_player->weight->value() + 0.004432 * m_player->size->value();
+            }
 
-                if(m_player->gender->value() == "male")
-                {
-                    r = 0.31233 - 0.006446 * m_player->weight->value() + 0.004466 * m_player->size->value();
-                }
-                else if(m_player->gender->value() == "female")
-                {
-                    r = 0.31608 - 0.004821 * m_player->weight->value() + 0.004432 * m_player->size->value();
-                }
-                else
-                {
-                    hash.insert(game,0.0);
-                }
-                if (m_player->weight->value() > 0){
-                    hash.insert(game,A / (double)(r*m_player->weight->value()));
-                }
-                else{
-                    hash.insert(game,0.0);
-                }
+            if (m_player->weight->value() > 0 && r != 0.0)
+            {
+                hash.insert(game, A / (double)(r*m_player->weight->value()));
+            }
+            else
+            {
+                hash.insert(game,0.0);
             }
         }
-
     }
 
     return hash;
