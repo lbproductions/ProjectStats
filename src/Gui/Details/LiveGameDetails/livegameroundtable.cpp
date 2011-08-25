@@ -127,13 +127,13 @@ void LiveGameRoundTable::addRound(::Database::Round* /*round*/)
 
 void LiveGameRoundTable::updateSizes()
 {
-    double width = ((double)this->width() / (double)(m_livegame->players->value().size()+0.3));
+    double width = ((double)this->width() / (double)(m_livegame->players->value().size()+0.5));
     for (int i = 0;  i < this->columnCount()-1; i++)
     {
         this->setColumnWidth(i,width-3);
         this->horizontalHeaderItem(i)->setSizeHint(QSize(width,50));
     }
-    this->setColumnWidth(this->columnCount()-1, width / 3);
+    this->setColumnWidth(this->columnCount()-1, width / 2);
 }
 
 void LiveGameRoundTable::resizeEvent(QResizeEvent* event)
