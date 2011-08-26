@@ -6,6 +6,7 @@
 #include <Database/player.h>
 #include <Database/livegame.h>
 #include <Database/round.h>
+#include <Database/point.h>
 
 #include <QDebug>
 

@@ -27,8 +27,6 @@ class DokoLiveGameInfoGroupBox : public LiveGameInfoGroupBox
 public:
     DokoLiveGameInfoGroupBox(Database::DokoLiveGame* dokogame, QWidget *parent = 0);
 
-    void updateWidget(QString lengthText);
-
 private:
     Database::DokoLiveGame* m_dokogame;
 };

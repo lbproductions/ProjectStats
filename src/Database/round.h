@@ -51,6 +51,8 @@ class Round : public Row
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Point*,Round,RoundCalculator,pointInstances)
 
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,Point*,Round,RoundCalculator,pointObjects)
+
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,points)
 
     DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,cardmixerPosition)
@@ -74,6 +76,8 @@ Q_DECLARE_METATYPE(Database::Round*)
 Q_DECLARE_METATYPE(QMap<Database::Round* COMMA int>)
 Q_DECLARE_METATYPE(QList<Database::Round*>)
 Q_DECLARE_METATYPE(QMap<int COMMA Database::Round*>)
+
+Q_DECLARE_METATYPE(QMap<Database::Player* COMMA Database::Point*>)
 
 START_TABLE_DECLARATION(Round)
 QPointer<Round> createRowInstance(int id);

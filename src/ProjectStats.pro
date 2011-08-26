@@ -164,7 +164,9 @@ SOURCES += main.cpp\
     Gui/MainWindow/Views/LeagueView/leaguestatswidget.cpp \
     Gui/MainWindow/Views/LeagueView/leagueoverviewwidget.cpp \
     Gui/MainWindow/Views/LeagueView/leaguegraphwidget.cpp \
-    Gui/Misc/groupbox.cpp
+    Gui/Misc/groupbox.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtableitem.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtabledelegate.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -343,7 +345,9 @@ HEADERS  += \
     Gui/MainWindow/Views/LeagueView/leaguestatswidget.h \
     Gui/MainWindow/Views/LeagueView/leagueoverviewwidget.h \
     Gui/MainWindow/Views/LeagueView/leaguegraphwidget.h \
-    Gui/Misc/groupbox.h
+    Gui/Misc/groupbox.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtableitem.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtabledelegate.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -402,6 +406,10 @@ Documentation.target = Documentation
 Documentation.commands = ../util/doxygen-1.7.5.1/doxygen ../util/documentation/QtDoxygen/DoxyFile.debug
 Documentation.depends = FORCE
 QMAKE_EXTRA_TARGETS += Documentation
+
+
+
+
 
 
 

@@ -20,6 +20,20 @@ QList<Point*> RoundCalculator::calculate_pointInstances()
     return Points::instance()->rowsBySqlCondition(QLatin1String("WHERE roundId = ")+QString::number(m_round->id()));
 }
 
+QMap<Player*,Point*> RoundCalculator::calculate_pointObjects() {
+    QMap<Player*,Point*> hash;
+    QList<Point*> points = m_round->pointInstances->value();
+    foreach(Point* p, points)
+    {
+        if(p)
+        {
+            hash.insert(Players::instance()->rowById(p->playerId->value()),
+                        p);
+        }
+    }
+    return hash;
+}
+
 QMap<Player*,int> RoundCalculator::calculate_points(){
     QMap<Player*,int> hash;
     QList<Point*> points = m_round->pointInstances->value();

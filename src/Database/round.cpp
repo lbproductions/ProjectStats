@@ -56,6 +56,8 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Point*,Round,RoundCalculator,m_calc,pointInstances,tr("Point Instances"))
 
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,Point*,Round,RoundCalculator,m_calc,pointObjects,tr("PointObjects"))
+
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,m_calc,points,tr("Points"))
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,cardmixerPosition,tr("Cardmixer Position"))
@@ -108,8 +110,11 @@ void Round::addPoints(Player* player, int points)
     Point* point = new Point(this,player,points);
     addChildRow(point);
 
+    point->points->addDependingAttribute(roundPoints);
+
     this->pointInstances->recalculateFromScratch();
     this->points->recalculateFromScratch();
+    this->roundPoints->recalculateFromScratch();
 }
 
 void Round::setState(RoundState state)

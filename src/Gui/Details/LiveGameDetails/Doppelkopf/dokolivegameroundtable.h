@@ -21,12 +21,16 @@ namespace LiveGameDetails
 namespace DokoLiveGameDetails
 {
 
+class DokoLiveGameRoundTableItem;
+
 class DokoLiveGameRoundTable : public LiveGameRoundTable
 {
 public:
     DokoLiveGameRoundTable(Database::DokoLiveGame* livegame, QWidget *parent = 0);
 
     void addRound(::Database::Round* round);
+
+    DokoLiveGameRoundTableItem* itemAtIndex(const QModelIndex& index);
 };
 
 }

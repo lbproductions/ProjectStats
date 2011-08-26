@@ -19,6 +19,8 @@ public:
 
     QMap<Player*,int> calculate_points();
 
+    QMap<Player*,Point*> calculate_pointObjects();
+
     virtual int calculate_cardmixerPosition();
 
     virtual int calculate_roundPoints();

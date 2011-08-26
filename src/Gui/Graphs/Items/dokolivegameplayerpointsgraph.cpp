@@ -4,6 +4,7 @@
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/Doppelkopf/schmeisserei.h>
 #include <Database/player.h>
+#include <Database/point.h>
 
 #include <Gui/Graphs/Items/livegamecoordinatesystem.h>
 #include <Gui/Graphs/Items/dokographpoint.h>
