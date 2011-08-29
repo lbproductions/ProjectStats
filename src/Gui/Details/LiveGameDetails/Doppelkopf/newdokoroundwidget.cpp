@@ -42,7 +42,7 @@ void NewDokoRoundWidget::setupWidget()
     ui->comboBoxSolo->addItem("");
     ui->comboBoxTrumpfabgabe->addItem("");
 
-    foreach(Database::Player *player, m_livegame->playersSortedByPosition->value())
+    foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
     {
         ui->comboBoxHochzeit->addItem(player->name->value());
         ui->comboBoxRe1->addItem(player->name->value());
