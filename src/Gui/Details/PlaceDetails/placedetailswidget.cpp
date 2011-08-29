@@ -176,7 +176,7 @@ void PlaceDetailsWidget::on_comboBoxPlayer_currentIndexChanged(QString /*name*/)
 
 void PlaceDetailsWidget::onlabelPicclicked(){
     QString fileName = QFileDialog::getOpenFileName(0,
-	 tr("Choose Place-Picture"), "~", tr("Picture Files (*.png)"));
+         tr("Choose Place-Picture"), QDir::homePath() , tr("Picture Files (*.png)"));
     if (fileName != ""){
 	QPixmap pixmap(50,150);
 	pixmap.load(fileName);

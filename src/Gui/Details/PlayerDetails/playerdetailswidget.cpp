@@ -35,6 +35,10 @@ PlayerDetailsWidget::PlayerDetailsWidget(Database::Player *player, QWidget *pare
     m_labelAvatar->setFocusPolicy(Qt::ClickFocus);
     m_labelAvatar->setEnabled(true);
 
+    if (m_player->avatarPath->value() != ""){
+      m_player->avatarPath->setValue(":/graphics/images/player");
+    }
+
     ui->comboBoxGender->addItem("-");
     ui->comboBoxGender->addItem(tr("male"));
     ui->comboBoxGender->addItem(tr("female"));
@@ -221,7 +225,7 @@ void PlayerDetailsWidget::on_comboBoxGender_currentIndexChanged(QString gender)
 
 void PlayerDetailsWidget::onAvatarClicked(){
     QString fileName = QFileDialog::getOpenFileName(0,
-	 tr("Choose Avatar"), "~", tr("Database Files (*.png)"));
+         tr("Choose Avatar"), QDir::homePath() , tr("Picture Files (*.png)"));
     if (fileName != ""){
 	QPixmap pixmap(64,90);
 	pixmap.load(fileName);

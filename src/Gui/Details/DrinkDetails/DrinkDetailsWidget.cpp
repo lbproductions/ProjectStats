@@ -78,7 +78,7 @@ void DrinkDetailsWidget::connectToAttributes(){
 
 void DrinkDetailsWidget::onlabelPicclicked(){
     QString fileName = QFileDialog::getOpenFileName(0,
-	 tr("Choose Drink-Picture"), "~", tr("Database Files (*.png)"));
+         tr("Choose Drink-Picture"),QDir::homePath(), tr("Database Files (*.png)"));
     if (fileName != ""){
 	QPixmap pixmap(50,150);
 	pixmap.load(fileName);
