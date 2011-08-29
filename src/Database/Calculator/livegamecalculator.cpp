@@ -58,6 +58,11 @@ QList<Round*> LiveGameCalculator::calculate_rounds(){
 
 QMap<Player*,int> LiveGameCalculator::calculate_points(){
     QMap<Player*,int> hash;
+    if(m_livegame->rounds->value().size() == 0){
+        for(int j = 0; j<m_livegame->players->value().size();j++){
+            hash.insert(m_livegame->players->value(j),0);
+        }
+    }
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
         for(int j = 0; j<m_livegame->players->value().size();j++){
             hash.insert(m_livegame->players->value(j),
@@ -98,14 +103,8 @@ QMap<Player*,int> LiveGameCalculator::calculate_placement(){
 }
 
 int LiveGameCalculator::calculate_percComplete(){
-    if(m_livegame->players->value().size() > 0)
-    {
-        int roundCount = m_livegame->rounds->value().size();
-        if(m_livegame->currentRound->value()->state->value() != Round::FinishedState)
-        {
-            --roundCount;
-        }
-        return qRound((double)(roundCount * 100) / (double)(m_livegame->players->value().size() * 6));
+    if(m_livegame->players->value().size() > 0){
+        return (m_livegame->rounds->value().size() * 100) / (m_livegame->players->value().size() * 6);
     }
     return 0;
 }
@@ -302,7 +301,7 @@ QMap<Player*,double> LiveGameCalculator::calculate_averagePlacement(){
         double value = 0.0;
         for(int i = 0; i<m_livegame->rounds->value().size();i++){
             count++;
-            value += (double)(hash.value(p) + m_livegame->placementAfterRounds->value(i).value(p));
+            value += m_livegame->placementAfterRounds->value(i).value(p);
         }
         hash.insert(p,value/count);
     }

@@ -16,6 +16,23 @@ GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
     ui->setupUi(this);
     ui->horizontalLayout->insertWidget(0, m_widget);
 
+    mainSetup();
+}
+
+GameSummaryWidget::~GameSummaryWidget()
+{
+    QListIterator<QLabel *> it(m_labelList);
+
+    while (it.hasNext())
+    {
+        delete it.next();
+    }
+
+    delete m_widget;
+    delete ui;
+}
+
+void GameSummaryWidget::mainSetup(){
     int size = m_game->playersSortedByPlacement->value().size();
     QLabel* position;
     QLabel* name;
@@ -79,15 +96,15 @@ GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
     ui->gridLayout->addWidget(nameHeader,0,1);
 }
 
-GameSummaryWidget::~GameSummaryWidget()
-{
-    QListIterator<QLabel *> it(m_labelList);
-
-    while (it.hasNext())
-    {
-        delete it.next();
+void GameSummaryWidget::update(){
+    while(ui->gridLayout->count() > 0){
+        QLayoutItem* i = ui->gridLayout->takeAt(0);
+        if(i->widget()){
+            delete i->widget();
+        }
+        delete i;
     }
+    m_labelList.clear();
 
-    delete m_widget;
-    delete ui;
+    mainSetup();
 }

@@ -17,6 +17,9 @@ LiveGameSummaryWidget::LiveGameSummaryWidget(Database::LiveGame* game, QWidget *
 {
     setupDrinkTab();
     setupGeneralTab();
+
+    connect(m_livegame->rounds,SIGNAL(changed()),this,SLOT(update()));
+    connect(m_livegame->placement,SIGNAL(changed()),this,SLOT(update()));
 }
 
 void LiveGameSummaryWidget::setupDrinkTab(){
@@ -115,6 +118,11 @@ void LiveGameSummaryWidget::setupGeneralTab(){
     averageHeader->setFont(font);
     m_labelList.append(averageHeader);
     static_cast<QGridLayout*>(ui->tab->layout())->addWidget(averageHeader,0,4);
+}
+
+void LiveGameSummaryWidget::update(){
+    GameSummaryWidget::update();
+    setupGeneralTab();
 }
 
 } // namespace LiveGameDetails

@@ -21,6 +21,9 @@ protected:
     void setupGeneralTab();
 
     QPointer<Database::LiveGame> m_livegame;
+
+protected slots:
+    void update();
 };
 
 } // namespace LiveGameDetails
