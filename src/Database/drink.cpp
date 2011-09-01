@@ -8,7 +8,45 @@
 
 #include <Gui/Details/DrinkDetails/DrinkDetailsWidget.h>
 
-START_TABLE_IMPLEMENTATION(Drink)
+namespace Database {
+IMPLEMENT_SINGLETON( Drinks )
+Drinks::Drinks() :
+    Table<Drink>(QString("drinks"))
+{
+    types = new ListAttribute<QString,Drinks, Drinks>("types",tr("Types"), this);
+    types->setCalculationFunction(this,&Drinks::calculate_types);
+    this->rows()->addDependingAttribute(types);
+
+    drinksOfType = new MappingAttribute<QString,QList<Drink*>,Drinks,Drinks>("drinksOfType",tr("DrinksOfType"),this);
+    drinksOfType->setCalculationFunction(this,&Drinks::calculate_drinksOfType);
+    this->rows()->addDependingAttribute(drinksOfType);
+}
+REGISTER_TABLE(Drinks)
+
+QList<QString> Drinks::calculate_types(){
+    QList<QString> list;
+    foreach(Drink* g, Drinks::instance()->allRows()){
+        if(!list.contains(g->type->value())){
+            list.append(g->type->value());
+        }
+    }
+    return list;
+}
+
+QMap<QString,QList<Drink*> > Drinks::calculate_drinksOfType(){
+    QMap<QString,QList<Drink*> > map;
+    foreach(QString type, Drinks::instance()->types->value()){
+        QList<Drink*> list;
+        foreach(Drink* g, Drinks::instance()->allRows()){
+            if(g->type->value() == type){
+                list.append(g);
+            }
+        }
+        map.insert(type,list);
+    }
+    return map;
+}
+
 END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Drink, Drink, Row)

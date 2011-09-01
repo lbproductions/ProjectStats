@@ -32,6 +32,13 @@ START_ROW_DECLARATION(Drink, Row)
 END_ROW_DECLARATION(Drink)
 
 START_TABLE_DECLARATION(Drink)
+
+ListAttribute<QString,Drinks, Drinks> *types;
+QList<QString> calculate_types();
+
+MappingAttribute<QString,QList<Drink*>,Drinks,Drinks > *drinksOfType;
+QMap<QString,QList<Drink*> > calculate_drinksOfType();
+
 END_TABLE_DECLARATION()
 
 #endif // DATABASE_DRINK_H

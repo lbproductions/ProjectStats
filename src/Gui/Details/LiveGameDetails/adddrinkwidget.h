@@ -4,11 +4,6 @@
 #include <QDialog>
 #include <QPointer>
 
-namespace Ui {
-    class AddDrinkWidget;
-}
-
-
 namespace Database
 {
     class LiveGame;
@@ -41,11 +36,8 @@ public:
 
     ~AddDrinkWidget();
 
-private:
-    Ui::AddDrinkWidget *ui;
-
 private slots:
-    void on_pushButtonClose_clicked();
+    void buttonCloseClicked();
 };
 
 }

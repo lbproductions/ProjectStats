@@ -22,6 +22,7 @@ namespace Database
     class ChildCategorie;
     class ParentCategorie;
     class LiveGameDrink;
+    class Drink;
 }
 
 
@@ -143,6 +144,7 @@ Q_DECLARE_METATYPE(QList<int>)
 Q_DECLARE_METATYPE(QList<QString>)
 Q_DECLARE_METATYPE(QMap<int COMMA QMap<Database::Player* COMMA int> >)
 Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Player*> >)
+Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Drink*> >)
 
 
 #endif // HANDLER_H
