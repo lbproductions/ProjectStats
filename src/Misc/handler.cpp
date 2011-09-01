@@ -75,6 +75,8 @@ Handler::~Handler()
 	delete m_messagesystem;
     }
 
+    //wir rufen das teil per invokeMethod auf, damit es im TaskScheduler thread startet
+    QMetaObject::invokeMethod(Database::TaskScheduler::instance(),"shutdown");
     Database::TaskScheduler::instance()->quit();
 }
 

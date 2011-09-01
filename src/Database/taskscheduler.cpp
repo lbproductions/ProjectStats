@@ -142,11 +142,15 @@ void TaskScheduler::run()
     exec();
 }
 
+void TaskScheduler::shutdown()
+{
+    QThreadPool::globalInstance()->waitForDone();
+}
+
 TaskScheduler::~TaskScheduler()
 {
     m_executeQueueHelper->deleteLater();
     m_timer->deleteLater();
-    QThreadPool::globalInstance()->waitForDone();
 }
 
 void TaskScheduler::schedule(Task* task)

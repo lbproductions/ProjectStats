@@ -167,6 +167,9 @@ public:
 
     void run();
 
+public slots:
+    void shutdown();
+
 private:
     QQueue<Task*> m_queue;
     QMutex m_mutex;
