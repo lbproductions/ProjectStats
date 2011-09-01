@@ -137,22 +137,24 @@ void DokoLiveGameRoundTablePlayerItem::setPoints(int points)
         points = -points;
     }
 
-    foreach(Database::Player* player, m_round->currentPlayingPlayers->value())
+    foreach(Database::Point* point, m_round->pointInstances->value())
     {
+        Database::Player* player = Database::Players::instance()->rowById(point->playerId->value());
+
         if(m_round->doko_re->value(player))
         {
             if(m_round->doko_soloPlayerId->value() == player->id())
             {
-                m_round->pointObjects->value(player)->points->setValue(points*3);
+                point->points->setValue(points*3);
             }
             else
             {
-                m_round->pointObjects->value(player)->points->setValue(points);
+                point->points->setValue(points);
             }
         }
         else
         {
-            m_round->pointObjects->value(player)->points->setValue(-points);
+            point->points->setValue(-points);
         }
     }
 }
@@ -167,14 +169,25 @@ DokoLiveGameRoundTableTotalPointsItem::DokoLiveGameRoundTableTotalPointsItem(Dat
 
     updateContent();
     connect(m_round->roundPoints,SIGNAL(changed()),this,SLOT(updateContent()));
-    Database::Point* point = round->pointObjects->value(round->currentPlayingPlayers->value().at(0));
+
+    if(round->pointObjects->value().isEmpty())
+    {
+        //! \todo eventuell müssen wir hier einen slot connecten, der sobald pointObject befüllt sind, das connecten übernimmt
+        return;
+    }
+
+    Database::Point* point = round->pointObjects->value().values().at(0);
     connect(point->points,SIGNAL(changed()),this,SLOT(updateContent()));
 }
 
 void DokoLiveGameRoundTableTotalPointsItem::updateContent()
 {
-    Database::Player* player = m_round->currentPlayingPlayers->value().at(0);
-    Database::Point* point = m_round->pointObjects->value(player);
+    if(m_round->pointObjects->value().isEmpty())
+    {
+        return;
+    }
+    Database::Point* point = m_round->pointObjects->value().values().at(0);
+    Database::Player* player = Database::Players::instance()->rowById(point->playerId->value());
     int points = qAbs(point->points->value());
     if(m_round->doko_soloPlayerId->value() == player->id())
     {

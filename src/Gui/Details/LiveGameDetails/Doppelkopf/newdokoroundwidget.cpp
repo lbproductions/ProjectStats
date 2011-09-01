@@ -102,7 +102,7 @@ void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
 	    Database::Player* contra2 = 0;
 
 	    int contraCount = 0;
-            foreach(Database::Player* player, m_livegame->players->value())
+            foreach(Database::Player* player, m_livegame->currentPlayingPlayers->value())
             {
                 if (player->name->value() != re1->name->value() && player->name->value() != re2->name->value())
                 {
@@ -154,7 +154,7 @@ void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
 	    Database::Player* contra3 = 0;
 
             int contraCount = 0;
-            foreach(Database::Player *player, m_livegame->playersSortedByPosition->value())
+            foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
             {
                 if (player->name->value() != re1->name->value())
                 {
@@ -202,7 +202,7 @@ void NewDokoRoundWidget::on_comboBoxRe1_currentIndexChanged(QString name)
     {
 	ui->comboBoxRe2->clear();
 	ui->comboBoxRe2->addItem("");
-        foreach(Database::Player *player, m_livegame->playersSortedByPosition->value())
+        foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
         {
             if (player->name->value() != name)
             {
@@ -225,7 +225,7 @@ void NewDokoRoundWidget::on_comboBoxRe2_currentIndexChanged(QString name)
     if (name != "" && ui->comboBoxRe1->currentText() == ""){
 	ui->comboBoxRe1->clear();
 	ui->comboBoxRe1->addItem("");
-        foreach(Database::Player *player, m_livegame->playersSortedByPosition->value())
+        foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
         {
             if (player->name->value() != name){
                 ui->comboBoxRe1->addItem(player->name->value());
@@ -277,7 +277,7 @@ void NewDokoRoundWidget::on_comboBoxHochzeit_activated(QString name)
 
 	ui->comboBoxRe1->clear();
 	ui->comboBoxRe1->addItem("");
-        foreach(Database::Player *player, m_livegame->playersSortedByPosition->value())
+        foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
         {
             if (player->name->value() != name)
             {

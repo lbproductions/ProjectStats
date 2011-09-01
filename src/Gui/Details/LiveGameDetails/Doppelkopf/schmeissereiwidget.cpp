@@ -38,7 +38,7 @@ SchmeissereiWidget::SchmeissereiWidget(Database::DokoLiveGame* livegame, QWidget
         ui->comboBoxType->addItem(">90 Punkte");
     }
 
-    foreach(Database::Player* player, m_livegame->playersSortedByPosition->value())
+    foreach(Database::Player* player, m_livegame->currentPlayingPlayers->value())
     {
         ui->comboBoxPlayer->addItem(player->name->value());
     }
