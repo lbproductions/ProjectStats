@@ -110,6 +110,10 @@ void Round::addPoints(Player* player, int points)
     addChildRow(point);
 
     point->points->addDependingAttribute(this->points);
+
+    this->pointInstances->recalculateFromScratch();
+    this->points->recalculateFromScratch();
+    this->roundPoints->recalculateFromScratch();
 }
 
 void Round::setState(RoundState state)
