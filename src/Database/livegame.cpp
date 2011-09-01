@@ -54,6 +54,7 @@ START_ROW_IMPLEMENTATION(LiveGame, Game, Game)
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,LiveGame,LiveGameCalculator,totalPoints,tr("TotalPoints"))
     currentRound->addDependingAttribute(totalPoints);
+    totalPoints->addDependingAttribute(points);
 
     IMPLEMENT_ATTRIBUTE_IN_CALC(bool,LiveGame,LiveGameCalculator,calc,isFinished,tr("Finished"))
 

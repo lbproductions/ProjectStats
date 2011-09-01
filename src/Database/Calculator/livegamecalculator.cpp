@@ -50,6 +50,7 @@ QList<Round*> LiveGameCalculator::calculate_rounds(){
     QList<Round*> list;
     foreach(Round* r, Rounds::instance()->allRows()){
         if(r->gameId->value() == m_livegame->id()){
+            r->points->addDependingAttribute(m_livegame->totalPoints);
             list.append(r);
         }
     }

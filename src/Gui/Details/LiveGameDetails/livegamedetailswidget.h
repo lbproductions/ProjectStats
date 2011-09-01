@@ -59,6 +59,8 @@ protected slots:
 
     void resizeEvent(QResizeEvent* /*event*/);
 
+    void fillWidget();
+
 protected:
     friend class ::Gui::Details::LiveGameRowWindow;
 
@@ -72,7 +74,6 @@ protected:
 
     QPointer<Gui::Graphs::LiveGameGraphView> m_graph;
 
-    void fillWidget();
 
     void updateSizes();
 };

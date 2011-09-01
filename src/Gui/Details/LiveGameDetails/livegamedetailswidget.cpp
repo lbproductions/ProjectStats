@@ -35,6 +35,7 @@ LiveGameDetailsWidget::LiveGameDetailsWidget(Database::LiveGame* livegame, QWidg
     this->setPalette(p);
 
     connect(livegame->currentRound,SIGNAL(changed()),this,SLOT(on_currentRoundChanged()));
+    connect(livegame->points,SIGNAL(changed()),this,SLOT(fillWidget()));
 }
 
 void LiveGameDetailsWidget::initializeItems()
@@ -138,6 +139,7 @@ void LiveGameDetailsWidget::fillWidget()
 
 void LiveGameDetailsWidget::on_currentRoundChanged()
 {
+    connect(m_livegame->currentRound->value()->points,SIGNAL(changed()),this,SLOT(fillWidget()));
     fillWidget();
 }
 
