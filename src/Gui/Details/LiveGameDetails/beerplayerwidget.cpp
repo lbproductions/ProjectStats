@@ -85,6 +85,7 @@ void BeerPlayerWidget::onlivegamedrinkAdded(::Database::LiveGameDrink* drink)
         connect(drinkIcon,SIGNAL(drinkDoubleClicked(::Database::LiveGameDrink*)),this,SLOT(ondrinkdoubleClicked(::Database::LiveGameDrink*)));
         ui->gridLayoutDrinks->addWidget(drinkIcon,(drinks/5),drinks%5,Qt::AlignCenter);
 
+        this->updateGeometry();
         this->parentWidget()->update();
     }
 }
@@ -119,7 +120,7 @@ void BeerPlayerWidget::dropEvent(QDropEvent *event)
         ChooseDrinkCountDialog dialog(d,m_player,m_livegame);
         dialog.exec();
     }
-    this->setStyleSheet("QFrame{background: black; color: white; border-radius: 10px;}");
+    this->setStyleSheet("QFrame{margin: 0px; padding: 0px; background: transparent; color: white; border: none; font-weight: bold;}");
     this->repaint();
 }
 
@@ -135,6 +136,6 @@ void BeerPlayerWidget::dragMoveEvent(QDragMoveEvent * /*event*/)
 
 void BeerPlayerWidget::dragLeaveEvent(QDragLeaveEvent * /*event*/)
 {
-    this->setStyleSheet("QFrame{background: black; color: white; border-radius: 10px;}");
+    this->setStyleSheet("QFrame{margin: 0px; padding: 0px; background: transparent; color: white; border: none; font-weight: bold;}");
     this->repaint();
 }

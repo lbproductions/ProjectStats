@@ -55,6 +55,8 @@ public:
 
     MappingAttributeFutureWatcher<K,V,R,C> *mappingFutureWatcher(const K& key);
 
+    void changeValue(const QMap<K,V> value);
+
 protected:
     QMap<K,MappingAttributeFutureWatcher<K,V,R,C>*> m_attributeFutureWatchers;
 };
@@ -64,6 +66,8 @@ MappingAttribute<K,V,R,C>::MappingAttribute(const QString &name, const QString &
     Attribute<QMap<K,V> ,R,C>(name,displayName,row),
     m_attributeFutureWatchers(QMap<K,MappingAttributeFutureWatcher<K,V,R,C>*>())
 {
+    //wie können Änderungen in der map viel schlechter verfolgen, daher wir einfach bei jeder Neuberechnung change emitted
+    Attribute<QMap<K,V> ,R,C>::m_emitChange = false;
 }
 
 template<class K, class V, class R, class C>
@@ -75,6 +79,13 @@ template<class K, class V, class R, class C>
 const QMap<K,V> MappingAttribute<K,V,R,C>::value()
 {
      return Attribute<QMap<K,V>,R,C>::value();
+}
+
+template<class K, class V, class R, class C>
+void MappingAttribute<K,V,R,C>::changeValue(const QMap<K,V> value)
+{
+    Attribute<QMap<K,V>,R,C>::changeValue(value);
+    emit Attribute<QMap<K,V>,R,C>::changed();
 }
 
 template<class K, class V, class R, class C>

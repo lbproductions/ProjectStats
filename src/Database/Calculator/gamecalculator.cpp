@@ -4,6 +4,7 @@
 #include <Database/player.h>
 #include <Database/position.h>
 #include <Database/offlinegameinformation.h>
+#include <Database/livegame.h>
 
 namespace Database {
 
@@ -20,7 +21,10 @@ QList<Player*> GameCalculator::calculate_players(){
 	    if(p->gameId->value() == m_game->id()){
 		if(!list.contains(Players::instance()->rowById(p->playerId->value()))){
 		    //list.insert(p->position->value(),Players::instance()->rowById(p->playerId->value()));
-		    list.append(Players::instance()->rowById(p->playerId->value()));
+                    Player* player = Players::instance()->rowById(p->playerId->value());
+                    list.append(player);
+
+                    static_cast<LiveGame*>(m_game.data())->drinksPerPlayer->addDependingAttribute(player->alcPegel);
 		}
 	    }
 	}

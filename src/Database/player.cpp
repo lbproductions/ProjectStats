@@ -114,7 +114,6 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     wins->addDependingAttribute(lastWin);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(LiveGame*,double,Player,PlayerCalculator,calc,alcPegel,tr("AlcPegel"))
-    LiveGameDrinks::instance()->rows()->addDependingAttribute(alcPegel);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,calc,averagePlacement,tr("LiveAveragePlacement"))
     games->addDependingAttribute(averagePlacement);
