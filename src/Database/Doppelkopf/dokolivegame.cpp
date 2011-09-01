@@ -46,7 +46,7 @@ START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_schweinerei,tr("Doko_Schweinerei"))
     rounds->addDependingAttribute(doko_schweinerei);
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_schmeisserei,tr("Doko_Schmeisserei"))
-    rounds->addDependingAttribute(doko_schmeisserei);
+
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,bool,DokoLiveGame,DokoLiveGameCalculator,calc,doko_hasPflichtSolo,tr("Doko_HasPflichtsolo"))
     rounds->addDependingAttribute(doko_hasPflichtSolo);
 

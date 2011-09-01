@@ -125,7 +125,6 @@ template<class K, class V, class R, class C>
 void MappingAttributeFutureWatcher<K,V,R,C>::on_attribute_changed()
 {
     MappingAttribute<K,V,R,C>* attribute = static_cast<MappingAttribute<K,V,R,C>*>(AttributeFutureWatcher::m_attribute);
-    qDebug() << m_key << attribute->value(m_key);
     AttributeVariant var;
     var.setValue(attribute->value(m_key));
     emit valueChanged(var.displayVariant().toString());
