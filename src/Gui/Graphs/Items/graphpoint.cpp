@@ -23,6 +23,12 @@ QPoint GraphPoint::point() const
     return m_point;
 }
 
+void GraphPoint::setPoint(const QPoint& point)
+{
+    m_point = point;
+    m_graph->updateDimensions(point);
+}
+
 QRectF GraphPoint::boundingRect() const
 {
     return QRectF(  m_point.x() * m_graph->coordinateSystem()->xScale() - m_radius,

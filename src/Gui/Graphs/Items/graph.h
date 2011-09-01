@@ -81,7 +81,7 @@ signals:
       */
     void pointAdded(const QPoint&);
 
-protected slots:
+public slots:
     /*!
       Dieser Slot wird aufgerufen, sobald ein Punkt zum Graphen hinzugefügt wurde. Hier werden die minmalen und maximalen x und y Werte angepasst.
       */

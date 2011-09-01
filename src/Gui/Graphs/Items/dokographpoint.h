@@ -30,6 +30,7 @@ public:
       */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    Database::DokoRound* round() const;
 private:
 
     Database::DokoRound* m_dokoround;

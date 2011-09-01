@@ -54,11 +54,14 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
     db_state->addDependingAttribute(state);
     state->setRole(Qt::DecorationRole);
 
-    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Point*,Round,RoundCalculator,m_calc,pointInstances,tr("Point Instances"))
-
-    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,Point*,Round,RoundCalculator,m_calc,pointObjects,tr("PointObjects"))
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,m_calc,points,tr("Points"))
+
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Point*,Round,RoundCalculator,m_calc,pointInstances,tr("Point Instances"))
+    points->addDependingAttribute(pointInstances);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,Point*,Round,RoundCalculator,m_calc,pointObjects,tr("PointObjects"))
+    points->addDependingAttribute(pointObjects);
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,cardmixerPosition,tr("Cardmixer Position"))
 
@@ -66,11 +69,6 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,roundPoints,tr("RoundPoints"))
     points->addDependingAttribute(roundPoints);
-
-    if(this->state->value() == Round::PausedState && !game->value().isNull())
-    {
-        length->addDependingAttribute(game->value()->length);
-    }
 
     m_timer = 0;
 }
@@ -97,6 +95,7 @@ QPointer<Game> Round::calculate_game()
 {
     Game *game = Games::instance()->rowById(this->gameId->value());
     state->addDependingAttribute(game->state);
+    length->addDependingAttribute(game->length);
     return game;
 }
 
@@ -110,11 +109,7 @@ void Round::addPoints(Player* player, int points)
     Point* point = new Point(this,player,points);
     addChildRow(point);
 
-    point->points->addDependingAttribute(roundPoints);
-
-    this->pointInstances->recalculateFromScratch();
-    this->points->recalculateFromScratch();
-    this->roundPoints->recalculateFromScratch();
+    point->points->addDependingAttribute(this->points);
 }
 
 void Round::setState(RoundState state)

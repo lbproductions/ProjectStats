@@ -48,10 +48,10 @@ void LiveGamePlayerPointsGraph::addRound(::Database::Round *r)
         addPoint(QPoint(r->number->value()+1,m_totalPoints));
         m_points.last()->setToolTip("<h1>"+m_player->name->value()+"</h1>"+
                                      "<span style=\"font-size: 18pt;\">"+tr("Round")+" "+QString::number(r->number->value()+1)+"<br></span>"
-				     "<span style=\"font-size: 22pt;\">"
+                                     "<span style=\"font-size: 22pt;\">"
                                      "<b>"+tr("Points")+":</b> "+QString::number(r->points->value(m_player))+"<br>"+
-				     "<b>"+tr("Total")+":</b> "+QString::number(m_totalPoints)+
-				     "</span>");
+                                     "<b>"+tr("Total")+":</b> "+QString::number(m_totalPoints)+
+                                     "</span>");
     }
 }
 

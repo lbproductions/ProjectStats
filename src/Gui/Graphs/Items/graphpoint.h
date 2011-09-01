@@ -36,6 +36,8 @@ public:
       */
     QPoint point() const;
 
+    void setPoint(const QPoint& point);
+
     /*!
       \return Das Rechteck, in dem die Darstellung dieses Punktes liegt.
       */

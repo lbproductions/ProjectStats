@@ -27,6 +27,7 @@ QMap<Player*,Point*> RoundCalculator::calculate_pointObjects() {
     {
         if(p)
         {
+            p->points->addDependingAttribute(m_round->points);
             hash.insert(Players::instance()->rowById(p->playerId->value()),
                         p);
         }

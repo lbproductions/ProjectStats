@@ -5,6 +5,7 @@
 
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/player.h>
+#include <Database/Doppelkopf/schmeisserei.h>
 
 #include <QPainter>
 
@@ -16,6 +17,45 @@ DokoGraphPoint::DokoGraphPoint(QPoint point, DokoLiveGamePlayerPointsGraph* grap
     m_radius = 7;
     m_dokoround = r;
     m_player = graph->player();
+
+    QString tooltip = "<h1>"+m_player->name->value()+"</h1>"+
+            "<span style=\"font-size: 18pt;\">"+tr("Round")+" "+QString::number(r->number->value()+1)+"<br></span>"
+            "<span style=\"font-size: 22pt;\">"
+            "<b>"+tr("Points")+":</b> "+QString::number(r->points->value(m_player))+"<br>"+
+            "<b>"+tr("Total")+":</b> "+QString::number(point.y())+"<br>"+
+            "<br>";
+    if (m_dokoround->doko_hochzeitPlayerId->value() == m_player->id()){
+        tooltip += "Hochzeit<br>";
+    }
+    if (m_dokoround->doko_soloPlayerId->value() == m_player->id()){
+        tooltip += m_dokoround->doko_soloType->value()+"-Solo<br>";
+    }
+    if (m_dokoround->doko_trumpfabgabePlayerId->value() == m_player->id()){
+        tooltip+= "Trumpfabgabe<br>";
+    }
+    if (m_dokoround->doko_schweinereiPlayerId->value() == m_player->id()){
+        tooltip+= "Schweinerei<br>";
+    }
+
+    bool hasSchmeisserei = false;
+    foreach(Database::Schmeisserei* s, m_dokoround->doko_schmeissereien->value())
+    {
+        if(s->playerId->value() == m_player->id())
+        {
+            hasSchmeisserei = true;
+        }
+    }
+
+    if (hasSchmeisserei){
+        tooltip+= "Schmeisserei<br>";
+    }
+    tooltip+="</span>";
+    setToolTip(tooltip);
+}
+
+Database::DokoRound* DokoGraphPoint::round() const
+{
+    return m_dokoround;
 }
 
 void DokoGraphPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/)

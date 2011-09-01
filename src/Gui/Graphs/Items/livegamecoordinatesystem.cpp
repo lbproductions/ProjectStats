@@ -62,7 +62,7 @@ void LiveGameCoordinateSystem::paint(QPainter *painter, const QStyleOptionGraphi
     int i = m_yMin;
     i/=10;
     i*=10;
-    for(; i < m_yMax; i+=10)
+    for(; i <= m_yMax; i+=10)
     {
 	if(i % 50 == 0)
 	{

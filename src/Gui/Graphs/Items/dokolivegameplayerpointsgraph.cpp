@@ -10,12 +10,38 @@
 #include <Gui/Graphs/Items/dokographpoint.h>
 
 #include <QDebug>
+#include <QGraphicsScene>
 
 using namespace Gui::Graphs::Items;
 
 DokoLiveGamePlayerPointsGraph::DokoLiveGamePlayerPointsGraph(Database::Player *player, Database::DokoLiveGame *liveGame, LiveGameCoordinateSystem *coordinateSystem):
     LiveGamePlayerPointsGraph(player,liveGame,coordinateSystem)
 {
+}
+
+void DokoLiveGamePlayerPointsGraph::update()
+{
+    m_totalPoints = 0;
+    int i = 0;
+    foreach(GraphPoint* gpoint, m_points)
+    {
+        if(i == 0)
+        {
+            i=1;
+            continue;
+        }
+        DokoGraphPoint* point = static_cast<DokoGraphPoint*>(gpoint);
+        Database::DokoRound* round = point->round();
+        if(round)
+        {
+            m_totalPoints += round->points->value(m_player);
+            QPoint p = point->point();
+            p.setY(m_totalPoints);
+            point->setPoint(p);
+        }
+    }
+
+    this->scene()->invalidate();
 }
 
 bool xCoordinateLessThan1(GraphPoint *p1, GraphPoint *p2)
@@ -39,39 +65,11 @@ void DokoLiveGamePlayerPointsGraph::addRound(::Database::Round *r){
     {
         Database::DokoRound* dokoround = static_cast<Database::DokoRound*>(r);
         m_totalPoints += r->points->value(m_player);
-        addPoint(QPoint(r->number->value()+1,m_totalPoints),dokoround);
-        QString tooltip = "<h1>"+m_player->name->value()+"</h1>"+
-                "<span style=\"font-size: 18pt;\">"+tr("Round")+" "+QString::number(r->number->value()+1)+"<br></span>"
-                "<span style=\"font-size: 22pt;\">"
-                "<b>"+tr("Points")+":</b> "+QString::number(r->points->value(m_player))+"<br>"+
-                "<b>"+tr("Total")+":</b> "+QString::number(m_totalPoints)+"<br>"+
-                "<br>";
-        if (dokoround->doko_hochzeitPlayerId->value() == m_player->id()){
-            tooltip += "Hochzeit<br>";
-        }
-        if (dokoround->doko_soloPlayerId->value() == m_player->id()){
-            tooltip += dokoround->doko_soloType->value()+"-Solo<br>";
-        }
-        if (dokoround->doko_trumpfabgabePlayerId->value() == m_player->id()){
-            tooltip+= "Trumpfabgabe<br>";
-        }
-        if (dokoround->doko_schweinereiPlayerId->value() == m_player->id()){
-            tooltip+= "Schweinerei<br>";
-        }
-
-        bool hasSchmeisserei = false;
-        foreach(Database::Schmeisserei* s, dokoround->doko_schmeissereien->value())
+        Database::Point* point = r->pointObjects->value(m_player);
+        if(point)
         {
-            if(s->playerId->value() == m_player->id())
-            {
-                hasSchmeisserei = true;
-            }
+            connect(point->points,SIGNAL(changed()),this,SLOT(update()));
         }
-
-        if (hasSchmeisserei){
-            tooltip+= "Schmeisserei<br>";
-        }
-        tooltip+="</span>";
-        m_points.last()->setToolTip(tooltip);
+        addPoint(QPoint(r->number->value()+1,m_totalPoints),dokoround);
     }
 }

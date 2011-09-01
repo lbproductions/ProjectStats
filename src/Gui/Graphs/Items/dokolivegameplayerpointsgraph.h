@@ -32,6 +32,7 @@ public:
     void addPoint(const QPoint &point, ::Database::DokoRound* r);
 
 public slots:
+    void update();
 
     void addRound(::Database::Round*);
 };
