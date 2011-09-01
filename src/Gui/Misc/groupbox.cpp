@@ -18,3 +18,16 @@ GroupBox::GroupBox(QWidget *contentWidget, QWidget *parent) :
     layout->addWidget(contentWidget);
     this->setLayout(layout);
 }
+
+GroupBox::GroupBox(QLayout *layout, QWidget *parent) :
+    QFrame(parent)
+{
+    this->setStyleSheet("Gui--Misc--GroupBox {"
+                        "background: transparent;"
+                        "border: 5px transparent;"
+                        "border-image: url(:/graphics/styles/mac/groupbox/fullscreen/background) 5px 5px 5px 5px;"
+                        "margin: 0px;"
+                        "padding: -5px;"
+                        "}");
+    this->setLayout(layout);
+}

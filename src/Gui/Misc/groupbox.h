@@ -15,6 +15,8 @@ class GroupBox : public QFrame
 public:
     explicit GroupBox(QWidget* contentWidget, QWidget *parent = 0);
 
+    GroupBox(QLayout *layout, QWidget *parent = 0);
+
 };
 
 }
