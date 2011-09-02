@@ -45,10 +45,10 @@ NewRowWidget::~NewRowWidget()
 void NewRowWidget::on_pushButtonCreate_clicked()
 {
     m_row->table()->insertRow(m_row);
-    this->close();
+    this->accept();
 }
 
 void NewRowWidget::on_pushButtonCancel_clicked()
 {
-    this->close();
+    this->reject();
 }

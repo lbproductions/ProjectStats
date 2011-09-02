@@ -109,10 +109,7 @@ void DrinkDetailsWidget::setEditable(bool editable)
 
 void DrinkDetailsWidget::on_lineEditName_editingFinished()
 {
-    /*
-    Q_ASSERT(!m_drink.isNull());
     m_drink->name->setValue(ui->lineEditName->text());
-    */
 }
 
 void DrinkDetailsWidget::on_comboBoxType_currentIndexChanged(QString )

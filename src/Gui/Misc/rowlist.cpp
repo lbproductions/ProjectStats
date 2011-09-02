@@ -128,7 +128,7 @@ void RowList::on_customContextMenuRequested(const QPoint &pos)
     connect(editAttributeAction,SIGNAL(triggered()),this,SLOT(on_editAttributeActionTriggered()));
     contextMenu->addAction(editAttributeAction);
 
-    contextMenu->exec(mapToGlobal(QPoint(pos.x(),pos.y()+5)));
+    contextMenu->exec(mapToGlobal(QPoint(pos.x(),pos.y()+10)));
 }
 
 void RowList::on_editAttributeActionTriggered()
