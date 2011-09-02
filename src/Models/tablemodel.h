@@ -14,6 +14,8 @@ namespace Database {
 
     template<class T>
     class Table;
+
+    class AttributeBase;
 }
 
 namespace Models {
@@ -34,6 +36,8 @@ public:
 
     void setVisibleColumns(QList<int> list);
     QList<int> visibleColumns();
+
+    virtual Database::AttributeBase* attributeAt(const QModelIndex& index) const = 0;
 
 protected:
     AttributeVariant::DisplayRole m_displayRole;
@@ -68,6 +72,8 @@ public:
     void setVisibleColumns(QList<QString> list);
 
     void updateData();
+
+    Database::AttributeBase* attributeAt(const QModelIndex& index) const;
 
 private:
     friend class Database::Table<RowType>;
@@ -232,6 +238,19 @@ int TableModel<RowType, Owner>::columnCount(const QModelIndex &parent) const
 }
 
 template<class RowType, class Owner>
+Database::AttributeBase* TableModel<RowType, Owner>::attributeAt(const QModelIndex& index) const
+{
+    RowType *row = m_data.at(index.row());
+    if(row == 0)
+    {
+        return 0;
+    }
+
+    QString name = m_owner->registeredAttributes()->values().at(index.column())->name();
+    return row->attribute(name);
+}
+
+template<class RowType, class Owner>
 QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) const
 {
     if(!index.isValid() || index.row() >=  m_data.size())
@@ -239,16 +258,9 @@ QVariant TableModel<RowType, Owner>::data(const QModelIndex &index, int role) co
         return QVariant();
     }
 
-    RowType *row = m_data.at(index.row());
-    if(row == 0)
-    {
-        return QVariant();
-    }
+    Database::AttributeBase *attribute = attributeAt(index);
 
-    QString name = m_owner->registeredAttributes()->values().at(index.column())->name();
-    Database::AttributeBase *attribute = row->attribute(name);
-
-    if(attribute == 0)
+    if(!attribute)
     {
         return QVariant();
     }

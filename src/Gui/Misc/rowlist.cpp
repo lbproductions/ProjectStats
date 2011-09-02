@@ -3,11 +3,14 @@
 #include "rowlistheader.h"
 
 #include <Models/tablemodel.h>
+#include <Database/attribute.h>
 
 #include <QSortFilterProxyModel>
 #include <QSettings>
 #include <QList>
 #include <QItemSelectionRange>
+#include <QAction>
+#include <QMenu>
 
 using namespace Gui::Misc;
 
@@ -31,10 +34,15 @@ RowList::RowList(Models::TableModelBase *model, QWidget *parent) :
 
     setModel(model);
 
+    setContextMenuPolicy(Qt::CustomContextMenu);
+
+    connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(on_customContextMenuRequested(QPoint)));
     connect(m_model,SIGNAL(visibleHeadersChanged()),this,SLOT(setupVisibleColumns()));
     connect(this,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(on_doubleClicked(QModelIndex)));
 
     setHeader(new RowListHeader(Qt::Horizontal));
+
+    setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 RowList::~RowList()
@@ -101,4 +109,32 @@ void RowList::setupVisibleColumns()
         }
     }
     this->repaint();
+}
+
+void RowList::on_customContextMenuRequested(const QPoint &pos)
+{
+    QModelIndex index = m_proxyModel->mapToSource(indexAt(pos));
+    Database::AttributeBase* attribute = m_model->attributeAt(index);
+    if(!attribute->isDatabaseAttribute())
+    {
+        return;
+    }
+
+    QMenu* contextMenu = new QMenu(this);
+
+    QAction* editAttributeAction = new QAction(contextMenu);
+    editAttributeAction->setText(tr("Edit %1").arg(attribute->name()));
+    editAttributeAction->setData(pos);
+    connect(editAttributeAction,SIGNAL(triggered()),this,SLOT(on_editAttributeActionTriggered()));
+    contextMenu->addAction(editAttributeAction);
+
+    contextMenu->exec(mapToGlobal(QPoint(pos.x(),pos.y()+5)));
+}
+
+void RowList::on_editAttributeActionTriggered()
+{
+    QAction* action = static_cast<QAction*>(sender());
+    QModelIndex index = indexAt(action->data().toPoint());
+    qDebug() << index;
+    edit(index);
 }
