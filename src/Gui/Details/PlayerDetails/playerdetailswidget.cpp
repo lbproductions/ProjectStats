@@ -8,6 +8,7 @@
 #include <Database/player.h>
 #include <Gui/Misc/clickablelabel.h>
 #include <Gui/Misc/placescombobox.h>
+#include <Gui/Details/PlayerDetails/playerresidencewidget.h>
 
 #include <QPixmap>
 #include <QFileDialog>
@@ -110,20 +111,22 @@ void PlayerDetailsWidget::setEditable(bool editable)
 	    ui->verticalLayoutResidence->removeItem(ui->verticalLayoutResidence->itemAt(0));
 	}
         foreach(Database::Place* p, m_player->places->value()){
+            /*
             Misc::PlacesComboBox* placesBox = new Misc::PlacesComboBox(this);
             placesBox->addItems(Database::Places::instance()->allRows());
 	    placesBox->setCurrentPlace(p->id());
 	    connect(placesBox,SIGNAL(currentIndexChanged(Database::Place*const,Database::Place*const)),this,
 		    SLOT(onPlacesComboBoxCurrentIndexChanged(Database::Place*const,Database::Place*const)));
-	    ui->verticalLayoutResidence->addWidget(placesBox);
-	}
-        if (m_player->places->value().size() == 0){
-            Misc::PlacesComboBox* placesBox = new Misc::PlacesComboBox(this);
-            placesBox->addItems(Database::Places::instance()->allRows());
-	    connect(placesBox,SIGNAL(currentIndexChanged(Database::Place*const,Database::Place*const)),this,
-		    SLOT(onPlacesComboBoxCurrentIndexChanged(Database::Place*const,Database::Place*const)));
-	    ui->verticalLayoutResidence->addWidget(placesBox);
-	}
+            */
+            PlayerResidenceWidget* widget = new PlayerResidenceWidget(m_player,p,this);
+            connect(widget,SIGNAL(newPlaceRequested()),this,SLOT(onPlayerResidenceWidgetNewPlaceRequested()));
+            ui->verticalLayoutResidence->addWidget(widget);
+        }
+
+        PlayerResidenceWidget* widget = new PlayerResidenceWidget(m_player,this);
+        connect(widget,SIGNAL(newPlaceRequested()),this,SLOT(onPlayerResidenceWidgetNewPlaceRequested()));
+        ui->verticalLayoutResidence->addWidget(widget);
+
     }
     else{
 	while (ui->verticalLayoutResidence->count() > 0)
@@ -168,35 +171,6 @@ void PlayerDetailsWidget::onLineEditNameEditingFinished()
     readPlayerData();
 }
 
-void PlayerDetailsWidget::onPlacesComboBoxCurrentIndexChanged(Database::Place *const oldPlace , Database::Place *const newPlace)
-{
-    Q_ASSERT(!m_player.isNull());
-
-    if (oldPlace != 0){
-        //oldPlace->player->setValue(0);
-    }
-    if(newPlace != 0)
-    {
-        newPlace->playerId->setValue(m_player->id());
-    }
-    else
-    {
-	while (ui->verticalLayoutResidence->count() > 0)
-	{
-	    ui->verticalLayoutResidence->itemAt(0)->widget()->setVisible(false);
-	    ui->verticalLayoutResidence->removeItem(ui->verticalLayoutResidence->itemAt(0));
-	}
-        foreach(Database::Place* p, m_player->places->value()){
-            Misc::PlacesComboBox* placesBox = new Misc::PlacesComboBox(this);
-            placesBox->addItems(Database::Places::instance()->allRows());
-	    placesBox->setCurrentPlace(p->id());
-	    connect(placesBox,SIGNAL(currentIndexChanged(Database::Place*const,Database::Place*const)),this,
-		    SLOT(onPlacesComboBoxCurrentIndexChanged(Database::Place*const,Database::Place*const)));
-	    ui->verticalLayoutResidence->addWidget(placesBox);
-	}
-    }
-}
-
 void PlayerDetailsWidget::on_spinBoxWeight_valueChanged(int weight)
 {
     Q_ASSERT(!m_player.isNull());
@@ -232,4 +206,15 @@ void PlayerDetailsWidget::onAvatarClicked(){
 	m_labelAvatar->setPixmap(pixmap);
         m_player->avatarPath->setValue(fileName);
     }
+}
+
+void PlayerDetailsWidget::onPlayerResidenceWidgetNewPlaceRequested(){
+    PlayerResidenceWidget* widget = new PlayerResidenceWidget(m_player,this);
+    connect(widget,SIGNAL(newPlaceRequested()),this,SLOT(onPlayerResidenceWidgetNewPlaceRequested()));
+    ui->verticalLayoutResidence->addWidget(widget);
+}
+
+void PlayerDetailsWidget::onPlayerResidenceWidgetRemovePlaceRequested(){
+    setEditable(m_editable);
+    this->repaint();
 }

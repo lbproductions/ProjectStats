@@ -11,6 +11,8 @@
 #include <Gui/Details/PlayerDetails/abstractplayerstatswidget.h>
 #include <Gui/MainWindow/mainwindow.h>
 
+#include <Database/playerplaceassignment.h>
+
 #include <QDebug>
 #include <QDateTime>
 
@@ -47,10 +49,10 @@ QMap<QString,int> PlayerCalculator::calculate_gameCount(){
 
 QList<Place*> PlayerCalculator::calculate_places(){
     QList<Place*> list;
-    foreach(Place* p, Places::instance()->allRows()){
-	if(p->player->value() == m_player){
-	    list.append(p);
-	}
+    foreach(PlayerPlaceAssignment* a, PlayerPlaceAssignments::instance()->allRows()){
+        if(a->playerId->value() == m_player->id()){
+            list.append(Places::instance()->rowById(a->placeId->value()));
+        }
     }
     return list;
 }

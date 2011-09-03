@@ -7,6 +7,7 @@
 namespace Database {
 
 class Place;
+class Player;
 
 class PlaceCalculator : public QObject
 {
@@ -15,6 +16,8 @@ public:
     explicit PlaceCalculator(Place* place, QObject *parent = 0);
 
     int calculate_gameCount();
+
+    QList<Player*> calculate_players();
 
 signals:
 

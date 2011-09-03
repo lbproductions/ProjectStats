@@ -4,6 +4,7 @@
 
 #include <Misc/logger.h>
 #include "game.h"
+#include "playerplaceassignment.h"
 
 #include <Gui/Details/PlaceDetails/placedetailswidget.h>
 
@@ -14,7 +15,6 @@ START_ROW_IMPLEMENTATION(Place, Place, Row)
 {
     PlaceCalculator* calc = new PlaceCalculator(this,this);
 
-    IMPLEMENT_DATABASEATTRIBUTE(int,Place,playerId,tr("PlayerId"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Place,plz,tr("PLZ"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Place,ort,tr("Ort"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Place,strasse,tr("Strasse"))
@@ -22,8 +22,8 @@ START_ROW_IMPLEMENTATION(Place, Place, Row)
     IMPLEMENT_DATABASEATTRIBUTE(QString,Place,comment,tr("Comment"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Place,iconPath,tr("IconPath"))
 
-    IMPLEMENT_ATTRIBUTE(QPointer<Player>, Place, player,tr("Player"))
-    playerId->addDependingAttribute(player);
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*, Place, PlaceCalculator, calc, players,tr("Players"))
+    PlayerPlaceAssignments::instance()->rows()->addDependingAttribute(players);
 
     IMPLEMENT_ATTRIBUTE(QImage,Place,icon,tr("Icon"))
     iconPath->addDependingAttribute(icon);
@@ -41,11 +41,6 @@ START_ROW_IMPLEMENTATION(Place, Place, Row)
 QString Place::mimeType() const
 {
     return "application/projectstats.place";
-}
-
-QPointer<Player> Place::calculate_player()
-{
-    return Players::instance()->rowById(this->playerId->value());
 }
 
 QImage Place::calculate_icon(){

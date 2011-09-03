@@ -15,7 +15,6 @@
 START_ROW_DECLARATION(Place, Row)
     DECLARE_ROW_CONSTRUCTORS(Place, Place)
 
-    DECLARE_DATABASEATTRIBUTE(int,Place,playerId)
     DECLARE_DATABASEATTRIBUTE(int,Place,plz)
     DECLARE_DATABASEATTRIBUTE(QString,Place,ort)
     DECLARE_DATABASEATTRIBUTE(QString,Place,strasse)
@@ -23,7 +22,7 @@ START_ROW_DECLARATION(Place, Row)
     DECLARE_DATABASEATTRIBUTE(QString,Place,comment)
     DECLARE_DATABASEATTRIBUTE(QString,Place,iconPath)
 
-    DECLARE_ATTRIBUTE(QPointer<Player>, Place, player)
+    DECLARE_LISTATTRIBUTE_IN_CALC(Player*, Place, PlaceCalculator, players)
     DECLARE_ATTRIBUTE(QImage,Place,icon)
 
     DECLARE_ATTRIBUTE_IN_CALC(int,Place,PlaceCalculator,gameCount)

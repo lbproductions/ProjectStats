@@ -29,6 +29,8 @@ namespace Misc
 namespace Details
 {
 
+class PlayerResidenceWidget;
+
 class PlayerDetailsWidget : public DetailsWidget
 {
     Q_OBJECT
@@ -46,8 +48,10 @@ private slots:
     void onPushButtonChooseColorClicked();
     void colorSelected(const QColor &color);
     void onLineEditNameEditingFinished();
-    void onPlacesComboBoxCurrentIndexChanged(Database::Place *const oldPlace , Database::Place *const newPlace);
     void onAvatarClicked();
+
+    void onPlayerResidenceWidgetNewPlaceRequested();
+    void onPlayerResidenceWidgetRemovePlaceRequested();
 
     void on_spinBoxWeight_valueChanged(int weight);
 
@@ -61,6 +65,7 @@ private:
     QPointer<Database::Player> m_player;
     QPointer<QColorDialog> m_colorDialog;
     QPointer<Misc::ClickableLabel> m_labelAvatar;
+    QList<PlayerResidenceWidget*> m_playerResidenceWidgets;
     bool m_editable;
 };
 

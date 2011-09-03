@@ -79,9 +79,11 @@ PlaceDetailsWidget::~PlaceDetailsWidget()
 
 void PlaceDetailsWidget::readPlaceData(){
     ui->textEditComment->setText(m_place->comment->value());
+    /*
     if(m_place->player->value() != 0){
         ui->comboBoxPlayer->setCurrentIndex(ui->comboBoxPlayer->findText(m_place->player->value()->name->value()));
     }
+    */
 
     m_filePath = m_place->iconPath->value();
 
@@ -95,7 +97,7 @@ void PlaceDetailsWidget::readPlaceData(){
 
 void PlaceDetailsWidget::connectToAttributes(){
     m_place->comment->futureWatcher()->connectTo(ui->labelCommentValue);
-    m_place->player->futureWatcher()->connectTo(ui->labelHomeOfValue);
+    m_place->players->futureWatcher()->connectTo(ui->labelHomeOfValue);
     m_place->nummer->futureWatcher()->connectTo(ui->labelNrValue);
     m_place->plz->futureWatcher()->connectTo(ui->labelPLZValue);
     m_place->strasse->futureWatcher()->connectTo(ui->labelStreetValue);
@@ -165,13 +167,16 @@ void PlaceDetailsWidget::on_textEditComment_textChanged()
 
 void PlaceDetailsWidget::on_comboBoxPlayer_currentIndexChanged(QString /*name*/)
 {
+    /*
     Q_ASSERT(!m_place.isNull());
     if (ui->comboBoxPlayer->currentText() != ""){
+        Database::Player* currentPlayer
         QList<Database::Player*> list = Database::Players::instance()->rowsBySqlCondition("WHERE name = " + ui->comboBoxPlayer->currentText());
         if(list.size() > 0){
             m_place->playerId->setValue(list.first()->id());
         }
     }
+    */
 }
 
 void PlaceDetailsWidget::onlabelPicclicked(){
