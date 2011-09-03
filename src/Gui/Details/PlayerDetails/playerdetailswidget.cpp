@@ -13,6 +13,7 @@
 #include <QPixmap>
 #include <QFileDialog>
 #include <QColorDialog>
+#include <QString>
 
 using namespace Gui::Details;
 
@@ -29,16 +30,18 @@ PlayerDetailsWidget::PlayerDetailsWidget(Database::Player *player, QWidget *pare
     ui->verticalLayoutAvatar->addWidget(m_labelAvatar);
     m_labelAvatar->setFixedSize(64,90);
 
+    if (m_player->avatarPath->value().isEmpty())
+    {
+      m_player->avatarPath->setValue(":/graphics/images/player");
+    }
+
     QPixmap pixmap(64,90);
-    pixmap.load(":/graphics/images/player");
+    pixmap.load(m_player->avatarPath->value());
     m_labelAvatar->setPixmap(pixmap);
     m_labelAvatar->setScaledContents(true);
     m_labelAvatar->setFocusPolicy(Qt::ClickFocus);
     m_labelAvatar->setEnabled(true);
 
-    if (m_player->avatarPath->value() != ""){
-      m_player->avatarPath->setValue(":/graphics/images/player");
-    }
 
     ui->comboBoxGender->addItem("-");
     ui->comboBoxGender->addItem(tr("male"));

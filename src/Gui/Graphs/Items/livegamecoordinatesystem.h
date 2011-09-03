@@ -48,6 +48,7 @@ protected:
     virtual void addGraphsForPlayers();
 
     Database::LiveGame* m_liveGame; //!< Das Spiel, welches das Koordinatensystem widerspiegelt.
+    int m_horizontalLineInterval;
 };
 
 }

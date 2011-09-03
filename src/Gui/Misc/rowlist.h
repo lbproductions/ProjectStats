@@ -14,6 +14,7 @@ namespace Models
 namespace Database
 {
     class Row;
+    class AttributeBase;
 }
 
 namespace Gui
@@ -49,6 +50,8 @@ public:
 
     Models::TableModelBase *model() const;
 
+    Database::AttributeBase* attributeAt(const QPoint& point);
+
 signals:
     /*!
       Dieses Signal wird gesendet, wenn ein Element doppelt geklickt wurde.
@@ -81,6 +84,10 @@ protected slots:
       Dieser Slot wird aktiviert, wenn sich die Liste der sichtbaren Spalten im Model geändert hat.
       */
     void setupVisibleColumns();
+
+    void on_customContextMenuRequested(const QPoint &pos);
+
+    void on_editAttributeActionTriggered();
 
 private:
     QPointer<QSortFilterProxyModel> m_proxyModel; //!< In diesem Proxymodel wird das eigentlich angezeigte Model gewrappt, und ist somit sortierbar.

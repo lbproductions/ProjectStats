@@ -71,12 +71,12 @@ CoordinateSystem *Graph::coordinateSystem() const
 
 void Graph::updateDimensions(const QPoint &point)
 {
+    prepareGeometryChange();
+
     m_xMax = qMax(m_xMax,point.x());
     m_xMin = qMin(m_xMin,point.x());
     m_yMax = qMax(m_yMax,point.y());
     m_yMin = qMin(m_yMin,point.y());
-
-    prepareGeometryChange();
 }
 
 int Graph::xMax() const

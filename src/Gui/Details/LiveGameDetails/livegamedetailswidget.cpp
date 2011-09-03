@@ -116,7 +116,7 @@ void LiveGameDetailsWidget::setupWidget()
          item->setFlags(item->flags() & ~Qt::ItemIsEditable & ~Qt::ItemIsSelectable);
          m_playerTotalPointsTable->setItem(0,i,item);
     }
-    m_playerTotalPointsTable->setRowHeight(0,40);
+    m_playerTotalPointsTable->setRowHeight(0,35);
     m_playerTotalPointsTable->setMaximumHeight(m_playerTotalPointsTable->rowHeight(0));
     QTableWidgetItem* item = new QTableWidgetItem("0");
     item->setSizeHint(QSize(0,0));

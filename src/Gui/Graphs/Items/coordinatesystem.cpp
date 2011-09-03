@@ -16,6 +16,14 @@ CoordinateSystem::CoordinateSystem() :
 {
 }
 
+void CoordinateSystem::resetDimensions()
+{
+    m_xMax=0;
+    m_yMax=0;
+    m_xMin=0;
+    m_yMin=0;
+}
+
 void CoordinateSystem::addGraph(Items::Graph *graph)
 {
     if(graph != 0)

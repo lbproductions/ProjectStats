@@ -23,6 +23,9 @@ void DokoLiveGamePlayerPointsGraph::update()
 {
     m_totalPoints = 0;
     int i = 0;
+
+    m_coordinateSystem->resetDimensions();
+
     foreach(GraphPoint* gpoint, m_points)
     {
         if(i == 0)
@@ -38,6 +41,8 @@ void DokoLiveGamePlayerPointsGraph::update()
             QPoint p = point->point();
             p.setY(m_totalPoints);
             point->setPoint(p);
+            updateDimensions(p);
+            emit pointAdded(p);
         }
     }
 

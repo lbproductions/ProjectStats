@@ -82,6 +82,8 @@ public:
       */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    void resetDimensions();
+
 signals:
     /*!
       Dieses Signal wird gesendet, wenn ein neuer Punkt zu einem enthaltenen Graphen hinzugefügt wurde.
