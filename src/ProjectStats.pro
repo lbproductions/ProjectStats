@@ -404,9 +404,11 @@ mac {
     QMAKE_BUNDLE_DATA += PRIVATE_FRAMEWORKS
 }
 
-RESOURCES += Ressources/Ressources.qrc
+RESOURCES += Ressources/Ressources.qrc \
+    Ressources/drinks.qrc
 
 Documentation.target = Documentation
 Documentation.commands = ../util/doxygen-1.7.5.1/doxygen ../util/documentation/QtDoxygen/DoxyFile.debug
 Documentation.depends = FORCE
 QMAKE_EXTRA_TARGETS += Documentation
+

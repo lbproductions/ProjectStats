@@ -1,27 +1,4 @@
 <RCC>
-    <qresource prefix="/graphics/drinks">
-        <file alias="default">graphics/drinks/beer_default.png</file>
-        <file alias="erdinger">graphics/drinks/erdinger.png</file>
-        <file alias="kromweizen">graphics/drinks/krombacher_weizen.png</file>
-        <file alias="paulaner">graphics/drinks/paulaner.png</file>
-        <file alias="vcola">graphics/drinks/v+cola.png</file>
-        <file alias="veltins033">graphics/drinks/veltins_033.png</file>
-        <file alias="warsteinercola">graphics/drinks/warsteiner_cola_033.png</file>
-        <file alias="brinkhoffs05">graphics/drinks/brinkhoffs_05.png</file>
-        <file alias="bitburger05">graphics/drinks/bitburger_05.png</file>
-        <file alias="brinkhoffs033">graphics/drinks/brinkhoffs_033.png</file>
-        <file alias="wikingerblut">graphics/drinks/wickingerblut.png</file>
-        <file alias="wickueler033">graphics/drinks/wickueler_033.png</file>
-        <file alias="gose">graphics/drinks/gose.png</file>
-        <file alias="veltins05">graphics/drinks/veltins_05.png</file>
-        <file alias="vapple">graphics/drinks/v+apple.png</file>
-        <file alias="venergy">graphics/drinks/v+energy.png</file>
-        <file alias="vlemon">graphics/drinks/v+lemon.png</file>
-        <file alias="oettingerradler05">graphics/drinks/oettingerradler05.png</file>
-        <file alias="mixerycola05">graphics/drinks/mixerycola05.png</file>
-        <file alias="krombacher033">graphics/drinks/krombacher033.png</file>
-        <file alias="astrarotlicht">graphics/drinks/astra_rotlicht.png</file>
-    </qresource>
     <qresource prefix="/graphics/places">
         <file alias="wappen_default">graphics/places/wappen_default.png</file>
         <file alias="wappen_dorsten">graphics/places/wappen_dorsten.png</file>
