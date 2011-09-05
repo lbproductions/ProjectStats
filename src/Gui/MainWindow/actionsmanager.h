@@ -83,6 +83,9 @@ public:
     QAction * actionPlayersShowHearts;
     QAction * actionPlayersShowPoker;
 
+    QAction* actionGamesShowAll;
+    QAction* actionGamesShowUnfinished;
+
 public slots:
     /*!
       Wird von der Action actionGameWizard() aufgerufen.
@@ -126,6 +129,9 @@ public slots:
     void playersShowPoker();
     void playersShowHearts();
 
+    void gamesShowAll();
+    void gamesShowUnfinished();
+
 private:
     /*!
       Erstellt eine neue QAction mit Namen \p name, dem Icon \p iconPath und der optionalen Tastenkombination \p shortcut.
@@ -133,7 +139,8 @@ private:
     QAction *constructAction(const QString& name, const QString& iconPath, const QKeySequence &shortcut = QKeySequence());
 
     void createActions();
-    QList<QString> createDefaultColumns();
+    QList<QString> createDefaultPlayerColumns();
+    QList<QString> createDefaultGameColumns();
 
     QPointer<MainWindow> m_mainWindow; //!< Das MainWindow mit dem die Actions arbeiten.
 

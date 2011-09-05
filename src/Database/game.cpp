@@ -23,6 +23,10 @@ Games::Games() :
     types = new ListAttribute<QString,Games, Games>("types",tr("Types"), this);
     types->setCalculationFunction(this,&Games::calculate_types);
     this->rows()->addDependingAttribute(types);
+
+    unfinishedGames = new ListAttribute<Game*,Games, Games>("unfinishedGames",tr("Unfinished Games"), this);
+    unfinishedGames->setCalculationFunction(this,&Games::calculate_unfinishedGames);
+    this->rows()->addDependingAttribute(unfinishedGames);
 }
 REGISTER_TABLE(Games)
 
@@ -68,6 +72,16 @@ QList<QString> Games::calculate_types(){
     foreach(Game* g, Games::instance()->allRows()){
         if(!list.contains(g->type->value())){
             list.append(g->type->value());
+        }
+    }
+    return list;
+}
+
+QList<Game*> Games::calculate_unfinishedGames(){
+    QList<Game*> list;
+    foreach(Game* g, Games::instance()->allRows()){
+        if(g->state->value() == Round::PausedState || g->state->value() == Round::RunningState){
+            list.append(g);
         }
     }
     return list;

@@ -13,6 +13,7 @@
 #include <Database/drink.h>
 #include <Database/database.h>
 #include <Database/categorie.h>
+#include <Database/game.h>
 #include <Database/Categories/childcategorie.h>
 #include <Gui/Misc/newrowwidget.h>
 
@@ -97,6 +98,13 @@ void ActionsManager::createActions()
     actionPlayersShowPoker = constructAction(tr("Poker"),"");
     actionPlayersShowPoker->setCheckable(true);
     connect(actionPlayersShowPoker,SIGNAL(triggered()),this,SLOT(playersShowPoker()));
+
+    actionGamesShowAll = constructAction(tr("Show All"),"");
+    actionGamesShowAll->setCheckable(true);
+    connect(actionGamesShowAll,SIGNAL(triggered()),this,SLOT(gamesShowAll()));
+    actionGamesShowUnfinished = constructAction(tr("Show unfinished games"),"");
+    actionGamesShowUnfinished->setCheckable(true);
+    connect(actionGamesShowUnfinished,SIGNAL(triggered()),this,SLOT(gamesShowUnfinished()));
 }
 
 QAction *ActionsManager::constructAction(const QString &name, const QString &iconPath, const QKeySequence &shortcut)
@@ -173,7 +181,7 @@ void ActionsManager::showDatabase()
     databaseWindow->show();
 }
 
-QList<QString> ActionsManager::createDefaultColumns()
+QList<QString> ActionsManager::createDefaultPlayerColumns()
 {
     QList<QString> list;
     list.append("Name");
@@ -193,7 +201,7 @@ void ActionsManager::playersShowGeneral(){
     if(actionPlayersShowGeneral->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::MainWindow);
         Database::Players::instance()->model()->setData(Database::Players::instance()->allRows());
-        Database::Players::instance()->model()->setVisibleColumns(createDefaultColumns());
+        Database::Players::instance()->model()->setVisibleColumns(createDefaultPlayerColumns());
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
         actionPlayersShowPoker->setChecked(false);
@@ -207,7 +215,7 @@ void ActionsManager::playersShowDoppelkopf(){
         Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Doppelkopf"));
 
         QList<QString> list;
-        list.append(createDefaultColumns());
+        list.append(createDefaultPlayerColumns());
         list.append("Hochzeiten");
         list.append("Soli");
         list.append("Trumpfabgaben");
@@ -228,7 +236,7 @@ void ActionsManager::playersShowPoker(){
     if(actionPlayersShowPoker->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::PokerWindow);
         Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Poker"));
-        Database::Players::instance()->model()->setVisibleColumns(createDefaultColumns());
+        Database::Players::instance()->model()->setVisibleColumns(createDefaultPlayerColumns());
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
@@ -241,7 +249,7 @@ void ActionsManager::playersShowHearts(){
     if(actionPlayersShowHearts->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::HeartsWindow);
         Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Hearts"));
-        Database::Players::instance()->model()->setVisibleColumns(createDefaultColumns());
+        Database::Players::instance()->model()->setVisibleColumns(createDefaultPlayerColumns());
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowPoker->setChecked(false);
@@ -256,7 +264,7 @@ void ActionsManager::playersShowSkat(){
         Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Skat"));
 
         QList<QString> list;
-        list.append(createDefaultColumns());
+        list.append(createDefaultPlayerColumns());
         list.append("GamePoints");
         Database::Players::instance()->model()->setVisibleColumns(list);
 
@@ -272,11 +280,40 @@ void ActionsManager::playersShowPrognose(){
     if(actionPlayersShowPrognose->isChecked()){
         Database::Players::instance()->model()->setDisplayRole(AttributeVariant::PrognoseWindow);
         Database::Players::instance()->model()->setData(Database::Players::instance()->playersOfType->value("Prognose"));
-        Database::Players::instance()->model()->setVisibleColumns(createDefaultColumns());
+        Database::Players::instance()->model()->setVisibleColumns(createDefaultPlayerColumns());
         actionPlayersShowGeneral->setChecked(false);
         actionPlayersShowDoppelkopf->setChecked(false);
         actionPlayersShowHearts->setChecked(false);
         actionPlayersShowPoker->setChecked(false);
         actionPlayersShowSkat->setChecked(false);
+    }
+}
+
+QList<QString> ActionsManager::createDefaultGameColumns(){
+    QList<QString> list;
+    list.append("Name");
+    list.append("Date");
+    list.append("Comment");
+    list.append("Length");
+    list.append("%Complete");
+    list.append("State");
+    list.append("Type");
+    list.append("Players");
+    return list;
+}
+
+void ActionsManager::gamesShowAll(){
+    if(actionGamesShowAll->isChecked()){
+        Database::Games::instance()->model()->setData(Database::Games::instance()->allRows());
+        Database::Games::instance()->model()->setVisibleColumns(createDefaultGameColumns());
+        actionGamesShowUnfinished->setChecked(false);
+    }
+}
+
+void ActionsManager::gamesShowUnfinished(){
+    if(actionGamesShowUnfinished->isChecked()){
+        Database::Games::instance()->model()->setData(Database::Games::instance()->unfinishedGames->value());
+        Database::Games::instance()->model()->setVisibleColumns(createDefaultGameColumns());
+        actionGamesShowAll->setChecked(false);
     }
 }
