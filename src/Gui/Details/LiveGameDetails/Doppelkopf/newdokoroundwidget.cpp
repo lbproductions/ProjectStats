@@ -20,10 +20,19 @@ NewDokoRoundWidget::NewDokoRoundWidget(Database::DokoLiveGame* livegame, QWidget
 
     setupWidget();
 
-    QFile newround(":/stylesheets/livegame/newroundwidget_fullscreen");
-    newround.open(QFile::ReadOnly);
-    setStyleSheet(newround.readAll());
-    newround.close();
+    QPalette p(this->palette());
+    p.setColor(QPalette::Background, QColor(55,55,55));
+    this->setPalette(p);
+
+    this->setStyleSheet("QGroupBox {"
+                        "background: transparent;"
+                        "border: 5px transparent;"
+                        "border-image: url(:/graphics/styles/mac/groupbox/fullscreen/background) 5px 5px 5px 5px;"
+                        "margin: 0px;"
+                        "padding: -5px;"
+                        "}"
+                        "QLabel{color: white;}"
+                        "QCheckBox{color:white;}");
 
     setWindowModality(Qt::WindowModal);
 }
