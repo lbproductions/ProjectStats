@@ -53,11 +53,11 @@ void NewDokoRoundWidget::setupWidget()
 
     foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
     {
-        ui->comboBoxHochzeit->addItem(player->name->value());
-        ui->comboBoxRe1->addItem(player->name->value());
-        ui->comboBoxRe2->addItem(player->name->value());
-        ui->comboBoxSchweinerei->addItem(player->name->value());
-        ui->comboBoxTrumpfabgabe->addItem(player->name->value());
+        ui->comboBoxHochzeit->addItem(QIcon(player->avatarPath->value()),player->name->value());
+        ui->comboBoxRe1->addItem(QIcon(player->avatarPath->value()),player->name->value());
+        ui->comboBoxRe2->addItem(QIcon(player->avatarPath->value()),player->name->value());
+        ui->comboBoxSchweinerei->addItem(QIcon(player->avatarPath->value()),player->name->value());
+        ui->comboBoxTrumpfabgabe->addItem(QIcon(player->avatarPath->value()),player->name->value());
     }
 
     ui->comboBoxWinner->addItem("Re");
