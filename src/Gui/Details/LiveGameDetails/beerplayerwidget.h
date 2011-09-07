@@ -46,6 +46,7 @@ public:
     void dragMoveEvent(QDragMoveEvent *event);
 
     void dragLeaveEvent(QDragLeaveEvent *event);
+
 private:
     Ui::BeerPlayerWidget *ui;
 

@@ -117,8 +117,13 @@ void BeerPlayerWidget::dropEvent(QDropEvent *event)
     Database::Drink *d = Database::Drinks::instance()->rowById(id);
     if(d)
     {
-        ChooseDrinkCountDialog dialog(d,m_player,m_livegame);
-        dialog.exec();
+        if(event->keyboardModifiers() == Qt::ShiftModifier){
+            ChooseDrinkCountDialog dialog(d,m_player,m_livegame);
+            dialog.exec();
+         }
+        else{
+            m_livegame->addDrink(m_player,d);
+        }
     }
     this->setStyleSheet("QFrame{margin: 0px; padding: 0px; background: transparent; color: white; border: none; font-weight: bold;}");
     this->repaint();
