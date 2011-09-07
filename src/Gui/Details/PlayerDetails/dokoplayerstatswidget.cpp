@@ -26,6 +26,8 @@ DokoPlayerStatsWidget::DokoPlayerStatsWidget(Database::Player* player, QWidget *
 
     ui->tabWidget->addTab(uiDoko->tab_2,"Doko I");
     ui->tabWidget->addTab(uiDoko->tab,"Doko II");
+
+    uiDoko->tabWidget->setVisible(false);
 }
 
 DokoPlayerStatsWidget::~DokoPlayerStatsWidget()

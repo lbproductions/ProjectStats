@@ -23,5 +23,4 @@ AbstractPlayerStatsWidget::AbstractPlayerStatsWidget(Database::Player* player, Q
 AbstractPlayerStatsWidget::~AbstractPlayerStatsWidget()
 {
     delete ui;
-    qDebug() << "AbstractPlayerStatsWidget wird zerstört";
 }
