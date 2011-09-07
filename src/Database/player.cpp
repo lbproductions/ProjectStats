@@ -7,6 +7,7 @@
 #include "game.h"
 #include "place.h"
 #include "livegamedrink.h"
+#include "playerplaceassignment.h"
 
 #include <Gui/Details/PlayerDetails/playerdetailswidget.h>
 #include <Gui/Details/PlayerDetails/playerstatswidget.h>
@@ -81,7 +82,7 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     games->addDependingAttribute(offlineGameCount);
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Place*,Player,PlayerCalculator,calc,places,tr("Places"))
-    Places::instance()->rows()->addDependingAttribute(places);
+    PlayerPlaceAssignments::instance()->rows()->addDependingAttribute(places);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,points,tr("Points"))
     games->addDependingAttribute(points);
