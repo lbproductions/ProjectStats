@@ -27,6 +27,10 @@ Games::Games() :
     unfinishedGames = new ListAttribute<Game*,Games, Games>("unfinishedGames",tr("Unfinished Games"), this);
     unfinishedGames->setCalculationFunction(this,&Games::calculate_unfinishedGames);
     this->rows()->addDependingAttribute(unfinishedGames);
+
+    gamesOfType = new MappingAttribute<QString, QList<Game*>,Games, Games>("gamesOfType",tr("Games of Type"), this);
+    gamesOfType->setCalculationFunction(this,&Games::calculate_gamesOfType);
+    this->rows()->addDependingAttribute(gamesOfType);
 }
 REGISTER_TABLE(Games)
 
@@ -85,6 +89,20 @@ QList<Game*> Games::calculate_unfinishedGames(){
         }
     }
     return list;
+}
+
+QMap<QString,QList<Game*> > Games::calculate_gamesOfType(){
+    QMap<QString,QList<Game*> > map;
+    foreach(QString type, Games::instance()->types->value()){
+        QList<Game*> list;
+        foreach(Game* g, Games::instance()->allRows()){
+            if(g->type->value() == type){
+                list.append(g);
+            }
+        }
+        map.insert(type,list);
+    }
+    return map;
 }
 
 END_TABLE_IMPLEMENTATION()

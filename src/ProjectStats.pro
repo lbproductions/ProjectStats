@@ -168,7 +168,8 @@ SOURCES += main.cpp\
     Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtableitem.cpp \
     Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtabledelegate.cpp \
     Database/playerplaceassignment.cpp \
-    Gui/Details/PlayerDetails/playerresidencewidget.cpp
+    Gui/Details/PlayerDetails/playerresidencewidget.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokoendlivegamewidget.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -351,7 +352,8 @@ HEADERS  += \
     Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtableitem.h \
     Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameroundtabledelegate.h \
     Database/playerplaceassignment.h \
-    Gui/Details/PlayerDetails/playerresidencewidget.h
+    Gui/Details/PlayerDetails/playerresidencewidget.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/dokoendlivegamewidget.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -411,4 +413,6 @@ Documentation.target = Documentation
 Documentation.commands = ../util/doxygen-1.7.5.1/doxygen ../util/documentation/QtDoxygen/DoxyFile.debug
 Documentation.depends = FORCE
 QMAKE_EXTRA_TARGETS += Documentation
+
+
 

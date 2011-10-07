@@ -19,11 +19,12 @@
         <file alias="veltins05">graphics/drinks/veltins_05.png</file>
         <file alias="veltins033">graphics/drinks/veltins_033.png</file>
         <file alias="warsteinercola">graphics/drinks/warsteiner_cola_033.png</file>
-        <file alias="wikingerblut">graphics/drinks/wickingerblut.png</file>
         <file alias="wickueler033">graphics/drinks/wickueler_033.png</file>
         <file alias="potts">graphics/drinks/potts.png</file>
         <file alias="gambrinus10">graphics/drinks/gambrinus10.png</file>
         <file alias="gambrinus11">graphics/drinks/gambrinus11.png</file>
         <file alias="hoevels">graphics/drinks/hoevels.png</file>
+        <file alias="whiskeycola">graphics/drinks/whiskeycola.png</file>
+        <file alias="wikingerblut">graphics/drinks/wickingerblut.png</file>
     </qresource>
 </RCC>

@@ -293,12 +293,12 @@ QList<QString> ActionsManager::createDefaultGameColumns(){
     QList<QString> list;
     list.append("Name");
     list.append("Date");
-    list.append("Comment");
     list.append("Length");
     list.append("%Complete");
     list.append("State");
     list.append("Type");
     list.append("Players");
+    list.append("Site");
     return list;
 }
 

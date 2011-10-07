@@ -65,6 +65,9 @@ START_TABLE_DECLARATION(Game)
     ListAttribute<Game*,Games, Games> *unfinishedGames;
     QList<Game*> calculate_unfinishedGames();
 
+    MappingAttribute<QString,QList<Game*>,Games, Games> *gamesOfType;
+    QMap<QString,QList<Game*> > calculate_gamesOfType();
+
 END_TABLE_DECLARATION()
 
 Q_DECLARE_METATYPE(QPointer<Database::Place>)
