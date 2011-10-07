@@ -21,6 +21,7 @@ DokoLiveGameInfoGroupBox::DokoLiveGameInfoGroupBox(Database::DokoLiveGame* dokog
         m_layout->addWidget(new Misc::HeaderLabel(tr("Hochzeiten"),this));
 
         QHBoxLayout* layout = new QHBoxLayout();
+
         Misc::ValueLabel* hochzeitCountLabel = new Misc::ValueLabel("-", this);
         m_dokogame->doko_hochzeitCount->futureWatcher()->connectTo(hochzeitCountLabel);
         layout->addWidget(hochzeitCountLabel);

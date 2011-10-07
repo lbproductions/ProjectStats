@@ -77,6 +77,13 @@ public:
     QString calculate_doko_trumpfabgabeStats();
     QString calculate_doko_schweinereiStats();
     QString calculate_doko_schmeissereiStats();
+
+    QMap<int,int> calculate_doko_hochzeitPositionAfterRounds();
+    QMap<int,int> calculate_doko_soloPositionAfterRounds();
+    QMap<int,int> calculate_doko_trumpfabgabePositionAfterRounds();
+    QMap<int,int> calculate_doko_pflichtSoloPositionAfterRounds();
+    QMap<int,int> calculate_doko_schmeissereiPositionAfterRounds();
+    QMap<int,int> calculate_doko_schweinereiPositionAfterRounds();
 private:
     QPointer<DokoLiveGame> m_dokolivegame;
 };

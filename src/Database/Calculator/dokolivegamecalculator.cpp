@@ -611,17 +611,15 @@ QMap<int,QMap<Player*,int> > DokoLiveGameCalculator::calculate_placementAfterRou
 
 QString DokoLiveGameCalculator::calculate_doko_hochzeitStats()
 {
-//    int count = m_dokolivegame->doko_hochzeitCount->value();
-    qDebug() << m_livegame->name->value();
+    //    int count = m_dokolivegame->doko_hochzeitCount->value();
     int roundCount = m_dokolivegame->roundCount->value();
-    qDebug() << "RoundCount: " << roundCount;
     int countAfterRounds = m_dokolivegame->doko_hochzeitCountAfterRounds->value(roundCount);
-    qDebug() << "CountAfterRounds: " << m_dokolivegame->doko_hochzeitCountAfterRounds->value();
     if(roundCount > 0)
     {
         //qDebug() << countAfterRounds << " / " << roundCount;
         int percentage = countAfterRounds * 100 / roundCount;
-        return "(" + QString::number(percentage) + "%)";
+        int position = m_dokolivegame->doko_hochzeitPositionAfterRounds->value(m_dokolivegame->roundCount->value());
+        return "(" + QString::number(percentage) + "% | " + QString::number(position) + ".)";
     }
 
     return QString();
@@ -635,7 +633,8 @@ QString DokoLiveGameCalculator::calculate_doko_soloStats()
     if(roundCount > 0)
     {
         int percentage = countAfterRounds * 100 / roundCount;
-        return "(" + QString::number(percentage) + "%)";
+        int position = m_dokolivegame->doko_soloPositionAfterRounds->value(m_dokolivegame->roundCount->value());
+        return "(" + QString::number(percentage) + "% | " + QString::number(position) + ".)";
     }
 
     return QString();
@@ -648,7 +647,8 @@ QString DokoLiveGameCalculator::calculate_doko_pflichtSoloStats()
     if(roundCount > 0)
     {
         int percentage = countAfterRounds * 100 / roundCount;
-        return "(" + QString::number(percentage) + "%)";
+        int position = m_dokolivegame->doko_pflichtSoloPositionAfterRounds->value(m_dokolivegame->roundCount->value());
+        return "(" + QString::number(percentage) + "% | " + QString::number(position) + ".)";
     }
 
     return QString();
@@ -662,7 +662,8 @@ QString DokoLiveGameCalculator::calculate_doko_trumpfabgabeStats()
     if(roundCount > 0)
     {
         int percentage = countAfterRounds * 100 / roundCount;
-        return "(" + QString::number(percentage) + "%)";
+        int position = m_dokolivegame->doko_trumpfabgabePositionAfterRounds->value(m_dokolivegame->roundCount->value());
+        return "(" + QString::number(percentage) + "% | " + QString::number(position) + ".)";
     }
 
     return QString();
@@ -676,7 +677,8 @@ QString DokoLiveGameCalculator::calculate_doko_schweinereiStats()
     if(roundCount > 0)
     {
         int percentage = countAfterRounds * 100 / roundCount;
-        return "(" + QString::number(percentage) + "%)";
+        int position = m_dokolivegame->doko_schweinereiPositionAfterRounds->value(m_dokolivegame->roundCount->value());
+        return "(" + QString::number(percentage) + "% | " + QString::number(position) + ".)";
     }
 
     return QString();
@@ -690,11 +692,163 @@ QString DokoLiveGameCalculator::calculate_doko_schmeissereiStats()
     if(roundCount > 0)
     {
         int percentage = countAfterRounds * 100 / roundCount;
-        return "(" + QString::number(percentage) + "%)";
+        int position = m_dokolivegame->doko_schmeissereiPositionAfterRounds->value(m_dokolivegame->roundCount->value());
+        return "(" + QString::number(percentage) + "% | " + QString::number(position) + ".)";
     }
 
     return QString();
 }
+
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_hochzeitPositionAfterRounds() {
+    QMap<int,int> map;
+    for(int i = 0; i<m_dokolivegame->roundCount->value();i++){
+        int count = 1;
+        int percThis = m_dokolivegame->doko_hochzeitCountAfterRounds->value(i+1) *100 / (i+1);
+        foreach(Game* g, Games::instance()->gamesOfType->value("Doppelkopf")){
+            if(g->live->value()){
+                DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
+                int percentage = 0;
+                if(i+1 <= game->roundCount->value()){
+                    percentage = game->doko_hochzeitCountAfterRounds->value(i+1) * 100 / (i+1);
+                }
+                else if(game->roundCount->value() > 0){
+                    percentage = game->doko_hochzeitCountAfterRounds->value(game->roundCount->value()) * 100 / game->roundCount->value();
+                }
+                if(percentage > percThis){
+                    count++;
+                }
+             }
+        }
+        map.insert(i+1,count);
+    }
+    return map;
+}
+
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_soloPositionAfterRounds(){
+    QMap<int,int> map;
+    for(int i = 0; i<m_dokolivegame->roundCount->value();i++){
+        int count = 1;
+        int percThis = m_dokolivegame->doko_soloCountAfterRounds->value(i+1) *100 / (i+1);
+        foreach(Game* g, Games::instance()->gamesOfType->value("Doppelkopf")){
+            if(g->live->value()){
+                DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
+                int percentage = 0;
+                if(i+1 <= game->roundCount->value()){
+                    percentage = game->doko_soloCountAfterRounds->value(i+1) * 100 / (i+1);
+                }
+                else if(game->roundCount->value() > 0){
+                    percentage = game->doko_soloCountAfterRounds->value(game->roundCount->value()) * 100 / game->roundCount->value();
+                }
+                if(percentage > percThis){
+                    count++;
+                }
+             }
+        }
+        map.insert(i+1,count);
+    }
+    return map;
+}
+
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_trumpfabgabePositionAfterRounds(){
+    QMap<int,int> map;
+    for(int i = 0; i<m_dokolivegame->roundCount->value();i++){
+        int count = 1;
+        int percThis = m_dokolivegame->doko_trumpfabgabeCountAfterRounds->value(i+1) *100 / (i+1);
+        foreach(Game* g, Games::instance()->gamesOfType->value("Doppelkopf")){
+            if(g->live->value()){
+                DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
+                int percentage = 0;
+                if(i+1 <= game->roundCount->value()){
+                    percentage = game->doko_trumpfabgabeCountAfterRounds->value(i+1) * 100 / (i+1);
+                }
+                else if(game->roundCount->value() > 0){
+                    percentage = game->doko_trumpfabgabeCountAfterRounds->value(game->roundCount->value()) * 100 / game->roundCount->value();
+                }
+                if(percentage > percThis){
+                    count++;
+                }
+             }
+        }
+        map.insert(i+1,count);
+    }
+    return map;
+}
+
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_pflichtSoloPositionAfterRounds(){
+    QMap<int,int> map;
+    for(int i = 0; i<m_dokolivegame->roundCount->value();i++){
+        int count = 1;
+        int percThis = m_dokolivegame->doko_pflichtSoloCountAfterRounds->value(i+1) *100 / (i+1);
+        foreach(Game* g, Games::instance()->gamesOfType->value("Doppelkopf")){
+            if(g->live->value()){
+                DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
+                int percentage = 0;
+                if(i+1 <= game->roundCount->value()){
+                    percentage = game->doko_pflichtSoloCountAfterRounds->value(i+1) * 100 / (i+1);
+                }
+                else if(game->roundCount->value() > 0){
+                    percentage = game->doko_pflichtSoloCountAfterRounds->value(game->roundCount->value()) * 100 / game->roundCount->value();
+                }
+                if(percentage > percThis){
+                    count++;
+                }
+             }
+        }
+        map.insert(i+1,count);
+    }
+    return map;
+}
+
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_schmeissereiPositionAfterRounds(){
+    QMap<int,int> map;
+    for(int i = 0; i<m_dokolivegame->roundCount->value();i++){
+        int count = 1;
+        int percThis = m_dokolivegame->doko_schmeissereiCountAfterRounds->value(i+1) *100 / (i+1);
+        foreach(Game* g, Games::instance()->gamesOfType->value("Doppelkopf")){
+            if(g->live->value()){
+                DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
+                int percentage = 0;
+                if(i+1 <= game->roundCount->value()){
+                    percentage = game->doko_schmeissereiCountAfterRounds->value(i+1) * 100 / (i+1);
+                }
+                else if(game->roundCount->value() > 0){
+                    percentage = game->doko_schmeissereiCountAfterRounds->value(game->roundCount->value()) * 100 / game->roundCount->value();
+                }
+                if(percentage > percThis){
+                    count++;
+                }
+             }
+        }
+        map.insert(i+1,count);
+    }
+    return map;
+}
+
+QMap<int,int> DokoLiveGameCalculator::calculate_doko_schweinereiPositionAfterRounds(){
+    QMap<int,int> map;
+    for(int i = 0; i<m_dokolivegame->roundCount->value();i++){
+        int count = 1;
+        int percThis = m_dokolivegame->doko_schweinereiCountAfterRounds->value(i+1) *100 / (i+1);
+        foreach(Game* g, Games::instance()->gamesOfType->value("Doppelkopf")){
+            if(g->live->value()){
+                DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
+                int percentage = 0;
+                if(i+1 <= game->roundCount->value()){
+                    percentage = game->doko_schweinereiCountAfterRounds->value(i+1) * 100 / (i+1);
+                }
+                else if(game->roundCount->value() > 0){
+                    percentage = game->doko_schweinereiCountAfterRounds->value(game->roundCount->value()) * 100 / game->roundCount->value();
+                }
+                if(percentage > percThis){
+                    count++;
+                }
+             }
+        }
+        map.insert(i+1,count);
+    }
+    return map;
+}
+
 
 
 } // namespace Database

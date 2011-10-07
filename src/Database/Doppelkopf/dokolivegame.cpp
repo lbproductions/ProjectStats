@@ -101,6 +101,20 @@ START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_roundWins,tr("Doko_RoundWins"))
     rounds->addDependingAttribute(doko_roundWins);
 
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_hochzeitPositionAfterRounds,tr("Doko_HochzeitPositionAfterRounds"))
+    rounds->addDependingAttribute(doko_hochzeitPositionAfterRounds);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_soloPositionAfterRounds,tr("Doko_SoloPositionAfterRounds"))
+    rounds->addDependingAttribute(doko_soloPositionAfterRounds);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_pflichtSoloPositionAfterRounds,tr("Doko_PflichtSoloPositionAfterRounds"))
+    rounds->addDependingAttribute(doko_pflichtSoloPositionAfterRounds);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_trumpfabgabePositionAfterRounds,tr("Doko_TrumpfabgabePositionAfterRounds"))
+    rounds->addDependingAttribute(doko_trumpfabgabePositionAfterRounds);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_schweinereiPositionAfterRounds,tr("Doko_SchweinereiPositionAfterRounds"))
+    rounds->addDependingAttribute(doko_schweinereiPositionAfterRounds);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_schmeissereiPositionAfterRounds,tr("Doko_SchmeissereiPositionAfterRounds"))
+    rounds->addDependingAttribute(doko_schmeissereiPositionAfterRounds);
+
+
 }
 
 DokoLiveGame::DokoLiveGame(bool mitHochzeit,
