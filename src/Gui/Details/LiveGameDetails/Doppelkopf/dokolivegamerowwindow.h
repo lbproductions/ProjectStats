@@ -53,6 +53,11 @@ protected slots:
     void reflectState();
 
     void showNewRoundDialog();
+
+    /**
+    * Wird von der Action m_actionCloseGame aufgerufen. Öffnet das EndLiveGameWidget und verknüpft dessen Signal liveGameClosed() mit dem Slot onLiveGameClosed.
+    */
+    void showEndGameDialog();
 };
 
 }

@@ -68,7 +68,7 @@ protected slots:
     /**
     * Wird von der Action m_actionCloseGame aufgerufen. Öffnet das EndLiveGameWidget und verknüpft dessen Signal liveGameClosed() mit dem Slot onLiveGameClosed.
     */
-    void showEndGameDialog();
+    virtual void showEndGameDialog();
 
     /**
     * Wird von der Action m_actionNewRound aufgerufen. Wechselt je nach Zustand von state zwischen Darstellen und Löschen des NewDokoRoundWidgets.

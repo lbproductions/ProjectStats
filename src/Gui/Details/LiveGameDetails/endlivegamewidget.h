@@ -4,13 +4,14 @@
 #include <QDialog>
 #include <QPointer>
 
-namespace Ui {
-    class EndLiveGameWidget;
-}
+class QLineEdit;
+class QTextEdit;
+class QGridLayout;
 
 namespace Database
 {
     class LiveGame;
+    class Player;
 }
 
 namespace Gui
@@ -23,7 +24,8 @@ namespace LiveGameDetails
 {
 
 /**
-* Widget, das ein LiveGame beendet. Dabei wird der Name und der Kommentar des LiveGames eingegeben.
+* Widget, das ein LiveGame beendet. Dabei wird der Name und der Kommentar des LiveGames eingegeben. Erbt eine Klasse von dieser, so muss
+  im Konstruktor setupWidget() ausgeführt werden, damit das Widget korrekt dargestellt wird.
 */
 class EndLiveGameWidget : public QDialog
 {
@@ -37,6 +39,8 @@ public:
 
     ~EndLiveGameWidget();
 
+    virtual void addTypeSpecificInformation(QGridLayout* layout, int row, int minColumn, Database::Player* player);
+
 private slots:
     /**
     * Beendet das Spiel endgültig. Der eingebene Name und Kommentar werden für das Spiel gesetzt.
@@ -45,10 +49,13 @@ private slots:
 
     void on_pushButtonCancel_clicked();
 
-private:
-    Ui::EndLiveGameWidget *ui;
-
+protected:
     QPointer<Database::LiveGame> m_livegame;
+
+    QLineEdit* m_nameLineEdit;
+    QTextEdit* m_commentTextEdit;
+
+    void setupWidget();
 
 };
 
