@@ -7,9 +7,7 @@
 
 #include <QGridLayout>
 
-namespace Gui {
-namespace Details {
-namespace LiveGameDetails {
+using namespace Gui::Details::LiveGameDetails;
 
 LiveGameSummaryWidget::LiveGameSummaryWidget(Database::LiveGame* game, QWidget *parent):
     GameSummaryWidget(game,parent),
@@ -17,6 +15,7 @@ LiveGameSummaryWidget::LiveGameSummaryWidget(Database::LiveGame* game, QWidget *
 {
     setupDrinkTab();
     setupGeneralTab();
+    setupCommentTab();
 
     connect(m_livegame->rounds,SIGNAL(changed()),this,SLOT(update()));
     connect(m_livegame->placement,SIGNAL(changed()),this,SLOT(update()));
@@ -120,11 +119,29 @@ void LiveGameSummaryWidget::setupGeneralTab(){
     static_cast<QGridLayout*>(ui->tab->layout())->addWidget(averageHeader,0,4);
 }
 
+void LiveGameSummaryWidget::setupCommentTab(){
+    QMap<int,QString> commentHash;
+    foreach(Database::Round* round, m_livegame->rounds->value()){
+        if(round->comment->value() != ""){
+            commentHash.insert(round->number->value(),round->comment->value());
+        }
+    }
+    if(!commentHash.isEmpty()){
+        QWidget* commentWidget = new QWidget(this);
+        QGridLayout* commentLayout = new QGridLayout(this);
+        for(int i = 0; i<commentHash.keys().size();i++){
+            int key = commentHash.keys().at(i);
+            commentLayout->addWidget(new QLabel("Round " + QString::number(key+1) + ":",this),i+1,0);
+            QLabel* comment = new QLabel(commentHash.value(key),this);
+            comment->setWordWrap(true);
+            commentLayout->addWidget(comment,i+1,1);
+        }
+        commentWidget->setLayout(commentLayout);
+        ui->tabWidget->addTab(commentWidget,tr("Comments"));
+    }
+}
+
 void LiveGameSummaryWidget::update(){
     GameSummaryWidget::update();
     setupGeneralTab();
 }
-
-} // namespace LiveGameDetails
-} // namespace Details
-} // namespace Gui

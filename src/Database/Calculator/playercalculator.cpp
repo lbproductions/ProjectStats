@@ -27,9 +27,9 @@ PlayerCalculator::PlayerCalculator(QPointer<Player> player,QObject *parent):
 QList<Game*> PlayerCalculator::calculate_games(){
     QList<Game*> list;
     foreach(Game* g, Games::instance()->allRows()){
-	if(g->players->value().contains(m_player)){
-	    list.append(g);
-	}
+        if(g->players->value().contains(m_player)){
+            list.append(g);
+        }
     }
 
     return list;
@@ -181,7 +181,7 @@ QMap<LiveGame*,double> PlayerCalculator::calculate_alcPegel(){
             {
                 Drink* drink = lgdrink->drink->value();
                 A += drink->size->value()*100 /*in cl umrechnen*/
-                     * drink->alc->value() *0.08;
+                        * drink->alc->value() *0.08;
             }
 
             double r = 0.0;
@@ -211,14 +211,20 @@ QMap<LiveGame*,double> PlayerCalculator::calculate_alcPegel(){
 
 QMap<QString,double> PlayerCalculator::calculate_averagePlacement(){
     QMap<QString,double> hash;
-    int livegamecount = 0;
-    for(int i = 0; i<m_player->games->value().size();i++){
-        if(m_player->games->value(i)->live->value()){
-            livegamecount++;
-            LiveGame* game = static_cast<LiveGame*>(m_player->games->value(i));
-            hash.insert("General",(hash.value("General")*(livegamecount-1)+game->averagePlacement->value(m_player))/(double)(livegamecount));
-            hash.insert(m_player->games->value(i)->type->value(),(hash.value(m_player->games->value(i)->type->value())*(livegamecount-1)+game->averagePlacement->value(m_player))/(double)(livegamecount));
+    QMap<QString,int> games;
+    QMap<QString,int> placement;
+    foreach(Game* g, m_player->games->value()){
+        if(g->live->value()){
+            LiveGame* game = static_cast<LiveGame*>(g);
+            games.insert("General",games.value("General")+1);
+            games.insert(game->type->value(),games.value(game->type->value())+1);
+
+            placement.insert("General",placement.value("General")+game->placement->value(m_player));
+            placement.insert(game->type->value(),placement.value(game->type->value())+game->placement->value(m_player));
         }
+    }
+    foreach(QString type, games.keys()){
+        hash.insert(type,(double)placement.value(type) / (double)games.value(type));
     }
     return hash;
 }

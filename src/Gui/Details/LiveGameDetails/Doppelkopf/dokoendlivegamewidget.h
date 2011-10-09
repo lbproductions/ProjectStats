@@ -18,7 +18,8 @@ namespace Details
 namespace LiveGameDetails
 {
 
-namespace DokoLiveGameDetails{
+namespace DokoLiveGameDetails
+{
 
 
 class DokoEndLiveGameWidget : public EndLiveGameWidget

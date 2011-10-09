@@ -31,11 +31,22 @@ public:
     AttributeBase *attribute(const QString &name) const;
 
     DECLARE_LISTATTRIBUTE(Game*,DokoPlayerStats,dokoGames)
+    DECLARE_ATTRIBUTE(int,DokoPlayerStats,re)
+    DECLARE_ATTRIBUTE(double,DokoPlayerStats,rePercentage)
+    DECLARE_ATTRIBUTE(int,DokoPlayerStats,reWins)
+    DECLARE_ATTRIBUTE(double,DokoPlayerStats,reWinsPercentage)
+    DECLARE_ATTRIBUTE(int,DokoPlayerStats,contra)
+    DECLARE_ATTRIBUTE(double,DokoPlayerStats,contraPercentage)
+    DECLARE_ATTRIBUTE(int,DokoPlayerStats,contraWins)
+    DECLARE_ATTRIBUTE(double,DokoPlayerStats,contraWinsPercentage)
     DECLARE_ATTRIBUTE(int,DokoPlayerStats,hochzeiten)
     DECLARE_ATTRIBUTE(int,DokoPlayerStats,soli)
     DECLARE_ATTRIBUTE(int,DokoPlayerStats,trumpfabgaben)
     DECLARE_ATTRIBUTE(int,DokoPlayerStats,schweinereien)
     DECLARE_ATTRIBUTE(int,DokoPlayerStats,schmeissereien)
+    DECLARE_ATTRIBUTE(double,DokoPlayerStats,pointAveragePerRound)
+    DECLARE_ATTRIBUTE(double,DokoPlayerStats,roundWinsPercentage)
+
 
 private:
     Player* m_player;

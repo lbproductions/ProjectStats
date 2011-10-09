@@ -14,4 +14,9 @@ namespace Database{
   */
 QTime operator+(const QTime &time1, const QTime &time2);
 
+/*!
+  Rundet die Zahl auf die angegebene Anzahl an Stellen.
+  */
+double round(double zahl, int stellen);
+
 #endif // GLOBAL_H

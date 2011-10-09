@@ -15,11 +15,19 @@ public:
 
     QMap<Player*,int> calculate_doko_re();
 
+    QMap<Player*,int> calculate_doko_rePercentage();
+
     QMap<Player*,int> calculate_doko_reWins();
+
+    QMap<Player*,int> calculate_doko_reWinsPercentage();
 
     QMap<Player*,int> calculate_doko_contra();
 
+    QMap<Player*,int> calculate_doko_contraPercentage();
+
     QMap<Player*,int> calculate_doko_contraWins();
+
+    QMap<Player*,int> calculate_doko_contraWinsPercentage();
 
     QMap<Player*,int> calculate_doko_hochzeit();
 
@@ -54,6 +62,8 @@ public:
     QMap<Player*,int> calculate_doko_rounds();
 
     QMap<Player*,int> calculate_doko_roundWins();
+
+    QMap<Player*,double> calculate_doko_roundWinsPercentage();
 
     QMap<int,QMap<Player*,int> > calculate_placementAfterRounds();
 

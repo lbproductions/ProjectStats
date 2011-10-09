@@ -19,6 +19,7 @@ public:
 protected:
     void setupDrinkTab();
     void setupGeneralTab();
+    void setupCommentTab();
 
     QPointer<Database::LiveGame> m_livegame;
 

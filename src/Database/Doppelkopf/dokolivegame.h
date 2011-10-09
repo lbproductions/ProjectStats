@@ -55,9 +55,13 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfabgabeSchmeisserei)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_re)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_rePercentage)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_reWins)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_reWinsPercentage)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_contra)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_contraPercentage)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_contraWins)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_contraWinsPercentage)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_hochzeit)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_solo)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_trumpfabgabe)
@@ -93,6 +97,7 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,double,DokoLiveGame,DokoLiveGameCalculator,doko_pointAveragePerWin)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_rounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_roundWins)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,double,DokoLiveGame,DokoLiveGameCalculator,doko_roundWinsPercentage)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_hochzeitPositionAfterRounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_soloPositionAfterRounds)
@@ -104,6 +109,8 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     virtual Gui::Details::DetailsWidget* detailsWidget();
 
     virtual Gui::Details::RowWindow* rowWindow();
+
+    Gui::Details::SummaryWidget* summaryWidget();
 
     static const QString TYPE;
 

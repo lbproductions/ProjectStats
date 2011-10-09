@@ -222,6 +222,10 @@ void ActionsManager::playersShowDoppelkopf(){
         list.append("Schweinereien");
         list.append("Schmeissereien");
         list.append("GamePoints");
+        list.append("RePercentage");
+        list.append("ContraPercentage");
+        list.append("PointAveragePerRound");
+        list.append("RoundWinsPercentage");
         Database::Players::instance()->model()->setVisibleColumns(list);
 
         actionPlayersShowGeneral->setChecked(false);

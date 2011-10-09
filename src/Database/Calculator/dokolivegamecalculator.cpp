@@ -28,6 +28,19 @@ QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_re(){
     return hash;
 }
 
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_rePercentage(){
+    QMap<Player*,int> map;
+    foreach(Player* p, m_dokolivegame->players->value()){
+        if(m_dokolivegame->doko_rounds->value(p) > 0){
+            map.insert(p,m_dokolivegame->doko_re->value(p) * 100 / m_dokolivegame->doko_rounds->value(p));
+        }
+        else{
+            map.insert(p,0);
+        }
+    }
+    return map;
+}
+
 QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_reWins(){
     QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
@@ -41,6 +54,19 @@ QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_reWins(){
         }
     }
     return hash;
+}
+
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_reWinsPercentage() {
+    QMap<Player*,int> map;
+    foreach(Player* p, m_dokolivegame->players->value()){
+        if(m_dokolivegame->doko_re->value(p) > 0){
+            map.insert(p,m_dokolivegame->doko_reWins->value(p) * 100 / m_dokolivegame->doko_re->value(p));
+        }
+        else{
+            map.insert(p,0);
+        }
+    }
+    return map;
 }
 
 QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_contra(){
@@ -59,6 +85,19 @@ QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_contra(){
     return hash;
 }
 
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_contraPercentage(){
+    QMap<Player*,int> map;
+    foreach(Player* p, m_dokolivegame->players->value()){
+        if(m_dokolivegame->doko_rounds->value(p) > 0){
+            map.insert(p,m_dokolivegame->doko_contra->value(p) * 100 / m_dokolivegame->doko_rounds->value(p));
+        }
+        else{
+            map.insert(p,0);
+        }
+    }
+    return map;
+}
+
 QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_contraWins(){
     QMap<Player*,int> hash;
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
@@ -72,6 +111,14 @@ QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_contraWins(){
         }
     }
     return hash;
+}
+
+QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_contraWinsPercentage() {
+    QMap<Player*,int> map;
+    foreach(Player* p, m_dokolivegame->players->value()){
+        map.insert(p,m_dokolivegame->doko_contraWins->value(p) * 100 / m_dokolivegame->doko_contra->value(p));
+    }
+    return map;
 }
 
 QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_hochzeit(){
@@ -560,9 +607,9 @@ QMap<Player*,double> DokoLiveGameCalculator::calculate_doko_pointAveragePerWin()
 
 QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_rounds(){
     QMap<Player*,int> hash;
-    for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
-        for(int j = 0; j<m_dokolivegame->currentPlayingPlayers->value().size();j++){
-            hash.insert(m_dokolivegame->currentPlayingPlayers->value(j),hash.value(m_dokolivegame->players->value(j))+1);
+    foreach(Round* r, m_dokolivegame->rounds->value()){
+        foreach(Player* p, r->currentPlayingPlayers->value()){
+            hash.insert(p,hash.value(p)+1);
         }
     }
     return hash;
@@ -571,10 +618,20 @@ QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_rounds(){
 QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_roundWins(){
     QMap<Player*,int> hash;
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
-        for(int j = 0; j<m_dokolivegame->currentPlayingPlayers->value().size();j++){
-            if(m_dokolivegame->rounds->value(i)->points->value(m_dokolivegame->currentPlayingPlayers->value(j)) > 0){
-                hash.insert(m_dokolivegame->currentPlayingPlayers->value(j),hash.value(m_dokolivegame->players->value(j))+1);
+        foreach(Player* p, m_dokolivegame->players->value()){
+            if(m_dokolivegame->rounds->value(i)->points->value(p) > 0){
+                hash.insert(p,hash.value(p)+1);
             }
+        }
+    }
+    return hash;
+}
+
+QMap<Player*,double> DokoLiveGameCalculator::calculate_doko_roundWinsPercentage(){
+    QMap<Player*,double> hash;
+    foreach(Player* p, m_dokolivegame->players->value()){
+        if(m_dokolivegame->doko_rounds->value(p) > 0){
+            hash.insert(p,(double)m_dokolivegame->doko_roundWins->value(p) * 100.0 /(double)m_dokolivegame->doko_rounds->value(p));
         }
     }
     return hash;
@@ -717,7 +774,7 @@ QMap<int,int> DokoLiveGameCalculator::calculate_doko_hochzeitPositionAfterRounds
                 if(percentage > percThis){
                     count++;
                 }
-             }
+            }
         }
         map.insert(i+1,count);
     }
@@ -742,7 +799,7 @@ QMap<int,int> DokoLiveGameCalculator::calculate_doko_soloPositionAfterRounds(){
                 if(percentage > percThis){
                     count++;
                 }
-             }
+            }
         }
         map.insert(i+1,count);
     }
@@ -767,7 +824,7 @@ QMap<int,int> DokoLiveGameCalculator::calculate_doko_trumpfabgabePositionAfterRo
                 if(percentage > percThis){
                     count++;
                 }
-             }
+            }
         }
         map.insert(i+1,count);
     }
@@ -792,7 +849,7 @@ QMap<int,int> DokoLiveGameCalculator::calculate_doko_pflichtSoloPositionAfterRou
                 if(percentage > percThis){
                     count++;
                 }
-             }
+            }
         }
         map.insert(i+1,count);
     }
@@ -817,7 +874,7 @@ QMap<int,int> DokoLiveGameCalculator::calculate_doko_schmeissereiPositionAfterRo
                 if(percentage > percThis){
                     count++;
                 }
-             }
+            }
         }
         map.insert(i+1,count);
     }
@@ -842,7 +899,7 @@ QMap<int,int> DokoLiveGameCalculator::calculate_doko_schweinereiPositionAfterRou
                 if(percentage > percThis){
                     count++;
                 }
-             }
+            }
         }
         map.insert(i+1,count);
     }
