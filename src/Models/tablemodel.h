@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 
 #include <Database/row.h>
+#include <Database/databaseattribute.h>
 
 #include <QStringList>
 #include <QMimeData>
@@ -290,8 +291,10 @@ bool TableModel<RowType, Owner>::setData(const QModelIndex &index, const QVarian
         QString name = m_owner->registeredAttributes()->values().at(index.column())->name();
         Database::AttributeBase *attribute = row->attribute(name);
 
-        attribute->changeValue(value);
-
+        if(attribute->isDatabaseAttribute())
+        {
+            attribute->changeValue(value,true);
+        }
         emit dataChanged(index, index);
         return true;
     }
