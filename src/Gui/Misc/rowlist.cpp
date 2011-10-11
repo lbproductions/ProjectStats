@@ -135,6 +135,5 @@ void RowList::on_editAttributeActionTriggered()
 {
     QAction* action = static_cast<QAction*>(sender());
     QModelIndex index = indexAt(action->data().toPoint());
-    qDebug() << index;
     edit(index);
 }

@@ -2,6 +2,7 @@
 
 #include "../graphview.h"
 #include "graph.h"
+#include "graphpoint.h"
 
 using namespace Gui::Graphs::Items;
 
@@ -16,12 +17,20 @@ CoordinateSystem::CoordinateSystem() :
 {
 }
 
-void CoordinateSystem::resetDimensions()
+void CoordinateSystem::updateDimensions()
 {
     m_xMax=0;
     m_yMax=0;
     m_xMin=0;
     m_yMin=0;
+
+    foreach(Items::Graph* graph, m_graphs)
+    {
+        foreach(Items::GraphPoint* point, graph->points())
+        {
+            updateDimensions(point->point());
+        }
+    }
 }
 
 void CoordinateSystem::addGraph(Items::Graph *graph)

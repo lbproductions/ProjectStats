@@ -75,6 +75,8 @@ public:
       */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    QList<QPointer<GraphPoint> > points() const;
+
 signals:
     /*!
       Dieses Signal wird gesendet, wenn ein Punkt zu diesem Graphen hinzugefügt wurde.
