@@ -26,9 +26,9 @@
         behavior |= NSWindowCollectionBehaviorFullScreenPrimary;
         [window setCollectionBehavior:behavior];
 
-        NSButton* fullscreenButton = [window standardWindowButton:NSWindowFullScreenButton];
-        [fullscreenButton setAction:@selector(enterFullScreen:)];
-        [fullscreenButton setTarget:self];
+//        NSButton* fullscreenButton = [window standardWindowButton:NSWindowFullScreenButton];
+//        [fullscreenButton setAction:@selector(enterFullScreen:)];
+//        [fullscreenButton setTarget:self];
     }
 }
 

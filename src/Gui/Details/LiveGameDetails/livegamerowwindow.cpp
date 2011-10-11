@@ -24,7 +24,7 @@ LiveGameRowWindow::LiveGameRowWindow(Database::LiveGame* livegame, QWidget* widg
 
     reflectState();
 
-#ifdef Q_WS_MAC
+#if false //defined Q_WS_MAC && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
     setUpFullScreenButton(this);
 #endif
 }
@@ -86,7 +86,7 @@ void LiveGameRowWindow::setFullScreen(bool state)
 {
     if (state)
     {
-#ifndef Q_WS_MAC
+#if true //!defined Q_WS_MAC || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_7
         this->showFullScreen();
 #else
         //setUnifiedTitleAndToolBarOnMac(false);
@@ -99,7 +99,7 @@ void LiveGameRowWindow::setFullScreen(bool state)
     else
     {
         this->setMinimumSize(100,100);
-#ifndef Q_WS_MAC
+#ifndef true // Q_WS_MAC
         this->showNormal();
 #else
         toggleFullscreen(this);
