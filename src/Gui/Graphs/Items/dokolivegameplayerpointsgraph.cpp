@@ -22,9 +22,11 @@ DokoLiveGamePlayerPointsGraph::DokoLiveGamePlayerPointsGraph(Database::Player *p
 void DokoLiveGamePlayerPointsGraph::update()
 {
     m_totalPoints = 0;
+    m_xMax=0;
+    m_yMax=0;
+    m_xMin=0;
+    m_yMin=0;
     int i = 0;
-
-    m_coordinateSystem->resetDimensions();
 
     foreach(GraphPoint* gpoint, m_points)
     {
@@ -45,6 +47,8 @@ void DokoLiveGamePlayerPointsGraph::update()
             emit pointAdded(p);
         }
     }
+
+    m_coordinateSystem->updateDimensions();
 
     this->scene()->invalidate();
 }
