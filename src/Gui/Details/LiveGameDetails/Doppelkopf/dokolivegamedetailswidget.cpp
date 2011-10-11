@@ -26,8 +26,6 @@ DokoLiveGameDetailsWidget::DokoLiveGameDetailsWidget(Database::DokoLiveGame *gam
 {
     initializeItems();
     setupWidget();
-
-    fillWidget();
 }
 
 DokoLiveGameDetailsWidget::~DokoLiveGameDetailsWidget()

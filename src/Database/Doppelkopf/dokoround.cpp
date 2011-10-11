@@ -39,7 +39,7 @@ void DokoRound::addSchmeisserei(Player* player, const QString& type)
 {
     Schmeisserei* schmeisserei = new Schmeisserei(player,this,type);
     addChildRow(schmeisserei);
-    static_cast<DokoLiveGame*>(game->value().data())->doko_schmeisserei->recalculateFromScratch();
+    static_cast<DokoLiveGame*>(game->value())->doko_schmeisserei->recalculateFromScratch();
     this->doko_schmeissereien->recalculateFromScratch();
 }
 

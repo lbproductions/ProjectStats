@@ -14,7 +14,7 @@ DokoRoundCalculator::DokoRoundCalculator(DokoRound* round):
 }
 
 QList<Player*> DokoRoundCalculator::calculate_currentPlayingPlayers(){
-    QPointer<DokoLiveGame> game = (DokoLiveGame*)m_dokoround->game->value().data();
+    QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(m_dokoround->game->value());
 
         QList<Player*> players;
         if(game->playersSortedByPosition->value().isEmpty())

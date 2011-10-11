@@ -50,7 +50,7 @@ QMap<Player*,int> RoundCalculator::calculate_points(){
 }
 
 int RoundCalculator::calculate_cardmixerPosition(){
-    QPointer<LiveGame> game = (LiveGame*)m_round->game->value().data();
+    QPointer<LiveGame> game = static_cast<LiveGame*>(m_round->game->value());
 
     if(game->playersSortedByPosition->value().isEmpty())
     {

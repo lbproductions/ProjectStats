@@ -55,11 +55,7 @@ public:
     virtual void initializeItems();
 
 protected slots:
-    void on_currentRoundChanged();
-
     void resizeEvent(QResizeEvent* /*event*/);
-
-    void fillWidget();
 
 protected:
     friend class ::Gui::Details::LiveGameRowWindow;

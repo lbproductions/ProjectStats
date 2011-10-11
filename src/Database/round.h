@@ -46,7 +46,7 @@ class Round : public Row
     DECLARE_DATABASEATTRIBUTE(int,Round,db_state)
     DECLARE_DATABASEATTRIBUTE(QString,Round,comment)
 
-    DECLARE_ATTRIBUTE(QPointer<Game>,Round,game)
+    DECLARE_ATTRIBUTE(LiveGame*,Round,game)
     DECLARE_ATTRIBUTE(RoundState,Round,state)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Point*,Round,RoundCalculator,pointInstances)

@@ -26,6 +26,13 @@
 
 class QLabel;
 class QLineEdit;
+namespace Gui
+{
+namespace Misc
+{
+class ConnectableTableWidgetItem;
+}
+}
 
 namespace Database {
 
@@ -367,6 +374,8 @@ public:
       Alle zukünftigen Änderungen werden der LineEdit mitgeteilt, sodass es sich automatisch anpassen kann.
       */
     virtual void connectTo(QLineEdit *lineEdit);
+
+    virtual void connectTo(Gui::Misc::ConnectableTableWidgetItem *item);
 
 signals:
     /*!
