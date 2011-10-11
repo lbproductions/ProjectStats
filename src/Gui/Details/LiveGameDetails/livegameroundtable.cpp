@@ -95,6 +95,9 @@ LiveGameRoundTable::LiveGameRoundTable(Database::LiveGame* livegame, QWidget *pa
     this->insertColumn(this->columnCount());
     this->setHorizontalHeaderItem(this->columnCount()-1,new QTableWidgetItem(tr("")));
 
+    this->insertColumn(this->columnCount());
+    this->setHorizontalHeaderItem(this->columnCount()-1,new QTableWidgetItem(tr("")));
+
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     updateSizes();
@@ -127,13 +130,14 @@ void LiveGameRoundTable::addRound(::Database::Round* /*round*/)
 
 void LiveGameRoundTable::updateSizes()
 {
-    double width = ((double)this->width() / (double)(m_livegame->players->value().size()+0.5));
-    for (int i = 0;  i < this->columnCount()-1; i++)
+    double width = ((double)this->width() / (double)(m_livegame->players->value().size()+0.75));
+    for (int i = 0;  i < this->columnCount()-2; i++)
     {
         this->setColumnWidth(i,width-3);
         this->horizontalHeaderItem(i)->setSizeHint(QSize(width,50));
     }
     this->setColumnWidth(this->columnCount()-1, width / 2);
+    this->setColumnWidth(this->columnCount()-1, width / 4);
 }
 
 void LiveGameRoundTable::resizeEvent(QResizeEvent* event)

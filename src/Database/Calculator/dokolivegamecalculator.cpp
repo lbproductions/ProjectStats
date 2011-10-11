@@ -741,6 +741,14 @@ QString DokoLiveGameCalculator::calculate_doko_schweinereiStats()
     return QString();
 }
 
+QString DokoLiveGameCalculator::calculate_doko_reVsContraStats(){
+    return QString::number(m_dokolivegame->doko_reRoundWins->value()) + " : " + QString::number(m_dokolivegame->doko_contraRoundWins->value());
+}
+
+QString DokoLiveGameCalculator::calculate_doko_contraVsContraStats(){
+
+}
+
 QString DokoLiveGameCalculator::calculate_doko_schmeissereiStats()
 {
     //    int count = m_dokolivegame->doko_hochzeitCount->value();
@@ -904,6 +912,28 @@ QMap<int,int> DokoLiveGameCalculator::calculate_doko_schweinereiPositionAfterRou
         map.insert(i+1,count);
     }
     return map;
+}
+
+int DokoLiveGameCalculator::calculate_doko_reRoundWins(){
+    int count = 0;
+    foreach(Round* r, m_dokolivegame->rounds->value()){
+        DokoRound* dokoRound = static_cast<DokoRound*>(r);
+        if(dokoRound->points->value(Players::instance()->rowById(dokoRound->doko_re1PlayerId->value())) > 0){
+            count++;
+        }
+    }
+    return count;
+}
+
+int DokoLiveGameCalculator::calculate_doko_contraRoundWins(){
+    int count = 0;
+    foreach(Round* r, m_dokolivegame->rounds->value()){
+        DokoRound* dokoRound = static_cast<DokoRound*>(r);
+        if(dokoRound->points->value(Players::instance()->rowById(dokoRound->doko_re1PlayerId->value())) < 0){
+            count++;
+        }
+    }
+    return count;
 }
 
 

@@ -62,6 +62,19 @@ void DokoLiveGameSummaryWidget::setupDokoStatsTab(){
     QWidget* statsWidget = new QWidget(this);
     QGridLayout* statsLayout = new QGridLayout(this);
 
+    QGridLayout* roundWinsLayout = new QGridLayout(this);
+    roundWinsLayout->addWidget(new QLabel(tr("ReWins"),this),0,0);
+    roundWinsLayout->addWidget(new QLabel(tr("ContraWins"),this),1,0);
+    QLabel* reWins = new QLabel(this);
+    m_dokoLiveGame->doko_reRoundWins->futureWatcher()->connectTo(reWins);
+    roundWinsLayout->addWidget(reWins,0,1);
+    QLabel* contraWins = new QLabel(this);
+    m_dokoLiveGame->doko_contraRoundWins->futureWatcher()->connectTo(contraWins);
+    roundWinsLayout->addWidget(contraWins,1,1);
+    statsLayout->addLayout(roundWinsLayout,0,0);
+
+
+
     statsWidget->setLayout(statsLayout);
     ui->tabWidget->addTab(statsWidget,tr("DokoGameStats"));
 }

@@ -113,6 +113,13 @@ START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
     rounds->addDependingAttribute(doko_roundWins);
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,double,DokoLiveGame,DokoLiveGameCalculator,calc,doko_roundWinsPercentage,tr("RoundWinsPercentage"))
     rounds->addDependingAttribute(doko_roundWinsPercentage);
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_reRoundWins,tr("ReRoundWins"))
+    rounds->addDependingAttribute(doko_reRoundWins);
+    IMPLEMENT_ATTRIBUTE_IN_CALC(int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_contraRoundWins,tr("ContraRoundWins"))
+    rounds->addDependingAttribute(doko_contraRoundWins);
+    IMPLEMENT_ATTRIBUTE_IN_CALC(QString,DokoLiveGame,DokoLiveGameCalculator,calc,doko_reVsContraStats,tr("ReVsContraStats"))
+    doko_reRoundWins->addDependingAttribute(doko_reVsContraStats);
+    doko_contraRoundWins->addDependingAttribute(doko_reVsContraStats);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_hochzeitPositionAfterRounds,tr("Doko_HochzeitPositionAfterRounds"))
     rounds->addDependingAttribute(doko_hochzeitPositionAfterRounds);

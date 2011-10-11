@@ -81,12 +81,18 @@ public:
 
     int calculate_totalPoints();
 
+    int calculate_doko_reRoundWins();
+
+    int calculate_doko_contraRoundWins();
+
     QString calculate_doko_hochzeitStats();
     QString calculate_doko_soloStats();
     QString calculate_doko_pflichtSoloStats();
     QString calculate_doko_trumpfabgabeStats();
     QString calculate_doko_schweinereiStats();
     QString calculate_doko_schmeissereiStats();
+    QString calculate_doko_reVsContraStats();
+    QString calculate_doko_contraVsContraStats();
 
     QMap<int,int> calculate_doko_hochzeitPositionAfterRounds();
     QMap<int,int> calculate_doko_soloPositionAfterRounds();
