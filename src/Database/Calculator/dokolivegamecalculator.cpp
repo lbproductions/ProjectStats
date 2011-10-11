@@ -116,7 +116,13 @@ QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_contraWins(){
 QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_contraWinsPercentage() {
     QMap<Player*,int> map;
     foreach(Player* p, m_dokolivegame->players->value()){
-        map.insert(p,m_dokolivegame->doko_contraWins->value(p) * 100 / m_dokolivegame->doko_contra->value(p));
+        int totalContra = m_dokolivegame->doko_contra->value(p);
+        if(totalContra > 0) {
+            map.insert(p,m_dokolivegame->doko_contraWins->value(p) * 100 / m_dokolivegame->doko_contra->value(p));
+        }
+        else {
+            map.insert(p,0);
+        }
     }
     return map;
 }
