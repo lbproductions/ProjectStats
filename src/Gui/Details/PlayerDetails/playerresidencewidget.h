@@ -34,8 +34,8 @@ private:
 
     Misc::PlacesComboBox* m_comboBox;
 
-    Database::Place* m_place;
     Database::Player* m_player;
+    Database::Place* m_place;
     Database::PlayerPlaceAssignment* m_assignment;
 
 
