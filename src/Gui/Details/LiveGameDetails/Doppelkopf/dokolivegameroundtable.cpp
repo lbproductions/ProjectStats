@@ -34,6 +34,12 @@ void DokoLiveGameRoundTable::addRound(::Database::Round* round)
     DokoLiveGameRoundTableItem* item = new DokoLiveGameRoundTableTotalPointsItem(dokoround);
     this->setItem(this->rowCount()-1,i,item);
 
+    if(round->comment->value() != ""){
+        QTableWidgetItem* item1 = new QTableWidgetItem("C");
+        this->setItem(this->rowCount()-1,i+1,item1);
+        item1->setToolTip(round->comment->value());
+    }
+
     QTableWidgetItem* item1 = new QTableWidgetItem("");
     item1->setSizeHint(QSize(0,0));
     this->setVerticalHeaderItem(this->rowCount()-1,item1);

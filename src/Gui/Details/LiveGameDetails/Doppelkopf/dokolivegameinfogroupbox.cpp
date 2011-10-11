@@ -16,6 +16,17 @@ DokoLiveGameInfoGroupBox::DokoLiveGameInfoGroupBox(Database::DokoLiveGame* dokog
     LiveGameInfoGroupBox(dokogame,parent),
     m_dokogame(dokogame)
 {
+    m_layout->addWidget(new Misc::HeaderLabel(tr("Re vs. Contra"),this));
+
+    QHBoxLayout* reVsContraLayout = new QHBoxLayout();
+
+    Misc::ValueLabel* reVsContraStatsLabel = new Misc::ValueLabel("-", this);
+    m_dokogame->doko_reVsContraStats->futureWatcher()->connectTo(reVsContraStatsLabel);
+    reVsContraLayout->addWidget(reVsContraStatsLabel);
+
+    m_layout->addLayout(reVsContraLayout);
+
+
     if (m_dokogame->doko_mitHochzeit->value())
     {
         m_layout->addWidget(new Misc::HeaderLabel(tr("Hochzeiten"),this));
