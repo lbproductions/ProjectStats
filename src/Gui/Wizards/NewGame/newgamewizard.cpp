@@ -117,6 +117,7 @@ Database::DokoLiveGame *NewGameWizard::createDokoLiveGame()
                 field("doko_mitFarbsolo").toBool(),
                 field("doko_mitFleischlos").toBool(),
                 field("doko_mitTrumpfsolo").toBool(),
+                field("doko_mitSchwarzsolo").toBool(),
 
                 field("doko_mitFuenfKoenige").toBool(),
                 field("doko_mitZuWenigTrumpf").toBool(),

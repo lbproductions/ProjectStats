@@ -24,6 +24,7 @@ START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFarbsolo,tr("doko_mitFarbsolo"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFleischlos,tr("doko_mitFleischlos"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfsolo,tr("doko_mitTrumpfsolo"))
+    IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSchwarzsolo,tr("doko_mitSchwarzsolo"))
 
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFuenfKoenige,tr("doko_mitZuWenigTrumpf"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitZuWenigTrumpf,tr("doko_mitZuWenigTrumpf"))
@@ -148,6 +149,7 @@ DokoLiveGame::DokoLiveGame(bool mitHochzeit,
                             bool mitFarbsolo,
                             bool mitFleischlos,
                             bool mitTrumpfsolo,
+                            bool mitSchwarzsolo,
                             bool mitFuenfKoenige,
                             bool mitZuWenigTrumpf,
                             bool mitNeunzigPunkte,
@@ -168,6 +170,7 @@ DokoLiveGame::DokoLiveGame(bool mitHochzeit,
     doko_mitFarbsolo->setValue(mitFarbsolo);
     doko_mitFleischlos->setValue(mitFleischlos);
     doko_mitTrumpfsolo->setValue(mitTrumpfsolo);
+    doko_mitSchwarzsolo->setValue(mitSchwarzsolo);
 
     doko_mitFuenfKoenige->setValue(mitFuenfKoenige);
     doko_mitZuWenigTrumpf->setValue(mitZuWenigTrumpf);

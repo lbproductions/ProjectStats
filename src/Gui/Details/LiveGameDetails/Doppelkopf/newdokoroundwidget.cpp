@@ -78,6 +78,10 @@ void NewDokoRoundWidget::setupWidget()
     if(m_livegame->doko_mitFarbsolo->value()){
         ui->comboBoxSolo->addItem("Farben");
     }
+    if(m_livegame->doko_mitSchwarzsolo->value()){
+        ui->comboBoxSolo->addItem("Schwarz");
+    }
+
 
     ui->comboBoxHochzeit->setVisible(m_livegame->doko_mitHochzeit->value());
     ui->labelHochzeit->setVisible(m_livegame->doko_mitHochzeit->value());
@@ -325,7 +329,19 @@ void NewDokoRoundWidget::on_comboBoxSolo_currentIndexChanged(QString name)
 	    ui->labelHochzeit->setEnabled(true);
 	    ui->comboBoxHochzeit->setEnabled(true);
 	}
-
+        if(name == "Schwarz"){
+            ui->comboBoxWinner->setCurrentIndex(ui->comboBoxWinner->findText("Contra"));
+            ui->comboBoxWinner->setEnabled(false);
+            ui->checkBoxPflichtsolo->setChecked(false);
+            ui->checkBoxPflichtsolo->setEnabled(false);
+            if(ui->lineEditComment->text() == ""){
+                ui->lineEditComment->setText(ui->comboBoxRe1->currentText() + tr(" verliert schwarz"));
+             }
+        }
+        else{
+            ui->comboBoxWinner->setEnabled(true);
+            ui->checkBoxPflichtsolo->setEnabled(true);
+        }
         if (ui->comboBoxRe1->currentText() != ""){
             if (m_livegame->doko_hasPflichtSolo->value(Database::Players::instance()->playerByName(ui->comboBoxRe1->currentText()))){
                 ui->checkBoxPflichtsolo->setChecked(false);
