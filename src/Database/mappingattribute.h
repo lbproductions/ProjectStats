@@ -3,6 +3,7 @@
 
 #include "attribute.h"
 #include <Misc/handler.h>
+#include <Gui/Misc/connectabletablewidgetitem.h>
 
 #include <QDebug>
 #include <QVariant>
@@ -26,6 +27,8 @@ public:
       Alle zukünftigen Änderungen werden dem Label mitgeteilt, sodass es sich automatisch anpassen kann.
       */
     void connectTo(QLabel *label);
+
+    void connectTo(Gui::Misc::ConnectableTableWidgetItem* item);
 
 protected:
     /*!
@@ -120,14 +123,44 @@ void MappingAttributeFutureWatcher<K,V,R,C>::connectTo(QLabel* label)
 
     connect(this,SIGNAL(valueChanged(QString)),label,SLOT(setText(QString)));
 }
+template<class K, class V, class R, class C>
+void MappingAttributeFutureWatcher<K,V,R,C>::connectTo(Gui::Misc::ConnectableTableWidgetItem* item)
+{
+    MappingAttribute<K,V,R,C>* attribute = static_cast<MappingAttribute<K,V,R,C>*>(AttributeFutureWatcher::m_attribute);
+
+    if(attribute->isCalculating())
+    {
+        item->setText("Loading...");
+    }
+    else
+    {
+        AttributeVariant variant;
+        variant.setValue(attribute->value(m_key));
+        QVariant display = variant.displayVariant();
+        if (!display.isNull()){
+            item->setText(display.toString());
+        }
+        else{
+            item->setText(QVariant::fromValue<V>(attribute->value(m_key)).toString());
+        }
+    }
+
+    connect(this,SIGNAL(valueChanged(QString)),item,SLOT(setText(QString)));
+}
 
 template<class K, class V, class R, class C>
 void MappingAttributeFutureWatcher<K,V,R,C>::on_attribute_changed()
 {
     MappingAttribute<K,V,R,C>* attribute = static_cast<MappingAttribute<K,V,R,C>*>(AttributeFutureWatcher::m_attribute);
-    AttributeVariant var;
-    var.setValue(attribute->value(m_key));
-    emit valueChanged(var.displayVariant().toString());
+    AttributeVariant variant;
+    variant.setValue(attribute->value(m_key));
+    QVariant display = variant.displayVariant();
+    if (!display.isNull()){
+        emit valueChanged(display.toString());
+    }
+    else{
+        emit valueChanged(QVariant::fromValue<V>(attribute->value(m_key)).toString());
+    }
 }
 
 template<class K, class V, class R, class C>

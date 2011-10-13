@@ -7,6 +7,8 @@
 
 #include <Database/player.h>
 
+#include <Gui/Misc/connectabletablewidgetitem.h>
+
 namespace Database {
 
 
@@ -154,6 +156,20 @@ void AttributeFutureWatcher::connectTo(QLineEdit *lineEdit)
     }
 
     connect(this,SIGNAL(valueChanged(QString)),lineEdit,SLOT(setText(QString)));
+}
+
+void AttributeFutureWatcher::connectTo(Gui::Misc::ConnectableTableWidgetItem *item)
+{
+    if(m_attribute->isCalculating())
+    {
+        item->setText("Loading...");
+    }
+    else
+    {
+        item->setText(m_attribute->toString());
+    }
+
+    connect(this,SIGNAL(valueChanged(QString)),item,SLOT(setText(QString)));
 }
 
 void AttributeBase::emitChanged()

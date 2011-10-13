@@ -40,7 +40,7 @@ public:
     /*!
         Wird ausgeführt sobald dieser Task an der Reihe ist.
       */
-    virtual void execute() = 0;
+    virtual void execute();
 
     /*!
         Gibt die aktuelle Priorität des Tasks zurück.
@@ -86,6 +86,17 @@ public:
       */
     void waitForFinished();
 
+    /*!
+        Führt den Task aus.
+
+        Sperrt zunächst alle weiteren Zugriffe mit lock() und startet dann
+        execute().
+
+        Anschließend werden alle dann wartenden Tasks geweckt und finished()
+        gesendet.
+      */
+    void run();
+
 signals:
     /*!
         Wird gesendet, sobald execute() verlassen wurde und alle wartenden
@@ -106,17 +117,6 @@ private:
         Setzt die QFuture des Tasks auf \a future
       */
     void setFuture(QFuture<void> future);
-
-    /*!
-        Führt den Task aus.
-
-        Sperrt zunächst alle weiteren Zugriffe mit lock() und startet dann
-        execute().
-
-        Anschließend werden alle dann wartenden Tasks geweckt und finished()
-        gesendet.
-      */
-    void run();
 
     /*!
         Sperrt den Mutex des Tasks.

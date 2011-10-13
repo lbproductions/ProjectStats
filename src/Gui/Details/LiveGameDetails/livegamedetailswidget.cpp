@@ -4,10 +4,13 @@
 #include "livegameroundtable.h"
 #include "livegameinfogroupbox.h"
 
+#include <Database/mappingattribute.h>
 #include <Database/livegame.h>
 #include <Database/player.h>
+#include <Database/point.h>
 #include <Gui/Misc/splitter.h>
 #include <Gui/Misc/groupbox.h>
+#include <Gui/Misc/connectabletablewidgetitem.h>
 #include <Gui/Graphs/livegamegraphview.h>
 
 #include <Misc/global.h>
@@ -20,6 +23,7 @@
 #include <QDebug>
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
+#include <QHeaderView>
 
 using namespace Gui::Details::LiveGameDetails;
 
@@ -33,9 +37,6 @@ LiveGameDetailsWidget::LiveGameDetailsWidget(Database::LiveGame* livegame, QWidg
     QPalette p(this->palette());
     p.setColor(QPalette::Background, QColor(55,55,55));
     this->setPalette(p);
-
-    connect(livegame->currentRound,SIGNAL(changed()),this,SLOT(on_currentRoundChanged()));
-    connect(livegame->points,SIGNAL(changed()),this,SLOT(fillWidget()));
 }
 
 void LiveGameDetailsWidget::initializeItems()
@@ -100,47 +101,32 @@ void LiveGameDetailsWidget::setupWidget()
 
     m_playerTotalPointsTable->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_playerTotalPointsTable->setGridStyle(Qt::NoPen);
-    for (int i = 0; i<m_playerTotalPointsTable->columnCount();i++)
+    m_playerTotalPointsTable->horizontalHeader()->hide();
+    m_playerTotalPointsTable->verticalHeader()->hide();
+    int i = 0;
+    for (;i<m_playerTotalPointsTable->columnCount();i++)
     {
-         m_playerTotalPointsTable->setColumnWidth(i, ((double)m_roundTable->columnWidth(0)));
-
-         QTableWidgetItem* item = new QTableWidgetItem("");
-         item->setSizeHint(QSize(0,0));
-         item->setTextAlignment(Qt::AlignCenter);
-         item->setFont(QFont("Lucia Grande",35,QFont::Bold,false));
-         m_playerTotalPointsTable->setHorizontalHeaderItem(i,item);
-
-         item = new QTableWidgetItem("");
+         Gui::Misc::ConnectableTableWidgetItem* item = new Gui::Misc::ConnectableTableWidgetItem();
          item->setTextAlignment(Qt::AlignCenter);
          item->setFont(QFont("Lucia Grande",35,QFont::Bold,false));
          item->setFlags(item->flags() & ~Qt::ItemIsEditable & ~Qt::ItemIsSelectable);
+
+         if(i < m_livegame->playersSortedByPosition->value().size())
+         {
+             m_livegame->points->mappingFutureWatcher(m_livegame->playersSortedByPosition->value().at(i))->connectTo(item);
+         }
+         else
+         {
+             m_livegame->totalPoints->futureWatcher()->connectTo(item);
+         }
          m_playerTotalPointsTable->setItem(0,i,item);
     }
+
     m_playerTotalPointsTable->setRowHeight(0,35);
     m_playerTotalPointsTable->setMaximumHeight(m_playerTotalPointsTable->rowHeight(0));
-    QTableWidgetItem* item = new QTableWidgetItem("0");
-    item->setSizeHint(QSize(0,0));
-    item->setTextAlignment(Qt::AlignCenter);
-    item->setFont(QFont("Lucia Grande",35,QFont::Bold,false));
-    m_playerTotalPointsTable->setVerticalHeaderItem(0,item);
+
     m_playerTotalPointsTable->setStyleSheet("QWidget{margin: 0px; padding: 0px; background:transparent; color: white;}");
     updateSizes();
-}
-
-void LiveGameDetailsWidget::fillWidget()
-{
-    for (int i = 0; i < m_livegame->players->value().size(); i++)
-    {
-        m_playerTotalPointsTable->item(0,i)->setText(QString::number(m_livegame->points->value(m_livegame->playersSortedByPosition->value().at(i))));
-    }
-
-    m_playerTotalPointsTable->item(0,m_livegame->players->value().size())->setText(QString::number(m_livegame->totalPoints->value()));
-}
-
-void LiveGameDetailsWidget::on_currentRoundChanged()
-{
-    connect(m_livegame->currentRound->value()->points,SIGNAL(changed()),this,SLOT(fillWidget()));
-    fillWidget();
 }
 
 void LiveGameDetailsWidget::updateSizes()

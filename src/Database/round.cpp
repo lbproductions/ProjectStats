@@ -3,7 +3,7 @@
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/Skat/skatround.h>
 #include <Database/Doppelkopf/dokolivegame.h>
-#include "game.h"
+#include "livegame.h"
 #include "point.h"
 
 #include <QDateTime>
@@ -48,7 +48,7 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
     IMPLEMENT_DATABASEATTRIBUTE(int,Round,db_state,tr("DB-State"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Round,comment,tr("Comment"))
 
-    IMPLEMENT_ATTRIBUTE(QPointer<Game>,Round,game,tr("Game"))
+    IMPLEMENT_ATTRIBUTE(LiveGame*,Round,game,tr("Game"))
     gameId->addDependingAttribute(game);
     IMPLEMENT_ATTRIBUTE(RoundState,Round,state,tr("State"))
     db_state->addDependingAttribute(state);
@@ -91,9 +91,9 @@ QString Round::mimeType() const
     return "application/projectstats.round";
 }
 
-QPointer<Game> Round::calculate_game()
+LiveGame* Round::calculate_game()
 {
-    Game *game = Games::instance()->rowById(this->gameId->value());
+    LiveGame *game = static_cast<LiveGame*>(Games::instance()->rowById(this->gameId->value()).data());
     state->addDependingAttribute(game->state);
     length->addDependingAttribute(game->length);
     return game;
