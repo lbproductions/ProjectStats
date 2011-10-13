@@ -348,7 +348,7 @@ protected:
     QMutex m_mutex; //!< Ein Mutex zum Threadsicher machen...
     QMutex m_waitingMutex;
     QWaitCondition m_waitCondition;
-    RecalculationTask<Attribute<T,R,C>, T>* m_currentTask;
+    Task* m_currentTask;
     bool m_isCalculating;
 };
 
@@ -651,14 +651,22 @@ const T Attribute<T,R,C>::value()
 //        QThreadPool::globalInstance()->reserveThread();
         m_mutex.lock();
     }
-    bool change = false;
-    if(!m_cacheInitialized && !m_isCalculating)
+
+    if(!m_cacheInitialized)
     {
         m_isCalculating = true;
-        m_value = calculate();
+        Task* task = m_currentTask = new Task(); //ein pseudotask, auf den gewartet werden kann
+        m_mutex.unlock();
+
+        T value = calculate();
+
+        m_mutex.lock();
+        m_value = value;
         m_isCalculating = false;
+        m_currentTask = 0;
         m_cacheInitialized = true;
-        change = true;
+
+        task->run();
     }
     m_mutex.unlock();
 

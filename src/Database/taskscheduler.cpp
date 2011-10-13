@@ -104,6 +104,10 @@ void Task::run()
     emit finished();
 }
 
+void Task::execute()
+{
+}
+
 void Task::waitForFinished()
 {
     QThreadPool::globalInstance()->releaseThread();
@@ -144,7 +148,7 @@ void TaskScheduler::run()
 
 void TaskScheduler::shutdown()
 {
-    QThreadPool::globalInstance()->waitForDone();
+    //QThreadPool::globalInstance()->waitForDone();
 }
 
 TaskScheduler::~TaskScheduler()
