@@ -48,7 +48,7 @@ public:
         \see increasePriority()
         \see decreasePriority()
       */
-    QThread::Priority priority();
+    const QThread::Priority& priority();
 
     /*!
         Erhöht die Priorität des Tasks um \c 1.
@@ -200,7 +200,7 @@ private:
     TaskScheduler* m_taskScheduler;
 
     int m_startedTasks;
-    static const int m_sortAfterCount = 10;
+    static const int m_sortAfterCount = 3;
 };
 
 }

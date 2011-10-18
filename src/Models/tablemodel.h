@@ -138,29 +138,10 @@ bool TableModel<RowType, Owner>::setData(QList<RowType*> list)
 template<class RowType, class Owner>
 void TableModel<RowType, Owner>::on_attribute_changed(::Database::AttributeBase *attribute)
 {
-    Database::Row *row = static_cast<Database::Row*>(attribute->owner());
+    RowType *row = static_cast<RowType*>(attribute->owner());
 
-    int size = m_data.size();
-    int i = 0;
-    for(; i < size; ++i)
-    {
-        if(m_data.at(i)->id() == row->id())
-        {
-            break;
-        }
-    }
-
-    QList<Database::AttributeBase*> list2 = m_owner->registeredAttributes()->values();
-    size = list2.size();
-
-    int j = 0;
-    for(; j < size; ++j)
-    {
-        if(list2.at(j)->name() == attribute->name())
-        {
-            break;
-        }
-    }
+    int i = m_data.indexOf(row);
+    int j = m_owner->registeredAttributes()->values().indexOf(attribute);
 
     QModelIndex changedIndex = index(i,j,QModelIndex());
     emit dataChanged(changedIndex, changedIndex);

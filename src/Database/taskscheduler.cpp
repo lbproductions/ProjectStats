@@ -20,10 +20,8 @@ ExecuteQueueHelper::ExecuteQueueHelper(TaskScheduler *parent) :
 void ExecuteQueueHelper::executeQueue()
 {
     m_taskScheduler->m_mutex.lock();
-//    if(m_startedTasks%3 == 0)
-//    {
-        qSort(m_taskScheduler->m_queue.begin(),m_taskScheduler->m_queue.end(),priorityIsHigher);
-//    }
+    qSort(m_taskScheduler->m_queue.begin(),m_taskScheduler->m_queue.end(),priorityIsHigher);
+
     while(!m_taskScheduler->m_queue.isEmpty()
           && QThreadPool::globalInstance()->activeThreadCount() < QThreadPool::globalInstance()->maxThreadCount())
     {
@@ -32,7 +30,6 @@ void ExecuteQueueHelper::executeQueue()
         QFuture<void> future = QtConcurrent::run(task, &Task::run);
         task->setFuture(future);
         task->unlock();
-//        ++m_startedTasks;
     }
     m_taskScheduler->m_mutex.unlock();
 }
@@ -73,7 +70,7 @@ QFuture<void> Task::future() const
     return m_future;
 }
 
-QThread::Priority Task::priority()
+const QThread::Priority& Task::priority()
 {
     return m_priority;
 }
