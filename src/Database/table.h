@@ -132,6 +132,9 @@ public:
       */
     virtual void insertRow(Row *row) = 0;
 
+signals:
+    void rowInserted(::Database::Row* row);
+
 protected:
     friend class Database;
     friend class RowRegistrar;
@@ -699,6 +702,8 @@ void Table<RowType>::insertRow(Row *row)
     {
 	qWarning() << "Table::insertRow: " << create.lastError();
     }
+
+    emit rowInserted(row);
 }
 
 template<class RowType>
