@@ -12,6 +12,7 @@ namespace Database
 {
     class Player;
     class DokoLiveGame;
+    class DokoRound;
 }
 
 namespace Gui
@@ -37,6 +38,10 @@ public:
     * Erstellt eine neue Instanz vom NewDokoRoundWidget für das übergebene DokoLiveGame. Setzt den StyleSheet für das Widget und führt setupWidget() aus.
     */
     explicit NewDokoRoundWidget(Database::DokoLiveGame* livegame, QWidget *parent = 0);
+    /**
+    * Erstellt eine neue Instanz vom NewDokoRoundWidget für das übergebene DokoLiveGame. Setzt den StyleSheet für das Widget und führt setupWidget() aus.
+    */
+    explicit NewDokoRoundWidget(Database::DokoRound* round, Database::DokoLiveGame* livegame, QWidget *parent = 0);
     ~NewDokoRoundWidget();
 
     /**
@@ -85,6 +90,12 @@ private slots:
     */
     void on_pushButtonCreateRound_clicked();
     void on_pushButtonClose_clicked();
+
+private:
+    Database::DokoRound* m_round;
+
+    void initialize();
+    void fillWidget();
 };
 
 }

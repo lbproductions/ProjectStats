@@ -2,10 +2,14 @@
 
 #include "dokolivegameroundtableitem.h"
 #include "dokolivegameroundtabledelegate.h"
+#include "newdokoroundwidget.h"
 
 #include <Database/Doppelkopf/dokolivegame.h>
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/player.h>
+
+#include <QMenu>
+#include <QAction>
 
 using namespace Gui::Details::LiveGameDetails::DokoLiveGameDetails;
 
@@ -13,6 +17,10 @@ DokoLiveGameRoundTable::DokoLiveGameRoundTable(Database::DokoLiveGame* livegame,
     LiveGameRoundTable(livegame,parent)
 {
     fillWidget();
+
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(on_customContextMenuRequested(QPoint)));
+
 
     this->setItemDelegate(new DokoLiveGameRoundTableDelegate(this));
 }
@@ -50,4 +58,32 @@ void DokoLiveGameRoundTable::addRound(::Database::Round* round)
 DokoLiveGameRoundTableItem* DokoLiveGameRoundTable::itemAtIndex(const QModelIndex& index)
 {
     return static_cast<DokoLiveGameRoundTableItem*>(item(index.row(),index.column()));
+}
+
+
+void DokoLiveGameRoundTable::on_customContextMenuRequested(const QPoint &pos)
+{
+    int index = indexAt(pos).row();
+
+    Database::Round* round = m_livegame->rounds->value(index);
+
+    QMenu* contextMenu = new QMenu(this);
+
+    QAction* editRoundAction = new QAction(contextMenu);
+    editRoundAction->setText(tr("Edit round %1").arg(round->number->value()+1));
+    editRoundAction->setData(qVariantFromValue(static_cast<void*>(round)));
+    connect(editRoundAction,SIGNAL(triggered()),this,SLOT(on_editRoundActionTriggered()));
+    contextMenu->addAction(editRoundAction);
+
+    contextMenu->exec(mapToGlobal(QPoint(pos.x(),pos.y()+55)));
+}
+
+
+void DokoLiveGameRoundTable::on_editRoundActionTriggered()
+{
+    QAction* action = static_cast<QAction*>(sender());
+    Database::DokoRound* round = static_cast<Database::DokoRound*>(action->data().value<void*>());
+
+    NewDokoRoundWidget ndrw(round,static_cast<Database::DokoLiveGame*>(m_livegame.data()));
+    ndrw.exec();
 }

@@ -6,6 +6,7 @@
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/Doppelkopf/dokolivegame.h>
 #include <Misc/handler.h>
+#include <Database/point.h>
 
 #include <QFile>
 
@@ -14,7 +15,23 @@ using namespace Gui::Details::LiveGameDetails::DokoLiveGameDetails;
 NewDokoRoundWidget::NewDokoRoundWidget(Database::DokoLiveGame* livegame, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NewDokoRoundWidget),
-    m_livegame(livegame)
+    m_livegame(livegame),
+    m_round(0)
+{
+    initialize();
+}
+
+NewDokoRoundWidget::NewDokoRoundWidget(Database::DokoRound* round, Database::DokoLiveGame* livegame, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::NewDokoRoundWidget),
+    m_livegame(livegame),
+    m_round(round)
+{
+    initialize();
+    fillWidget();
+}
+
+void NewDokoRoundWidget::initialize()
 {
     ui->setupUi(this);
 
@@ -95,11 +112,107 @@ void NewDokoRoundWidget::setupWidget()
     ui->checkBoxPflichtsolo->setChecked(m_livegame->doko_mitPflichtsolo->value());
 }
 
+void NewDokoRoundWidget::fillWidget()
+{
+    Database::Player* player = Database::Players::instance()->rowById(m_round->doko_hochzeitPlayerId->value());
+    int index = 0;
+    if(player)
+    {
+        index = ui->comboBoxHochzeit->findText(player->name->value());
+    }
+    ui->comboBoxHochzeit->setCurrentIndex(index);
+
+    player = Database::Players::instance()->rowById(m_round->doko_re1PlayerId->value());
+    index = 0;
+    if(player)
+    {
+        index = ui->comboBoxRe1->findText(player->name->value());
+    }
+    ui->comboBoxRe1->setCurrentIndex(index);
+
+    player = Database::Players::instance()->rowById(m_round->doko_re2PlayerId->value());
+    index = 0;
+    if(player)
+    {
+        index = ui->comboBoxRe2->findText(player->name->value());
+    }
+    ui->comboBoxRe2->setCurrentIndex(index);
+
+    player = Database::Players::instance()->rowById(m_round->doko_schweinereiPlayerId->value());
+    index = 0;
+    if(player)
+    {
+        index = ui->comboBoxSchweinerei->findText(player->name->value());
+    }
+    ui->comboBoxSchweinerei->setCurrentIndex(index);
+
+    player = Database::Players::instance()->rowById(m_round->doko_trumpfabgabePlayerId->value());
+    index = 0;
+    if(player)
+    {
+        index = ui->comboBoxTrumpfabgabe->findText(player->name->value());
+    }
+    ui->comboBoxTrumpfabgabe->setCurrentIndex(index);
+
+    ui->comboBoxSolo->setCurrentIndex(ui->comboBoxSolo->findText(m_round->doko_soloType->value()));
+
+//    foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
+//    {
+//        ui->comboBoxHochzeit->addItem(QIcon(player->avatarPath->value()),player->name->value());
+//        ui->comboBoxRe1->addItem(QIcon(player->avatarPath->value()),player->name->value());
+//        ui->comboBoxRe2->addItem(QIcon(player->avatarPath->value()),player->name->value());
+//        ui->comboBoxSchweinerei->addItem(QIcon(player->avatarPath->value()),player->name->value());
+//        ui->comboBoxTrumpfabgabe->addItem(QIcon(player->avatarPath->value()),player->name->value());
+//    }
+
+//    ui->comboBoxWinner->addItem("Re");
+//    ui->comboBoxWinner->addItem("Contra");
+
+//    if(m_livegame->doko_mitBubensolo->value()){
+//        ui->comboBoxSolo->addItem("Buben");
+//    }
+//    if(m_livegame->doko_mitDamensolo->value()){
+//        ui->comboBoxSolo->addItem("Damen");
+//    }
+//    if(m_livegame->doko_mitFleischlos->value()){
+//        ui->comboBoxSolo->addItem("Fleischlos");
+//    }
+//    if(m_livegame->doko_mitTrumpfsolo->value()){
+//        ui->comboBoxSolo->addItem("Trumpf");
+//    }
+//    if(m_livegame->doko_mitFarbsolo->value()){
+//        ui->comboBoxSolo->addItem("Farben");
+//    }
+
+//    ui->comboBoxHochzeit->setVisible(m_livegame->doko_mitHochzeit->value());
+//    ui->labelHochzeit->setVisible(m_livegame->doko_mitHochzeit->value());
+
+//    ui->comboBoxSolo->setVisible(m_livegame->doko_mitSolo->value());
+//    ui->labelSolo->setVisible(m_livegame->doko_mitSolo->value());
+
+//    ui->comboBoxSchweinerei->setVisible(m_livegame->doko_mitSchweinerei->value());
+//    ui->labelSchweinerei->setVisible(m_livegame->doko_mitSchweinerei->value());
+
+//    ui->comboBoxTrumpfabgabe->setVisible(m_livegame->doko_mitTrumpfabgabe->value());
+//    ui->labelTrumpfabgabe->setVisible(m_livegame->doko_mitTrumpfabgabe->value());
+
+//    ui->checkBoxPflichtsolo->setVisible(m_livegame->doko_mitPflichtsolo->value());
+//    ui->checkBoxPflichtsolo->setChecked(m_livegame->doko_mitPflichtsolo->value());
+}
+
 void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
 {
     if (checkInputs())
     {
-        Database::DokoRound* round = static_cast<Database::DokoRound*>(m_livegame->currentRound->value());
+        Database::DokoRound* round = 0;
+        if(!m_round)
+        {
+            round = static_cast<Database::DokoRound*>(m_livegame->currentRound->value());
+        }
+        else
+        {
+            round = m_round;
+        }
 
         // Kein Solo
         if (ui->comboBoxSolo->currentText().isEmpty())
@@ -136,10 +249,20 @@ void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
                 points = -points;
             }
 
-            round->addPoints(re1,points);
-            round->addPoints(re2,points);
-            round->addPoints(contra1,-points);
-            round->addPoints(contra2,-points);
+            if(!m_round)
+            {
+                round->addPoints(re1,points);
+                round->addPoints(re2,points);
+                round->addPoints(contra1,-points);
+                round->addPoints(contra2,-points);
+            }
+            else
+            {
+                round->pointObjects->value(re1)->points->setValue(points);
+                round->pointObjects->value(re2)->points->setValue(points);
+                round->pointObjects->value(contra1)->points->setValue(-points);
+                round->pointObjects->value(contra2)->points->setValue(-points);
+            }
 
             if (ui->comboBoxHochzeit->currentText() != "")
             {
@@ -193,14 +316,28 @@ void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
             {
                 points = -points;
 	    }
-            round->addPoints(re1,3*points);
-            round->addPoints(contra1,-points);
-            round->addPoints(contra2,-points);
-            round->addPoints(contra3,-points);
+            if(!m_round)
+            {
+                round->addPoints(re1,3*points);
+                round->addPoints(contra1,-points);
+                round->addPoints(contra2,-points);
+                round->addPoints(contra3,-points);
+            }
+            else
+            {
+                round->pointObjects->value(re1)->points->setValue(3*points);
+                round->pointObjects->value(contra1)->points->setValue(-points);
+                round->pointObjects->value(contra2)->points->setValue(-points);
+                round->pointObjects->value(contra3)->points->setValue(-points);
+            }
 	}
         round->comment->setValue(ui->lineEditComment->text());
-        m_livegame->startNextRound();
-        m_livegame->currentRound->value()->startTime->setValue(QDateTime().currentDateTime());
+
+        if(!m_round)
+        {
+            m_livegame->startNextRound();
+            m_livegame->currentRound->value()->startTime->setValue(QDateTime().currentDateTime());
+        }
         this->accept();
    }
 }
