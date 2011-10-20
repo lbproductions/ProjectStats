@@ -56,6 +56,7 @@ void SchmeissereiWidget::on_pushButton_clicked()
     Database::DokoRound* round = static_cast<Database::DokoRound*>(m_livegame->currentRound->value());
 
     round->addSchmeisserei(Database::Players::instance()->playerByName(ui->comboBoxPlayer->currentText()),ui->comboBoxType->currentText());
+    m_livegame->doko_schmeissereiStats->recalculateFromScratch();
     accept();
 }
 

@@ -759,11 +759,11 @@ QString DokoLiveGameCalculator::calculate_doko_schmeissereiStats()
 {
     //    int count = m_dokolivegame->doko_hochzeitCount->value();
     int roundCount = m_dokolivegame->roundCount->value();
-    int countAfterRounds = m_dokolivegame->doko_schmeissereiCountAfterRounds->value(roundCount);
+    int countAfterRounds = m_dokolivegame->doko_schmeissereiCountAfterRounds->value(m_dokolivegame->rounds->value().size());
     if(roundCount > 0)
     {
-        int percentage = countAfterRounds * 100 / roundCount;
-        int position = m_dokolivegame->doko_schmeissereiPositionAfterRounds->value(m_dokolivegame->roundCount->value());
+        int percentage = countAfterRounds * 100 / m_dokolivegame->roundCount->value();
+        int position = m_dokolivegame->doko_schmeissereiPositionAfterRounds->value(m_dokolivegame->rounds->value().size());
         return "(" + QString::number(percentage) + "% | " + QString::number(position) + ".)";
     }
 
@@ -779,10 +779,10 @@ QMap<int,int> DokoLiveGameCalculator::calculate_doko_hochzeitPositionAfterRounds
             if(g->live->value()){
                 DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
                 int percentage = 0;
-                if(i+1 <= game->roundCount->value()){
+                if(i+1 <= game->roundCount->value()){ // Wenn die Zahl der Runden des Spiels größer sind als der aktuelle Runden-Count
                     percentage = game->doko_hochzeitCountAfterRounds->value(i+1) * 100 / (i+1);
                 }
-                else if(game->roundCount->value() > 0){
+                else if(game->roundCount->value() > 0){ // Sonst soll er den Wert zum Abschluss des Spiels nehmen
                     percentage = game->doko_hochzeitCountAfterRounds->value(game->roundCount->value()) * 100 / game->roundCount->value();
                 }
                 if(percentage > percThis){
@@ -872,7 +872,7 @@ QMap<int,int> DokoLiveGameCalculator::calculate_doko_pflichtSoloPositionAfterRou
 
 QMap<int,int> DokoLiveGameCalculator::calculate_doko_schmeissereiPositionAfterRounds(){
     QMap<int,int> map;
-    for(int i = 0; i<m_dokolivegame->roundCount->value();i++){
+    for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         int count = 1;
         int percThis = m_dokolivegame->doko_schmeissereiCountAfterRounds->value(i+1) *100 / (i+1);
         foreach(Game* g, Games::instance()->gamesOfType->value("Doppelkopf")){
