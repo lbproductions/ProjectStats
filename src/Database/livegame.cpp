@@ -137,8 +137,18 @@ Round* LiveGame::startNextRound()
 void LiveGame::finishGame()
 {
     Round* round = rounds->value().last();
+    Round* lastRound = this->lastRound->value();
+
     Rounds::instance()->deleteRow(round);
     this->rounds->recalculateFromScratch();
+
+    if(lastRound)
+    {
+        foreach(LiveGameDrink* d, this->drinks->value())
+        {
+            d->roundId->setValue(lastRound->id());
+        }
+    }
 }
 
 Gui::Details::SummaryWidget* LiveGame::summaryWidget(){
