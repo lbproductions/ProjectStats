@@ -129,6 +129,14 @@ bool sortPlayersByPosition(QPair<Player*,Game*> pair1, QPair<Player*,Game*> pair
 
 QList<Player*> LiveGameCalculator::calculate_playersSortedByPosition(){
     QList<Player*> alist;
+
+    foreach(Position* p, Positions::instance()->rowsBySqlCondition(" WHERE gameId = "+QString::number(m_game->id())+" ORDER BY position"))
+    {
+        alist.append(Players::instance()->rowById(p->playerId->value()));
+    }
+    return alist;
+
+    /*
     QList<QPair<Player*,Game*> > list;
     for (int i = 0; i<m_game->players->value().size();i++){
         QPair<Player*,Game*> pair;
@@ -140,7 +148,7 @@ QList<Player*> LiveGameCalculator::calculate_playersSortedByPosition(){
     for(int i = 0; i<list.size();i++){
         alist.append(list.at(i).first);
     }
-    return alist;
+    return alist;*/
 }
 
 bool sortPlayersByPlacement(QPair<Player*,Game*> pair1, QPair<Player*,Game*> pair2){

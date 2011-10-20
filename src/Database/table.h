@@ -90,7 +90,7 @@ public:
     /*!
         Gibt das Modell, das alle Reihen dieser Tabelle enthält, zurück.
       */
-    virtual Models::TableModelBase *model() const = 0;
+    virtual Models::TableModelBase *model() = 0;
 
     /*!
         Löscht die Reihe \a row aus der Datenbank.
@@ -236,7 +236,7 @@ public:
 
     void registerRowType(Row *row);
 
-    Models::TableModel<RowType, Table<RowType> > *model() const;
+    Models::TableModel<RowType, Table<RowType> > *model();
 
     /*!
         Gibt ein MappingAttribute zurück, das von IDs auf die zugehörigen Reihen
@@ -379,8 +379,12 @@ Table<RowType>::Table(const QString &name) :
 }
 
 template<class RowType>
-Models::TableModel<RowType, Table<RowType> > *Table<RowType>::model() const
+Models::TableModel<RowType, Table<RowType> > *Table<RowType>::model()
 {
+    if(!m_model)
+    {
+        m_model = new Models::TableModel<RowType, Table<RowType> >(this);
+    }
     return m_model;
 }
 
@@ -462,6 +466,7 @@ void Table<RowType>::initializeCache()
     // Alle Reihen selecten
     QSqlQuery select = QSqlQuery(Database::instance()->sqlDatabaseLocked());
     QString query(QLatin1String("SELECT id FROM ")+m_name);
+    select.setForwardOnly(true);
     select.exec(query);
     Database::instance()->releaseDatabaseLock();
 
@@ -496,9 +501,6 @@ void Table<RowType>::initializeCache()
     m_rows->setEmitChange(true); // Später hinzugefügte Reihen sollen durchaus
                                  // ein emit change() hervorrufen.
 
-    //Model erzeugen
-    m_model = new Models::TableModel<RowType, Table<RowType> >(this);
-
     m_cacheInitialized = true;
 }
 
@@ -515,6 +517,7 @@ void Table<RowType>::initializeRowCaches()
 
     // und ausführen
     QSqlQuery select = QSqlQuery(Database::instance()->sqlDatabaseLocked());
+    select.setForwardOnly(true);
     select.exec(queryString);
     Database::instance()->releaseDatabaseLock();
 
@@ -594,6 +597,7 @@ QList<RowType*> Table<RowType>::rowsBySqlCondition(const QString &condition)
     //Query zusammensetzen und ausführen
     QSqlQuery select = QSqlQuery(Database::instance()->sqlDatabaseLocked());
     QString query = QLatin1String("SELECT id FROM ") + m_name + QLatin1String(" ") + condition;
+    select.setForwardOnly(true);
     select.exec(query);
     Database::instance()->releaseDatabaseLock();
 

@@ -138,6 +138,7 @@ void LiveGame::finishGame()
 {
     Round* round = rounds->value().last();
     Rounds::instance()->deleteRow(round);
+    this->rounds->recalculateFromScratch();
 }
 
 Gui::Details::SummaryWidget* LiveGame::summaryWidget(){

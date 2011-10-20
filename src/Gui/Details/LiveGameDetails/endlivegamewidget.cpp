@@ -86,7 +86,7 @@ void EndLiveGameWidget::on_pushButtonFinish_clicked()
 {
     m_livegame->name->setValue(m_nameLineEdit->text());
     m_livegame->comment->setValue(m_commentTextEdit->toPlainText());
-    m_livegame->setState(Database::Round::FinishedState);
+    m_livegame->finishGame();
 
     this->accept();
 }
