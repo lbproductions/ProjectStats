@@ -8,6 +8,7 @@ namespace Database
 {
     class Places;
     class Place;
+    class Row;
 }
 
 namespace Gui
@@ -38,7 +39,7 @@ signals:
 private slots:
     void updateView();
     void on_currentIndexChanged();
-    void on_placeCreated(Database::Place*);
+    void on_placeCreated(::Database::Row*);
     void on_placeCreationCanceled();
 
 private:

@@ -15,6 +15,7 @@ PlacesComboBox::PlacesComboBox(QWidget *parent) :
     placeIndexBefore(-1)
 {
     connect(this,SIGNAL(currentIndexChanged(int)),this,SLOT(on_currentIndexChanged()));
+    connect(Database::Places::instance(),SIGNAL(rowInserted(::Database::Row*)),this,SLOT(on_placeCreated(::Database::Row*)));
 
     updateView();
 }
@@ -38,6 +39,7 @@ void PlacesComboBox::on_currentIndexChanged()
     if(index == count()-1 && currentText() == tr("Create new place..."))
     {
         NewRowWidget* createplace = new NewRowWidget(new Database::Place());
+        createplace->setModal(true);
 	//connect(npw,SIGNAL(placeCreated(Database::Place*)),this,SLOT(on_placeCreated(Database::Place*)));
 	//connect(npw,SIGNAL(rejected()),this,SLOT(on_placeCreationCanceled()));
 	createplace->show();
@@ -55,8 +57,9 @@ void PlacesComboBox::on_currentIndexChanged()
     placeIndexBefore = currentIndex();
 }
 
-void PlacesComboBox::on_placeCreated(Database::Place* place)
+void PlacesComboBox::on_placeCreated(::Database::Row* row)
 {
+    Database::Place* place = static_cast<Database::Place*>(row);
     updateView();
 
     if(place != 0)
@@ -90,7 +93,7 @@ Database::Place *PlacesComboBox::currentPlace() const
 {
     int index = currentIndex();
 
-    if(index < 0 || index >= m_placePositions.count() - 1)
+    if(index < 0 || index >= m_placePositions.count())
     {
 	return 0;
     }
