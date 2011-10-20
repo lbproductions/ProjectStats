@@ -108,7 +108,7 @@ public:
         liegt, sondern schlicht die Reihe mit der ID der gegebenen Reihe aus
         dieser Tabelle gelöscht.
       */
-    void deleteRow(Row *row);
+    virtual void deleteRow(Row *row) = 0;
 
     /*!
         Fügt die Reihe \a row dieser Tabelle hinzu.
@@ -252,6 +252,8 @@ public:
         Typ haben kann.
       */
     static QMap<QString, AttributeBase*> *registeredAttributes();
+
+    void deleteRow(Row *row);
 
 protected:
     /*!
@@ -665,7 +667,7 @@ void Table<RowType>::insertRow(Row *row)
     row->setId(id);
 
     //Dem Modell (und damit glaube ich den Views) mitteilen, dass sich gleich was ändern wird
-    m_model->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
+    model()->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
 
     //Reihe dem Cache hinzufügen
     RowType* r = static_cast<RowType*>(row);
@@ -715,6 +717,44 @@ void Table<RowType>::registerRowType(Row *row)
         //qDebug() << "Table::registerRowType: Databaseattribute" << attribute->name() << "registered at table" << m_name;
         registeredDatabaseAttributes()->insert(attribute->name(), attribute);
     }
+}
+
+template<class RowType>
+void Table<RowType>::deleteRow(Row *row)
+{
+    //Zunächst alle Kinder löschen
+    foreach(Row* row, row->childRows())
+    {
+        deleteRow(row);
+    }
+
+    //Dann die Reihe selber
+    qDebug() << "Deleting row id "+QString::number(row->id())+" from "+m_name+".";
+    QSqlQuery deletion = query(QString("DELETE FROM %1 WHERE id = %2").arg(m_name).arg(row->id()));
+
+    if(deletion.lastError().isValid())
+    {
+        qWarning() << "Deletion failed: " << deletion.lastError();
+    }
+
+    deletion.finish();
+
+    //Dem Modell (und damit glaube ich den Views) mitteilen, dass sich gleich was ändern wird
+    model()->beginRemoveRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
+
+    //aus den caches entfernen
+    m_allRows.removeAll(static_cast<RowType*>(row));
+    m_rows->m_value.remove(row->id());
+    m_rows->emitChanged();
+
+    //Dem Modell (einmal zu viel?) mitteilen, dass es Änderungen gab
+    m_model->updateData();
+
+    //und die Änderung abschließen
+    m_model->endInsertRows();
+
+    //und invalid machen
+    row->setId(-1);
 }
 
 template<class RowType>
