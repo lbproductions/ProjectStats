@@ -93,14 +93,17 @@ protected:
     /*!
       Zeichnet im QPainter \p painter eine Verbindung zwischen den Punkten \p p1 und \p p2.
       */
-    virtual void drawJunction(const QPoint &p1, const QPoint &p2, QPainter *painter);
+    virtual void drawJunction(GraphPoint* p1, GraphPoint* p2, QPainter *painter);
 
     QList<QPointer<GraphPoint> > m_points; //!< Die Punkte in diesem Graphen
+    QList<QPoint> m_qpoints;
     QPointer<CoordinateSystem> m_coordinateSystem; //!< Das Koordinatensystem, in dem dieser Graph liegt.
     int m_xMax; //!< Der Maximale X-Wert aller Graphen dieses Koordinatensystems.
     int m_yMax; //!< Der Maximale Y-Wert aller Graphen dieses Koordinatensystems.
     int m_xMin; //!< Der Minimale X-Wert aller Graphen dieses Koordinatensystems.
     int m_yMin; //!< Der Minimale Y-Wert aller Graphen dieses Koordinatensystems.
+
+    GraphPoint* point(QPoint p);
 };
 
 }

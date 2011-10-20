@@ -27,6 +27,7 @@ void Graph::addPoint(const QPoint &point)
 {
     GraphPoint *graphPoint = new GraphPoint(point,this);
     m_points.append(graphPoint);
+    m_qpoints.append(point);
 
     qSort(m_points.begin(),m_points.end(),xCoordinateLessThan);
 
@@ -47,21 +48,40 @@ void Graph::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/
     {
 	if(p1 != 0 && p2 != 0)
 	{
-	    drawJunction(p1->point(),p2->point(),painter);
+            drawJunction(p1,p2,painter);
 	}
 	p1 = p2;
     }
 }
 
-void Graph::drawJunction(const QPoint &p1, const QPoint &p2, QPainter *painter)
+void Graph::drawJunction(GraphPoint* p1, GraphPoint* p2, QPainter *painter)
 {
+    foreach(Graph* g, m_coordinateSystem->graphs())
+    {
+        if(g != this && g->m_qpoints.contains(p1->point()) && g->m_qpoints.contains(p2->point()))
+        {
+            GraphPoint* otherPoint = g->point(p1->point());
+            if(p1->junctionIsDashed())
+            {
+                m_pen.setStyle(Qt::DotLine);
+            }
+            else
+            {
+                otherPoint->setJunctionIsDashed(true);
+            }
+            break;
+        }
+    }
+
     m_pen.setJoinStyle(Qt::RoundJoin);
     painter->setPen(m_pen);
     QPen pen = painter->pen();
     pen.setWidth(3);
     painter->setPen(pen);
-    painter->drawLine(p1.x() * m_coordinateSystem->xScale(),-p1.y() * m_coordinateSystem->yScale(),
-		       p2.x() * m_coordinateSystem->xScale(),-p2.y() * m_coordinateSystem->yScale());
+    painter->drawLine(p1->point().x() * m_coordinateSystem->xScale(),-p1->point().y() * m_coordinateSystem->yScale(),
+                       p2->point().x() * m_coordinateSystem->xScale(),-p2->point().y() * m_coordinateSystem->yScale());
+
+    m_pen.setStyle(Qt::SolidLine);
 }
 
 CoordinateSystem *Graph::coordinateSystem() const
@@ -102,4 +122,16 @@ int Graph::yMin() const
 QList<QPointer<GraphPoint> > Graph::points() const
 {
     return m_points;
+}
+
+GraphPoint* Graph::point(QPoint p)
+{
+    foreach(GraphPoint* point, m_points)
+    {
+        if(point->point() == p)
+        {
+            return point;
+        }
+    }
+    return 0;
 }

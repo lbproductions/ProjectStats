@@ -84,6 +84,8 @@ public:
 
     void updateDimensions();
 
+    QList<QPointer<Items::Graph> > graphs();
+
 signals:
     /*!
       Dieses Signal wird gesendet, wenn ein neuer Punkt zu einem enthaltenen Graphen hinzugefügt wurde.

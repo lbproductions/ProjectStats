@@ -111,3 +111,8 @@ int CoordinateSystem::yMin() const
 {
     return m_yMin;
 }
+
+QList<QPointer<Graph> > CoordinateSystem::graphs()
+{
+    return m_graphs;
+}

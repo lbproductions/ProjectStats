@@ -62,6 +62,7 @@ void DokoLiveGamePlayerPointsGraph::addPoint(const QPoint &point, ::Database::Do
 {
     DokoGraphPoint *graphPoint = new DokoGraphPoint(point,this,r);
     m_points.append(graphPoint);
+    m_qpoints.append(point);
 
     qSort(m_points.begin(),m_points.end(),xCoordinateLessThan1);
 

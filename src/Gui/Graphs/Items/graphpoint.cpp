@@ -12,7 +12,8 @@ GraphPoint::GraphPoint(QPoint point, Graph* graph) :
     AbstractItem(graph),
     m_graph(graph),
     m_point(point),
-    m_radius(3)
+    m_radius(3),
+    m_junctionIsDashed(false)
 {
     m_pen = QPen();
     m_pen.setBrush(QBrush(m_pen.color()));
@@ -44,4 +45,14 @@ void GraphPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*opt
 				    -m_point.y()*m_graph->coordinateSystem()->yScale()),
 				    m_radius,
                                     m_radius);
+}
+
+bool GraphPoint::junctionIsDashed() const
+{
+    return m_junctionIsDashed;
+}
+
+void GraphPoint::setJunctionIsDashed(bool dashed)
+{
+    m_junctionIsDashed = dashed;
 }
