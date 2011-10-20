@@ -77,6 +77,8 @@ public:
 
     QList<QPointer<GraphPoint> > points() const;
 
+    QList<QPoint> qpoints() const;
+
 signals:
     /*!
       Dieses Signal wird gesendet, wenn ein Punkt zu diesem Graphen hinzugefügt wurde.

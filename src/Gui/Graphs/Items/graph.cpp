@@ -124,6 +124,11 @@ QList<QPointer<GraphPoint> > Graph::points() const
     return m_points;
 }
 
+QList<QPoint> Graph::qpoints() const
+{
+    return m_qpoints;
+}
+
 GraphPoint* Graph::point(QPoint p)
 {
     foreach(GraphPoint* point, m_points)

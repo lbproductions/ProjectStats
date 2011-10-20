@@ -60,12 +60,26 @@ Database::DokoRound* DokoGraphPoint::round() const
 
 void DokoGraphPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/)
 {
+    int deltaRadius = 0;
+
+    foreach(Graph* g, m_graph->coordinateSystem()->graphs())
+    {
+        if(g != m_graph && g->qpoints().contains(m_point))
+        {
+            if(m_junctionIsDashed)
+            {
+                deltaRadius = -1;
+            }
+            break;
+        }
+    }
+
     painter->setPen(m_player->color->value());
     painter->setBrush(Qt::black);
     painter->drawEllipse(QPointF(  m_point.x()*m_graph->coordinateSystem()->xScale(),
                                     -m_point.y()*m_graph->coordinateSystem()->yScale()),
-                                    m_radius,
-                                    m_radius);
+                                    m_radius+deltaRadius,
+                                    m_radius+deltaRadius);
     painter->setPen(QColor("white"));
     QFont font = painter->font();
     font.setPointSize(10);
