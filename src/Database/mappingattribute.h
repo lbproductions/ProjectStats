@@ -69,7 +69,7 @@ MappingAttribute<K,V,R,C>::MappingAttribute(const QString &name, const QString &
     Attribute<QMap<K,V> ,R,C>(name,displayName,row),
     m_attributeFutureWatchers(QMap<K,MappingAttributeFutureWatcher<K,V,R,C>*>())
 {
-    //wie können Änderungen in der map viel schlechter verfolgen, daher wir einfach bei jeder Neuberechnung change emitted
+    //wie können Änderungen in der map viel schlechter verfolgen, daher wird einfach bei jeder Neuberechnung change emitted
     Attribute<QMap<K,V> ,R,C>::m_emitChange = false;
 }
 

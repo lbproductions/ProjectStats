@@ -301,6 +301,8 @@ public:
       Berechnet den Wert des Attributs komplett neu.
       */
     void recalculateFromScratch();
+
+    void setCacheInitialized(bool initialized);
 protected:
     friend class TableModel<R, Table<R> >;
     friend class RecalculationTask<Attribute<T,R,C>,T>;
@@ -747,6 +749,11 @@ void Attribute<T,R,C>::addDependingAttribute(AttributeBase *dependingAttribute)
     m_dependingAttributes.append(dependingAttribute);
     connect(this,SIGNAL(changed()),dependingAttribute,SLOT(updateFromDependency()));
     //connect(this,SIGNAL(changed()),this,SLOT(onChange()));
+}
+
+template<class T, class R, class C>
+void Attribute<T,R,C>::setCacheInitialized(bool initialized){
+    m_cacheInitialized = initialized;
 }
 
 template<class AttributeType, class ValueType>

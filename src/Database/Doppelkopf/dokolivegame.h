@@ -31,6 +31,7 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
                  bool mitFarbsolo,
                  bool mitFleischloss,
                  bool mitTrumpfsolo,
+                 bool mitSchwarzsolo,
                  bool mitFuenfKoenige,
                  bool mitZuWenigTrumpf,
                  bool mitNeunzigPunkte,
@@ -48,6 +49,7 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFarbsolo)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFleischlos)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitTrumpfsolo)
+    DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitSchwarzsolo)
 
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitFuenfKoenige)
     DECLARE_DATABASEATTRIBUTE(bool,DokoLiveGame,doko_mitZuWenigTrumpf)

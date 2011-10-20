@@ -213,6 +213,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxSchwarz">
+          <property name="text">
+           <string>Schwarz-Solo</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>

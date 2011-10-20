@@ -30,6 +30,7 @@ LiveDokoGameOptionsWidget::LiveDokoGameOptionsWidget(QWidget *parent) :
     registerField("doko_mitFleischlos",ui->checkBoxFleischlos);
     registerField("doko_mitTrumpfsolo",ui->checkBoxTrumpf);
     registerField("doko_mitPflichtsolo",ui->checkBoxPflichtsolo);
+    registerField("doko_mitSchwarzsolo",ui->checkBoxSchwarz);
 
     registerField("doko_mitFuenfKoenige",ui->checkBoxKings);
     registerField("doko_mitZuWenigTrumpf",ui->checkBoxWenigTrumpf);
@@ -49,6 +50,7 @@ LiveDokoGameOptionsWidget::LiveDokoGameOptionsWidget(QWidget *parent) :
     ui->checkBoxFleischlos->setChecked(settings.value("GameWizard/LiveGameDokoGameOptions/mitFleischlos",true).toBool());
     ui->checkBoxTrumpf->setChecked(settings.value("GameWizard/LiveGameDokoGameOptions/mitTrumpfsolo",true).toBool());
     ui->checkBoxPflichtsolo->setChecked(settings.value("GameWizard/LiveGameDokoGameOptions/mitPflichtsolo",true).toBool());
+    ui->checkBoxSchwarz->setChecked(settings.value("GameWizard/LiveGameDokoGameOptions/mitSchwarzSolo").toBool());
 
     ui->checkBoxKings->setChecked(settings.value("GameWizard/LiveGameDokoGameOptions/mitFuenfKoenige",true).toBool());
     ui->checkBoxWenigTrumpf->setChecked(settings.value("GameWizard/LiveGameDokoGameOptions/mitZuWenigTrumpf",true).toBool());
@@ -77,6 +79,7 @@ void LiveDokoGameOptionsWidget::saveOptions() const
     settings.setValue("GameWizard/LiveGameDokoGameOptions/mitFleischlos", ui->checkBoxFleischlos->isChecked());
     settings.setValue("GameWizard/LiveGameDokoGameOptions/mitTrumpfsolo", ui->checkBoxTrumpf->isChecked());
     settings.setValue("GameWizard/LiveGameDokoGameOptions/mitPflichtsolo", ui->checkBoxPflichtsolo->isChecked());
+    settings.setValue("GameWizard/LiveGameDokoGameOptions/mitSchwarzsolo",ui->checkBoxSchwarz->isChecked());
 
     settings.setValue("GameWizard/LiveGameDokoGameOptions/mitFuenfKoenige", ui->checkBoxKings->isChecked());
     settings.setValue("GameWizard/LiveGameDokoGameOptions/mitZuWenigTrumpf", ui->checkBoxWenigTrumpf->isChecked());
