@@ -93,29 +93,6 @@ void TableBase::addColumn(AttributeBase * attribute)
     }
 }
 
-void TableBase::deleteRow(Row *row)
-{
-    //Zunächst alle Kinder löschen
-    foreach(Row* row, row->childRows())
-    {
-	deleteRow(row);
-    }
-
-    //Dann die Reihe selber
-    qDebug() << "Deleting row id "+QString::number(row->id())+" from "+m_name+".";
-    QSqlQuery deletion = query(QString("DELETE FROM %1 WHERE id = %2").arg(m_name).arg(row->id()));
-
-    if(deletion.lastError().isValid())
-    {
-	qWarning() << "Deletion failed: " << deletion.lastError();
-    }
-
-    deletion.finish();
-
-    //und invalid machen
-    row->setId(-1);
-}
-
 RowRegistrar::RowRegistrar(TableBase* table, Row *row)
 {
     table->registerRowType(row);
