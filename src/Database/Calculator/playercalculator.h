@@ -38,6 +38,10 @@ public:
 
     QMap<QString,double> calculate_average();
 
+    QMap<QString,double> calculate_weightedAverage();
+
+    QMap<QString,double> calculate_diffAverageWeightedAverage();
+
     QMap<QString,int> calculate_wins();
 
     QMap<QString,int> calculate_losses();

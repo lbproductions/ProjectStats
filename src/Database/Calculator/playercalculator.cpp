@@ -279,4 +279,71 @@ QMap<QString,int> PlayerCalculator::calculate_offlineGamePoints(){
     return hash;
 }
 
+QMap<QString,double> PlayerCalculator::calculate_weightedAverage(){
+    QMap<QString,double> hash;
+    double points = 0;
+    double weight = 0.0;
+    foreach(Game* g, m_player->games->value()){
+        double zaehler = (double)(g->players->value().size() - g->placement->value(m_player));
+        double nenner = (double)g->players->value().size()-1;
+        double point = zaehler*100.0/nenner;
+        QDateTime date = g->date->value();
+        double yearsTo = (double)(date.date().daysTo(QDate::currentDate()));
+        if(yearsTo < 3*365){
+            if(yearsTo < 2* 365){
+                if(yearsTo < 365){
+                    if(yearsTo < 200){
+                        if(yearsTo < 100){
+                            if(yearsTo < 50){
+                                if(yearsTo < 14){
+                                    weight += 1;
+                                }
+                                else{
+                                    weight += 0.9;
+                                    point = point * 0.9;
+                                }
+                            }
+                            else{
+                                weight += 0.8;
+                                point = point * 0.8;
+                            }
+                        }
+                        else{
+                            weight += 0.7;
+                            point = point * 0.7;
+                        }
+                    }
+                    else{
+                        weight += 0.55;
+                        point = point * 0.55;
+                    }
+                }
+                else{
+                    weight += 0.4;
+                    point = point * 0.4;
+                }
+            }
+            else{
+                weight += 0.25;
+                point = point * 0.25;
+            }
+        }
+        else{
+            weight += 0.1;
+            point = point * 0.1;
+        }
+
+        points += point;
+    }
+    hash.insert("General",points/weight);
+    return hash;
+
+}
+
+QMap<QString,double> PlayerCalculator::calculate_diffAverageWeightedAverage(){
+   QMap<QString,double> hash;
+   hash.insert("General",m_player->weightedAverage->value("General")-m_player->average->value("General"));
+   return hash;
+}
+
 } // namespace Database

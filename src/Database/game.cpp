@@ -129,8 +129,8 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
     players->addDependingAttribute(placement);
 
     IMPLEMENT_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,points,tr("Points"))
-    Points::instance()->rows()->addDependingAttribute(points);
     OfflineGameInformations::instance()->rows()->addDependingAttribute(points);
+    placement->addDependingAttribute(points);
 
     IMPLEMENT_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,playersSortedByPosition,tr("PlayersSortedByPosition"))
     players->addDependingAttribute(playersSortedByPosition);

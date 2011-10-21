@@ -5,3 +5,4 @@
 /build.debug/*
 
 /src/Makefile
+ProjectStats-build-desktop/

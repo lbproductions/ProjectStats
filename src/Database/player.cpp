@@ -101,6 +101,13 @@ START_ROW_IMPLEMENTATION(Player, Player, Row)
     games->addDependingAttribute(average);
     points->addDependingAttribute(average);
 
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,calc,weightedAverage,tr("WeightedAverage"))
+    average->addDependingAttribute(weightedAverage);
+
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,double,Player,PlayerCalculator,calc,diffAverageWeightedAverage,tr("DiffAverage"))
+    average->addDependingAttribute(diffAverageWeightedAverage);
+    weightedAverage->addDependingAttribute(diffAverageWeightedAverage);
+
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QString,int,Player,PlayerCalculator,calc,wins,tr("Wins"))
     games->addDependingAttribute(wins);
 
