@@ -31,6 +31,9 @@
 #include <Database/livegamedrink.h>
 #include <Database/taskscheduler.h>
 
+#include <Server/server.h>
+#include <Server/TestClient/testclient.h>
+
 Handler::Handler(int argc, char *argv[])
     : QApplication(argc,argv),
       m_updater(0),
@@ -115,31 +118,14 @@ bool Handler::showMainWindow(){
         m_database->initialize(databaseFile);
     }
 
-    //    Database::AtomicRule *before = new Database::AtomicRule();
-    //    before->parameter->setValue(QDate::fromString("2010-12-31").toString());
-    //    before->attributeName->setValue("date");
-    //    before->constraintId->setValue(Database::Constraints::DateIsBefore);
 
-    //    Database::AtomicRule *after = new Database::AtomicRule();
-    //    after->parameter->setValue(QDate::fromString("2010-06-01").toString());
-    //    after->attributeName->setValue("date");
-    //    after->constraintId->setValue(Database::Constraints::DateIsAfter);
+    Server* server = new Server();
+    server->start();
 
-    //    Database::RuleConjunction *conjunction = new Database::RuleConjunction();
-    //    conjunction->addRule(before);
-    //    conjunction->addRule(after);
+//    TestClient testClient;
+//    PlayerInformation info = testClient.playerById(1);
 
-    //    Database::Rules::instance()->insertRow(conjunction);
-
-    //    foreach(Database::Game *g, Database::Games::instance()->allRows())
-    //    {
-    //	qDebug() << g->id() << g->date->value();
-    //    }
-
-//    foreach(Database::Round* r, Database::Rounds::instance()->allRows())
-//    {
-//        r->db_state->setValue(r->db_state->value()+1);
-//    }
+//    qDebug() << info.name;
 
     m_mainwindow = new Gui::MainWindow::MainWindow();
 

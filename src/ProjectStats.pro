@@ -10,6 +10,9 @@ TARGET = ProjectStats
 TEMPLATE = app
 DEFINES *= QT_USE_QSTRINGBUILDER
 
+CONFIG += link_pkgconfig
+PKGCONFIG += gsoap++
+
 SOURCES += main.cpp\
     Database/table.cpp \
     Database/database.cpp \
@@ -171,7 +174,13 @@ SOURCES += main.cpp\
     Gui/Details/PlayerDetails/playerresidencewidget.cpp \
     Gui/Details/LiveGameDetails/Doppelkopf/dokoendlivegamewidget.cpp \
     Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamesummarywidget.cpp \
-    Gui/Misc/connectabletablewidgetitem.cpp
+    Gui/Misc/connectabletablewidgetitem.cpp \
+    Server/soapprojectstatsService.cpp \
+    Server/soapprojectstatsProxy.cpp \
+    Server/soapC.cpp \
+    Server/stdsoap2.cpp \
+    Server/server.cpp \
+    Server/TestClient/testclient.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -357,7 +366,16 @@ HEADERS  += \
     Gui/Details/PlayerDetails/playerresidencewidget.h \
     Gui/Details/LiveGameDetails/Doppelkopf/dokoendlivegamewidget.h \
     Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamesummarywidget.h \
-    Gui/Misc/connectabletablewidgetitem.h
+    Gui/Misc/connectabletablewidgetitem.h \
+    Server/servicedescription.h \
+    Server/soapStub.h \
+    Server/soapprojectstatsService.h \
+    Server/soapprojectstatsProxy.h \
+    Server/soapH.h \
+    Server/projectstats.nsmap \
+    Server/stdsoap2.h \
+    Server/server.h \
+    Server/TestClient/testclient.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -417,6 +435,26 @@ Documentation.target = Documentation
 Documentation.commands = ../util/doxygen-1.7.5.1/doxygen ../util/documentation/QtDoxygen/DoxyFile.debug
 Documentation.depends = FORCE
 QMAKE_EXTRA_TARGETS += Documentation
+
+OTHER_FILES += \
+    Server/ps.xsd \
+    Server/projectstats.wsdl \
+    Server/projectstats.playerById.res.xml \
+    Server/projectstats.playerById.req.xml
+
+
+
+DEFINES += WITH_NONAMESPACES
+
+
+
+
+
+
+
+
+
+
 
 
 
