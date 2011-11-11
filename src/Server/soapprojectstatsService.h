@@ -11,14 +11,12 @@ compiling, linking, and/or using OpenSSL is allowed.
 #ifndef soapprojectstatsService_H
 #define soapprojectstatsService_H
 #include "soapH.h"
-class SOAP_CMAC projectstatsService
+class SOAP_CMAC projectstatsService : public soap
 { public:
-	struct soap *soap;
-	bool own;
 	/// Constructor
 	projectstatsService();
-	/// Constructor to use/share an engine state
-	projectstatsService(struct soap*);
+	/// Constructor with copy of another engine state
+	projectstatsService(const struct soap&);
 	/// Constructor with engine input+output mode control
 	projectstatsService(soap_mode iomode);
 	/// Constructor with engine input and output mode control
@@ -73,5 +71,8 @@ class SOAP_CMAC projectstatsService
 
 	/// Web service operation 'playerById' (returns error code or SOAP_OK)
 	virtual	int playerById(int id, PlayerInformation &result) SOAP_PURE_VIRTUAL;
+
+	/// Web service operation 'playerList' (returns error code or SOAP_OK)
+	virtual	int playerList(PlayerList &result) SOAP_PURE_VIRTUAL;
 };
 #endif

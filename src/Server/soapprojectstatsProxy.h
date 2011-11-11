@@ -12,16 +12,14 @@ compiling, linking, and/or using OpenSSL is allowed.
 #define soapprojectstatsProxy_H
 #include "soapH.h"
 
-class SOAP_CMAC projectstatsProxy
+class SOAP_CMAC projectstatsProxy : public soap
 { public:
-	struct soap *soap;
-	bool own;
 	/// Endpoint URL of service 'projectstatsProxy' (change as needed)
 	const char *soap_endpoint;
 	/// Constructor
 	projectstatsProxy();
-	/// Constructor to use/share an engine state
-	projectstatsProxy(struct soap*);
+	/// Constructor with copy of another engine state
+	projectstatsProxy(const struct soap&);
 	/// Constructor with endpoint URL
 	projectstatsProxy(const char *url);
 	/// Constructor with engine input+output mode control
@@ -62,5 +60,9 @@ class SOAP_CMAC projectstatsProxy
 	/// Web service operation 'playerById' (returns error code or SOAP_OK)
 	virtual	int playerById(int id, PlayerInformation &result) { return playerById(NULL, NULL, id, result); }
 	virtual	int playerById(const char *endpoint, const char *soap_action, int id, PlayerInformation &result);
+
+	/// Web service operation 'playerList' (returns error code or SOAP_OK)
+	virtual	int playerList(PlayerList &result) { return playerList(NULL, NULL, result); }
+	virtual	int playerList(const char *endpoint, const char *soap_action, PlayerList &result);
 };
 #endif

@@ -6,11 +6,17 @@
  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
  xmlns:ps="urn:projectstats">
  <SOAP-ENV:Body>
-  <ps:playerByIdResponse>
+  <ps:playerListResponse>
    <result>
-    <id>0</id>
-    <name></name>
+    <playerList>
+     <id>0</id>
+     <name></name>
+    </playerList>
+    <playerList>
+     <id>0</id>
+     <name></name>
+    </playerList>
    </result>
-  </ps:playerByIdResponse>
+  </ps:playerListResponse>
  </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>

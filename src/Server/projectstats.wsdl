@@ -28,7 +28,14 @@
   <complexType name="PlayerInformation"><!-- PlayerInformation -->
 
    <sequence>
+     <element name="id" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- PlayerInformation::id -->
      <element name="name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/><!-- PlayerInformation::name -->
+   </sequence>
+  </complexType>
+  <complexType name="PlayerList"><!-- PlayerList -->
+
+   <sequence>
+     <element name="playerList" type="ps:PlayerInformation" minOccurs="0" maxOccurs="unbounded"/><!-- PlayerList::playerList -->
    </sequence>
   </complexType>
   <!-- operation request element -->
@@ -47,6 +54,21 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="playerList">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="playerListResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:PlayerList" minOccurs="1" maxOccurs="1"/><!-- ps__playerList::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 
 </types>
@@ -59,11 +81,24 @@
  <part name="parameters" element="ps:playerByIdResponse"/>
 </message>
 
+<message name="playerListRequest">
+ <part name="parameters" element="ps:playerList"/><!-- ps__playerList::ps__playerList -->
+</message>
+
+<message name="playerListResponse">
+ <part name="parameters" element="ps:playerListResponse"/>
+</message>
+
 <portType name="projectstatsPortType">
  <operation name="playerById">
   <documentation>Service definition of function ps__playerById</documentation>
   <input message="tns:playerByIdRequest"/>
   <output message="tns:playerByIdResponse"/>
+ </operation>
+ <operation name="playerList">
+  <documentation>Service definition of function ps__playerList</documentation>
+  <input message="tns:playerListRequest"/>
+  <output message="tns:playerListResponse"/>
  </operation>
 </portType>
 
@@ -78,11 +113,21 @@
      <SOAP:body parts="parameters" use="literal"/>
   </output>
  </operation>
+ <operation name="playerList">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
 </binding>
 
 <service name="projectstats">
  <documentation>gSOAP 2.8.4 generated service definition</documentation>
  <port name="projectstats" binding="tns:projectstats">
+  <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>
  </port>
 </service>

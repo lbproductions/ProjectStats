@@ -12,6 +12,7 @@ compiling, linking, and/or using OpenSSL is allowed.
 #define soapStub_H
 #ifndef SERVICEDESCRIPTION_H
 #define SERVICEDESCRIPTION_H
+#include <vector>
 #endif // SERVICEDESCRIPTION_H
 #include "stdsoap2.h"
 
@@ -41,14 +42,15 @@ compiling, linking, and/or using OpenSSL is allowed.
 #endif
 
 #ifndef SOAP_TYPE_PlayerInformation
-#define SOAP_TYPE_PlayerInformation (8)
+#define SOAP_TYPE_PlayerInformation (9)
 /* PlayerInformation */
 class SOAP_CMAC PlayerInformation
 {
 public:
+	int id;	/* required element of type xsd:int */
 	char *name;	/* optional element of type xsd:string */
 public:
-	virtual int soap_type() const { return 8; } /* = unique id SOAP_TYPE_PlayerInformation */
+	virtual int soap_type() const { return 9; } /* = unique id SOAP_TYPE_PlayerInformation */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -60,8 +62,28 @@ public:
 };
 #endif
 
+#ifndef SOAP_TYPE_PlayerList
+#define SOAP_TYPE_PlayerList (10)
+/* PlayerList */
+class SOAP_CMAC PlayerList
+{
+public:
+	std::vector<PlayerInformation >playerList;	/* optional element of type PlayerInformation */
+public:
+	virtual int soap_type() const { return 10; } /* = unique id SOAP_TYPE_PlayerList */
+	virtual void soap_default(struct soap*);
+	virtual void soap_serialize(struct soap*) const;
+	virtual int soap_put(struct soap*, const char*, const char*) const;
+	virtual int soap_out(struct soap*, const char*, int, const char*) const;
+	virtual void *soap_get(struct soap*, const char*, const char*);
+	virtual void *soap_in(struct soap*, const char*, const char*);
+	         PlayerList() { PlayerList::soap_default(NULL); }
+	virtual ~PlayerList() { }
+};
+#endif
+
 #ifndef SOAP_TYPE_ps__playerByIdResponse
-#define SOAP_TYPE_ps__playerByIdResponse (11)
+#define SOAP_TYPE_ps__playerByIdResponse (14)
 /* ps:playerByIdResponse */
 struct ps__playerByIdResponse
 {
@@ -71,7 +93,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__playerById
-#define SOAP_TYPE_ps__playerById (12)
+#define SOAP_TYPE_ps__playerById (15)
 /* ps:playerById */
 struct ps__playerById
 {
@@ -80,10 +102,32 @@ public:
 };
 #endif
 
+#ifndef SOAP_TYPE_ps__playerListResponse
+#define SOAP_TYPE_ps__playerListResponse (18)
+/* ps:playerListResponse */
+struct ps__playerListResponse
+{
+public:
+	PlayerList result;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type PlayerList */
+};
+#endif
+
+#ifndef SOAP_TYPE_ps__playerList
+#define SOAP_TYPE_ps__playerList (19)
+/* ps:playerList */
+struct ps__playerList
+{
+#ifdef WITH_NOEMPTYSTRUCT
+private:
+	char dummy;	/* dummy member to enable compilation */
+#endif
+};
+#endif
+
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (13)
+#define SOAP_TYPE_SOAP_ENV__Header (20)
 /* SOAP Header: */
 struct SOAP_ENV__Header
 {
@@ -99,7 +143,7 @@ private:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (14)
+#define SOAP_TYPE_SOAP_ENV__Code (21)
 /* SOAP Fault Code: */
 struct SOAP_ENV__Code
 {
@@ -114,7 +158,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (16)
+#define SOAP_TYPE_SOAP_ENV__Detail (23)
 /* SOAP-ENV:Detail */
 struct SOAP_ENV__Detail
 {
@@ -130,7 +174,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (19)
+#define SOAP_TYPE_SOAP_ENV__Reason (26)
 /* SOAP-ENV:Reason */
 struct SOAP_ENV__Reason
 {
@@ -144,7 +188,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (20)
+#define SOAP_TYPE_SOAP_ENV__Fault (27)
 /* SOAP Fault: */
 struct SOAP_ENV__Fault
 {
@@ -180,7 +224,7 @@ typedef char *_XML;
 #endif
 
 #ifndef SOAP_TYPE_xsd__string
-#define SOAP_TYPE_xsd__string (7)
+#define SOAP_TYPE_xsd__string (8)
 typedef char *xsd__string;
 #endif
 

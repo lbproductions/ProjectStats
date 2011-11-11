@@ -25,5 +25,20 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="playerList">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="playerListResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:PlayerList" minOccurs="1" maxOccurs="1"/><!-- ps__playerList::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 

@@ -415,7 +415,7 @@ mac {
     OBJECTIVE_SOURCES += Misc/cocoainitializer.mm \
                         Gui/Misc/macwindowcontroller.mm
 
-    LIBS += -F../frameworks/ \
+    LIBS += -F../frameworks \
             -framework AppKit \
             -framework Sparkle
 

@@ -26,7 +26,7 @@ void Server::run()
             psService.soap_print_fault(stderr);
             break;
         }
-        qDebug() << "Server::run: accepted" << i << ". connection from IP " << ((psService.soap->ip >> 24)&0xFF) << "." << ((psService.soap->ip >> 16)&0xFF) << "." << ((psService.soap->ip >> 8)&0xFF) << "." << (psService.soap->ip&0xFF) << "; socket =" << s;
+        //qDebug() << "Server::run: accepted" << i << ". connection from IP " << ((psService.soap->ip >> 24)&0xFF) << "." << ((psService.soap->ip >> 16)&0xFF) << "." << ((psService.soap->ip >> 8)&0xFF) << "." << (psService.soap->ip&0xFF) << "; socket =" << s;
 
         if (psService.serve() != SOAP_OK) // process RPC request
             psService.soap_print_fault(stderr);
@@ -45,6 +45,22 @@ int projectstatsService::playerById(int id, PlayerInformation &result)
     }
 
     result.name = player->name->value().toUtf8().data();
+    result.id = id;
+
+    return SOAP_OK;
+}
+
+int projectstatsService::playerList(PlayerList& result)
+{
+    foreach(Database::Player* player, Database::Players::instance()->allRows())
+    {
+        PlayerInformation info;
+        QByteArray ba = player->name->value().toLocal8Bit();
+        info.name = strdup(ba.data());
+        info.id = player->id();
+        qDebug() << info.id << info.name;
+        result.playerList.push_back(info);
+    }
 
     return SOAP_OK;
 }

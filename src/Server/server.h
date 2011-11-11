@@ -2,6 +2,7 @@
 #define SERVER_H
 
 #include <QThread>
+#include <vector>
 
 class Server : public QThread
 {

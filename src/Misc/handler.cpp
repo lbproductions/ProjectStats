@@ -127,9 +127,9 @@ bool Handler::showMainWindow(){
 
 //    qDebug() << info.name;
 
-    m_mainwindow = new Gui::MainWindow::MainWindow();
+    //m_mainwindow = new Gui::MainWindow::MainWindow();
 
-    m_mainwindow->show();
+    //m_mainwindow->show();
     return true;
 }
 

@@ -11,37 +11,26 @@ compiling, linking, and/or using OpenSSL is allowed.
 #include "soapprojectstatsService.h"
 
 projectstatsService::projectstatsService()
-{	this->soap = soap_new();
-	this->own = true;
-	projectstatsService_init(SOAP_IO_DEFAULT, SOAP_IO_DEFAULT);
+{	projectstatsService_init(SOAP_IO_DEFAULT, SOAP_IO_DEFAULT);
 }
 
-projectstatsService::projectstatsService(struct soap *_soap)
-{	this->soap = _soap;
-	this->own = false;
-	projectstatsService_init(_soap->imode, _soap->omode);
-}
+projectstatsService::projectstatsService(const struct soap &_soap) : soap(_soap)
+{ }
 
 projectstatsService::projectstatsService(soap_mode iomode)
-{	this->soap = soap_new();
-	this->own = true;
-	projectstatsService_init(iomode, iomode);
+{	projectstatsService_init(iomode, iomode);
 }
 
 projectstatsService::projectstatsService(soap_mode imode, soap_mode omode)
-{	this->soap = soap_new();
-	this->own = true;
-	projectstatsService_init(imode, omode);
+{	projectstatsService_init(imode, omode);
 }
 
 projectstatsService::~projectstatsService()
-{	if (this->own)
-		soap_free(this->soap);
-}
+{ }
 
 void projectstatsService::projectstatsService_init(soap_mode imode, soap_mode omode)
-{	soap_imode(this->soap, imode);
-	soap_omode(this->soap, omode);
+{	soap_imode(this, imode);
+	soap_omode(this, omode);
 	static const struct Namespace namespaces[] =
 {
 	{"SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/", "http://www.w3.org/*/soap-envelope", NULL},
@@ -51,141 +40,140 @@ void projectstatsService::projectstatsService_init(soap_mode imode, soap_mode om
 	{"ps", "urn:projectstats", NULL, NULL},
 	{NULL, NULL, NULL, NULL}
 };
-	soap_set_namespaces(this->soap, namespaces);
+	soap_set_namespaces(this, namespaces);
 };
 
 void projectstatsService::destroy()
-{	soap_destroy(this->soap);
-	soap_end(this->soap);
+{	soap_destroy(this);
+	soap_end(this);
 }
 
 #ifndef WITH_PURE_VIRTUAL
 projectstatsService *projectstatsService::copy()
-{	projectstatsService *dup = SOAP_NEW_COPY(projectstatsService);
-	if (dup)
-		soap_copy_context(dup->soap, this->soap);
+{	projectstatsService *dup = SOAP_NEW_COPY(projectstatsService(*(struct soap*)this));
 	return dup;
 }
 #endif
 
 int projectstatsService::soap_close_socket()
-{	return soap_closesock(this->soap);
+{	return soap_closesock(this);
 }
 
 int projectstatsService::soap_force_close_socket()
-{	return soap_force_closesock(this->soap);
+{	return soap_force_closesock(this);
 }
 
 int projectstatsService::soap_senderfault(const char *string, const char *detailXML)
-{	return ::soap_sender_fault(this->soap, string, detailXML);
+{	return ::soap_sender_fault(this, string, detailXML);
 }
 
 int projectstatsService::soap_senderfault(const char *subcodeQName, const char *string, const char *detailXML)
-{	return ::soap_sender_fault_subcode(this->soap, subcodeQName, string, detailXML);
+{	return ::soap_sender_fault_subcode(this, subcodeQName, string, detailXML);
 }
 
 int projectstatsService::soap_receiverfault(const char *string, const char *detailXML)
-{	return ::soap_receiver_fault(this->soap, string, detailXML);
+{	return ::soap_receiver_fault(this, string, detailXML);
 }
 
 int projectstatsService::soap_receiverfault(const char *subcodeQName, const char *string, const char *detailXML)
-{	return ::soap_receiver_fault_subcode(this->soap, subcodeQName, string, detailXML);
+{	return ::soap_receiver_fault_subcode(this, subcodeQName, string, detailXML);
 }
 
 void projectstatsService::soap_print_fault(FILE *fd)
-{	::soap_print_fault(this->soap, fd);
+{	::soap_print_fault(this, fd);
 }
 
 #ifndef WITH_LEAN
 void projectstatsService::soap_stream_fault(std::ostream& os)
-{	::soap_stream_fault(this->soap, os);
+{	::soap_stream_fault(this, os);
 }
 
 char *projectstatsService::soap_sprint_fault(char *buf, size_t len)
-{	return ::soap_sprint_fault(this->soap, buf, len);
+{	return ::soap_sprint_fault(this, buf, len);
 }
 #endif
 
 void projectstatsService::soap_noheader()
-{	this->soap->header = NULL;
+{	this->header = NULL;
 }
 
 const SOAP_ENV__Header *projectstatsService::soap_header()
-{	return this->soap->header;
+{	return this->header;
 }
 
 int projectstatsService::run(int port)
 {	if (soap_valid_socket(bind(NULL, port, 100)))
 	{	for (;;)
 		{	if (!soap_valid_socket(accept()) || serve())
-				return this->soap->error;
-			soap_destroy(this->soap);
-			soap_end(this->soap);
+				return this->error;
+			soap_destroy(this);
+			soap_end(this);
 		}
 	}
 	else
-		return this->soap->error;
+		return this->error;
 	return SOAP_OK;
 }
 
 SOAP_SOCKET projectstatsService::bind(const char *host, int port, int backlog)
-{	return soap_bind(this->soap, host, port, backlog);
+{	return soap_bind(this, host, port, backlog);
 }
 
 SOAP_SOCKET projectstatsService::accept()
-{	return soap_accept(this->soap);
+{	return soap_accept(this);
 }
 
 int projectstatsService::serve()
 {
 #ifndef WITH_FASTCGI
-	unsigned int k = this->soap->max_keep_alive;
+	unsigned int k = this->max_keep_alive;
 #endif
 	do
 	{
 
 #ifndef WITH_FASTCGI
-		if (this->soap->max_keep_alive > 0 && !--k)
-			this->soap->keep_alive = 0;
+		if (this->max_keep_alive > 0 && !--k)
+			this->keep_alive = 0;
 #endif
 
-		if (soap_begin_serve(this->soap))
-		{	if (this->soap->error >= SOAP_STOP)
+		if (soap_begin_serve(this))
+		{	if (this->error >= SOAP_STOP)
 				continue;
-			return this->soap->error;
+			return this->error;
 		}
-		if (dispatch() || (this->soap->fserveloop && this->soap->fserveloop(this->soap)))
+		if (dispatch() || (this->fserveloop && this->fserveloop(this)))
 		{
 #ifdef WITH_FASTCGI
-			soap_send_fault(this->soap);
+			soap_send_fault(this);
 #else
-			return soap_send_fault(this->soap);
+			return soap_send_fault(this);
 #endif
 		}
 
 #ifdef WITH_FASTCGI
-		soap_destroy(this->soap);
-		soap_end(this->soap);
+		soap_destroy(this);
+		soap_end(this);
 	} while (1);
 #else
-	} while (this->soap->keep_alive);
+	} while (this->keep_alive);
 #endif
 	return SOAP_OK;
 }
 
 static int serve_ps__playerById(projectstatsService*);
+static int serve_ps__playerList(projectstatsService*);
 
 int projectstatsService::dispatch()
-{	projectstatsService_init(this->soap->imode, this->soap->omode);
-	soap_peek_element(this->soap);
-	if (!soap_match_tag(this->soap, this->soap->tag, "ps:playerById"))
+{	soap_peek_element(this);
+	if (!soap_match_tag(this, this->tag, "ps:playerById"))
 		return serve_ps__playerById(this);
-	return this->soap->error = SOAP_NO_METHOD;
+	if (!soap_match_tag(this, this->tag, "ps:playerList"))
+		return serve_ps__playerList(this);
+	return this->error = SOAP_NO_METHOD;
 }
 
-static int serve_ps__playerById(projectstatsService *service)
-{	struct soap *soap = service->soap;
-	struct ps__playerById soap_tmp_ps__playerById;
+static int serve_ps__playerById(projectstatsService *soap)
+{	struct ps__playerById soap_tmp_ps__playerById;
 	struct ps__playerByIdResponse soap_tmp_ps__playerByIdResponse;
 	soap_default_ps__playerByIdResponse(soap, &soap_tmp_ps__playerByIdResponse);
 	soap_default_ps__playerById(soap, &soap_tmp_ps__playerById);
@@ -196,7 +184,7 @@ static int serve_ps__playerById(projectstatsService *service)
 	 || soap_envelope_end_in(soap)
 	 || soap_end_recv(soap))
 		return soap->error;
-	soap->error = service->playerById(soap_tmp_ps__playerById.id, soap_tmp_ps__playerByIdResponse.result);
+	soap->error = soap->playerById(soap_tmp_ps__playerById.id, soap_tmp_ps__playerByIdResponse.result);
 	if (soap->error)
 		return soap->error;
 	soap_serializeheader(soap);
@@ -218,6 +206,47 @@ static int serve_ps__playerById(projectstatsService *service)
 	 || soap_putheader(soap)
 	 || soap_body_begin_out(soap)
 	 || soap_put_ps__playerByIdResponse(soap, &soap_tmp_ps__playerByIdResponse, "ps:playerByIdResponse", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap->error;
+	return soap_closesock(soap);
+}
+
+static int serve_ps__playerList(projectstatsService *soap)
+{	struct ps__playerList soap_tmp_ps__playerList;
+	struct ps__playerListResponse soap_tmp_ps__playerListResponse;
+	soap_default_ps__playerListResponse(soap, &soap_tmp_ps__playerListResponse);
+	soap_default_ps__playerList(soap, &soap_tmp_ps__playerList);
+	soap->encodingStyle = NULL;
+	if (!soap_get_ps__playerList(soap, &soap_tmp_ps__playerList, "ps:playerList", NULL))
+		return soap->error;
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap->error;
+	soap->error = soap->playerList(soap_tmp_ps__playerListResponse.result);
+	if (soap->error)
+		return soap->error;
+	soap_serializeheader(soap);
+	soap_serialize_ps__playerListResponse(soap, &soap_tmp_ps__playerListResponse);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__playerListResponse(soap, &soap_tmp_ps__playerListResponse, "ps:playerListResponse", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	};
+	if (soap_end_count(soap)
+	 || soap_response(soap, SOAP_OK)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__playerListResponse(soap, &soap_tmp_ps__playerListResponse, "ps:playerListResponse", NULL)
 	 || soap_body_end_out(soap)
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
