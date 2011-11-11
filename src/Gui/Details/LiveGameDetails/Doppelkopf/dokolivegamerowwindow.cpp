@@ -4,6 +4,7 @@
 #include "schmeissereiwidget.h"
 #include "newdokoroundwidget.h"
 #include "dokoendlivegamewidget.h"
+#include "newdoppelkopfroundwidget.h"
 
 #include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.h>
 #include <Database/Doppelkopf/dokolivegame.h>
@@ -85,6 +86,10 @@ void DokoLiveGameRowWindow::showNewRoundDialog()
 {
     LiveGameDetails::DokoLiveGameDetails::NewDokoRoundWidget newDokoRoundWidget(m_dokolivegame,this);
     newDokoRoundWidget.exec();
+    /*
+    LiveGameDetails::DokoLiveGameDetails::NewDoppelkopfRoundWidget newDokoRoundWidget(m_dokolivegame,this);
+    newDokoRoundWidget.exec();
+    */
 }
 
 void DokoLiveGameRowWindow::showEndGameDialog()

@@ -171,7 +171,13 @@ SOURCES += main.cpp\
     Gui/Details/PlayerDetails/playerresidencewidget.cpp \
     Gui/Details/LiveGameDetails/Doppelkopf/dokoendlivegamewidget.cpp \
     Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamesummarywidget.cpp \
-    Gui/Misc/connectabletablewidgetitem.cpp
+    Gui/Misc/connectabletablewidgetitem.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/newdoppelkopfroundwidget.cpp \
+    Gui/Misc/checkbox.cpp \
+    Gui/Misc/playercheckbox.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/NewDokoRoundWidget/column.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/NewDokoRoundWidget/recolumn.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/NewDokoRoundWidget/hochzeitcolumn.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -357,7 +363,13 @@ HEADERS  += \
     Gui/Details/PlayerDetails/playerresidencewidget.h \
     Gui/Details/LiveGameDetails/Doppelkopf/dokoendlivegamewidget.h \
     Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamesummarywidget.h \
-    Gui/Misc/connectabletablewidgetitem.h
+    Gui/Misc/connectabletablewidgetitem.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/newdoppelkopfroundwidget.h \
+    Gui/Misc/checkbox.h \
+    Gui/Misc/playercheckbox.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/NewDokoRoundWidget/column.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/NewDokoRoundWidget/recolumn.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/NewDokoRoundWidget/hochzeitcolumn.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -417,6 +429,20 @@ Documentation.target = Documentation
 Documentation.commands = ../util/doxygen-1.7.5.1/doxygen ../util/documentation/QtDoxygen/DoxyFile.debug
 Documentation.depends = FORCE
 QMAKE_EXTRA_TARGETS += Documentation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
