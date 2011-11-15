@@ -4,6 +4,7 @@
 #include "soapprojectstatsService.h"
 
 #include <Database/player.h>
+#include <Database/drink.h>
 
 #include <QDebug>
 
@@ -97,5 +98,30 @@ int projectstatsService::playerList(PlayerList& result)
         result.playerList.push_back(info);
     }
 
+    return SOAP_OK;
+}
+
+int projectstatsService::drinkList(DrinkList& result)
+{
+    foreach(Database::Drink* drink, Database::Drinks::instance()->allRows())
+    {
+        DrinkInformation info;
+        QByteArray ba = drink->name->value().toLocal8Bit();
+        info.name = strdup(ba.data());
+        info.id = drink->id();
+        QByteArray ty = drink->type->value().toLocal8Bit();
+        info.type = strdup(ty.data());
+        info.alc = drink->alc->value();
+        info.size = drink->size->value();
+        info.drinkCount = drink->drinkCount->value();
+        foreach(Database::Player* player ,drink->countPerPlayer->value().keys()){
+            StringIntPair pair;
+            QByteArray ba = player->name->value().toLocal8Bit();
+            pair.key = strdup(ba.data());
+            pair.value = drink->countPerPlayer->value(player);
+            info.drinksPerPlayer.push_back(pair);
+        }
+        result.drinkList.push_back(info);
+    }
     return SOAP_OK;
 }
