@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ps="urn:projectstats">
+ <SOAP-ENV:Body>
+  <ps:drinkListResponse>
+   <result>
+    <drinkList>
+     <id>0</id>
+     <name></name>
+     <type></type>
+     <size>0.0</size>
+     <alc>0.0</alc>
+     <drinkCount>0</drinkCount>
+     <drinksPerPlayer>
+      <key></key>
+      <value>0</value>
+     </drinksPerPlayer>
+     <drinksPerPlayer>
+      <key></key>
+      <value>0</value>
+     </drinksPerPlayer>
+    </drinkList>
+    <drinkList>
+     <id>0</id>
+     <name></name>
+     <type></type>
+     <size>0.0</size>
+     <alc>0.0</alc>
+     <drinkCount>0</drinkCount>
+     <drinksPerPlayer>
+      <key></key>
+      <value>0</value>
+     </drinksPerPlayer>
+     <drinksPerPlayer>
+      <key></key>
+      <value>0</value>
+     </drinksPerPlayer>
+    </drinkList>
+   </result>
+  </ps:drinkListResponse>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
