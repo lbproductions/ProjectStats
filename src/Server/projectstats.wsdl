@@ -100,6 +100,7 @@
    <sequence>
      <element name="id" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- GameInformation::id -->
      <element name="name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/><!-- GameInformation::name -->
+     <element name="date" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/><!-- GameInformation::date -->
    </sequence>
   </complexType>
   <complexType name="GameList"><!-- GameList -->

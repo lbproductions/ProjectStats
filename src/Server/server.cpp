@@ -163,6 +163,8 @@ int projectstatsService::gameList(GameList& result)
         QByteArray ba = game->name->value().toLocal8Bit();
         info.name = strdup(ba.data());
         info.id = game->id();
+        ba = game->date->value().toString("dd.MM.yyyy").toLocal8Bit();
+        info.date = strdup(ba.data());
         result.gameList.push_back(info);
     }
     return SOAP_OK;

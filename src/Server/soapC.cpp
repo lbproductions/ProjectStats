@@ -15,7 +15,7 @@ compiling, linking, and/or using OpenSSL is allowed.
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.4 2011-11-15 16:04:23 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.4 2011-11-15 16:47:48 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -1329,12 +1329,14 @@ void GameInformation::soap_default(struct soap *soap)
 	(void)soap; /* appease -Wall -Werror */
 	soap_default_int(soap, &this->GameInformation::id);
 	soap_default_xsd__string(soap, &this->GameInformation::name);
+	soap_default_xsd__string(soap, &this->GameInformation::date);
 }
 
 void GameInformation::soap_serialize(struct soap *soap) const
 {
 	(void)soap; /* appease -Wall -Werror */
 	soap_serialize_xsd__string(soap, &this->GameInformation::name);
+	soap_serialize_xsd__string(soap, &this->GameInformation::date);
 }
 
 int GameInformation::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
@@ -1349,6 +1351,8 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out_GameInformation(struct soap *soap, const char
 	if (soap_out_int(soap, "id", -1, &(a->GameInformation::id), ""))
 		return soap->error;
 	if (soap_out_xsd__string(soap, "name", -1, &(a->GameInformation::name), ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "date", -1, &(a->GameInformation::date), ""))
 		return soap->error;
 	return soap_element_end_out(soap, tag);
 }
@@ -1375,6 +1379,7 @@ SOAP_FMAC3 GameInformation * SOAP_FMAC4 soap_in_GameInformation(struct soap *soa
 	}
 	size_t soap_flag_id1 = 1;
 	size_t soap_flag_name1 = 1;
+	size_t soap_flag_date1 = 1;
 	if (soap->body && !*soap->href)
 	{
 		for (;;)
@@ -1387,6 +1392,11 @@ SOAP_FMAC3 GameInformation * SOAP_FMAC4 soap_in_GameInformation(struct soap *soa
 			if (soap_flag_name1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
 				if (soap_in_xsd__string(soap, "name", &(a->GameInformation::name), "xsd:string"))
 				{	soap_flag_name1--;
+					continue;
+				}
+			if (soap_flag_date1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_xsd__string(soap, "date", &(a->GameInformation::date), "xsd:string"))
+				{	soap_flag_date1--;
 					continue;
 				}
 			if (soap->error == SOAP_TAG_MISMATCH)

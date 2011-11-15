@@ -71,6 +71,7 @@ class GameInformation
 {
     int id;
     xsd__string name;
+    xsd__string date;
 };
 
 class GameList

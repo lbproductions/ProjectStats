@@ -11,10 +11,12 @@
     <gameList>
      <id>0</id>
      <name></name>
+     <date></date>
     </gameList>
     <gameList>
      <id>0</id>
      <name></name>
+     <date></date>
     </gameList>
    </result>
   </ps:gameListResponse>
