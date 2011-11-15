@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <schema targetNamespace="urn:projectstats"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:ps="urn:projectstats"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <!-- operation request element -->
+  <element name="playerById">
+   <complexType>
+    <sequence>
+     <element name="id" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__playerById::id -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="playerByIdResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:PlayerInformation" minOccurs="1" maxOccurs="1"/><!-- ps__playerById::result -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="playerList">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="playerListResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:PlayerList" minOccurs="1" maxOccurs="1"/><!-- ps__playerList::result -->
+    </sequence>
+   </complexType>
+  </element>
+ </schema>
+

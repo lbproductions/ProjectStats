@@ -185,8 +185,7 @@ SOURCES += main.cpp\
     Server/soapprojectstatsProxy.cpp \
     Server/soapC.cpp \
     Server/stdsoap2.cpp \
-    Server/server.cpp \
-    Server/TestClient/testclient.cpp
+    Server/server.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -387,7 +386,7 @@ HEADERS  += \
     Server/projectstats.nsmap \
     Server/stdsoap2.h \
     Server/server.h \
-    Server/TestClient/testclient.h
+    Server/stdsoap2.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -452,11 +451,19 @@ OTHER_FILES += \
     Server/ps.xsd \
     Server/projectstats.wsdl \
     Server/projectstats.playerById.res.xml \
+    Server/projectstats.playerById.req.xml \
+    Server/ps.xsd \
+    Server/projectstats.wsdl \
+    Server/projectstats.playerList.res.xml \
+    Server/projectstats.playerList.req.xml \
+    Server/projectstats.playerById.res.xml \
     Server/projectstats.playerById.req.xml
 
 
 
 DEFINES += WITH_NONAMESPACES
+
+
 
 
 

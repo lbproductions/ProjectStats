@@ -30,6 +30,7 @@
 #include <Database/Categories/parentcategorie.h>
 #include <Database/livegamedrink.h>
 #include <Database/taskscheduler.h>
+#include <Server/server.h>
 
 Handler::Handler(int argc, char *argv[])
     : QApplication(argc,argv),
@@ -140,6 +141,9 @@ bool Handler::showMainWindow(){
 //    {
 //        r->db_state->setValue(r->db_state->value()+1);
 //    }
+
+    Server *server = new Server(this);
+    server->start();
 
     m_mainwindow = new Gui::MainWindow::MainWindow();
 
