@@ -33,6 +33,22 @@ class PlayerList
     std::vector<PlayerInformation> playerList;
 };
 
+class DrinkInformation
+{
+    int id;
+    xsd__string name;
+    xsd__string type;
+    double size;
+    double alc;
+    int drinkCount;
+    std::vector<StringIntPair> drinksPerPlayer;
+};
+
+class DrinkList
+{
+    std::vector<DrinkInformation> drinkList;
+};
+
 //gsoap ps service name: projectstats
 //gsoap ps service port: http://eineurl.von.uns?
 //gsoap ps service namespace: urn:projectstats
@@ -50,5 +66,14 @@ int ps__playerById(int id, PlayerInformation& result);
 //gsoap ps service method-encoding: encoded
 //gsoap ps service method-action: playerList ""
 int ps__playerList(PlayerList& result);
+
+//gsoap ps service name: projectstats
+//gsoap ps service port: http://eineurl.von.uns?
+//gsoap ps service namespace: urn:projectstats
+
+//gsoap ps service method-style: rpc
+//gsoap ps service method-encoding: encoded
+//gsoap ps service method-action: drinkList ""
+int ps__drinkList(DrinkList& result);
 
 #endif // SERVICEDESCRIPTION_H
