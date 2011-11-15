@@ -5,6 +5,7 @@
 
 #include <Database/player.h>
 #include <Database/drink.h>
+#include <Database/place.h>
 
 #include <QDebug>
 
@@ -16,7 +17,7 @@ Server::Server(QObject *parent) :
 void Server::run()
 {
     projectstatsService psService;
-    psService.bind("127.0.0.1",1332,100);
+    psService.bind(NULL,1332,100);
 
     int s;
     for (int i = 1; ; i++)
@@ -122,6 +123,32 @@ int projectstatsService::drinkList(DrinkList& result)
             info.drinksPerPlayer.push_back(pair);
         }
         result.drinkList.push_back(info);
+    }
+    return SOAP_OK;
+}
+
+int projectstatsService::placeList(PlaceList& result)
+{
+    foreach(Database::Place* place, Database::Places::instance()->allRows())
+    {
+        PlaceInformation info;
+        QByteArray ba = place->displayString->value().toLocal8Bit();
+        info.name = strdup(ba.data());
+        info.id = place->id();
+        QByteArray ty = place->strasse->value().toLocal8Bit();
+        info.strasse = strdup(ty.data());
+        info.number = place->nummer->value();
+        info.plz = place->plz->value();
+        info.gameCount = place->gameCount->value();
+        QByteArray com = place->comment->value().toLocal8Bit();
+        info.comment = strdup(com.data());
+        QByteArray ort = place->ort->value().toLocal8Bit();
+        info.ort = strdup(ort.data());
+        foreach(Database::Player* player ,place->players->value()){
+            QByteArray ba = player->name->value().toLocal8Bit();
+            info.players.push_back(strdup(ba.data()));
+        }
+        result.placeList.push_back(info);
     }
     return SOAP_OK;
 }
