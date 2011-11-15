@@ -108,7 +108,7 @@ int projectstatsProxy::playerById(const char *endpoint, const char *soap_action,
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -164,7 +164,7 @@ int projectstatsProxy::playerList(const char *endpoint, const char *soap_action,
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -219,7 +219,7 @@ int projectstatsProxy::drinkList(const char *endpoint, const char *soap_action, 
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -264,6 +264,230 @@ int projectstatsProxy::drinkList(const char *endpoint, const char *soap_action, 
 	 || soap_end_recv(soap))
 		return soap_closesock(soap);
 	result = soap_tmp_ps__drinkListResponse->result;
+	return soap_closesock(soap);
+}
+
+int projectstatsProxy::placeList(const char *endpoint, const char *soap_action, PlaceList &result)
+{	struct soap *soap = this;
+	struct ps__placeList soap_tmp_ps__placeList;
+	struct ps__placeListResponse *soap_tmp_ps__placeListResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (!soap_endpoint)
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+	if (!soap_action)
+		soap_action = "";
+	soap->encodingStyle = NULL;
+	soap_begin(soap);
+	soap_serializeheader(soap);
+	soap_serialize_ps__placeList(soap, &soap_tmp_ps__placeList);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__placeList(soap, &soap_tmp_ps__placeList, "ps:placeList", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__placeList(soap, &soap_tmp_ps__placeList, "ps:placeList", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&result)
+		return soap_closesock(soap);
+	result.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	soap_tmp_ps__placeListResponse = soap_get_ps__placeListResponse(soap, NULL, "ps:placeListResponse", "");
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	result = soap_tmp_ps__placeListResponse->result;
+	return soap_closesock(soap);
+}
+
+int projectstatsProxy::gameList(const char *endpoint, const char *soap_action, GameList &result)
+{	struct soap *soap = this;
+	struct ps__gameList soap_tmp_ps__gameList;
+	struct ps__gameListResponse *soap_tmp_ps__gameListResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (!soap_endpoint)
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+	if (!soap_action)
+		soap_action = "";
+	soap->encodingStyle = NULL;
+	soap_begin(soap);
+	soap_serializeheader(soap);
+	soap_serialize_ps__gameList(soap, &soap_tmp_ps__gameList);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__gameList(soap, &soap_tmp_ps__gameList, "ps:gameList", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__gameList(soap, &soap_tmp_ps__gameList, "ps:gameList", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&result)
+		return soap_closesock(soap);
+	result.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	soap_tmp_ps__gameListResponse = soap_get_ps__gameListResponse(soap, NULL, "ps:gameListResponse", "");
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	result = soap_tmp_ps__gameListResponse->result;
+	return soap_closesock(soap);
+}
+
+int projectstatsProxy::gameCurrentPlayingPlayers(const char *endpoint, const char *soap_action, int gameId, PlayerList &result)
+{	struct soap *soap = this;
+	struct ps__gameCurrentPlayingPlayers soap_tmp_ps__gameCurrentPlayingPlayers;
+	struct ps__gameCurrentPlayingPlayersResponse *soap_tmp_ps__gameCurrentPlayingPlayersResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (!soap_endpoint)
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+	if (!soap_action)
+		soap_action = "";
+	soap->encodingStyle = NULL;
+	soap_tmp_ps__gameCurrentPlayingPlayers.gameId = gameId;
+	soap_begin(soap);
+	soap_serializeheader(soap);
+	soap_serialize_ps__gameCurrentPlayingPlayers(soap, &soap_tmp_ps__gameCurrentPlayingPlayers);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__gameCurrentPlayingPlayers(soap, &soap_tmp_ps__gameCurrentPlayingPlayers, "ps:gameCurrentPlayingPlayers", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__gameCurrentPlayingPlayers(soap, &soap_tmp_ps__gameCurrentPlayingPlayers, "ps:gameCurrentPlayingPlayers", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&result)
+		return soap_closesock(soap);
+	result.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	soap_tmp_ps__gameCurrentPlayingPlayersResponse = soap_get_ps__gameCurrentPlayingPlayersResponse(soap, NULL, "ps:gameCurrentPlayingPlayersResponse", "");
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	result = soap_tmp_ps__gameCurrentPlayingPlayersResponse->result;
+	return soap_closesock(soap);
+}
+
+int projectstatsProxy::addSchmeisserei(const char *endpoint, const char *soap_action, int gameId, int playerId, std::string type, std::string &result)
+{	struct soap *soap = this;
+	struct ps__addSchmeisserei soap_tmp_ps__addSchmeisserei;
+	struct ps__addSchmeissereiResponse *soap_tmp_ps__addSchmeissereiResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (!soap_endpoint)
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+	if (!soap_action)
+		soap_action = "";
+	soap->encodingStyle = NULL;
+	soap_tmp_ps__addSchmeisserei.gameId = gameId;
+	soap_tmp_ps__addSchmeisserei.playerId = playerId;
+	soap_tmp_ps__addSchmeisserei.type = type;
+	soap_begin(soap);
+	soap_serializeheader(soap);
+	soap_serialize_ps__addSchmeisserei(soap, &soap_tmp_ps__addSchmeisserei);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__addSchmeisserei(soap, &soap_tmp_ps__addSchmeisserei, "ps:addSchmeisserei", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__addSchmeisserei(soap, &soap_tmp_ps__addSchmeisserei, "ps:addSchmeisserei", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&result)
+		return soap_closesock(soap);
+	soap_default_std__string(soap, &result);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	soap_tmp_ps__addSchmeissereiResponse = soap_get_ps__addSchmeissereiResponse(soap, NULL, "ps:addSchmeissereiResponse", "");
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	result = soap_tmp_ps__addSchmeissereiResponse->result;
 	return soap_closesock(soap);
 }
 /* End of client proxy code */

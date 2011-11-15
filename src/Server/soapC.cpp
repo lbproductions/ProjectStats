@@ -15,7 +15,7 @@ compiling, linking, and/or using OpenSSL is allowed.
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.4 2011-11-15 09:11:33 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.4 2011-11-15 16:04:23 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -174,6 +174,16 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_int(soap, NULL, NULL, "xsd:int");
 	case SOAP_TYPE_double:
 		return soap_in_double(soap, NULL, NULL, "xsd:double");
+	case SOAP_TYPE_std__string:
+		return soap_in_std__string(soap, NULL, NULL, "xsd:string");
+	case SOAP_TYPE_GameList:
+		return soap_in_GameList(soap, NULL, NULL, "GameList");
+	case SOAP_TYPE_GameInformation:
+		return soap_in_GameInformation(soap, NULL, NULL, "GameInformation");
+	case SOAP_TYPE_PlaceList:
+		return soap_in_PlaceList(soap, NULL, NULL, "PlaceList");
+	case SOAP_TYPE_PlaceInformation:
+		return soap_in_PlaceInformation(soap, NULL, NULL, "PlaceInformation");
 	case SOAP_TYPE_DrinkList:
 		return soap_in_DrinkList(soap, NULL, NULL, "DrinkList");
 	case SOAP_TYPE_DrinkInformation:
@@ -186,6 +196,22 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_StringDoublePair(soap, NULL, NULL, "StringDoublePair");
 	case SOAP_TYPE_StringIntPair:
 		return soap_in_StringIntPair(soap, NULL, NULL, "StringIntPair");
+	case SOAP_TYPE_ps__addSchmeisserei:
+		return soap_in_ps__addSchmeisserei(soap, NULL, NULL, "ps:addSchmeisserei");
+	case SOAP_TYPE_ps__addSchmeissereiResponse:
+		return soap_in_ps__addSchmeissereiResponse(soap, NULL, NULL, "ps:addSchmeissereiResponse");
+	case SOAP_TYPE_ps__gameCurrentPlayingPlayers:
+		return soap_in_ps__gameCurrentPlayingPlayers(soap, NULL, NULL, "ps:gameCurrentPlayingPlayers");
+	case SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse:
+		return soap_in_ps__gameCurrentPlayingPlayersResponse(soap, NULL, NULL, "ps:gameCurrentPlayingPlayersResponse");
+	case SOAP_TYPE_ps__gameList:
+		return soap_in_ps__gameList(soap, NULL, NULL, "ps:gameList");
+	case SOAP_TYPE_ps__gameListResponse:
+		return soap_in_ps__gameListResponse(soap, NULL, NULL, "ps:gameListResponse");
+	case SOAP_TYPE_ps__placeList:
+		return soap_in_ps__placeList(soap, NULL, NULL, "ps:placeList");
+	case SOAP_TYPE_ps__placeListResponse:
+		return soap_in_ps__placeListResponse(soap, NULL, NULL, "ps:placeListResponse");
 	case SOAP_TYPE_ps__drinkList:
 		return soap_in_ps__drinkList(soap, NULL, NULL, "ps:drinkList");
 	case SOAP_TYPE_ps__drinkListResponse:
@@ -217,6 +243,26 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 	{	const char *t = soap->type;
 		if (!*t)
 			t = soap->tag;
+		if (!soap_match_tag(soap, t, "xsd:string"))
+		{	*type = SOAP_TYPE_std__string;
+			return soap_in_std__string(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "GameList"))
+		{	*type = SOAP_TYPE_GameList;
+			return soap_in_GameList(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "GameInformation"))
+		{	*type = SOAP_TYPE_GameInformation;
+			return soap_in_GameInformation(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "PlaceList"))
+		{	*type = SOAP_TYPE_PlaceList;
+			return soap_in_PlaceList(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "PlaceInformation"))
+		{	*type = SOAP_TYPE_PlaceInformation;
+			return soap_in_PlaceInformation(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "DrinkList"))
 		{	*type = SOAP_TYPE_DrinkList;
 			return soap_in_DrinkList(soap, NULL, NULL, NULL);
@@ -252,6 +298,38 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		if (!soap_match_tag(soap, t, "xsd:double"))
 		{	*type = SOAP_TYPE_double;
 			return soap_in_double(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:addSchmeisserei"))
+		{	*type = SOAP_TYPE_ps__addSchmeisserei;
+			return soap_in_ps__addSchmeisserei(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:addSchmeissereiResponse"))
+		{	*type = SOAP_TYPE_ps__addSchmeissereiResponse;
+			return soap_in_ps__addSchmeissereiResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:gameCurrentPlayingPlayers"))
+		{	*type = SOAP_TYPE_ps__gameCurrentPlayingPlayers;
+			return soap_in_ps__gameCurrentPlayingPlayers(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:gameCurrentPlayingPlayersResponse"))
+		{	*type = SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse;
+			return soap_in_ps__gameCurrentPlayingPlayersResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:gameList"))
+		{	*type = SOAP_TYPE_ps__gameList;
+			return soap_in_ps__gameList(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:gameListResponse"))
+		{	*type = SOAP_TYPE_ps__gameListResponse;
+			return soap_in_ps__gameListResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:placeList"))
+		{	*type = SOAP_TYPE_ps__placeList;
+			return soap_in_ps__placeList(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:placeListResponse"))
+		{	*type = SOAP_TYPE_ps__placeListResponse;
+			return soap_in_ps__placeListResponse(soap, NULL, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ps:drinkList"))
 		{	*type = SOAP_TYPE_ps__drinkList;
@@ -367,6 +445,16 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_int(soap, tag, id, (const int *)ptr, "xsd:int");
 	case SOAP_TYPE_double:
 		return soap_out_double(soap, tag, id, (const double *)ptr, "xsd:double");
+	case SOAP_TYPE_std__string:
+		return soap_out_std__string(soap, tag, id, (const std::string *)ptr, "xsd:string");
+	case SOAP_TYPE_GameList:
+		return ((GameList *)ptr)->soap_out(soap, tag, id, "GameList");
+	case SOAP_TYPE_GameInformation:
+		return ((GameInformation *)ptr)->soap_out(soap, tag, id, "GameInformation");
+	case SOAP_TYPE_PlaceList:
+		return ((PlaceList *)ptr)->soap_out(soap, tag, id, "PlaceList");
+	case SOAP_TYPE_PlaceInformation:
+		return ((PlaceInformation *)ptr)->soap_out(soap, tag, id, "PlaceInformation");
 	case SOAP_TYPE_DrinkList:
 		return ((DrinkList *)ptr)->soap_out(soap, tag, id, "DrinkList");
 	case SOAP_TYPE_DrinkInformation:
@@ -379,6 +467,22 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((StringDoublePair *)ptr)->soap_out(soap, tag, id, "StringDoublePair");
 	case SOAP_TYPE_StringIntPair:
 		return ((StringIntPair *)ptr)->soap_out(soap, tag, id, "StringIntPair");
+	case SOAP_TYPE_ps__addSchmeisserei:
+		return soap_out_ps__addSchmeisserei(soap, tag, id, (const struct ps__addSchmeisserei *)ptr, "ps:addSchmeisserei");
+	case SOAP_TYPE_ps__addSchmeissereiResponse:
+		return soap_out_ps__addSchmeissereiResponse(soap, tag, id, (const struct ps__addSchmeissereiResponse *)ptr, "ps:addSchmeissereiResponse");
+	case SOAP_TYPE_ps__gameCurrentPlayingPlayers:
+		return soap_out_ps__gameCurrentPlayingPlayers(soap, tag, id, (const struct ps__gameCurrentPlayingPlayers *)ptr, "ps:gameCurrentPlayingPlayers");
+	case SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse:
+		return soap_out_ps__gameCurrentPlayingPlayersResponse(soap, tag, id, (const struct ps__gameCurrentPlayingPlayersResponse *)ptr, "ps:gameCurrentPlayingPlayersResponse");
+	case SOAP_TYPE_ps__gameList:
+		return soap_out_ps__gameList(soap, tag, id, (const struct ps__gameList *)ptr, "ps:gameList");
+	case SOAP_TYPE_ps__gameListResponse:
+		return soap_out_ps__gameListResponse(soap, tag, id, (const struct ps__gameListResponse *)ptr, "ps:gameListResponse");
+	case SOAP_TYPE_ps__placeList:
+		return soap_out_ps__placeList(soap, tag, id, (const struct ps__placeList *)ptr, "ps:placeList");
+	case SOAP_TYPE_ps__placeListResponse:
+		return soap_out_ps__placeListResponse(soap, tag, id, (const struct ps__placeListResponse *)ptr, "ps:placeListResponse");
 	case SOAP_TYPE_ps__drinkList:
 		return soap_out_ps__drinkList(soap, tag, id, (const struct ps__drinkList *)ptr, "ps:drinkList");
 	case SOAP_TYPE_ps__drinkListResponse:
@@ -416,6 +520,21 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	(void)soap; (void)ptr; (void)type; /* appease -Wall -Werror */
 	switch (type)
 	{
+	case SOAP_TYPE_std__string:
+		soap_serialize_std__string(soap, (const std::string *)ptr);
+		break;
+	case SOAP_TYPE_GameList:
+		((GameList *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_GameInformation:
+		((GameInformation *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_PlaceList:
+		((PlaceList *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_PlaceInformation:
+		((PlaceInformation *)ptr)->soap_serialize(soap);
+		break;
 	case SOAP_TYPE_DrinkList:
 		((DrinkList *)ptr)->soap_serialize(soap);
 		break;
@@ -433,6 +552,30 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE_StringIntPair:
 		((StringIntPair *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_ps__addSchmeisserei:
+		soap_serialize_ps__addSchmeisserei(soap, (const struct ps__addSchmeisserei *)ptr);
+		break;
+	case SOAP_TYPE_ps__addSchmeissereiResponse:
+		soap_serialize_ps__addSchmeissereiResponse(soap, (const struct ps__addSchmeissereiResponse *)ptr);
+		break;
+	case SOAP_TYPE_ps__gameCurrentPlayingPlayers:
+		soap_serialize_ps__gameCurrentPlayingPlayers(soap, (const struct ps__gameCurrentPlayingPlayers *)ptr);
+		break;
+	case SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse:
+		soap_serialize_ps__gameCurrentPlayingPlayersResponse(soap, (const struct ps__gameCurrentPlayingPlayersResponse *)ptr);
+		break;
+	case SOAP_TYPE_ps__gameList:
+		soap_serialize_ps__gameList(soap, (const struct ps__gameList *)ptr);
+		break;
+	case SOAP_TYPE_ps__gameListResponse:
+		soap_serialize_ps__gameListResponse(soap, (const struct ps__gameListResponse *)ptr);
+		break;
+	case SOAP_TYPE_ps__placeList:
+		soap_serialize_ps__placeList(soap, (const struct ps__placeList *)ptr);
+		break;
+	case SOAP_TYPE_ps__placeListResponse:
+		soap_serialize_ps__placeListResponse(soap, (const struct ps__placeListResponse *)ptr);
 		break;
 	case SOAP_TYPE_ps__drinkList:
 		soap_serialize_ps__drinkList(soap, (const struct ps__drinkList *)ptr);
@@ -485,6 +628,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_DrinkInformation(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_DrinkList:
 		return (void*)soap_instantiate_DrinkList(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_PlaceInformation:
+		return (void*)soap_instantiate_PlaceInformation(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_PlaceList:
+		return (void*)soap_instantiate_PlaceList(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_GameInformation:
+		return (void*)soap_instantiate_GameInformation(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_GameList:
+		return (void*)soap_instantiate_GameList(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ps__playerByIdResponse:
 		return (void*)soap_instantiate_ps__playerByIdResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ps__playerById:
@@ -497,6 +648,24 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_ps__drinkListResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ps__drinkList:
 		return (void*)soap_instantiate_ps__drinkList(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__placeListResponse:
+		return (void*)soap_instantiate_ps__placeListResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__placeList:
+		return (void*)soap_instantiate_ps__placeList(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__gameListResponse:
+		return (void*)soap_instantiate_ps__gameListResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__gameList:
+		return (void*)soap_instantiate_ps__gameList(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse:
+		return (void*)soap_instantiate_ps__gameCurrentPlayingPlayersResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__gameCurrentPlayingPlayers:
+		return (void*)soap_instantiate_ps__gameCurrentPlayingPlayers(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_std__string:
+		return (void*)soap_instantiate_std__string(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__addSchmeissereiResponse:
+		return (void*)soap_instantiate_ps__addSchmeissereiResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__addSchmeisserei:
+		return (void*)soap_instantiate_ps__addSchmeisserei(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		return (void*)soap_instantiate_SOAP_ENV__Header(soap, -1, type, arrayType, n);
@@ -517,6 +686,12 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 	case SOAP_TYPE_SOAP_ENV__Fault:
 		return (void*)soap_instantiate_SOAP_ENV__Fault(soap, -1, type, arrayType, n);
 #endif
+	case SOAP_TYPE_std__vectorTemplateOfGameInformation:
+		return (void*)soap_instantiate_std__vectorTemplateOfGameInformation(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_std__vectorTemplateOfPlaceInformation:
+		return (void*)soap_instantiate_std__vectorTemplateOfPlaceInformation(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_std__vectorTemplateOfxsd__string:
+		return (void*)soap_instantiate_std__vectorTemplateOfxsd__string(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfDrinkInformation:
 		return (void*)soap_instantiate_std__vectorTemplateOfDrinkInformation(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfPlayerInformation:
@@ -568,6 +743,30 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY((DrinkList*)p->ptr);
 		break;
+	case SOAP_TYPE_PlaceInformation:
+		if (p->size < 0)
+			SOAP_DELETE((PlaceInformation*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((PlaceInformation*)p->ptr);
+		break;
+	case SOAP_TYPE_PlaceList:
+		if (p->size < 0)
+			SOAP_DELETE((PlaceList*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((PlaceList*)p->ptr);
+		break;
+	case SOAP_TYPE_GameInformation:
+		if (p->size < 0)
+			SOAP_DELETE((GameInformation*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((GameInformation*)p->ptr);
+		break;
+	case SOAP_TYPE_GameList:
+		if (p->size < 0)
+			SOAP_DELETE((GameList*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((GameList*)p->ptr);
+		break;
 	case SOAP_TYPE_ps__playerByIdResponse:
 		if (p->size < 0)
 			SOAP_DELETE((struct ps__playerByIdResponse*)p->ptr);
@@ -603,6 +802,60 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			SOAP_DELETE((struct ps__drinkList*)p->ptr);
 		else
 			SOAP_DELETE_ARRAY((struct ps__drinkList*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__placeListResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__placeListResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__placeListResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__placeList:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__placeList*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__placeList*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__gameListResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__gameListResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__gameListResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__gameList:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__gameList*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__gameList*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__gameCurrentPlayingPlayersResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__gameCurrentPlayingPlayersResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__gameCurrentPlayingPlayers:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__gameCurrentPlayingPlayers*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__gameCurrentPlayingPlayers*)p->ptr);
+		break;
+	case SOAP_TYPE_std__string:
+		if (p->size < 0)
+			SOAP_DELETE((std::string*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((std::string*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__addSchmeissereiResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__addSchmeissereiResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__addSchmeissereiResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__addSchmeisserei:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__addSchmeisserei*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__addSchmeisserei*)p->ptr);
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -644,6 +897,24 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			SOAP_DELETE_ARRAY((struct SOAP_ENV__Fault*)p->ptr);
 		break;
 #endif
+	case SOAP_TYPE_std__vectorTemplateOfGameInformation:
+		if (p->size < 0)
+			SOAP_DELETE((std::vector<GameInformation >*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((std::vector<GameInformation >*)p->ptr);
+		break;
+	case SOAP_TYPE_std__vectorTemplateOfPlaceInformation:
+		if (p->size < 0)
+			SOAP_DELETE((std::vector<PlaceInformation >*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((std::vector<PlaceInformation >*)p->ptr);
+		break;
+	case SOAP_TYPE_std__vectorTemplateOfxsd__string:
+		if (p->size < 0)
+			SOAP_DELETE((std::vector<char * >*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((std::vector<char * >*)p->ptr);
+		break;
 	case SOAP_TYPE_std__vectorTemplateOfDrinkInformation:
 		if (p->size < 0)
 			SOAP_DELETE((std::vector<DrinkInformation >*)p->ptr);
@@ -690,6 +961,18 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_container_insert(struct soap *soap, int st, int 
 	(void)soap; (void)st; (void)p; (void)len; (void)q; (void)n; /* appease -Wall -Werror */
 	switch (tt)
 	{
+	case SOAP_TYPE_std__vectorTemplateOfGameInformation:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container soap_container_insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
+		(*(std::vector<GameInformation >*)p)[len] = *(GameInformation *)q;
+		break;
+	case SOAP_TYPE_std__vectorTemplateOfPlaceInformation:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container soap_container_insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
+		(*(std::vector<PlaceInformation >*)p)[len] = *(PlaceInformation *)q;
+		break;
+	case SOAP_TYPE_std__vectorTemplateOfxsd__string:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container soap_container_insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
+		(*(std::vector<char * >*)p)[len] = *(char **)q;
+		break;
 	case SOAP_TYPE_std__vectorTemplateOfDrinkInformation:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container soap_container_insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
 		(*(std::vector<DrinkInformation >*)p)[len] = *(DrinkInformation *)q;
@@ -823,6 +1106,690 @@ SOAP_FMAC3 double * SOAP_FMAC4 soap_get_double(struct soap *soap, double *p, con
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__string(struct soap *soap, std::string *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->erase();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__string(struct soap *soap, const std::string *a)
+{	(void)soap; (void)a; /* appease -Wall -Werror */
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__string(struct soap *soap, const char *tag, int id, const std::string *s, const char *type)
+{
+	if ((soap->mode & SOAP_C_NILSTRING) && s->empty())
+		return soap_element_null(soap, tag, id, type);
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, s, SOAP_TYPE_std__string), type) || soap_string_out(soap, s->c_str(), 0) || soap_element_end_out(soap, tag))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::string * SOAP_FMAC4 soap_in_std__string(struct soap *soap, const char *tag, std::string *s, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!s)
+		s = soap_new_std__string(soap, -1);
+	if (soap->null)
+		if (s)
+			s->erase();
+	if (soap->body && !*soap->href)
+	{	char *t;
+		s = (std::string*)soap_class_id_enter(soap, soap->id, s, SOAP_TYPE_std__string, sizeof(std::string), soap->type, soap->arrayType);
+		if (s)
+		{	if (!(t = soap_string_in(soap, 1, 0, -1)))
+				return NULL;
+			s->assign(t);
+		}
+	}
+	else
+		s = (std::string*)soap_id_forward(soap, soap->href, soap_class_id_enter(soap, soap->id, s, SOAP_TYPE_std__string, sizeof(std::string), soap->type, soap->arrayType), 0, SOAP_TYPE_std__string, 0, sizeof(std::string), 0, soap_copy_std__string);
+	if (soap->body && soap_element_end_in(soap, tag))
+		return NULL;
+	return s;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_std__string(struct soap *soap, const std::string *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_std__string);
+	if (soap_out_std__string(soap, tag?tag:"string", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 std::string * SOAP_FMAC4 soap_get_std__string(struct soap *soap, std::string *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_std__string(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 std::string * SOAP_FMAC2 soap_instantiate_std__string(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__string(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_std__string, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(std::string);
+		if (size)
+			*size = sizeof(std::string);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(std::string[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(std::string);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (std::string*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__string(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::string %p -> %p\n", q, p));
+	*(std::string*)p = *(std::string*)q;
+}
+
+void GameList::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_std__vectorTemplateOfGameInformation(soap, &this->GameList::gameList);
+}
+
+void GameList::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_serialize_std__vectorTemplateOfGameInformation(soap, &this->GameList::gameList);
+}
+
+int GameList::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_GameList(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_GameList(struct soap *soap, const char *tag, int id, const GameList *a, const char *type)
+{
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_GameList), type))
+		return soap->error;
+	if (soap_out_std__vectorTemplateOfGameInformation(soap, "gameList", -1, &(a->GameList::gameList), ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *GameList::soap_in(struct soap *soap, const char *tag, const char *type)
+{	return soap_in_GameList(soap, tag, this, type);
+}
+
+SOAP_FMAC3 GameList * SOAP_FMAC4 soap_in_GameList(struct soap *soap, const char *tag, GameList *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (GameList *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_GameList, sizeof(GameList), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	if (soap->alloced)
+	{	a->soap_default(soap);
+		if (soap->clist->type != SOAP_TYPE_GameList)
+		{	soap_revert(soap);
+			*soap->id = '\0';
+			return (GameList *)a->soap_in(soap, tag, type);
+		}
+	}
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_std__vectorTemplateOfGameInformation(soap, "gameList", &(a->GameList::gameList), "GameInformation"))
+					continue;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (GameList *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_GameList, 0, sizeof(GameList), 0, soap_copy_GameList);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+int GameList::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	register int id = soap_embed(soap, (void*)this, NULL, 0, tag, SOAP_TYPE_GameList);
+	if (this->soap_out(soap, tag?tag:"GameList", id, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *GameList::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_GameList(soap, this, tag, type);
+}
+
+SOAP_FMAC3 GameList * SOAP_FMAC4 soap_get_GameList(struct soap *soap, GameList *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_GameList(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 GameList * SOAP_FMAC2 soap_instantiate_GameList(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_GameList(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_GameList, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(GameList);
+		if (size)
+			*size = sizeof(GameList);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(GameList[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(GameList);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (GameList*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_GameList(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying GameList %p -> %p\n", q, p));
+	*(GameList*)p = *(GameList*)q;
+}
+
+void GameInformation::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_int(soap, &this->GameInformation::id);
+	soap_default_xsd__string(soap, &this->GameInformation::name);
+}
+
+void GameInformation::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_serialize_xsd__string(soap, &this->GameInformation::name);
+}
+
+int GameInformation::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_GameInformation(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_GameInformation(struct soap *soap, const char *tag, int id, const GameInformation *a, const char *type)
+{
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_GameInformation), type))
+		return soap->error;
+	if (soap_out_int(soap, "id", -1, &(a->GameInformation::id), ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "name", -1, &(a->GameInformation::name), ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *GameInformation::soap_in(struct soap *soap, const char *tag, const char *type)
+{	return soap_in_GameInformation(soap, tag, this, type);
+}
+
+SOAP_FMAC3 GameInformation * SOAP_FMAC4 soap_in_GameInformation(struct soap *soap, const char *tag, GameInformation *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (GameInformation *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_GameInformation, sizeof(GameInformation), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	if (soap->alloced)
+	{	a->soap_default(soap);
+		if (soap->clist->type != SOAP_TYPE_GameInformation)
+		{	soap_revert(soap);
+			*soap->id = '\0';
+			return (GameInformation *)a->soap_in(soap, tag, type);
+		}
+	}
+	size_t soap_flag_id1 = 1;
+	size_t soap_flag_name1 = 1;
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_id1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "id", &(a->GameInformation::id), "xsd:int"))
+				{	soap_flag_id1--;
+					continue;
+				}
+			if (soap_flag_name1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_xsd__string(soap, "name", &(a->GameInformation::name), "xsd:string"))
+				{	soap_flag_name1--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (GameInformation *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_GameInformation, 0, sizeof(GameInformation), 0, soap_copy_GameInformation);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_id1 > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+int GameInformation::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	register int id = soap_embed(soap, (void*)this, NULL, 0, tag, SOAP_TYPE_GameInformation);
+	if (this->soap_out(soap, tag?tag:"GameInformation", id, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *GameInformation::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_GameInformation(soap, this, tag, type);
+}
+
+SOAP_FMAC3 GameInformation * SOAP_FMAC4 soap_get_GameInformation(struct soap *soap, GameInformation *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_GameInformation(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 GameInformation * SOAP_FMAC2 soap_instantiate_GameInformation(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_GameInformation(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_GameInformation, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(GameInformation);
+		if (size)
+			*size = sizeof(GameInformation);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(GameInformation[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(GameInformation);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (GameInformation*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_GameInformation(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying GameInformation %p -> %p\n", q, p));
+	*(GameInformation*)p = *(GameInformation*)q;
+}
+
+void PlaceList::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_std__vectorTemplateOfPlaceInformation(soap, &this->PlaceList::placeList);
+}
+
+void PlaceList::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_serialize_std__vectorTemplateOfPlaceInformation(soap, &this->PlaceList::placeList);
+}
+
+int PlaceList::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_PlaceList(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PlaceList(struct soap *soap, const char *tag, int id, const PlaceList *a, const char *type)
+{
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_PlaceList), type))
+		return soap->error;
+	if (soap_out_std__vectorTemplateOfPlaceInformation(soap, "placeList", -1, &(a->PlaceList::placeList), ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *PlaceList::soap_in(struct soap *soap, const char *tag, const char *type)
+{	return soap_in_PlaceList(soap, tag, this, type);
+}
+
+SOAP_FMAC3 PlaceList * SOAP_FMAC4 soap_in_PlaceList(struct soap *soap, const char *tag, PlaceList *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (PlaceList *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_PlaceList, sizeof(PlaceList), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	if (soap->alloced)
+	{	a->soap_default(soap);
+		if (soap->clist->type != SOAP_TYPE_PlaceList)
+		{	soap_revert(soap);
+			*soap->id = '\0';
+			return (PlaceList *)a->soap_in(soap, tag, type);
+		}
+	}
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_std__vectorTemplateOfPlaceInformation(soap, "placeList", &(a->PlaceList::placeList), "PlaceInformation"))
+					continue;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (PlaceList *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_PlaceList, 0, sizeof(PlaceList), 0, soap_copy_PlaceList);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+int PlaceList::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	register int id = soap_embed(soap, (void*)this, NULL, 0, tag, SOAP_TYPE_PlaceList);
+	if (this->soap_out(soap, tag?tag:"PlaceList", id, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *PlaceList::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_PlaceList(soap, this, tag, type);
+}
+
+SOAP_FMAC3 PlaceList * SOAP_FMAC4 soap_get_PlaceList(struct soap *soap, PlaceList *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PlaceList(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 PlaceList * SOAP_FMAC2 soap_instantiate_PlaceList(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_PlaceList(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_PlaceList, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(PlaceList);
+		if (size)
+			*size = sizeof(PlaceList);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(PlaceList[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(PlaceList);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (PlaceList*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_PlaceList(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying PlaceList %p -> %p\n", q, p));
+	*(PlaceList*)p = *(PlaceList*)q;
+}
+
+void PlaceInformation::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_int(soap, &this->PlaceInformation::id);
+	soap_default_xsd__string(soap, &this->PlaceInformation::name);
+	soap_default_int(soap, &this->PlaceInformation::plz);
+	soap_default_xsd__string(soap, &this->PlaceInformation::ort);
+	soap_default_xsd__string(soap, &this->PlaceInformation::strasse);
+	soap_default_int(soap, &this->PlaceInformation::number);
+	soap_default_xsd__string(soap, &this->PlaceInformation::comment);
+	soap_default_int(soap, &this->PlaceInformation::gameCount);
+	soap_default_std__vectorTemplateOfxsd__string(soap, &this->PlaceInformation::players);
+}
+
+void PlaceInformation::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_serialize_xsd__string(soap, &this->PlaceInformation::name);
+	soap_serialize_xsd__string(soap, &this->PlaceInformation::ort);
+	soap_serialize_xsd__string(soap, &this->PlaceInformation::strasse);
+	soap_serialize_xsd__string(soap, &this->PlaceInformation::comment);
+	soap_serialize_std__vectorTemplateOfxsd__string(soap, &this->PlaceInformation::players);
+}
+
+int PlaceInformation::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_PlaceInformation(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PlaceInformation(struct soap *soap, const char *tag, int id, const PlaceInformation *a, const char *type)
+{
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_PlaceInformation), type))
+		return soap->error;
+	if (soap_out_int(soap, "id", -1, &(a->PlaceInformation::id), ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "name", -1, &(a->PlaceInformation::name), ""))
+		return soap->error;
+	if (soap_out_int(soap, "plz", -1, &(a->PlaceInformation::plz), ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "ort", -1, &(a->PlaceInformation::ort), ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "strasse", -1, &(a->PlaceInformation::strasse), ""))
+		return soap->error;
+	if (soap_out_int(soap, "number", -1, &(a->PlaceInformation::number), ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "comment", -1, &(a->PlaceInformation::comment), ""))
+		return soap->error;
+	if (soap_out_int(soap, "gameCount", -1, &(a->PlaceInformation::gameCount), ""))
+		return soap->error;
+	if (soap_out_std__vectorTemplateOfxsd__string(soap, "players", -1, &(a->PlaceInformation::players), ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *PlaceInformation::soap_in(struct soap *soap, const char *tag, const char *type)
+{	return soap_in_PlaceInformation(soap, tag, this, type);
+}
+
+SOAP_FMAC3 PlaceInformation * SOAP_FMAC4 soap_in_PlaceInformation(struct soap *soap, const char *tag, PlaceInformation *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (PlaceInformation *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_PlaceInformation, sizeof(PlaceInformation), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	if (soap->alloced)
+	{	a->soap_default(soap);
+		if (soap->clist->type != SOAP_TYPE_PlaceInformation)
+		{	soap_revert(soap);
+			*soap->id = '\0';
+			return (PlaceInformation *)a->soap_in(soap, tag, type);
+		}
+	}
+	size_t soap_flag_id1 = 1;
+	size_t soap_flag_name1 = 1;
+	size_t soap_flag_plz1 = 1;
+	size_t soap_flag_ort1 = 1;
+	size_t soap_flag_strasse1 = 1;
+	size_t soap_flag_number1 = 1;
+	size_t soap_flag_comment1 = 1;
+	size_t soap_flag_gameCount1 = 1;
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_id1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "id", &(a->PlaceInformation::id), "xsd:int"))
+				{	soap_flag_id1--;
+					continue;
+				}
+			if (soap_flag_name1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_xsd__string(soap, "name", &(a->PlaceInformation::name), "xsd:string"))
+				{	soap_flag_name1--;
+					continue;
+				}
+			if (soap_flag_plz1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "plz", &(a->PlaceInformation::plz), "xsd:int"))
+				{	soap_flag_plz1--;
+					continue;
+				}
+			if (soap_flag_ort1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_xsd__string(soap, "ort", &(a->PlaceInformation::ort), "xsd:string"))
+				{	soap_flag_ort1--;
+					continue;
+				}
+			if (soap_flag_strasse1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_xsd__string(soap, "strasse", &(a->PlaceInformation::strasse), "xsd:string"))
+				{	soap_flag_strasse1--;
+					continue;
+				}
+			if (soap_flag_number1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "number", &(a->PlaceInformation::number), "xsd:int"))
+				{	soap_flag_number1--;
+					continue;
+				}
+			if (soap_flag_comment1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_xsd__string(soap, "comment", &(a->PlaceInformation::comment), "xsd:string"))
+				{	soap_flag_comment1--;
+					continue;
+				}
+			if (soap_flag_gameCount1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "gameCount", &(a->PlaceInformation::gameCount), "xsd:int"))
+				{	soap_flag_gameCount1--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_std__vectorTemplateOfxsd__string(soap, "players", &(a->PlaceInformation::players), "xsd:string"))
+					continue;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (PlaceInformation *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_PlaceInformation, 0, sizeof(PlaceInformation), 0, soap_copy_PlaceInformation);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_id1 > 0 || soap_flag_plz1 > 0 || soap_flag_number1 > 0 || soap_flag_gameCount1 > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+int PlaceInformation::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	register int id = soap_embed(soap, (void*)this, NULL, 0, tag, SOAP_TYPE_PlaceInformation);
+	if (this->soap_out(soap, tag?tag:"PlaceInformation", id, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *PlaceInformation::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_PlaceInformation(soap, this, tag, type);
+}
+
+SOAP_FMAC3 PlaceInformation * SOAP_FMAC4 soap_get_PlaceInformation(struct soap *soap, PlaceInformation *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PlaceInformation(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 PlaceInformation * SOAP_FMAC2 soap_instantiate_PlaceInformation(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_PlaceInformation(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_PlaceInformation, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(PlaceInformation);
+		if (size)
+			*size = sizeof(PlaceInformation);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(PlaceInformation[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(PlaceInformation);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (PlaceInformation*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_PlaceInformation(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying PlaceInformation %p -> %p\n", q, p));
+	*(PlaceInformation*)p = *(PlaceInformation*)q;
 }
 
 void DrinkList::soap_default(struct soap *soap)
@@ -2350,6 +3317,867 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Header(struct soap *soap, int st,
 
 #endif
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__addSchmeisserei(struct soap *soap, struct ps__addSchmeisserei *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_int(soap, &a->gameId);
+	soap_default_int(soap, &a->playerId);
+	soap_default_std__string(soap, &a->type);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__addSchmeisserei(struct soap *soap, const struct ps__addSchmeisserei *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_std__string(soap, &a->type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__addSchmeisserei(struct soap *soap, const char *tag, int id, const struct ps__addSchmeisserei *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__addSchmeisserei), type))
+		return soap->error;
+	if (soap_out_int(soap, "gameId", -1, &a->gameId, ""))
+		return soap->error;
+	if (soap_out_int(soap, "playerId", -1, &a->playerId, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "type", -1, &a->type, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__addSchmeisserei * SOAP_FMAC4 soap_in_ps__addSchmeisserei(struct soap *soap, const char *tag, struct ps__addSchmeisserei *a, const char *type)
+{
+	size_t soap_flag_gameId = 1;
+	size_t soap_flag_playerId = 1;
+	size_t soap_flag_type = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__addSchmeisserei *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ps__addSchmeisserei, sizeof(struct ps__addSchmeisserei), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ps__addSchmeisserei(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_gameId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "gameId", &a->gameId, "xsd:int"))
+				{	soap_flag_gameId--;
+					continue;
+				}
+			if (soap_flag_playerId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "playerId", &a->playerId, "xsd:int"))
+				{	soap_flag_playerId--;
+					continue;
+				}
+			if (soap_flag_type && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "type", &a->type, "xsd:string"))
+				{	soap_flag_type--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__addSchmeisserei *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__addSchmeisserei, 0, sizeof(struct ps__addSchmeisserei), 0, soap_copy_ps__addSchmeisserei);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_gameId > 0 || soap_flag_playerId > 0 || soap_flag_type > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__addSchmeisserei(struct soap *soap, const struct ps__addSchmeisserei *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__addSchmeisserei);
+	if (soap_out_ps__addSchmeisserei(soap, tag?tag:"ps:addSchmeisserei", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__addSchmeisserei * SOAP_FMAC4 soap_get_ps__addSchmeisserei(struct soap *soap, struct ps__addSchmeisserei *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__addSchmeisserei(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__addSchmeisserei * SOAP_FMAC2 soap_instantiate_ps__addSchmeisserei(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__addSchmeisserei(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__addSchmeisserei, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__addSchmeisserei);
+		if (size)
+			*size = sizeof(struct ps__addSchmeisserei);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__addSchmeisserei[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__addSchmeisserei);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__addSchmeisserei*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__addSchmeisserei(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__addSchmeisserei %p -> %p\n", q, p));
+	*(struct ps__addSchmeisserei*)p = *(struct ps__addSchmeisserei*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__addSchmeissereiResponse(struct soap *soap, struct ps__addSchmeissereiResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_std__string(soap, &a->result);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__addSchmeissereiResponse(struct soap *soap, const struct ps__addSchmeissereiResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_std__string(soap, &a->result);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__addSchmeissereiResponse(struct soap *soap, const char *tag, int id, const struct ps__addSchmeissereiResponse *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__addSchmeissereiResponse), type))
+		return soap->error;
+	if (soap_out_std__string(soap, "result", -1, &a->result, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__addSchmeissereiResponse * SOAP_FMAC4 soap_in_ps__addSchmeissereiResponse(struct soap *soap, const char *tag, struct ps__addSchmeissereiResponse *a, const char *type)
+{
+	size_t soap_flag_result = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__addSchmeissereiResponse *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ps__addSchmeissereiResponse, sizeof(struct ps__addSchmeissereiResponse), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ps__addSchmeissereiResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_result && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "result", &a->result, "xsd:string"))
+				{	soap_flag_result--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__addSchmeissereiResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__addSchmeissereiResponse, 0, sizeof(struct ps__addSchmeissereiResponse), 0, soap_copy_ps__addSchmeissereiResponse);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_result > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__addSchmeissereiResponse(struct soap *soap, const struct ps__addSchmeissereiResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__addSchmeissereiResponse);
+	if (soap_out_ps__addSchmeissereiResponse(soap, tag?tag:"ps:addSchmeissereiResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__addSchmeissereiResponse * SOAP_FMAC4 soap_get_ps__addSchmeissereiResponse(struct soap *soap, struct ps__addSchmeissereiResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__addSchmeissereiResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__addSchmeissereiResponse * SOAP_FMAC2 soap_instantiate_ps__addSchmeissereiResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__addSchmeissereiResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__addSchmeissereiResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__addSchmeissereiResponse);
+		if (size)
+			*size = sizeof(struct ps__addSchmeissereiResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__addSchmeissereiResponse[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__addSchmeissereiResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__addSchmeissereiResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__addSchmeissereiResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__addSchmeissereiResponse %p -> %p\n", q, p));
+	*(struct ps__addSchmeissereiResponse*)p = *(struct ps__addSchmeissereiResponse*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__gameCurrentPlayingPlayers(struct soap *soap, struct ps__gameCurrentPlayingPlayers *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_int(soap, &a->gameId);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__gameCurrentPlayingPlayers(struct soap *soap, const struct ps__gameCurrentPlayingPlayers *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__gameCurrentPlayingPlayers(struct soap *soap, const char *tag, int id, const struct ps__gameCurrentPlayingPlayers *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__gameCurrentPlayingPlayers), type))
+		return soap->error;
+	if (soap_out_int(soap, "gameId", -1, &a->gameId, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__gameCurrentPlayingPlayers * SOAP_FMAC4 soap_in_ps__gameCurrentPlayingPlayers(struct soap *soap, const char *tag, struct ps__gameCurrentPlayingPlayers *a, const char *type)
+{
+	size_t soap_flag_gameId = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__gameCurrentPlayingPlayers *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ps__gameCurrentPlayingPlayers, sizeof(struct ps__gameCurrentPlayingPlayers), 0, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default_ps__gameCurrentPlayingPlayers(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_gameId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "gameId", &a->gameId, "xsd:int"))
+				{	soap_flag_gameId--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__gameCurrentPlayingPlayers *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__gameCurrentPlayingPlayers, 0, sizeof(struct ps__gameCurrentPlayingPlayers), 0, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_gameId > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__gameCurrentPlayingPlayers(struct soap *soap, const struct ps__gameCurrentPlayingPlayers *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__gameCurrentPlayingPlayers);
+	if (soap_out_ps__gameCurrentPlayingPlayers(soap, tag?tag:"ps:gameCurrentPlayingPlayers", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__gameCurrentPlayingPlayers * SOAP_FMAC4 soap_get_ps__gameCurrentPlayingPlayers(struct soap *soap, struct ps__gameCurrentPlayingPlayers *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__gameCurrentPlayingPlayers(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__gameCurrentPlayingPlayers * SOAP_FMAC2 soap_instantiate_ps__gameCurrentPlayingPlayers(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__gameCurrentPlayingPlayers(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__gameCurrentPlayingPlayers, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__gameCurrentPlayingPlayers);
+		if (size)
+			*size = sizeof(struct ps__gameCurrentPlayingPlayers);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__gameCurrentPlayingPlayers[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__gameCurrentPlayingPlayers);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__gameCurrentPlayingPlayers*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__gameCurrentPlayingPlayers(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__gameCurrentPlayingPlayers %p -> %p\n", q, p));
+	*(struct ps__gameCurrentPlayingPlayers*)p = *(struct ps__gameCurrentPlayingPlayers*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__gameCurrentPlayingPlayersResponse(struct soap *soap, struct ps__gameCurrentPlayingPlayersResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->result.PlayerList::soap_default(soap);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__gameCurrentPlayingPlayersResponse(struct soap *soap, const struct ps__gameCurrentPlayingPlayersResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->result.soap_serialize(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__gameCurrentPlayingPlayersResponse(struct soap *soap, const char *tag, int id, const struct ps__gameCurrentPlayingPlayersResponse *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse), type))
+		return soap->error;
+	if (a->result.soap_out(soap, "result", -1, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__gameCurrentPlayingPlayersResponse * SOAP_FMAC4 soap_in_ps__gameCurrentPlayingPlayersResponse(struct soap *soap, const char *tag, struct ps__gameCurrentPlayingPlayersResponse *a, const char *type)
+{
+	size_t soap_flag_result = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__gameCurrentPlayingPlayersResponse *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse, sizeof(struct ps__gameCurrentPlayingPlayersResponse), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ps__gameCurrentPlayingPlayersResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_result && soap->error == SOAP_TAG_MISMATCH)
+				if (a->result.soap_in(soap, "result", "PlayerList"))
+				{	soap_flag_result--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__gameCurrentPlayingPlayersResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse, 0, sizeof(struct ps__gameCurrentPlayingPlayersResponse), 0, soap_copy_ps__gameCurrentPlayingPlayersResponse);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_result > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__gameCurrentPlayingPlayersResponse(struct soap *soap, const struct ps__gameCurrentPlayingPlayersResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse);
+	if (soap_out_ps__gameCurrentPlayingPlayersResponse(soap, tag?tag:"ps:gameCurrentPlayingPlayersResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__gameCurrentPlayingPlayersResponse * SOAP_FMAC4 soap_get_ps__gameCurrentPlayingPlayersResponse(struct soap *soap, struct ps__gameCurrentPlayingPlayersResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__gameCurrentPlayingPlayersResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__gameCurrentPlayingPlayersResponse * SOAP_FMAC2 soap_instantiate_ps__gameCurrentPlayingPlayersResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__gameCurrentPlayingPlayersResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__gameCurrentPlayingPlayersResponse);
+		if (size)
+			*size = sizeof(struct ps__gameCurrentPlayingPlayersResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__gameCurrentPlayingPlayersResponse[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__gameCurrentPlayingPlayersResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__gameCurrentPlayingPlayersResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__gameCurrentPlayingPlayersResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__gameCurrentPlayingPlayersResponse %p -> %p\n", q, p));
+	*(struct ps__gameCurrentPlayingPlayersResponse*)p = *(struct ps__gameCurrentPlayingPlayersResponse*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__gameList(struct soap *soap, struct ps__gameList *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__gameList(struct soap *soap, const struct ps__gameList *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__gameList(struct soap *soap, const char *tag, int id, const struct ps__gameList *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__gameList), type))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__gameList * SOAP_FMAC4 soap_in_ps__gameList(struct soap *soap, const char *tag, struct ps__gameList *a, const char *type)
+{
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__gameList *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ps__gameList, sizeof(struct ps__gameList), 0, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default_ps__gameList(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__gameList *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__gameList, 0, sizeof(struct ps__gameList), 0, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__gameList(struct soap *soap, const struct ps__gameList *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__gameList);
+	if (soap_out_ps__gameList(soap, tag?tag:"ps:gameList", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__gameList * SOAP_FMAC4 soap_get_ps__gameList(struct soap *soap, struct ps__gameList *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__gameList(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__gameList * SOAP_FMAC2 soap_instantiate_ps__gameList(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__gameList(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__gameList, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__gameList);
+		if (size)
+			*size = sizeof(struct ps__gameList);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__gameList[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__gameList);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__gameList*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__gameList(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__gameList %p -> %p\n", q, p));
+	*(struct ps__gameList*)p = *(struct ps__gameList*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__gameListResponse(struct soap *soap, struct ps__gameListResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->result.GameList::soap_default(soap);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__gameListResponse(struct soap *soap, const struct ps__gameListResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->result.soap_serialize(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__gameListResponse(struct soap *soap, const char *tag, int id, const struct ps__gameListResponse *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__gameListResponse), type))
+		return soap->error;
+	if (a->result.soap_out(soap, "result", -1, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__gameListResponse * SOAP_FMAC4 soap_in_ps__gameListResponse(struct soap *soap, const char *tag, struct ps__gameListResponse *a, const char *type)
+{
+	size_t soap_flag_result = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__gameListResponse *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ps__gameListResponse, sizeof(struct ps__gameListResponse), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ps__gameListResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_result && soap->error == SOAP_TAG_MISMATCH)
+				if (a->result.soap_in(soap, "result", "GameList"))
+				{	soap_flag_result--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__gameListResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__gameListResponse, 0, sizeof(struct ps__gameListResponse), 0, soap_copy_ps__gameListResponse);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_result > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__gameListResponse(struct soap *soap, const struct ps__gameListResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__gameListResponse);
+	if (soap_out_ps__gameListResponse(soap, tag?tag:"ps:gameListResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__gameListResponse * SOAP_FMAC4 soap_get_ps__gameListResponse(struct soap *soap, struct ps__gameListResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__gameListResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__gameListResponse * SOAP_FMAC2 soap_instantiate_ps__gameListResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__gameListResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__gameListResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__gameListResponse);
+		if (size)
+			*size = sizeof(struct ps__gameListResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__gameListResponse[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__gameListResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__gameListResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__gameListResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__gameListResponse %p -> %p\n", q, p));
+	*(struct ps__gameListResponse*)p = *(struct ps__gameListResponse*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__placeList(struct soap *soap, struct ps__placeList *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__placeList(struct soap *soap, const struct ps__placeList *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__placeList(struct soap *soap, const char *tag, int id, const struct ps__placeList *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__placeList), type))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__placeList * SOAP_FMAC4 soap_in_ps__placeList(struct soap *soap, const char *tag, struct ps__placeList *a, const char *type)
+{
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__placeList *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ps__placeList, sizeof(struct ps__placeList), 0, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default_ps__placeList(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__placeList *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__placeList, 0, sizeof(struct ps__placeList), 0, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__placeList(struct soap *soap, const struct ps__placeList *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__placeList);
+	if (soap_out_ps__placeList(soap, tag?tag:"ps:placeList", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__placeList * SOAP_FMAC4 soap_get_ps__placeList(struct soap *soap, struct ps__placeList *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__placeList(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__placeList * SOAP_FMAC2 soap_instantiate_ps__placeList(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__placeList(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__placeList, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__placeList);
+		if (size)
+			*size = sizeof(struct ps__placeList);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__placeList[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__placeList);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__placeList*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__placeList(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__placeList %p -> %p\n", q, p));
+	*(struct ps__placeList*)p = *(struct ps__placeList*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__placeListResponse(struct soap *soap, struct ps__placeListResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->result.PlaceList::soap_default(soap);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__placeListResponse(struct soap *soap, const struct ps__placeListResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->result.soap_serialize(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__placeListResponse(struct soap *soap, const char *tag, int id, const struct ps__placeListResponse *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__placeListResponse), type))
+		return soap->error;
+	if (a->result.soap_out(soap, "result", -1, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__placeListResponse * SOAP_FMAC4 soap_in_ps__placeListResponse(struct soap *soap, const char *tag, struct ps__placeListResponse *a, const char *type)
+{
+	size_t soap_flag_result = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__placeListResponse *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ps__placeListResponse, sizeof(struct ps__placeListResponse), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ps__placeListResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_result && soap->error == SOAP_TAG_MISMATCH)
+				if (a->result.soap_in(soap, "result", "PlaceList"))
+				{	soap_flag_result--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__placeListResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__placeListResponse, 0, sizeof(struct ps__placeListResponse), 0, soap_copy_ps__placeListResponse);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_result > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__placeListResponse(struct soap *soap, const struct ps__placeListResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__placeListResponse);
+	if (soap_out_ps__placeListResponse(soap, tag?tag:"ps:placeListResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__placeListResponse * SOAP_FMAC4 soap_get_ps__placeListResponse(struct soap *soap, struct ps__placeListResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__placeListResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__placeListResponse * SOAP_FMAC2 soap_instantiate_ps__placeListResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__placeListResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__placeListResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__placeListResponse);
+		if (size)
+			*size = sizeof(struct ps__placeListResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__placeListResponse[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__placeListResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__placeListResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__placeListResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__placeListResponse %p -> %p\n", q, p));
+	*(struct ps__placeListResponse*)p = *(struct ps__placeListResponse*)q;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__drinkList(struct soap *soap, struct ps__drinkList *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -3264,6 +5092,270 @@ SOAP_FMAC3 char ** SOAP_FMAC4 soap_get_string(struct soap *soap, char **p, const
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfGameInformation(struct soap *soap, std::vector<GameInformation >*p)
+{
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfGameInformation(struct soap *soap, const std::vector<GameInformation >*a)
+{
+	for (std::vector<GameInformation >::const_iterator i = a->begin(); i != a->end(); ++i)
+		(*i).soap_serialize(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfGameInformation(struct soap *soap, const char *tag, int id, const std::vector<GameInformation >*a, const char *type)
+{
+	for (std::vector<GameInformation >::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if ((*i).soap_out(soap, tag, id, ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<GameInformation >* SOAP_FMAC4 soap_in_std__vectorTemplateOfGameInformation(struct soap *soap, const char *tag, std::vector<GameInformation >*a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a && !(a = soap_new_std__vectorTemplateOfGameInformation(soap, -1)))
+		return NULL;
+	GameInformation n;
+	short soap_flag = 0;
+	do
+	{	if (tag && *tag != '-')
+			soap_revert(soap);
+		n.soap_default(soap);
+		if (*soap->id || *soap->href)
+		{	if (!soap_container_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size(), SOAP_TYPE_GameInformation, SOAP_TYPE_std__vectorTemplateOfGameInformation, sizeof(GameInformation), 0))
+				break;
+			if (!soap_in_GameInformation(soap, tag, NULL, "GameInformation"))
+				break;
+		}
+		else
+		{
+			if (!soap_in_GameInformation(soap, tag, &n, "GameInformation"))
+				break;
+		}
+		soap_update_pointers(soap, (char*)&n, (char*)&n + sizeof(n), (char*)&(*a->insert(a->end(), n)), (char*)&n);
+		soap_flag = 1;
+	}
+	while (tag && *tag != '-' && !soap_element_begin_in(soap, tag, 1, NULL));
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<GameInformation > * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfGameInformation(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfGameInformation(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_std__vectorTemplateOfGameInformation, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(std::vector<GameInformation >);
+		if (size)
+			*size = sizeof(std::vector<GameInformation >);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(std::vector<GameInformation >[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(std::vector<GameInformation >);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (std::vector<GameInformation >*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfGameInformation(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::vector<GameInformation > %p -> %p\n", q, p));
+	*(std::vector<GameInformation >*)p = *(std::vector<GameInformation >*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPlaceInformation(struct soap *soap, std::vector<PlaceInformation >*p)
+{
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPlaceInformation(struct soap *soap, const std::vector<PlaceInformation >*a)
+{
+	for (std::vector<PlaceInformation >::const_iterator i = a->begin(); i != a->end(); ++i)
+		(*i).soap_serialize(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPlaceInformation(struct soap *soap, const char *tag, int id, const std::vector<PlaceInformation >*a, const char *type)
+{
+	for (std::vector<PlaceInformation >::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if ((*i).soap_out(soap, tag, id, ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<PlaceInformation >* SOAP_FMAC4 soap_in_std__vectorTemplateOfPlaceInformation(struct soap *soap, const char *tag, std::vector<PlaceInformation >*a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a && !(a = soap_new_std__vectorTemplateOfPlaceInformation(soap, -1)))
+		return NULL;
+	PlaceInformation n;
+	short soap_flag = 0;
+	do
+	{	if (tag && *tag != '-')
+			soap_revert(soap);
+		n.soap_default(soap);
+		if (*soap->id || *soap->href)
+		{	if (!soap_container_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size(), SOAP_TYPE_PlaceInformation, SOAP_TYPE_std__vectorTemplateOfPlaceInformation, sizeof(PlaceInformation), 0))
+				break;
+			if (!soap_in_PlaceInformation(soap, tag, NULL, "PlaceInformation"))
+				break;
+		}
+		else
+		{
+			if (!soap_in_PlaceInformation(soap, tag, &n, "PlaceInformation"))
+				break;
+		}
+		soap_update_pointers(soap, (char*)&n, (char*)&n + sizeof(n), (char*)&(*a->insert(a->end(), n)), (char*)&n);
+		soap_flag = 1;
+	}
+	while (tag && *tag != '-' && !soap_element_begin_in(soap, tag, 1, NULL));
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<PlaceInformation > * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfPlaceInformation(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPlaceInformation(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_std__vectorTemplateOfPlaceInformation, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(std::vector<PlaceInformation >);
+		if (size)
+			*size = sizeof(std::vector<PlaceInformation >);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(std::vector<PlaceInformation >[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(std::vector<PlaceInformation >);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (std::vector<PlaceInformation >*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfPlaceInformation(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::vector<PlaceInformation > %p -> %p\n", q, p));
+	*(std::vector<PlaceInformation >*)p = *(std::vector<PlaceInformation >*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfxsd__string(struct soap *soap, std::vector<char * >*p)
+{
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfxsd__string(struct soap *soap, const std::vector<char * >*a)
+{
+	for (std::vector<char * >::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_xsd__string(soap, &(*i));
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfxsd__string(struct soap *soap, const char *tag, int id, const std::vector<char * >*a, const char *type)
+{
+	for (std::vector<char * >::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_xsd__string(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<char * >* SOAP_FMAC4 soap_in_std__vectorTemplateOfxsd__string(struct soap *soap, const char *tag, std::vector<char * >*a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a && !(a = soap_new_std__vectorTemplateOfxsd__string(soap, -1)))
+		return NULL;
+	char *n;
+	short soap_flag = 0;
+	do
+	{	if (tag && *tag != '-')
+			soap_revert(soap);
+		n = NULL;
+		if (*soap->id || *soap->href)
+		{	if (!soap_container_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size(), SOAP_TYPE_xsd__string, SOAP_TYPE_std__vectorTemplateOfxsd__string, sizeof(char *), 1))
+				break;
+			if (!soap_in_xsd__string(soap, tag, NULL, "xsd:string"))
+				break;
+		}
+		else
+		{
+			if (!soap_in_xsd__string(soap, tag, &n, "xsd:string"))
+				break;
+		}
+		a->push_back(n);
+		soap_flag = 1;
+	}
+	while (tag && *tag != '-' && !soap_element_begin_in(soap, tag, 1, NULL));
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<char * > * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfxsd__string(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfxsd__string(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_std__vectorTemplateOfxsd__string, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(std::vector<char * >);
+		if (size)
+			*size = sizeof(std::vector<char * >);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(std::vector<char * >[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(std::vector<char * >);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (std::vector<char * >*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfxsd__string(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::vector<char * > %p -> %p\n", q, p));
+	*(std::vector<char * >*)p = *(std::vector<char * >*)q;
 }
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfDrinkInformation(struct soap *soap, std::vector<DrinkInformation >*p)

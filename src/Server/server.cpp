@@ -6,6 +6,9 @@
 #include <Database/player.h>
 #include <Database/drink.h>
 #include <Database/place.h>
+#include <Database/game.h>
+#include <Database/Doppelkopf/dokolivegame.h>
+#include <Database/Doppelkopf/dokoround.h>
 
 #include <QDebug>
 
@@ -95,7 +98,6 @@ int projectstatsService::playerList(PlayerList& result)
             pair.value = player->average->value(type);
             info.average.push_back(pair);
         }
-        qDebug() << info.id << info.name;
         result.playerList.push_back(info);
     }
 
@@ -152,3 +154,54 @@ int projectstatsService::placeList(PlaceList& result)
     }
     return SOAP_OK;
 }
+
+int projectstatsService::gameList(GameList& result)
+{
+    foreach(Database::Game* game, Database::Games::instance()->allRows())
+    {
+        GameInformation info;
+        QByteArray ba = game->name->value().toLocal8Bit();
+        info.name = strdup(ba.data());
+        info.id = game->id();
+        result.gameList.push_back(info);
+    }
+    return SOAP_OK;
+}
+
+int projectstatsService::gameCurrentPlayingPlayers(int gameId, PlayerList& result)
+{
+    Database::LiveGame* game = static_cast<Database::LiveGame*>(Database::Games::instance()->rowById(gameId).data());
+    foreach(Database::Player* player, game->currentPlayingPlayers->value())
+    {
+        PlayerInformation info;
+        QByteArray ba = player->name->value().toLocal8Bit();
+        info.name = strdup(ba.data());
+        info.id = player->id();
+
+        result.playerList.push_back(info);
+    }
+
+    return SOAP_OK;
+}
+
+int projectstatsService::addSchmeisserei(int gameId, int playerId, std::string type, std::string& /*result*/)
+{
+    Database::Game* game = Database::Games::instance()->rowById(gameId);
+
+    if(game->live->value() && game->type->value() == "Doppelkopf")
+    {
+        Database::DokoLiveGame* dokogame = static_cast<Database::DokoLiveGame*>(game);
+
+        if(!dokogame->isFinished->value())
+        {
+            Database::DokoRound* round = static_cast<Database::DokoRound*>(dokogame->currentRound->value());
+            Database::Player* player = Database::Players::instance()->rowById(playerId);
+            QString stype = QString::fromUtf8(type.c_str());
+            round->addSchmeisserei(player, stype);
+        }
+    }
+
+    return SOAP_OK;
+}
+
+

@@ -67,6 +67,17 @@ class PlaceList
     std::vector<PlaceInformation> placeList;
 };
 
+class GameInformation
+{
+    int id;
+    xsd__string name;
+};
+
+class GameList
+{
+    std::vector<GameInformation> gameList;
+};
+
 //gsoap ps service name: projectstats
 //gsoap ps service port: http://eineurl.von.uns?
 //gsoap ps service namespace: urn:projectstats
@@ -102,5 +113,32 @@ int ps__drinkList(DrinkList& result);
 //gsoap ps service method-encoding: encoded
 //gsoap ps service method-action: placeList ""
 int ps__placeList(PlaceList& result);
+
+//gsoap ps service name: projectstats
+//gsoap ps service port: http://eineurl.von.uns?
+//gsoap ps service namespace: urn:projectstats
+
+//gsoap ps service method-style: rpc
+//gsoap ps service method-encoding: encoded
+//gsoap ps service method-action: gameList ""
+int ps__gameList(GameList& result);
+
+//gsoap ps service name: projectstats
+//gsoap ps service port: http://eineurl.von.uns?
+//gsoap ps service namespace: urn:projectstats
+
+//gsoap ps service method-style: rpc
+//gsoap ps service method-encoding: encoded
+//gsoap ps service method-action: gameCurrentPlayingPlayers ""
+int ps__gameCurrentPlayingPlayers(int gameId, PlayerList& result);
+
+//gsoap ps service name: projectstats
+//gsoap ps service port: http://eineurl.von.uns?
+//gsoap ps service namespace: urn:projectstats
+
+//gsoap ps service method-style: rpc
+//gsoap ps service method-encoding: encoded
+//gsoap ps service method-action: addSchmeisserei ""
+int ps__addSchmeisserei(int gameId, int playerId, std::string type, std::string& result);
 
 #endif // SERVICEDESCRIPTION_H

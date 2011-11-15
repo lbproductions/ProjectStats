@@ -77,5 +77,17 @@ class SOAP_CMAC projectstatsService : public soap
 
 	/// Web service operation 'drinkList' (returns error code or SOAP_OK)
 	virtual	int drinkList(DrinkList &result) SOAP_PURE_VIRTUAL;
+
+	/// Web service operation 'placeList' (returns error code or SOAP_OK)
+	virtual	int placeList(PlaceList &result) SOAP_PURE_VIRTUAL;
+
+	/// Web service operation 'gameList' (returns error code or SOAP_OK)
+	virtual	int gameList(GameList &result) SOAP_PURE_VIRTUAL;
+
+	/// Web service operation 'gameCurrentPlayingPlayers' (returns error code or SOAP_OK)
+	virtual	int gameCurrentPlayingPlayers(int gameId, PlayerList &result) SOAP_PURE_VIRTUAL;
+
+	/// Web service operation 'addSchmeisserei' (returns error code or SOAP_OK)
+	virtual	int addSchmeisserei(int gameId, int playerId, std::string type, std::string &result) SOAP_PURE_VIRTUAL;
 };
 #endif

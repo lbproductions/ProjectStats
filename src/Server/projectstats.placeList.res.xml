@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ps="urn:projectstats">
+ <SOAP-ENV:Body>
+  <ps:placeListResponse>
+   <result>
+    <placeList>
+     <id>0</id>
+     <name></name>
+     <plz>0</plz>
+     <ort></ort>
+     <strasse></strasse>
+     <number>0</number>
+     <comment></comment>
+     <gameCount>0</gameCount>
+     <players></players>
+     <players></players>
+    </placeList>
+    <placeList>
+     <id>0</id>
+     <name></name>
+     <plz>0</plz>
+     <ort></ort>
+     <strasse></strasse>
+     <number>0</number>
+     <comment></comment>
+     <gameCount>0</gameCount>
+     <players></players>
+     <players></players>
+    </placeList>
+   </result>
+  </ps:placeListResponse>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

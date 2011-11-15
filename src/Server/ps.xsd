@@ -55,5 +55,69 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="placeList">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="placeListResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:PlaceList" minOccurs="1" maxOccurs="1"/><!-- ps__placeList::result -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="gameList">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="gameListResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:GameList" minOccurs="1" maxOccurs="1"/><!-- ps__gameList::result -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="gameCurrentPlayingPlayers">
+   <complexType>
+    <sequence>
+     <element name="gameId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__gameCurrentPlayingPlayers::gameId -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="gameCurrentPlayingPlayersResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:PlayerList" minOccurs="1" maxOccurs="1"/><!-- ps__gameCurrentPlayingPlayers::result -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="addSchmeisserei">
+   <complexType>
+    <sequence>
+     <element name="gameId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addSchmeisserei::gameId -->
+     <element name="playerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addSchmeisserei::playerId -->
+     <element name="type" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ps__addSchmeisserei::type -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="addSchmeissereiResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ps__addSchmeisserei::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 

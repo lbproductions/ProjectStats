@@ -163,6 +163,10 @@ int projectstatsService::serve()
 static int serve_ps__playerById(projectstatsService*);
 static int serve_ps__playerList(projectstatsService*);
 static int serve_ps__drinkList(projectstatsService*);
+static int serve_ps__placeList(projectstatsService*);
+static int serve_ps__gameList(projectstatsService*);
+static int serve_ps__gameCurrentPlayingPlayers(projectstatsService*);
+static int serve_ps__addSchmeisserei(projectstatsService*);
 
 int projectstatsService::dispatch()
 {	soap_peek_element(this);
@@ -172,6 +176,14 @@ int projectstatsService::dispatch()
 		return serve_ps__playerList(this);
 	if (!soap_match_tag(this, this->tag, "ps:drinkList"))
 		return serve_ps__drinkList(this);
+	if (!soap_match_tag(this, this->tag, "ps:placeList"))
+		return serve_ps__placeList(this);
+	if (!soap_match_tag(this, this->tag, "ps:gameList"))
+		return serve_ps__gameList(this);
+	if (!soap_match_tag(this, this->tag, "ps:gameCurrentPlayingPlayers"))
+		return serve_ps__gameCurrentPlayingPlayers(this);
+	if (!soap_match_tag(this, this->tag, "ps:addSchmeisserei"))
+		return serve_ps__addSchmeisserei(this);
 	return this->error = SOAP_NO_METHOD;
 }
 
@@ -291,6 +303,170 @@ static int serve_ps__drinkList(projectstatsService *soap)
 	 || soap_putheader(soap)
 	 || soap_body_begin_out(soap)
 	 || soap_put_ps__drinkListResponse(soap, &soap_tmp_ps__drinkListResponse, "ps:drinkListResponse", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap->error;
+	return soap_closesock(soap);
+}
+
+static int serve_ps__placeList(projectstatsService *soap)
+{	struct ps__placeList soap_tmp_ps__placeList;
+	struct ps__placeListResponse soap_tmp_ps__placeListResponse;
+	soap_default_ps__placeListResponse(soap, &soap_tmp_ps__placeListResponse);
+	soap_default_ps__placeList(soap, &soap_tmp_ps__placeList);
+	soap->encodingStyle = NULL;
+	if (!soap_get_ps__placeList(soap, &soap_tmp_ps__placeList, "ps:placeList", NULL))
+		return soap->error;
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap->error;
+	soap->error = soap->placeList(soap_tmp_ps__placeListResponse.result);
+	if (soap->error)
+		return soap->error;
+	soap_serializeheader(soap);
+	soap_serialize_ps__placeListResponse(soap, &soap_tmp_ps__placeListResponse);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__placeListResponse(soap, &soap_tmp_ps__placeListResponse, "ps:placeListResponse", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	};
+	if (soap_end_count(soap)
+	 || soap_response(soap, SOAP_OK)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__placeListResponse(soap, &soap_tmp_ps__placeListResponse, "ps:placeListResponse", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap->error;
+	return soap_closesock(soap);
+}
+
+static int serve_ps__gameList(projectstatsService *soap)
+{	struct ps__gameList soap_tmp_ps__gameList;
+	struct ps__gameListResponse soap_tmp_ps__gameListResponse;
+	soap_default_ps__gameListResponse(soap, &soap_tmp_ps__gameListResponse);
+	soap_default_ps__gameList(soap, &soap_tmp_ps__gameList);
+	soap->encodingStyle = NULL;
+	if (!soap_get_ps__gameList(soap, &soap_tmp_ps__gameList, "ps:gameList", NULL))
+		return soap->error;
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap->error;
+	soap->error = soap->gameList(soap_tmp_ps__gameListResponse.result);
+	if (soap->error)
+		return soap->error;
+	soap_serializeheader(soap);
+	soap_serialize_ps__gameListResponse(soap, &soap_tmp_ps__gameListResponse);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__gameListResponse(soap, &soap_tmp_ps__gameListResponse, "ps:gameListResponse", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	};
+	if (soap_end_count(soap)
+	 || soap_response(soap, SOAP_OK)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__gameListResponse(soap, &soap_tmp_ps__gameListResponse, "ps:gameListResponse", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap->error;
+	return soap_closesock(soap);
+}
+
+static int serve_ps__gameCurrentPlayingPlayers(projectstatsService *soap)
+{	struct ps__gameCurrentPlayingPlayers soap_tmp_ps__gameCurrentPlayingPlayers;
+	struct ps__gameCurrentPlayingPlayersResponse soap_tmp_ps__gameCurrentPlayingPlayersResponse;
+	soap_default_ps__gameCurrentPlayingPlayersResponse(soap, &soap_tmp_ps__gameCurrentPlayingPlayersResponse);
+	soap_default_ps__gameCurrentPlayingPlayers(soap, &soap_tmp_ps__gameCurrentPlayingPlayers);
+	soap->encodingStyle = NULL;
+	if (!soap_get_ps__gameCurrentPlayingPlayers(soap, &soap_tmp_ps__gameCurrentPlayingPlayers, "ps:gameCurrentPlayingPlayers", NULL))
+		return soap->error;
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap->error;
+	soap->error = soap->gameCurrentPlayingPlayers(soap_tmp_ps__gameCurrentPlayingPlayers.gameId, soap_tmp_ps__gameCurrentPlayingPlayersResponse.result);
+	if (soap->error)
+		return soap->error;
+	soap_serializeheader(soap);
+	soap_serialize_ps__gameCurrentPlayingPlayersResponse(soap, &soap_tmp_ps__gameCurrentPlayingPlayersResponse);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__gameCurrentPlayingPlayersResponse(soap, &soap_tmp_ps__gameCurrentPlayingPlayersResponse, "ps:gameCurrentPlayingPlayersResponse", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	};
+	if (soap_end_count(soap)
+	 || soap_response(soap, SOAP_OK)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__gameCurrentPlayingPlayersResponse(soap, &soap_tmp_ps__gameCurrentPlayingPlayersResponse, "ps:gameCurrentPlayingPlayersResponse", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap->error;
+	return soap_closesock(soap);
+}
+
+static int serve_ps__addSchmeisserei(projectstatsService *soap)
+{	struct ps__addSchmeisserei soap_tmp_ps__addSchmeisserei;
+	struct ps__addSchmeissereiResponse soap_tmp_ps__addSchmeissereiResponse;
+	soap_default_ps__addSchmeissereiResponse(soap, &soap_tmp_ps__addSchmeissereiResponse);
+	soap_default_ps__addSchmeisserei(soap, &soap_tmp_ps__addSchmeisserei);
+	soap->encodingStyle = NULL;
+	if (!soap_get_ps__addSchmeisserei(soap, &soap_tmp_ps__addSchmeisserei, "ps:addSchmeisserei", NULL))
+		return soap->error;
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap->error;
+	soap->error = soap->addSchmeisserei(soap_tmp_ps__addSchmeisserei.gameId, soap_tmp_ps__addSchmeisserei.playerId, soap_tmp_ps__addSchmeisserei.type, soap_tmp_ps__addSchmeissereiResponse.result);
+	if (soap->error)
+		return soap->error;
+	soap_serializeheader(soap);
+	soap_serialize_ps__addSchmeissereiResponse(soap, &soap_tmp_ps__addSchmeissereiResponse);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__addSchmeissereiResponse(soap, &soap_tmp_ps__addSchmeissereiResponse, "ps:addSchmeissereiResponse", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	};
+	if (soap_end_count(soap)
+	 || soap_response(soap, SOAP_OK)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__addSchmeissereiResponse(soap, &soap_tmp_ps__addSchmeissereiResponse, "ps:addSchmeissereiResponse", NULL)
 	 || soap_body_end_out(soap)
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))
