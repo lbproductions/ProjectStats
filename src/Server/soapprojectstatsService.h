@@ -74,5 +74,8 @@ class SOAP_CMAC projectstatsService : public soap
 
 	/// Web service operation 'playerList' (returns error code or SOAP_OK)
 	virtual	int playerList(PlayerList &result) SOAP_PURE_VIRTUAL;
+
+	/// Web service operation 'drinkList' (returns error code or SOAP_OK)
+	virtual	int drinkList(DrinkList &result) SOAP_PURE_VIRTUAL;
 };
 #endif

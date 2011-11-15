@@ -129,8 +129,54 @@ public:
 };
 #endif
 
+#ifndef SOAP_TYPE_DrinkInformation
+#define SOAP_TYPE_DrinkInformation (17)
+/* DrinkInformation */
+class SOAP_CMAC DrinkInformation
+{
+public:
+	int id;	/* required element of type xsd:int */
+	char *name;	/* optional element of type xsd:string */
+	char *type;	/* optional element of type xsd:string */
+	double size;	/* required element of type xsd:double */
+	double alc;	/* required element of type xsd:double */
+	int drinkCount;	/* required element of type xsd:int */
+	std::vector<StringIntPair >drinksPerPlayer;	/* optional element of type StringIntPair */
+public:
+	virtual int soap_type() const { return 17; } /* = unique id SOAP_TYPE_DrinkInformation */
+	virtual void soap_default(struct soap*);
+	virtual void soap_serialize(struct soap*) const;
+	virtual int soap_put(struct soap*, const char*, const char*) const;
+	virtual int soap_out(struct soap*, const char*, int, const char*) const;
+	virtual void *soap_get(struct soap*, const char*, const char*);
+	virtual void *soap_in(struct soap*, const char*, const char*);
+	         DrinkInformation() { DrinkInformation::soap_default(NULL); }
+	virtual ~DrinkInformation() { }
+};
+#endif
+
+#ifndef SOAP_TYPE_DrinkList
+#define SOAP_TYPE_DrinkList (18)
+/* DrinkList */
+class SOAP_CMAC DrinkList
+{
+public:
+	std::vector<DrinkInformation >drinkList;	/* optional element of type DrinkInformation */
+public:
+	virtual int soap_type() const { return 18; } /* = unique id SOAP_TYPE_DrinkList */
+	virtual void soap_default(struct soap*);
+	virtual void soap_serialize(struct soap*) const;
+	virtual int soap_put(struct soap*, const char*, const char*) const;
+	virtual int soap_out(struct soap*, const char*, int, const char*) const;
+	virtual void *soap_get(struct soap*, const char*, const char*);
+	virtual void *soap_in(struct soap*, const char*, const char*);
+	         DrinkList() { DrinkList::soap_default(NULL); }
+	virtual ~DrinkList() { }
+};
+#endif
+
 #ifndef SOAP_TYPE_ps__playerByIdResponse
-#define SOAP_TYPE_ps__playerByIdResponse (19)
+#define SOAP_TYPE_ps__playerByIdResponse (22)
 /* ps:playerByIdResponse */
 struct ps__playerByIdResponse
 {
@@ -140,7 +186,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__playerById
-#define SOAP_TYPE_ps__playerById (20)
+#define SOAP_TYPE_ps__playerById (23)
 /* ps:playerById */
 struct ps__playerById
 {
@@ -150,7 +196,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__playerListResponse
-#define SOAP_TYPE_ps__playerListResponse (23)
+#define SOAP_TYPE_ps__playerListResponse (26)
 /* ps:playerListResponse */
 struct ps__playerListResponse
 {
@@ -160,9 +206,31 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__playerList
-#define SOAP_TYPE_ps__playerList (24)
+#define SOAP_TYPE_ps__playerList (27)
 /* ps:playerList */
 struct ps__playerList
+{
+#ifdef WITH_NOEMPTYSTRUCT
+private:
+	char dummy;	/* dummy member to enable compilation */
+#endif
+};
+#endif
+
+#ifndef SOAP_TYPE_ps__drinkListResponse
+#define SOAP_TYPE_ps__drinkListResponse (30)
+/* ps:drinkListResponse */
+struct ps__drinkListResponse
+{
+public:
+	DrinkList result;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type DrinkList */
+};
+#endif
+
+#ifndef SOAP_TYPE_ps__drinkList
+#define SOAP_TYPE_ps__drinkList (31)
+/* ps:drinkList */
+struct ps__drinkList
 {
 #ifdef WITH_NOEMPTYSTRUCT
 private:
@@ -174,7 +242,7 @@ private:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (25)
+#define SOAP_TYPE_SOAP_ENV__Header (32)
 /* SOAP Header: */
 struct SOAP_ENV__Header
 {
@@ -190,7 +258,7 @@ private:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (26)
+#define SOAP_TYPE_SOAP_ENV__Code (33)
 /* SOAP Fault Code: */
 struct SOAP_ENV__Code
 {
@@ -205,7 +273,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (28)
+#define SOAP_TYPE_SOAP_ENV__Detail (35)
 /* SOAP-ENV:Detail */
 struct SOAP_ENV__Detail
 {
@@ -221,7 +289,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (31)
+#define SOAP_TYPE_SOAP_ENV__Reason (38)
 /* SOAP-ENV:Reason */
 struct SOAP_ENV__Reason
 {
@@ -235,7 +303,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (32)
+#define SOAP_TYPE_SOAP_ENV__Fault (39)
 /* SOAP Fault: */
 struct SOAP_ENV__Fault
 {

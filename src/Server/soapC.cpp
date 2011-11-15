@@ -15,7 +15,7 @@ compiling, linking, and/or using OpenSSL is allowed.
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.4 2011-11-15 07:38:37 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.4 2011-11-15 09:11:33 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -174,6 +174,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_int(soap, NULL, NULL, "xsd:int");
 	case SOAP_TYPE_double:
 		return soap_in_double(soap, NULL, NULL, "xsd:double");
+	case SOAP_TYPE_DrinkList:
+		return soap_in_DrinkList(soap, NULL, NULL, "DrinkList");
+	case SOAP_TYPE_DrinkInformation:
+		return soap_in_DrinkInformation(soap, NULL, NULL, "DrinkInformation");
 	case SOAP_TYPE_PlayerList:
 		return soap_in_PlayerList(soap, NULL, NULL, "PlayerList");
 	case SOAP_TYPE_PlayerInformation:
@@ -182,6 +186,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_StringDoublePair(soap, NULL, NULL, "StringDoublePair");
 	case SOAP_TYPE_StringIntPair:
 		return soap_in_StringIntPair(soap, NULL, NULL, "StringIntPair");
+	case SOAP_TYPE_ps__drinkList:
+		return soap_in_ps__drinkList(soap, NULL, NULL, "ps:drinkList");
+	case SOAP_TYPE_ps__drinkListResponse:
+		return soap_in_ps__drinkListResponse(soap, NULL, NULL, "ps:drinkListResponse");
 	case SOAP_TYPE_ps__playerList:
 		return soap_in_ps__playerList(soap, NULL, NULL, "ps:playerList");
 	case SOAP_TYPE_ps__playerListResponse:
@@ -209,6 +217,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 	{	const char *t = soap->type;
 		if (!*t)
 			t = soap->tag;
+		if (!soap_match_tag(soap, t, "DrinkList"))
+		{	*type = SOAP_TYPE_DrinkList;
+			return soap_in_DrinkList(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "DrinkInformation"))
+		{	*type = SOAP_TYPE_DrinkInformation;
+			return soap_in_DrinkInformation(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "PlayerList"))
 		{	*type = SOAP_TYPE_PlayerList;
 			return soap_in_PlayerList(soap, NULL, NULL, NULL);
@@ -236,6 +252,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		if (!soap_match_tag(soap, t, "xsd:double"))
 		{	*type = SOAP_TYPE_double;
 			return soap_in_double(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:drinkList"))
+		{	*type = SOAP_TYPE_ps__drinkList;
+			return soap_in_ps__drinkList(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:drinkListResponse"))
+		{	*type = SOAP_TYPE_ps__drinkListResponse;
+			return soap_in_ps__drinkListResponse(soap, NULL, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ps:playerList"))
 		{	*type = SOAP_TYPE_ps__playerList;
@@ -343,6 +367,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_int(soap, tag, id, (const int *)ptr, "xsd:int");
 	case SOAP_TYPE_double:
 		return soap_out_double(soap, tag, id, (const double *)ptr, "xsd:double");
+	case SOAP_TYPE_DrinkList:
+		return ((DrinkList *)ptr)->soap_out(soap, tag, id, "DrinkList");
+	case SOAP_TYPE_DrinkInformation:
+		return ((DrinkInformation *)ptr)->soap_out(soap, tag, id, "DrinkInformation");
 	case SOAP_TYPE_PlayerList:
 		return ((PlayerList *)ptr)->soap_out(soap, tag, id, "PlayerList");
 	case SOAP_TYPE_PlayerInformation:
@@ -351,6 +379,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((StringDoublePair *)ptr)->soap_out(soap, tag, id, "StringDoublePair");
 	case SOAP_TYPE_StringIntPair:
 		return ((StringIntPair *)ptr)->soap_out(soap, tag, id, "StringIntPair");
+	case SOAP_TYPE_ps__drinkList:
+		return soap_out_ps__drinkList(soap, tag, id, (const struct ps__drinkList *)ptr, "ps:drinkList");
+	case SOAP_TYPE_ps__drinkListResponse:
+		return soap_out_ps__drinkListResponse(soap, tag, id, (const struct ps__drinkListResponse *)ptr, "ps:drinkListResponse");
 	case SOAP_TYPE_ps__playerList:
 		return soap_out_ps__playerList(soap, tag, id, (const struct ps__playerList *)ptr, "ps:playerList");
 	case SOAP_TYPE_ps__playerListResponse:
@@ -384,6 +416,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	(void)soap; (void)ptr; (void)type; /* appease -Wall -Werror */
 	switch (type)
 	{
+	case SOAP_TYPE_DrinkList:
+		((DrinkList *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_DrinkInformation:
+		((DrinkInformation *)ptr)->soap_serialize(soap);
+		break;
 	case SOAP_TYPE_PlayerList:
 		((PlayerList *)ptr)->soap_serialize(soap);
 		break;
@@ -395,6 +433,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE_StringIntPair:
 		((StringIntPair *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_ps__drinkList:
+		soap_serialize_ps__drinkList(soap, (const struct ps__drinkList *)ptr);
+		break;
+	case SOAP_TYPE_ps__drinkListResponse:
+		soap_serialize_ps__drinkListResponse(soap, (const struct ps__drinkListResponse *)ptr);
 		break;
 	case SOAP_TYPE_ps__playerList:
 		soap_serialize_ps__playerList(soap, (const struct ps__playerList *)ptr);
@@ -437,6 +481,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_PlayerInformation(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_PlayerList:
 		return (void*)soap_instantiate_PlayerList(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_DrinkInformation:
+		return (void*)soap_instantiate_DrinkInformation(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_DrinkList:
+		return (void*)soap_instantiate_DrinkList(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ps__playerByIdResponse:
 		return (void*)soap_instantiate_ps__playerByIdResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ps__playerById:
@@ -445,6 +493,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_ps__playerListResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ps__playerList:
 		return (void*)soap_instantiate_ps__playerList(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__drinkListResponse:
+		return (void*)soap_instantiate_ps__drinkListResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__drinkList:
+		return (void*)soap_instantiate_ps__drinkList(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		return (void*)soap_instantiate_SOAP_ENV__Header(soap, -1, type, arrayType, n);
@@ -465,6 +517,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 	case SOAP_TYPE_SOAP_ENV__Fault:
 		return (void*)soap_instantiate_SOAP_ENV__Fault(soap, -1, type, arrayType, n);
 #endif
+	case SOAP_TYPE_std__vectorTemplateOfDrinkInformation:
+		return (void*)soap_instantiate_std__vectorTemplateOfDrinkInformation(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfPlayerInformation:
 		return (void*)soap_instantiate_std__vectorTemplateOfPlayerInformation(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfStringDoublePair:
@@ -502,6 +556,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY((PlayerList*)p->ptr);
 		break;
+	case SOAP_TYPE_DrinkInformation:
+		if (p->size < 0)
+			SOAP_DELETE((DrinkInformation*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((DrinkInformation*)p->ptr);
+		break;
+	case SOAP_TYPE_DrinkList:
+		if (p->size < 0)
+			SOAP_DELETE((DrinkList*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((DrinkList*)p->ptr);
+		break;
 	case SOAP_TYPE_ps__playerByIdResponse:
 		if (p->size < 0)
 			SOAP_DELETE((struct ps__playerByIdResponse*)p->ptr);
@@ -525,6 +591,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			SOAP_DELETE((struct ps__playerList*)p->ptr);
 		else
 			SOAP_DELETE_ARRAY((struct ps__playerList*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__drinkListResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__drinkListResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__drinkListResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__drinkList:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__drinkList*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__drinkList*)p->ptr);
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -566,6 +644,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			SOAP_DELETE_ARRAY((struct SOAP_ENV__Fault*)p->ptr);
 		break;
 #endif
+	case SOAP_TYPE_std__vectorTemplateOfDrinkInformation:
+		if (p->size < 0)
+			SOAP_DELETE((std::vector<DrinkInformation >*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((std::vector<DrinkInformation >*)p->ptr);
+		break;
 	case SOAP_TYPE_std__vectorTemplateOfPlayerInformation:
 		if (p->size < 0)
 			SOAP_DELETE((std::vector<PlayerInformation >*)p->ptr);
@@ -606,6 +690,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_container_insert(struct soap *soap, int st, int 
 	(void)soap; (void)st; (void)p; (void)len; (void)q; (void)n; /* appease -Wall -Werror */
 	switch (tt)
 	{
+	case SOAP_TYPE_std__vectorTemplateOfDrinkInformation:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container soap_container_insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
+		(*(std::vector<DrinkInformation >*)p)[len] = *(DrinkInformation *)q;
+		break;
 	case SOAP_TYPE_std__vectorTemplateOfPlayerInformation:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container soap_container_insert type=%d in %d location=%p object=%p len=%lu\n", st, tt, p, q, (unsigned long)len));
 		(*(std::vector<PlayerInformation >*)p)[len] = *(PlayerInformation *)q;
@@ -735,6 +823,314 @@ SOAP_FMAC3 double * SOAP_FMAC4 soap_get_double(struct soap *soap, double *p, con
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
+}
+
+void DrinkList::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_std__vectorTemplateOfDrinkInformation(soap, &this->DrinkList::drinkList);
+}
+
+void DrinkList::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_serialize_std__vectorTemplateOfDrinkInformation(soap, &this->DrinkList::drinkList);
+}
+
+int DrinkList::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_DrinkList(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_DrinkList(struct soap *soap, const char *tag, int id, const DrinkList *a, const char *type)
+{
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_DrinkList), type))
+		return soap->error;
+	if (soap_out_std__vectorTemplateOfDrinkInformation(soap, "drinkList", -1, &(a->DrinkList::drinkList), ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *DrinkList::soap_in(struct soap *soap, const char *tag, const char *type)
+{	return soap_in_DrinkList(soap, tag, this, type);
+}
+
+SOAP_FMAC3 DrinkList * SOAP_FMAC4 soap_in_DrinkList(struct soap *soap, const char *tag, DrinkList *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (DrinkList *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_DrinkList, sizeof(DrinkList), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	if (soap->alloced)
+	{	a->soap_default(soap);
+		if (soap->clist->type != SOAP_TYPE_DrinkList)
+		{	soap_revert(soap);
+			*soap->id = '\0';
+			return (DrinkList *)a->soap_in(soap, tag, type);
+		}
+	}
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_std__vectorTemplateOfDrinkInformation(soap, "drinkList", &(a->DrinkList::drinkList), "DrinkInformation"))
+					continue;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (DrinkList *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_DrinkList, 0, sizeof(DrinkList), 0, soap_copy_DrinkList);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+int DrinkList::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	register int id = soap_embed(soap, (void*)this, NULL, 0, tag, SOAP_TYPE_DrinkList);
+	if (this->soap_out(soap, tag?tag:"DrinkList", id, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *DrinkList::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_DrinkList(soap, this, tag, type);
+}
+
+SOAP_FMAC3 DrinkList * SOAP_FMAC4 soap_get_DrinkList(struct soap *soap, DrinkList *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_DrinkList(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 DrinkList * SOAP_FMAC2 soap_instantiate_DrinkList(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_DrinkList(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_DrinkList, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(DrinkList);
+		if (size)
+			*size = sizeof(DrinkList);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(DrinkList[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(DrinkList);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (DrinkList*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_DrinkList(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying DrinkList %p -> %p\n", q, p));
+	*(DrinkList*)p = *(DrinkList*)q;
+}
+
+void DrinkInformation::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_int(soap, &this->DrinkInformation::id);
+	soap_default_xsd__string(soap, &this->DrinkInformation::name);
+	soap_default_xsd__string(soap, &this->DrinkInformation::type);
+	soap_default_double(soap, &this->DrinkInformation::size);
+	soap_default_double(soap, &this->DrinkInformation::alc);
+	soap_default_int(soap, &this->DrinkInformation::drinkCount);
+	soap_default_std__vectorTemplateOfStringIntPair(soap, &this->DrinkInformation::drinksPerPlayer);
+}
+
+void DrinkInformation::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_serialize_xsd__string(soap, &this->DrinkInformation::name);
+	soap_serialize_xsd__string(soap, &this->DrinkInformation::type);
+	soap_serialize_std__vectorTemplateOfStringIntPair(soap, &this->DrinkInformation::drinksPerPlayer);
+}
+
+int DrinkInformation::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_DrinkInformation(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_DrinkInformation(struct soap *soap, const char *tag, int id, const DrinkInformation *a, const char *type)
+{
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_DrinkInformation), type))
+		return soap->error;
+	if (soap_out_int(soap, "id", -1, &(a->DrinkInformation::id), ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "name", -1, &(a->DrinkInformation::name), ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "type", -1, &(a->DrinkInformation::type), ""))
+		return soap->error;
+	if (soap_out_double(soap, "size", -1, &(a->DrinkInformation::size), ""))
+		return soap->error;
+	if (soap_out_double(soap, "alc", -1, &(a->DrinkInformation::alc), ""))
+		return soap->error;
+	if (soap_out_int(soap, "drinkCount", -1, &(a->DrinkInformation::drinkCount), ""))
+		return soap->error;
+	if (soap_out_std__vectorTemplateOfStringIntPair(soap, "drinksPerPlayer", -1, &(a->DrinkInformation::drinksPerPlayer), ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *DrinkInformation::soap_in(struct soap *soap, const char *tag, const char *type)
+{	return soap_in_DrinkInformation(soap, tag, this, type);
+}
+
+SOAP_FMAC3 DrinkInformation * SOAP_FMAC4 soap_in_DrinkInformation(struct soap *soap, const char *tag, DrinkInformation *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (DrinkInformation *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_DrinkInformation, sizeof(DrinkInformation), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	if (soap->alloced)
+	{	a->soap_default(soap);
+		if (soap->clist->type != SOAP_TYPE_DrinkInformation)
+		{	soap_revert(soap);
+			*soap->id = '\0';
+			return (DrinkInformation *)a->soap_in(soap, tag, type);
+		}
+	}
+	size_t soap_flag_id1 = 1;
+	size_t soap_flag_name1 = 1;
+	size_t soap_flag_type1 = 1;
+	size_t soap_flag_size1 = 1;
+	size_t soap_flag_alc1 = 1;
+	size_t soap_flag_drinkCount1 = 1;
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_id1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "id", &(a->DrinkInformation::id), "xsd:int"))
+				{	soap_flag_id1--;
+					continue;
+				}
+			if (soap_flag_name1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_xsd__string(soap, "name", &(a->DrinkInformation::name), "xsd:string"))
+				{	soap_flag_name1--;
+					continue;
+				}
+			if (soap_flag_type1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_xsd__string(soap, "type", &(a->DrinkInformation::type), "xsd:string"))
+				{	soap_flag_type1--;
+					continue;
+				}
+			if (soap_flag_size1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_double(soap, "size", &(a->DrinkInformation::size), "xsd:double"))
+				{	soap_flag_size1--;
+					continue;
+				}
+			if (soap_flag_alc1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_double(soap, "alc", &(a->DrinkInformation::alc), "xsd:double"))
+				{	soap_flag_alc1--;
+					continue;
+				}
+			if (soap_flag_drinkCount1 && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "drinkCount", &(a->DrinkInformation::drinkCount), "xsd:int"))
+				{	soap_flag_drinkCount1--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_std__vectorTemplateOfStringIntPair(soap, "drinksPerPlayer", &(a->DrinkInformation::drinksPerPlayer), "StringIntPair"))
+					continue;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (DrinkInformation *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_DrinkInformation, 0, sizeof(DrinkInformation), 0, soap_copy_DrinkInformation);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_id1 > 0 || soap_flag_size1 > 0 || soap_flag_alc1 > 0 || soap_flag_drinkCount1 > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+int DrinkInformation::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	register int id = soap_embed(soap, (void*)this, NULL, 0, tag, SOAP_TYPE_DrinkInformation);
+	if (this->soap_out(soap, tag?tag:"DrinkInformation", id, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *DrinkInformation::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_DrinkInformation(soap, this, tag, type);
+}
+
+SOAP_FMAC3 DrinkInformation * SOAP_FMAC4 soap_get_DrinkInformation(struct soap *soap, DrinkInformation *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_DrinkInformation(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 DrinkInformation * SOAP_FMAC2 soap_instantiate_DrinkInformation(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_DrinkInformation(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_DrinkInformation, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(DrinkInformation);
+		if (size)
+			*size = sizeof(DrinkInformation);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(DrinkInformation[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(DrinkInformation);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (DrinkInformation*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_DrinkInformation(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying DrinkInformation %p -> %p\n", q, p));
+	*(DrinkInformation*)p = *(DrinkInformation*)q;
 }
 
 void PlayerList::soap_default(struct soap *soap)
@@ -1954,6 +2350,210 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Header(struct soap *soap, int st,
 
 #endif
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__drinkList(struct soap *soap, struct ps__drinkList *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__drinkList(struct soap *soap, const struct ps__drinkList *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__drinkList(struct soap *soap, const char *tag, int id, const struct ps__drinkList *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__drinkList), type))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__drinkList * SOAP_FMAC4 soap_in_ps__drinkList(struct soap *soap, const char *tag, struct ps__drinkList *a, const char *type)
+{
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__drinkList *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ps__drinkList, sizeof(struct ps__drinkList), 0, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default_ps__drinkList(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__drinkList *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__drinkList, 0, sizeof(struct ps__drinkList), 0, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__drinkList(struct soap *soap, const struct ps__drinkList *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__drinkList);
+	if (soap_out_ps__drinkList(soap, tag?tag:"ps:drinkList", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__drinkList * SOAP_FMAC4 soap_get_ps__drinkList(struct soap *soap, struct ps__drinkList *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__drinkList(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__drinkList * SOAP_FMAC2 soap_instantiate_ps__drinkList(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__drinkList(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__drinkList, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__drinkList);
+		if (size)
+			*size = sizeof(struct ps__drinkList);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__drinkList[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__drinkList);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__drinkList*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__drinkList(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__drinkList %p -> %p\n", q, p));
+	*(struct ps__drinkList*)p = *(struct ps__drinkList*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__drinkListResponse(struct soap *soap, struct ps__drinkListResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->result.DrinkList::soap_default(soap);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__drinkListResponse(struct soap *soap, const struct ps__drinkListResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->result.soap_serialize(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__drinkListResponse(struct soap *soap, const char *tag, int id, const struct ps__drinkListResponse *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__drinkListResponse), type))
+		return soap->error;
+	if (a->result.soap_out(soap, "result", -1, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__drinkListResponse * SOAP_FMAC4 soap_in_ps__drinkListResponse(struct soap *soap, const char *tag, struct ps__drinkListResponse *a, const char *type)
+{
+	size_t soap_flag_result = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__drinkListResponse *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ps__drinkListResponse, sizeof(struct ps__drinkListResponse), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ps__drinkListResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_result && soap->error == SOAP_TAG_MISMATCH)
+				if (a->result.soap_in(soap, "result", "DrinkList"))
+				{	soap_flag_result--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__drinkListResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__drinkListResponse, 0, sizeof(struct ps__drinkListResponse), 0, soap_copy_ps__drinkListResponse);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_result > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__drinkListResponse(struct soap *soap, const struct ps__drinkListResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__drinkListResponse);
+	if (soap_out_ps__drinkListResponse(soap, tag?tag:"ps:drinkListResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__drinkListResponse * SOAP_FMAC4 soap_get_ps__drinkListResponse(struct soap *soap, struct ps__drinkListResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__drinkListResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__drinkListResponse * SOAP_FMAC2 soap_instantiate_ps__drinkListResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__drinkListResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__drinkListResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__drinkListResponse);
+		if (size)
+			*size = sizeof(struct ps__drinkListResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__drinkListResponse[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__drinkListResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__drinkListResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__drinkListResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__drinkListResponse %p -> %p\n", q, p));
+	*(struct ps__drinkListResponse*)p = *(struct ps__drinkListResponse*)q;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__playerList(struct soap *soap, struct ps__playerList *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -2664,6 +3264,94 @@ SOAP_FMAC3 char ** SOAP_FMAC4 soap_get_string(struct soap *soap, char **p, const
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfDrinkInformation(struct soap *soap, std::vector<DrinkInformation >*p)
+{
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfDrinkInformation(struct soap *soap, const std::vector<DrinkInformation >*a)
+{
+	for (std::vector<DrinkInformation >::const_iterator i = a->begin(); i != a->end(); ++i)
+		(*i).soap_serialize(soap);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfDrinkInformation(struct soap *soap, const char *tag, int id, const std::vector<DrinkInformation >*a, const char *type)
+{
+	for (std::vector<DrinkInformation >::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if ((*i).soap_out(soap, tag, id, ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<DrinkInformation >* SOAP_FMAC4 soap_in_std__vectorTemplateOfDrinkInformation(struct soap *soap, const char *tag, std::vector<DrinkInformation >*a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a && !(a = soap_new_std__vectorTemplateOfDrinkInformation(soap, -1)))
+		return NULL;
+	DrinkInformation n;
+	short soap_flag = 0;
+	do
+	{	if (tag && *tag != '-')
+			soap_revert(soap);
+		n.soap_default(soap);
+		if (*soap->id || *soap->href)
+		{	if (!soap_container_id_forward(soap, *soap->id?soap->id:soap->href, a, (size_t)a->size(), SOAP_TYPE_DrinkInformation, SOAP_TYPE_std__vectorTemplateOfDrinkInformation, sizeof(DrinkInformation), 0))
+				break;
+			if (!soap_in_DrinkInformation(soap, tag, NULL, "DrinkInformation"))
+				break;
+		}
+		else
+		{
+			if (!soap_in_DrinkInformation(soap, tag, &n, "DrinkInformation"))
+				break;
+		}
+		soap_update_pointers(soap, (char*)&n, (char*)&n + sizeof(n), (char*)&(*a->insert(a->end(), n)), (char*)&n);
+		soap_flag = 1;
+	}
+	while (tag && *tag != '-' && !soap_element_begin_in(soap, tag, 1, NULL));
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<DrinkInformation > * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfDrinkInformation(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfDrinkInformation(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_std__vectorTemplateOfDrinkInformation, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(std::vector<DrinkInformation >);
+		if (size)
+			*size = sizeof(std::vector<DrinkInformation >);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(std::vector<DrinkInformation >[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(std::vector<DrinkInformation >);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (std::vector<DrinkInformation >*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_std__vectorTemplateOfDrinkInformation(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying std::vector<DrinkInformation > %p -> %p\n", q, p));
+	*(std::vector<DrinkInformation >*)p = *(std::vector<DrinkInformation >*)q;
 }
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPlayerInformation(struct soap *soap, std::vector<PlayerInformation >*p)

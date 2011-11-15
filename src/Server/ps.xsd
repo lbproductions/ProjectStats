@@ -40,5 +40,20 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="drinkList">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="drinkListResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:DrinkList" minOccurs="1" maxOccurs="1"/><!-- ps__drinkList::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 

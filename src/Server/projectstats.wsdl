@@ -57,6 +57,24 @@
      <element name="playerList" type="ps:PlayerInformation" minOccurs="0" maxOccurs="unbounded"/><!-- PlayerList::playerList -->
    </sequence>
   </complexType>
+  <complexType name="DrinkInformation"><!-- DrinkInformation -->
+
+   <sequence>
+     <element name="id" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- DrinkInformation::id -->
+     <element name="name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/><!-- DrinkInformation::name -->
+     <element name="type" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/><!-- DrinkInformation::type -->
+     <element name="size" type="xsd:double" minOccurs="1" maxOccurs="1"/><!-- DrinkInformation::size -->
+     <element name="alc" type="xsd:double" minOccurs="1" maxOccurs="1"/><!-- DrinkInformation::alc -->
+     <element name="drinkCount" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- DrinkInformation::drinkCount -->
+     <element name="drinksPerPlayer" type="ps:StringIntPair" minOccurs="0" maxOccurs="unbounded"/><!-- DrinkInformation::drinksPerPlayer -->
+   </sequence>
+  </complexType>
+  <complexType name="DrinkList"><!-- DrinkList -->
+
+   <sequence>
+     <element name="drinkList" type="ps:DrinkInformation" minOccurs="0" maxOccurs="unbounded"/><!-- DrinkList::drinkList -->
+   </sequence>
+  </complexType>
   <!-- operation request element -->
   <element name="playerById">
    <complexType>
@@ -88,6 +106,21 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="drinkList">
+   <complexType>
+    <sequence>
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="drinkListResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:DrinkList" minOccurs="1" maxOccurs="1"/><!-- ps__drinkList::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 
 </types>
@@ -108,6 +141,14 @@
  <part name="parameters" element="ps:playerListResponse"/>
 </message>
 
+<message name="drinkListRequest">
+ <part name="parameters" element="ps:drinkList"/><!-- ps__drinkList::ps__drinkList -->
+</message>
+
+<message name="drinkListResponse">
+ <part name="parameters" element="ps:drinkListResponse"/>
+</message>
+
 <portType name="projectstatsPortType">
  <operation name="playerById">
   <documentation>Service definition of function ps__playerById</documentation>
@@ -118,6 +159,11 @@
   <documentation>Service definition of function ps__playerList</documentation>
   <input message="tns:playerListRequest"/>
   <output message="tns:playerListResponse"/>
+ </operation>
+ <operation name="drinkList">
+  <documentation>Service definition of function ps__drinkList</documentation>
+  <input message="tns:drinkListRequest"/>
+  <output message="tns:drinkListResponse"/>
  </operation>
 </portType>
 
@@ -141,11 +187,21 @@
      <SOAP:body parts="parameters" use="literal"/>
   </output>
  </operation>
+ <operation name="drinkList">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
 </binding>
 
 <service name="projectstats">
  <documentation>gSOAP 2.8.4 generated service definition</documentation>
  <port name="projectstats" binding="tns:projectstats">
+  <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>
  </port>
