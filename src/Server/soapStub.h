@@ -232,6 +232,9 @@ public:
 	int id;	/* required element of type xsd:int */
 	char *name;	/* optional element of type xsd:string */
 	char *date;	/* optional element of type xsd:string */
+	bool isLive;	/* required element of type xsd:boolean */
+	std::vector<PlayerInformation >playersSortedByPosition;	/* optional element of type PlayerInformation */
+	std::vector<PlayerInformation >currentPlayingPlayers;	/* optional element of type PlayerInformation */
 public:
 	virtual int soap_type() const { return 24; } /* = unique id SOAP_TYPE_GameInformation */
 	virtual void soap_default(struct soap*);
@@ -246,14 +249,14 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_GameList
-#define SOAP_TYPE_GameList (25)
+#define SOAP_TYPE_GameList (26)
 /* GameList */
 class SOAP_CMAC GameList
 {
 public:
 	std::vector<GameInformation >gameList;	/* optional element of type GameInformation */
 public:
-	virtual int soap_type() const { return 25; } /* = unique id SOAP_TYPE_GameList */
+	virtual int soap_type() const { return 26; } /* = unique id SOAP_TYPE_GameList */
 	virtual void soap_default(struct soap*);
 	virtual void soap_serialize(struct soap*) const;
 	virtual int soap_put(struct soap*, const char*, const char*) const;
@@ -266,7 +269,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__playerByIdResponse
-#define SOAP_TYPE_ps__playerByIdResponse (29)
+#define SOAP_TYPE_ps__playerByIdResponse (30)
 /* ps:playerByIdResponse */
 struct ps__playerByIdResponse
 {
@@ -276,7 +279,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__playerById
-#define SOAP_TYPE_ps__playerById (30)
+#define SOAP_TYPE_ps__playerById (31)
 /* ps:playerById */
 struct ps__playerById
 {
@@ -286,7 +289,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__playerListResponse
-#define SOAP_TYPE_ps__playerListResponse (33)
+#define SOAP_TYPE_ps__playerListResponse (34)
 /* ps:playerListResponse */
 struct ps__playerListResponse
 {
@@ -296,7 +299,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__playerList
-#define SOAP_TYPE_ps__playerList (34)
+#define SOAP_TYPE_ps__playerList (35)
 /* ps:playerList */
 struct ps__playerList
 {
@@ -308,7 +311,7 @@ private:
 #endif
 
 #ifndef SOAP_TYPE_ps__drinkListResponse
-#define SOAP_TYPE_ps__drinkListResponse (37)
+#define SOAP_TYPE_ps__drinkListResponse (38)
 /* ps:drinkListResponse */
 struct ps__drinkListResponse
 {
@@ -318,7 +321,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__drinkList
-#define SOAP_TYPE_ps__drinkList (38)
+#define SOAP_TYPE_ps__drinkList (39)
 /* ps:drinkList */
 struct ps__drinkList
 {
@@ -330,7 +333,7 @@ private:
 #endif
 
 #ifndef SOAP_TYPE_ps__placeListResponse
-#define SOAP_TYPE_ps__placeListResponse (41)
+#define SOAP_TYPE_ps__placeListResponse (42)
 /* ps:placeListResponse */
 struct ps__placeListResponse
 {
@@ -340,7 +343,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__placeList
-#define SOAP_TYPE_ps__placeList (42)
+#define SOAP_TYPE_ps__placeList (43)
 /* ps:placeList */
 struct ps__placeList
 {
@@ -352,7 +355,7 @@ private:
 #endif
 
 #ifndef SOAP_TYPE_ps__gameListResponse
-#define SOAP_TYPE_ps__gameListResponse (45)
+#define SOAP_TYPE_ps__gameListResponse (46)
 /* ps:gameListResponse */
 struct ps__gameListResponse
 {
@@ -362,7 +365,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__gameList
-#define SOAP_TYPE_ps__gameList (46)
+#define SOAP_TYPE_ps__gameList (47)
 /* ps:gameList */
 struct ps__gameList
 {
@@ -374,7 +377,7 @@ private:
 #endif
 
 #ifndef SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse
-#define SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse (48)
+#define SOAP_TYPE_ps__gameCurrentPlayingPlayersResponse (49)
 /* ps:gameCurrentPlayingPlayersResponse */
 struct ps__gameCurrentPlayingPlayersResponse
 {
@@ -384,7 +387,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__gameCurrentPlayingPlayers
-#define SOAP_TYPE_ps__gameCurrentPlayingPlayers (49)
+#define SOAP_TYPE_ps__gameCurrentPlayingPlayers (50)
 /* ps:gameCurrentPlayingPlayers */
 struct ps__gameCurrentPlayingPlayers
 {
@@ -398,7 +401,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__addSchmeissereiResponse
-#define SOAP_TYPE_ps__addSchmeissereiResponse (53)
+#define SOAP_TYPE_ps__addSchmeissereiResponse (54)
 /* ps:addSchmeissereiResponse */
 struct ps__addSchmeissereiResponse
 {
@@ -408,7 +411,7 @@ public:
 #endif
 
 #ifndef SOAP_TYPE_ps__addSchmeisserei
-#define SOAP_TYPE_ps__addSchmeisserei (54)
+#define SOAP_TYPE_ps__addSchmeisserei (55)
 /* ps:addSchmeisserei */
 struct ps__addSchmeisserei
 {
@@ -419,10 +422,32 @@ public:
 };
 #endif
 
+#ifndef SOAP_TYPE_ps__addDrinkResponse
+#define SOAP_TYPE_ps__addDrinkResponse (57)
+/* ps:addDrinkResponse */
+struct ps__addDrinkResponse
+{
+public:
+	std::string result;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:string */
+};
+#endif
+
+#ifndef SOAP_TYPE_ps__addDrink
+#define SOAP_TYPE_ps__addDrink (58)
+/* ps:addDrink */
+struct ps__addDrink
+{
+public:
+	int gameId;	/* required element of type xsd:int */
+	int playerId;	/* required element of type xsd:int */
+	int drinkId;	/* required element of type xsd:int */
+};
+#endif
+
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (55)
+#define SOAP_TYPE_SOAP_ENV__Header (59)
 /* SOAP Header: */
 struct SOAP_ENV__Header
 {
@@ -438,7 +463,7 @@ private:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (56)
+#define SOAP_TYPE_SOAP_ENV__Code (60)
 /* SOAP Fault Code: */
 struct SOAP_ENV__Code
 {
@@ -453,7 +478,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (58)
+#define SOAP_TYPE_SOAP_ENV__Detail (62)
 /* SOAP-ENV:Detail */
 struct SOAP_ENV__Detail
 {
@@ -469,7 +494,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (61)
+#define SOAP_TYPE_SOAP_ENV__Reason (65)
 /* SOAP-ENV:Reason */
 struct SOAP_ENV__Reason
 {
@@ -483,7 +508,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (62)
+#define SOAP_TYPE_SOAP_ENV__Fault (66)
 /* SOAP Fault: */
 struct SOAP_ENV__Fault
 {

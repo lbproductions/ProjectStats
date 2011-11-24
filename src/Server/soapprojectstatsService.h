@@ -89,5 +89,8 @@ class SOAP_CMAC projectstatsService : public soap
 
 	/// Web service operation 'addSchmeisserei' (returns error code or SOAP_OK)
 	virtual	int addSchmeisserei(int gameId, int playerId, std::string type, std::string &result) SOAP_PURE_VIRTUAL;
+
+	/// Web service operation 'addDrink' (returns error code or SOAP_OK)
+	virtual	int addDrink(int gameId, int playerId, int drinkId, std::string &result) SOAP_PURE_VIRTUAL;
 };
 #endif

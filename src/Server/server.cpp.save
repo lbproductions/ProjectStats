@@ -1,4 +1,4 @@
-#include "server.h"
+	#include "server.h"
 
 #include "stdsoap2.h"
 #include "soapprojectstatsService.h"
@@ -163,27 +163,8 @@ int projectstatsService::gameList(GameList& result)
         QByteArray ba = game->name->value().toLocal8Bit();
         info.name = strdup(ba.data());
         info.id = game->id();
-        info.isLive = game->live->value();
         ba = game->date->value().toString("dd.MM.yyyy").toLocal8Bit();
         info.date = strdup(ba.data());
-
-        if(game->live->value()){
-            Database::LiveGame* liveGame = static_cast<Database::LiveGame*>(game);
-            foreach(Database::Player* player, liveGame->playersSortedByPosition->value()){
-                PlayerInformation playerInfo;
-                QByteArray ba = player->name->value().toLocal8Bit();
-                playerInfo.name = strdup(ba.data());
-                playerInfo.id = player->id();
-                info.playersSortedByPosition.push_back(playerInfo);
-            }
-            foreach(Database::Player* player, liveGame->currentPlayingPlayers->value()){
-                PlayerInformation playerInfo;
-                QByteArray ba = player->name->value().toLocal8Bit();
-                playerInfo.name = strdup(ba.data());
-                playerInfo.id = player->id();
-                info.currentPlayingPlayers.push_back(playerInfo);
-            }
-        }
         result.gameList.push_back(info);
     }
     return SOAP_OK;
@@ -220,20 +201,6 @@ int projectstatsService::addSchmeisserei(int gameId, int playerId, std::string t
             QString stype = QString::fromUtf8(type.c_str());
             round->addSchmeisserei(player, stype);
         }
-    }
-
-    return SOAP_OK;
-}
-
-int projectstatsService::addDrink(int gameId, int playerId, int drinkId, std::string& /*result*/)
-{
-    Database::Game* game = Database::Games::instance()->rowById(gameId);
-
-    if(game->live->value()){
-        Database::LiveGame* liveGame = static_cast<Database::LiveGame*>(game);
-        Database::Drink* drink = Database::Drinks::instance()->rowById(drinkId);
-        Database::Player* player = Database::Players::instance()->rowById(playerId);
-        liveGame->addDrink(player,drink);
     }
 
     return SOAP_OK;

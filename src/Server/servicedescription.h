@@ -72,12 +72,17 @@ class GameInformation
     int id;
     xsd__string name;
     xsd__string date;
+    bool isLive;
+
+    std::vector<PlayerInformation> playersSortedByPosition;
+    std::vector<PlayerInformation> currentPlayingPlayers;
 };
 
 class GameList
 {
     std::vector<GameInformation> gameList;
 };
+
 
 //gsoap ps service name: projectstats
 //gsoap ps service port: http://eineurl.von.uns?
@@ -141,5 +146,14 @@ int ps__gameCurrentPlayingPlayers(int gameId, PlayerList& result);
 //gsoap ps service method-encoding: encoded
 //gsoap ps service method-action: addSchmeisserei ""
 int ps__addSchmeisserei(int gameId, int playerId, std::string type, std::string& result);
+
+//gsoap ps service name: projectstats
+//gsoap ps service port: http://eineurl.von.uns?
+//gsoap ps service namespace: urn:projectstats
+
+//gsoap ps service method-style: rpc
+//gsoap ps service method-encoding: encoded
+//gsoap ps service method-action: addDrink ""
+int ps__addDrink(int gameId, int playerId, int drinkId, std::string& result);
 
 #endif // SERVICEDESCRIPTION_H

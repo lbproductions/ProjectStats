@@ -101,6 +101,9 @@
      <element name="id" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- GameInformation::id -->
      <element name="name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/><!-- GameInformation::name -->
      <element name="date" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/><!-- GameInformation::date -->
+     <element name="isLive" type="xsd:boolean" minOccurs="1" maxOccurs="1"/><!-- GameInformation::isLive -->
+     <element name="playersSortedByPosition" type="ps:PlayerInformation" minOccurs="0" maxOccurs="unbounded"/><!-- GameInformation::playersSortedByPosition -->
+     <element name="currentPlayingPlayers" type="ps:PlayerInformation" minOccurs="0" maxOccurs="unbounded"/><!-- GameInformation::currentPlayingPlayers -->
    </sequence>
   </complexType>
   <complexType name="GameList"><!-- GameList -->
@@ -219,6 +222,24 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="addDrink">
+   <complexType>
+    <sequence>
+     <element name="gameId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addDrink::gameId -->
+     <element name="playerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addDrink::playerId -->
+     <element name="drinkId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addDrink::drinkId -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="addDrinkResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ps__addDrink::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 
 </types>
@@ -279,6 +300,14 @@
  <part name="parameters" element="ps:addSchmeissereiResponse"/>
 </message>
 
+<message name="addDrinkRequest">
+ <part name="parameters" element="ps:addDrink"/><!-- ps__addDrink::ps__addDrink -->
+</message>
+
+<message name="addDrinkResponse">
+ <part name="parameters" element="ps:addDrinkResponse"/>
+</message>
+
 <portType name="projectstatsPortType">
  <operation name="playerById">
   <documentation>Service definition of function ps__playerById</documentation>
@@ -314,6 +343,11 @@
   <documentation>Service definition of function ps__addSchmeisserei</documentation>
   <input message="tns:addSchmeissereiRequest"/>
   <output message="tns:addSchmeissereiResponse"/>
+ </operation>
+ <operation name="addDrink">
+  <documentation>Service definition of function ps__addDrink</documentation>
+  <input message="tns:addDrinkRequest"/>
+  <output message="tns:addDrinkResponse"/>
  </operation>
 </portType>
 
@@ -382,11 +416,21 @@
      <SOAP:body parts="parameters" use="literal"/>
   </output>
  </operation>
+ <operation name="addDrink">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
 </binding>
 
 <service name="projectstats">
  <documentation>gSOAP 2.8.4 generated service definition</documentation>
  <port name="projectstats" binding="tns:projectstats">
+  <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>

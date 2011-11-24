@@ -84,5 +84,9 @@ class SOAP_CMAC projectstatsProxy : public soap
 	/// Web service operation 'addSchmeisserei' (returns error code or SOAP_OK)
 	virtual	int addSchmeisserei(int gameId, int playerId, std::string type, std::string &result) { return addSchmeisserei(NULL, NULL, gameId, playerId, type, result); }
 	virtual	int addSchmeisserei(const char *endpoint, const char *soap_action, int gameId, int playerId, std::string type, std::string &result);
+
+	/// Web service operation 'addDrink' (returns error code or SOAP_OK)
+	virtual	int addDrink(int gameId, int playerId, int drinkId, std::string &result) { return addDrink(NULL, NULL, gameId, playerId, drinkId, result); }
+	virtual	int addDrink(const char *endpoint, const char *soap_action, int gameId, int playerId, int drinkId, std::string &result);
 };
 #endif

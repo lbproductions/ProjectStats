@@ -167,6 +167,7 @@ static int serve_ps__placeList(projectstatsService*);
 static int serve_ps__gameList(projectstatsService*);
 static int serve_ps__gameCurrentPlayingPlayers(projectstatsService*);
 static int serve_ps__addSchmeisserei(projectstatsService*);
+static int serve_ps__addDrink(projectstatsService*);
 
 int projectstatsService::dispatch()
 {	soap_peek_element(this);
@@ -184,6 +185,8 @@ int projectstatsService::dispatch()
 		return serve_ps__gameCurrentPlayingPlayers(this);
 	if (!soap_match_tag(this, this->tag, "ps:addSchmeisserei"))
 		return serve_ps__addSchmeisserei(this);
+	if (!soap_match_tag(this, this->tag, "ps:addDrink"))
+		return serve_ps__addDrink(this);
 	return this->error = SOAP_NO_METHOD;
 }
 
@@ -467,6 +470,47 @@ static int serve_ps__addSchmeisserei(projectstatsService *soap)
 	 || soap_putheader(soap)
 	 || soap_body_begin_out(soap)
 	 || soap_put_ps__addSchmeissereiResponse(soap, &soap_tmp_ps__addSchmeissereiResponse, "ps:addSchmeissereiResponse", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap->error;
+	return soap_closesock(soap);
+}
+
+static int serve_ps__addDrink(projectstatsService *soap)
+{	struct ps__addDrink soap_tmp_ps__addDrink;
+	struct ps__addDrinkResponse soap_tmp_ps__addDrinkResponse;
+	soap_default_ps__addDrinkResponse(soap, &soap_tmp_ps__addDrinkResponse);
+	soap_default_ps__addDrink(soap, &soap_tmp_ps__addDrink);
+	soap->encodingStyle = NULL;
+	if (!soap_get_ps__addDrink(soap, &soap_tmp_ps__addDrink, "ps:addDrink", NULL))
+		return soap->error;
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap->error;
+	soap->error = soap->addDrink(soap_tmp_ps__addDrink.gameId, soap_tmp_ps__addDrink.playerId, soap_tmp_ps__addDrink.drinkId, soap_tmp_ps__addDrinkResponse.result);
+	if (soap->error)
+		return soap->error;
+	soap_serializeheader(soap);
+	soap_serialize_ps__addDrinkResponse(soap, &soap_tmp_ps__addDrinkResponse);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__addDrinkResponse(soap, &soap_tmp_ps__addDrinkResponse, "ps:addDrinkResponse", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	};
+	if (soap_end_count(soap)
+	 || soap_response(soap, SOAP_OK)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__addDrinkResponse(soap, &soap_tmp_ps__addDrinkResponse, "ps:addDrinkResponse", NULL)
 	 || soap_body_end_out(soap)
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))

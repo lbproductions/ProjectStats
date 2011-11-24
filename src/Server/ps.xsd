@@ -119,5 +119,23 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="addDrink">
+   <complexType>
+    <sequence>
+     <element name="gameId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addDrink::gameId -->
+     <element name="playerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addDrink::playerId -->
+     <element name="drinkId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addDrink::drinkId -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="addDrinkResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ps__addDrink::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 
