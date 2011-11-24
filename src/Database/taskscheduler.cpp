@@ -111,7 +111,7 @@ void Task::waitForFinished()
     emit waiting();
     lock();
     m_priority = (QThread::Priority) ((int)m_priority + 1);
-    if(!m_finished)
+    while(!m_finished)
     {
         m_waitingMutex.lock();
         unlock();

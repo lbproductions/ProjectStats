@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ps="urn:projectstats">
+ <SOAP-ENV:Body>
+  <ps:addRound>
+   <gameId>0</gameId>
+   <re1PlayerId>0</re1PlayerId>
+   <re2PlayerId>0</re2PlayerId>
+   <hochzeitPlayerId>0</hochzeitPlayerId>
+   <schweinereiPlayerId>0</schweinereiPlayerId>
+   <trumpfabgabePlayerId>0</trumpfabgabePlayerId>
+   <soloType></soloType>
+   <pflichtsolo>false</pflichtsolo>
+   <points>0</points>
+   <comment></comment>
+  </ps:addRound>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

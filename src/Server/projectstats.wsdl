@@ -240,6 +240,31 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="addRound">
+   <complexType>
+    <sequence>
+     <element name="gameId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::gameId -->
+     <element name="re1PlayerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::re1PlayerId -->
+     <element name="re2PlayerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::re2PlayerId -->
+     <element name="hochzeitPlayerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::hochzeitPlayerId -->
+     <element name="schweinereiPlayerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::schweinereiPlayerId -->
+     <element name="trumpfabgabePlayerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::trumpfabgabePlayerId -->
+     <element name="soloType" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::soloType -->
+     <element name="pflichtsolo" type="xsd:boolean" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::pflichtsolo -->
+     <element name="points" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::points -->
+     <element name="comment" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::comment -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="addRoundResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 
 </types>
@@ -308,6 +333,14 @@
  <part name="parameters" element="ps:addDrinkResponse"/>
 </message>
 
+<message name="addRoundRequest">
+ <part name="parameters" element="ps:addRound"/><!-- ps__addRound::ps__addRound -->
+</message>
+
+<message name="addRoundResponse">
+ <part name="parameters" element="ps:addRoundResponse"/>
+</message>
+
 <portType name="projectstatsPortType">
  <operation name="playerById">
   <documentation>Service definition of function ps__playerById</documentation>
@@ -348,6 +381,11 @@
   <documentation>Service definition of function ps__addDrink</documentation>
   <input message="tns:addDrinkRequest"/>
   <output message="tns:addDrinkResponse"/>
+ </operation>
+ <operation name="addRound">
+  <documentation>Service definition of function ps__addRound</documentation>
+  <input message="tns:addRoundRequest"/>
+  <output message="tns:addRoundResponse"/>
  </operation>
 </portType>
 
@@ -425,11 +463,21 @@
      <SOAP:body parts="parameters" use="literal"/>
   </output>
  </operation>
+ <operation name="addRound">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
 </binding>
 
 <service name="projectstats">
  <documentation>gSOAP 2.8.4 generated service definition</documentation>
  <port name="projectstats" binding="tns:projectstats">
+  <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>

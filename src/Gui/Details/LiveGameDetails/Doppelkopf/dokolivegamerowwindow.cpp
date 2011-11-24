@@ -8,6 +8,7 @@
 
 #include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.h>
 #include <Database/Doppelkopf/dokolivegame.h>
+#include <Server/soapprojectstatsService.h>
 
 #include <QDebug>
 #include <QAction>

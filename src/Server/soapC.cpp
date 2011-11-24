@@ -15,7 +15,7 @@ compiling, linking, and/or using OpenSSL is allowed.
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.4 2011-11-24 10:19:52 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.4 2011-11-24 15:26:03 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -198,6 +198,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_StringDoublePair(soap, NULL, NULL, "StringDoublePair");
 	case SOAP_TYPE_StringIntPair:
 		return soap_in_StringIntPair(soap, NULL, NULL, "StringIntPair");
+	case SOAP_TYPE_ps__addRound:
+		return soap_in_ps__addRound(soap, NULL, NULL, "ps:addRound");
+	case SOAP_TYPE_ps__addRoundResponse:
+		return soap_in_ps__addRoundResponse(soap, NULL, NULL, "ps:addRoundResponse");
 	case SOAP_TYPE_ps__addDrink:
 		return soap_in_ps__addDrink(soap, NULL, NULL, "ps:addDrink");
 	case SOAP_TYPE_ps__addDrinkResponse:
@@ -308,6 +312,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		if (!soap_match_tag(soap, t, "xsd:boolean"))
 		{	*type = SOAP_TYPE_bool;
 			return soap_in_bool(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:addRound"))
+		{	*type = SOAP_TYPE_ps__addRound;
+			return soap_in_ps__addRound(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:addRoundResponse"))
+		{	*type = SOAP_TYPE_ps__addRoundResponse;
+			return soap_in_ps__addRoundResponse(soap, NULL, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ps:addDrink"))
 		{	*type = SOAP_TYPE_ps__addDrink;
@@ -487,6 +499,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((StringDoublePair *)ptr)->soap_out(soap, tag, id, "StringDoublePair");
 	case SOAP_TYPE_StringIntPair:
 		return ((StringIntPair *)ptr)->soap_out(soap, tag, id, "StringIntPair");
+	case SOAP_TYPE_ps__addRound:
+		return soap_out_ps__addRound(soap, tag, id, (const struct ps__addRound *)ptr, "ps:addRound");
+	case SOAP_TYPE_ps__addRoundResponse:
+		return soap_out_ps__addRoundResponse(soap, tag, id, (const struct ps__addRoundResponse *)ptr, "ps:addRoundResponse");
 	case SOAP_TYPE_ps__addDrink:
 		return soap_out_ps__addDrink(soap, tag, id, (const struct ps__addDrink *)ptr, "ps:addDrink");
 	case SOAP_TYPE_ps__addDrinkResponse:
@@ -576,6 +592,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE_StringIntPair:
 		((StringIntPair *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_ps__addRound:
+		soap_serialize_ps__addRound(soap, (const struct ps__addRound *)ptr);
+		break;
+	case SOAP_TYPE_ps__addRoundResponse:
+		soap_serialize_ps__addRoundResponse(soap, (const struct ps__addRoundResponse *)ptr);
 		break;
 	case SOAP_TYPE_ps__addDrink:
 		soap_serialize_ps__addDrink(soap, (const struct ps__addDrink *)ptr);
@@ -700,6 +722,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_ps__addDrinkResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ps__addDrink:
 		return (void*)soap_instantiate_ps__addDrink(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__addRoundResponse:
+		return (void*)soap_instantiate_ps__addRoundResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__addRound:
+		return (void*)soap_instantiate_ps__addRound(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		return (void*)soap_instantiate_SOAP_ENV__Header(soap, -1, type, arrayType, n);
@@ -902,6 +928,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			SOAP_DELETE((struct ps__addDrink*)p->ptr);
 		else
 			SOAP_DELETE_ARRAY((struct ps__addDrink*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__addRoundResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__addRoundResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__addRoundResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__addRound:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__addRound*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__addRound*)p->ptr);
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -3479,6 +3517,306 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Header(struct soap *soap, int st,
 }
 
 #endif
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__addRound(struct soap *soap, struct ps__addRound *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_int(soap, &a->gameId);
+	soap_default_int(soap, &a->re1PlayerId);
+	soap_default_int(soap, &a->re2PlayerId);
+	soap_default_int(soap, &a->hochzeitPlayerId);
+	soap_default_int(soap, &a->schweinereiPlayerId);
+	soap_default_int(soap, &a->trumpfabgabePlayerId);
+	soap_default_std__string(soap, &a->soloType);
+	soap_default_bool(soap, &a->pflichtsolo);
+	soap_default_int(soap, &a->points);
+	soap_default_std__string(soap, &a->comment);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__addRound(struct soap *soap, const struct ps__addRound *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_std__string(soap, &a->soloType);
+	soap_serialize_std__string(soap, &a->comment);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__addRound(struct soap *soap, const char *tag, int id, const struct ps__addRound *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__addRound), type))
+		return soap->error;
+	if (soap_out_int(soap, "gameId", -1, &a->gameId, ""))
+		return soap->error;
+	if (soap_out_int(soap, "re1PlayerId", -1, &a->re1PlayerId, ""))
+		return soap->error;
+	if (soap_out_int(soap, "re2PlayerId", -1, &a->re2PlayerId, ""))
+		return soap->error;
+	if (soap_out_int(soap, "hochzeitPlayerId", -1, &a->hochzeitPlayerId, ""))
+		return soap->error;
+	if (soap_out_int(soap, "schweinereiPlayerId", -1, &a->schweinereiPlayerId, ""))
+		return soap->error;
+	if (soap_out_int(soap, "trumpfabgabePlayerId", -1, &a->trumpfabgabePlayerId, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "soloType", -1, &a->soloType, ""))
+		return soap->error;
+	if (soap_out_bool(soap, "pflichtsolo", -1, &a->pflichtsolo, ""))
+		return soap->error;
+	if (soap_out_int(soap, "points", -1, &a->points, ""))
+		return soap->error;
+	if (soap_out_std__string(soap, "comment", -1, &a->comment, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__addRound * SOAP_FMAC4 soap_in_ps__addRound(struct soap *soap, const char *tag, struct ps__addRound *a, const char *type)
+{
+	size_t soap_flag_gameId = 1;
+	size_t soap_flag_re1PlayerId = 1;
+	size_t soap_flag_re2PlayerId = 1;
+	size_t soap_flag_hochzeitPlayerId = 1;
+	size_t soap_flag_schweinereiPlayerId = 1;
+	size_t soap_flag_trumpfabgabePlayerId = 1;
+	size_t soap_flag_soloType = 1;
+	size_t soap_flag_pflichtsolo = 1;
+	size_t soap_flag_points = 1;
+	size_t soap_flag_comment = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__addRound *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ps__addRound, sizeof(struct ps__addRound), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ps__addRound(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_gameId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "gameId", &a->gameId, "xsd:int"))
+				{	soap_flag_gameId--;
+					continue;
+				}
+			if (soap_flag_re1PlayerId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "re1PlayerId", &a->re1PlayerId, "xsd:int"))
+				{	soap_flag_re1PlayerId--;
+					continue;
+				}
+			if (soap_flag_re2PlayerId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "re2PlayerId", &a->re2PlayerId, "xsd:int"))
+				{	soap_flag_re2PlayerId--;
+					continue;
+				}
+			if (soap_flag_hochzeitPlayerId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "hochzeitPlayerId", &a->hochzeitPlayerId, "xsd:int"))
+				{	soap_flag_hochzeitPlayerId--;
+					continue;
+				}
+			if (soap_flag_schweinereiPlayerId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "schweinereiPlayerId", &a->schweinereiPlayerId, "xsd:int"))
+				{	soap_flag_schweinereiPlayerId--;
+					continue;
+				}
+			if (soap_flag_trumpfabgabePlayerId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "trumpfabgabePlayerId", &a->trumpfabgabePlayerId, "xsd:int"))
+				{	soap_flag_trumpfabgabePlayerId--;
+					continue;
+				}
+			if (soap_flag_soloType && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "soloType", &a->soloType, "xsd:string"))
+				{	soap_flag_soloType--;
+					continue;
+				}
+			if (soap_flag_pflichtsolo && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_bool(soap, "pflichtsolo", &a->pflichtsolo, "xsd:boolean"))
+				{	soap_flag_pflichtsolo--;
+					continue;
+				}
+			if (soap_flag_points && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "points", &a->points, "xsd:int"))
+				{	soap_flag_points--;
+					continue;
+				}
+			if (soap_flag_comment && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "comment", &a->comment, "xsd:string"))
+				{	soap_flag_comment--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__addRound *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__addRound, 0, sizeof(struct ps__addRound), 0, soap_copy_ps__addRound);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_gameId > 0 || soap_flag_re1PlayerId > 0 || soap_flag_re2PlayerId > 0 || soap_flag_hochzeitPlayerId > 0 || soap_flag_schweinereiPlayerId > 0 || soap_flag_trumpfabgabePlayerId > 0 || soap_flag_soloType > 0 || soap_flag_pflichtsolo > 0 || soap_flag_points > 0 || soap_flag_comment > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__addRound(struct soap *soap, const struct ps__addRound *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__addRound);
+	if (soap_out_ps__addRound(soap, tag?tag:"ps:addRound", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__addRound * SOAP_FMAC4 soap_get_ps__addRound(struct soap *soap, struct ps__addRound *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__addRound(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__addRound * SOAP_FMAC2 soap_instantiate_ps__addRound(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__addRound(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__addRound, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__addRound);
+		if (size)
+			*size = sizeof(struct ps__addRound);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__addRound[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__addRound);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__addRound*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__addRound(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__addRound %p -> %p\n", q, p));
+	*(struct ps__addRound*)p = *(struct ps__addRound*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__addRoundResponse(struct soap *soap, struct ps__addRoundResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_std__string(soap, &a->result);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__addRoundResponse(struct soap *soap, const struct ps__addRoundResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_serialize_std__string(soap, &a->result);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__addRoundResponse(struct soap *soap, const char *tag, int id, const struct ps__addRoundResponse *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__addRoundResponse), type))
+		return soap->error;
+	if (soap_out_std__string(soap, "result", -1, &a->result, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__addRoundResponse * SOAP_FMAC4 soap_in_ps__addRoundResponse(struct soap *soap, const char *tag, struct ps__addRoundResponse *a, const char *type)
+{
+	size_t soap_flag_result = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__addRoundResponse *)soap_class_id_enter(soap, soap->id, a, SOAP_TYPE_ps__addRoundResponse, sizeof(struct ps__addRoundResponse), soap->type, soap->arrayType);
+	if (!a)
+		return NULL;
+	soap_default_ps__addRoundResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_result && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+				if (soap_in_std__string(soap, "result", &a->result, "xsd:string"))
+				{	soap_flag_result--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__addRoundResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__addRoundResponse, 0, sizeof(struct ps__addRoundResponse), 0, soap_copy_ps__addRoundResponse);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_result > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__addRoundResponse(struct soap *soap, const struct ps__addRoundResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__addRoundResponse);
+	if (soap_out_ps__addRoundResponse(soap, tag?tag:"ps:addRoundResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__addRoundResponse * SOAP_FMAC4 soap_get_ps__addRoundResponse(struct soap *soap, struct ps__addRoundResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__addRoundResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__addRoundResponse * SOAP_FMAC2 soap_instantiate_ps__addRoundResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__addRoundResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__addRoundResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__addRoundResponse);
+		if (size)
+			*size = sizeof(struct ps__addRoundResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__addRoundResponse[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__addRoundResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__addRoundResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__addRoundResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__addRoundResponse %p -> %p\n", q, p));
+	*(struct ps__addRoundResponse*)p = *(struct ps__addRoundResponse*)q;
+}
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__addDrink(struct soap *soap, struct ps__addDrink *a)
 {

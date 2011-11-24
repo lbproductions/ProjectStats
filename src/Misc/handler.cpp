@@ -16,6 +16,7 @@
 #include <Misc/Updater/Updater.h>
 
 #include <Gui/MainWindow/mainwindow.h>
+#include <Server/soapprojectstatsService.h>
 
 #include <Database/database.h>
 #include <Database/attribute.h>
@@ -148,6 +149,7 @@ bool Handler::showMainWindow(){
     m_mainwindow = new Gui::MainWindow::MainWindow();
 
     m_mainwindow->show();
+
     return true;
 }
 

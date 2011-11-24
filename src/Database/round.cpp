@@ -81,7 +81,7 @@ Round::Round(Game* game, int number) :
     this->number->setValue(number);
 
     this->startTime->setValue(QDateTime::currentDateTime());
-    this->db_state->setValue(Round::RunningState);
+    this->db_state->setValue(Round::PausedState);
 
     connect(game,SIGNAL(idChanged(int)),gameId,SLOT(changeValue(int)));
 }

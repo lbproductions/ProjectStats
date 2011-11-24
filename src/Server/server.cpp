@@ -239,4 +239,108 @@ int projectstatsService::addDrink(int gameId, int playerId, int drinkId, std::st
     return SOAP_OK;
 }
 
+int projectstatsService::addRound(int gameId, int re1PlayerId, int re2PlayerId, int hochzeitPlayerId, int schweinereiPlayerId, int trumpfabgabePlayerId, std::string soloType, bool pflichtsolo, int points, std::string comment, std::string &/*result*/)
+{
+    Database::Game* game = Database::Games::instance()->rowById(gameId);
 
+    if(game->live->value() && game->type->value() == "Doppelkopf")
+    {
+        Database::DokoLiveGame* dokogame = static_cast<Database::DokoLiveGame*>(game);
+
+        if(!dokogame->isFinished->value())
+        {
+            Database::DokoRound* round = static_cast<Database::DokoRound*>(dokogame->currentRound->value());
+
+            // Kein Solo
+            if (soloType == "")
+            {
+                Database::Player* re1 = Database::Players::instance()->rowById(re1PlayerId);
+                Database::Player* re2 = Database::Players::instance()->rowById(re2PlayerId);
+
+                Database::Player* contra1 = 0;
+                Database::Player* contra2 = 0;
+
+                int contraCount = 0;
+                foreach(Database::Player* player, dokogame->currentPlayingPlayers->value())
+                {
+                    if (player->id() != re1->id() && player->id() != re2->id())
+                    {
+                        if (contraCount == 0)
+                        {
+                            contra1 = player;
+                        }
+                        if (contraCount == 1)
+                        {
+                            contra2 = player;
+                        }
+                        contraCount++;
+                    }
+                }
+
+                round->doko_re1PlayerId->setValue(re1PlayerId);
+                round->doko_re2PlayerId->setValue(re2PlayerId);
+
+                round->addPoints(re1,points);
+                round->addPoints(re2,points);
+                round->addPoints(contra1,-points);
+                round->addPoints(contra2,-points);
+
+                if (hochzeitPlayerId > 0)
+                {
+                    round->doko_hochzeitPlayerId->setValue(hochzeitPlayerId);
+                }
+                if (schweinereiPlayerId > 0)
+                {
+                    round->doko_schweinereiPlayerId->setValue(schweinereiPlayerId);
+                }
+                if (trumpfabgabePlayerId > 0)
+                {
+                    round->doko_trumpfabgabePlayerId->setValue(trumpfabgabePlayerId);
+                }
+            }
+            // Solo
+            else
+            {
+                Database::Player* re1 = Database::Players::instance()->rowById(re1PlayerId);
+                Database::Player* contra1 = 0;
+                Database::Player* contra2 = 0;
+                Database::Player* contra3 = 0;
+
+                int contraCount = 0;
+                foreach(Database::Player *player, dokogame->currentPlayingPlayers->value())
+                {
+                    if (player->id() != re1->id())
+                    {
+                        if (contraCount == 0)
+                        {
+                            contra1 = player;
+                        }
+                        if (contraCount == 1)
+                        {
+                            contra2 = player;
+                        }
+                        if (contraCount == 2)
+                        {
+                            contra3 = player;
+                        }
+                        contraCount++;
+                    }
+                }
+
+                round->doko_re1PlayerId->setValue(re1PlayerId);
+                round->doko_soloPlayerId->setValue(re1PlayerId);
+                round->doko_soloType->setValue(QString::fromStdString(soloType));
+                round->doko_soloPflicht->setValue(pflichtsolo);
+
+                round->addPoints(re1,3*points);
+                round->addPoints(contra1,-points);
+                round->addPoints(contra2,-points);
+                round->addPoints(contra3,-points);
+            }
+            round->comment->setValue(QString::fromStdString(comment));
+            dokogame->startNextRound();
+            dokogame->currentRound->value()->startTime->setValue(QDateTime().currentDateTime());
+        }
+    }
+    return SOAP_OK;
+}

@@ -128,7 +128,6 @@ Round* LiveGame::startNextRound()
     newRound->length->addDependingAttribute(length);
 
     //Dieser Statuswechsel initialisiert den Timer, der die Length aktualisiert
-    newRound->setState(Round::PausedState);
     newRound->setState(Round::RunningState);
 
     return newRound;

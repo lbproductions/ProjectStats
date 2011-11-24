@@ -137,5 +137,30 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="addRound">
+   <complexType>
+    <sequence>
+     <element name="gameId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::gameId -->
+     <element name="re1PlayerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::re1PlayerId -->
+     <element name="re2PlayerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::re2PlayerId -->
+     <element name="hochzeitPlayerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::hochzeitPlayerId -->
+     <element name="schweinereiPlayerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::schweinereiPlayerId -->
+     <element name="trumpfabgabePlayerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::trumpfabgabePlayerId -->
+     <element name="soloType" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::soloType -->
+     <element name="pflichtsolo" type="xsd:boolean" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::pflichtsolo -->
+     <element name="points" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::points -->
+     <element name="comment" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::comment -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="addRoundResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ps__addRound::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 
