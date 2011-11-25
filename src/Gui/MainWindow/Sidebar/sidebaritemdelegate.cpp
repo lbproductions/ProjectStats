@@ -28,38 +28,50 @@ void SidebarItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     if(c->isParentCategorie())
     {
-	QFont font = qVariantValue<QFont>(index.data(Qt::FontRole));
-	QColor color = qVariantValue<QColor>(index.data(Qt::TextColorRole));
+        QFont font = qVariantValue<QFont>(index.data(Qt::FontRole));
+        font.setPixelSize(11);
+        font.setBold(true);
 
-	painter->setFont(font);
-	painter->setPen(QColor(255,255,255,150));
-	painter->drawText(option.rect.x(),option.rect.y()+16,
-			  index.data().toString());
+        painter->setFont(font);
+        painter->setPen(QColor(255,255,255,200));
+        painter->drawText(option.rect.x(),option.rect.y()+16,
+                  index.data().toString());
 
-	painter->setPen(color);
-	painter->drawText(option.rect.x(),option.rect.y()+15,
-			  index.data().toString());
+        painter->setPen(QColor(114,126,140,255));
+        painter->drawText(option.rect.x(),option.rect.y()+15,
+                  index.data().toString());
 	return;
     }
     else
     {
-	QStyledItemDelegate::paint(painter,option,index);
+        QStyledItemDelegate::paint(painter,option,index);
 
-	if(m_view->selectionModel()->selectedIndexes().contains(index))
-	{
-	    QFont font = qVariantValue<QFont>(index.data(Qt::FontRole));
-	    font.setBold(false);
+        QString text = index.data(Qt::UserRole + 2).toString();
 
-	    painter->setFont(font);
-	    painter->setPen(QColor(83,96,117,200));
-	    painter->drawText(option.rect.x()+47,option.rect.y()+23,
-			      index.data().toString());
-	    painter->setPen(QColor(255,255,255));
-	    painter->drawText(option.rect.x()+47,option.rect.y()+22,
-			      index.data().toString());
-	}
+        QFont font = qVariantValue<QFont>(index.data(Qt::FontRole));
+        font.setPixelSize(12);
 
-	return;
+        if(m_view->selectionModel()->selectedIndexes().contains(index))
+        {
+            font.setBold(true);
+
+            painter->setFont(font);
+            painter->setPen(QColor(113,125,150,255));
+            painter->drawText(option.rect.x()+30,option.rect.y()+18,
+                      text);
+            painter->setPen(QColor(255,255,255));
+            painter->drawText(option.rect.x()+30,option.rect.y()+17,
+                      text);
+        }
+        else
+        {
+            painter->setFont(font);
+            painter->setPen(QColor(0,0,0,255));
+            painter->drawText(option.rect.x()+30,option.rect.y()+17,
+                      text);
+        }
+
+        return;
     }
 
     QStyledItemDelegate::paint(painter,option,index);
