@@ -185,7 +185,8 @@ SOURCES += main.cpp\
     Server/soapprojectstatsProxy.cpp \
     Server/soapC.cpp \
     Server/stdsoap2.cpp \
-    Server/server.cpp
+    Server/server.cpp \
+    Gui/Misc/sheet.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -386,7 +387,8 @@ HEADERS  += \
     Server/projectstats.nsmap \
     Server/stdsoap2.h \
     Server/server.h \
-    Server/stdsoap2.h
+    Server/stdsoap2.h \
+    Gui/Misc/sheet.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \

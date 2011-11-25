@@ -10,6 +10,7 @@
 #include <Gui/MainWindow/mainwindow.h>
 #include <Gui/MainWindow/statusbar.h>
 #include <Misc/handler.h>
+#include <Gui/Misc/sheet.h>
 
 #include <QHBoxLayout>
 #include <QScrollArea>
@@ -46,10 +47,6 @@ ListView::ListView(Database::ChildCategorie *categorie, MainWindow *parent) :
     m_scrollAreaDetails->setAutoFillBackground(true);
     m_scrollAreaDetails->setBackgroundRole(QPalette::Base);
     m_scrollAreaDetails->setStyleSheet("QScrollArea {"
-//                                       "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, "
-//                                       "stop:0 rgba(0, 0, 0, 130), "
-//                                       "stop:0.08 rgba(0, 0, 0, 80), "
-//                                       "stop:1 rgba(0, 0, 0, 65))"
                                        "background: transparent;"
                                        "border-top: 43px transparent;"
                                        "border-image: url(:/graphics/images/greybackground2) 43px 0px 0px 0px repeat;"
@@ -58,6 +55,10 @@ ListView::ListView(Database::ChildCategorie *categorie, MainWindow *parent) :
                      "}");
     m_scrollAreaDetails->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     m_scrollAreaDetails->setWidgetResizable(true);
+
+    m_sheet = new Gui::Misc::Sheet(m_scrollAreaDetails);
+    m_sheet->setVisible(false);
+
     m_horizontalSplitter->addWidget(m_scrollAreaDetails);
 
     restoreSettings();
@@ -120,6 +121,7 @@ void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
 
     if(!m_rowWidget.isNull())
     {
+        m_sheet->setVisible(false);
         m_rowWidget->setVisible(false);
         m_rowWidget->deleteLater();
     }
@@ -143,10 +145,14 @@ void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
 
         updateStatusbar();
 
-        m_scrollAreaDetails->setWidget(m_rowWidget);
+        m_sheet->setWidget(m_rowWidget);
+        m_sheet->setVisible(true);
+        m_scrollAreaDetails->setWidget(m_sheet);
     }
     else{
-        m_scrollAreaDetails->setWidget(summaryWidget);
+        m_sheet->setWidget(summaryWidget);
+        m_sheet->setVisible(true);
+        m_scrollAreaDetails->setWidget(m_sheet);
     }
 
 
