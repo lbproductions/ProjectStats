@@ -162,10 +162,6 @@ protected slots:
     virtual void endCalculation() = 0;
 
 signals:
-    /*!
-      Wird gesendet, sobald sich das Attribut geändert hat.
-      */
-    void changed();
 
     void changed(::Database::AttributeBase*);
 

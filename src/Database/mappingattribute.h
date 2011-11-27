@@ -88,7 +88,7 @@ template<class K, class V, class R, class C>
 void MappingAttribute<K,V,R,C>::changeValue(const QMap<K,V> value)
 {
     Attribute<QMap<K,V>,R,C>::changeValue(value);
-    emit Attribute<QMap<K,V>,R,C>::changed();
+    emit Changeable::changed();
 }
 
 template<class K, class V, class R, class C>

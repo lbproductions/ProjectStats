@@ -151,7 +151,6 @@ void TaskScheduler::shutdown()
 TaskScheduler::~TaskScheduler()
 {
     m_executeQueueHelper->deleteLater();
-    m_timer->deleteLater();
 }
 
 void TaskScheduler::schedule(Task* task)

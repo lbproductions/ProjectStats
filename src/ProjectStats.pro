@@ -439,6 +439,10 @@ mac {
     QMAKE_BUNDLE_DATA += PRIVATE_FRAMEWORKS
 }
 
+win32 {
+    LIBS += -lws2_32
+}
+
 RESOURCES += Ressources/Ressources.qrc \
     Ressources/drinks.qrc
 
