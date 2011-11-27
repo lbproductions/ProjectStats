@@ -27,6 +27,7 @@ namespace Misc
 {
     class Splitter;
     class RowList;
+    class Sheet;
 }
 
 namespace MainWindow
@@ -75,6 +76,7 @@ private:
     QPointer<Database::ChildCategorie> m_categorie;
 
     QPointer<QScrollArea> m_scrollAreaDetails; //!< In dieser ScrollArea werden die DetailsWidgets angezeigt.
+    Gui::Misc::Sheet* m_sheet;
     QPointer<Details::RowWidget> m_rowWidget; //!< Speichert das aktuelle RowWidget
     QPointer<Misc::Splitter> m_horizontalSplitter; //!< Enthält oben die ItemsList und unten ein DetailsWidget.
     QPointer<Misc::RowList> m_rowList;

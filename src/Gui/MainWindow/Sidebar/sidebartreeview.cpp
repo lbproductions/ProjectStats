@@ -27,24 +27,29 @@ SidebarTreeView::SidebarTreeView(Sidebar *parent) :
     this->setDropIndicatorShown(true);
     this->setDragDropMode(QAbstractItemView::DropOnly);
     this->setAcceptDrops(true);
-    this->setIconSize(QSize(32,32));
+    this->setIconSize(QSize(17,17));
     setFrameStyle(QFrame::NoFrame);
     setAttribute(Qt::WA_MacShowFocusRect, false);
     setAutoFillBackground(true);
     setItemDelegate(new SidebarItemDelegate(this));
 
     // Set the palette.
-    QPalette p = palette();
-    QColor macSidebarColor(221, 228, 235);
-    p.setColor(QPalette::Base, macSidebarColor);
-    setPalette(p);
+//    QPalette p = palette();
+//    QColor macSidebarColor(221, 228, 235);
+//    p.setColor(QPalette::Base, macSidebarColor);
+//    setPalette(p);
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setTextElideMode(Qt::ElideMiddle);
-    setIndentation(10);
+    setIndentation(7);
 
 
-    setStyleSheet("QTreeView::branch:open:has-children:!has-siblings, "
+    setStyleSheet("QTreeView {"
+                  "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, "
+                  "stop:0 rgba(238, 240, 244, 255),"
+                  "stop:1 rgba(210, 216, 224, 255)) "
+                  "}"
+                "QTreeView::branch:open:has-children:!has-siblings, "
                   "QTreeView::branch:open:has-children:has-siblings  {"
                          "border-image: none;"
                          "image: none /*url(:/graphics/styles/mac/sidebar/treeview-item-expanded-osx)*/;"
@@ -56,18 +61,15 @@ SidebarTreeView::SidebarTreeView(Sidebar *parent) :
                   "}"
                   "QTreeView { "
                   "selection-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, "
-                  "stop:0 rgba(172, 188, 224, 255), "
-                  "stop:1 rgba(126, 149, 187, 255))"
+                  "stop:0 rgba(196, 203, 224, 255), "
+                  "stop:1 rgba(158, 169, 197, 255))"
                     "}"
-                  "QTreeView::item { "
-                  "border-top: 1px solid #dde4eb;"
-                "}"
                   "QTreeView::item:selected { "
-                    "font-weight: bold;"
-                    "border-top: 1px solid #a0afcd;"
+                    "border-top: 1px solid #b9c0d3;"
+                  "border-bottom: 1px solid #959fb9;"
                   "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, "
-                  "stop:0 rgba(172, 188, 224, 255), "
-                  "stop:1 rgba(126, 149, 187, 255))"
+                  "stop:0 rgba(196, 203, 224, 255), "
+                  "stop:1 rgba(158, 169, 197, 255))"
                   "}"
                     );
 

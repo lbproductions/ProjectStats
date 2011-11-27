@@ -9,6 +9,9 @@
     <qresource prefix="/graphics/images">
         <file alias="player">graphics/images/player.png</file>
         <file alias="psavatar">graphics/images/ps_avatar.png</file>
+        <file alias="greybackground">graphics/styles/mac/greybackground.png</file>
+        <file alias="greybackground2">graphics/styles/mac/greybackground2.png</file>
+        <file alias="sheetbackground">graphics/styles/mac/sheetbackground.png</file>
     </qresource>
     <qresource prefix="/graphics/styles/mac/sidebar">
         <file alias="sidebar_options_addbutton_pressed">graphics/styles/mac/sidebar/sidebar_options_addbutton_pressed.png</file>
