@@ -43,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     addToolBar(m_toolbar);
 
     m_menubar = new MenuBar(this);
+    this->setMenuBar(m_menubar);
 
     restoreSettings();
 

@@ -12,8 +12,12 @@
 
 //#include <databasewindow.h>
 #include <Misc/messagesystem.h>
-#include <Misc/Updater/sparkleupdater.h>
-#include <Misc/Updater/Updater.h>
+
+#ifdef Q_WS_MAC
+#   include <Misc/Updater/sparkleupdater.h>
+#elif defined Q_WS_WIN
+#   include <Misc/Updater/winsparkleupdater.h>
+#endif
 
 #include <Gui/MainWindow/mainwindow.h>
 #include <Server/soapprojectstatsService.h>
@@ -49,7 +53,9 @@ Handler::Handler(int argc, char *argv[])
     this->setWindowIcon(QIcon(":/icons/pslogo"));
 
 #ifdef Q_WS_MAC
-    //m_updater = new SparkleUpdater("http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast.xml");
+    //m_updater = new SparkleUpdater("http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast_macos.xml");
+#elif defined Q_WS_WIN
+    m_updater = new WinSparkleUpdater("http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast_win.xml");
 #endif
 
     if (m_updater) {

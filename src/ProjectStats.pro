@@ -186,7 +186,8 @@ SOURCES += main.cpp\
     Server/soapC.cpp \
     Server/stdsoap2.cpp \
     Server/server.cpp \
-    Gui/Misc/sheet.cpp
+    Gui/Misc/sheet.cpp \
+    Misc/Updater/winsparkleupdater.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -388,7 +389,8 @@ HEADERS  += \
     Server/stdsoap2.h \
     Server/server.h \
     Server/stdsoap2.h \
-    Gui/Misc/sheet.h
+    Gui/Misc/sheet.h \
+    Misc/Updater/winsparkleupdater.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -442,7 +444,9 @@ mac {
 }
 
 win32 {
-    LIBS += -lws2_32
+    LIBS += -lws2_32 \
+            -L../frameworks/WinSparkle-0.3 \
+            -lWinSparkle
 }
 
 RESOURCES += Ressources/Ressources.qrc \
@@ -468,6 +472,8 @@ OTHER_FILES += \
 
 
 DEFINES += WITH_NONAMESPACES
+
+
 
 
 
