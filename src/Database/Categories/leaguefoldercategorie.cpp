@@ -55,6 +55,7 @@ void LeagueFolderCategorie::initializeAttributes()
     IMPLEMENT_ATTRIBUTE(SmartFolderCategorie*, LeagueFolderCategorie, gamesFolder, tr("Games Folder"))
 
     m_gamesModel = 0;
+    m_playersModel = 0;
 }
 
 
@@ -122,18 +123,19 @@ Models::TableModelBase* LeagueFolderCategorie::gamesModel()
     if(!m_gamesModel)
     {
         SmartFolderCategorie* folder = static_cast<SmartFolderCategorie*>(gamesFolder->value());
-        QList<Game*> games = folder->getAll<Game,Games>();
-        m_gamesModel = new Models::TableModel<Game,Games>(games,Games::instance());
+        m_gamesModel = new Models::TableModel<Game,Games>(folder->getAll<Game,Games>(),Games::instance());
     }
     return m_gamesModel;
 }
 
-//Models::TableModelBase* LeagueFolderCategorie::playersModel(){
-//    if(m_playerModel.isNull()){
-//       m_playerModel = new Models::TableModel<Player,Players>(m_players,Players::instance());
-//    }
-//    return m_playerModel;
-//}
+Models::TableModelBase* LeagueFolderCategorie::playersModel()
+{
+    if(!m_playersModel)
+    {
+        m_playersModel = new Models::TableModel<Player,Players>(playersFolder->value()->players->value(),Players::instance());
+    }
+    return m_playersModel;
+}
 
 //void LeagueFolderCategorie::setPlayers(QList<Player*> players){
 //    m_players = players;

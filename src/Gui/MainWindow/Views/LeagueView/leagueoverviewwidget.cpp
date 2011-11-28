@@ -42,7 +42,7 @@ LeagueOverviewWidget::LeagueOverviewWidget(Database::LeagueFolderCategorie *cate
     m_viewSplitter->setStretchFactor(1, 1);
     m_basicSplitter->addWidget(m_viewSplitter);
 
-    m_rowListPlayer = new Gui::Misc::RowList(/*m_categorie->playersModel()*/0);
+    m_rowListPlayer = new Gui::Misc::RowList(m_categorie->playersModel());
     m_rowListPlayer->setColumnHidden(1,true);
     m_rowListPlayer->setColumnHidden(8,true);
     m_rowListPlayer->setColumnHidden(9,true);

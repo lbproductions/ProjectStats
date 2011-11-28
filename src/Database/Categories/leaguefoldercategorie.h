@@ -25,6 +25,7 @@ START_ROW_DECLARATION(LeagueFolderCategorie, FolderCategorie)
     Gui::MainWindow::Views::View *view();
 
     Models::TableModelBase* gamesModel();
+    Models::TableModelBase* playersModel();
 
     void addPlayer(Player* player);
 
@@ -33,6 +34,8 @@ private:
     DECLARE_ATTRIBUTE(SmartFolderCategorie*, LeagueFolderCategorie, gamesFolder)
 
     Models::TableModelBase* m_gamesModel;
+    Models::TableModelBase* m_playersModel;
+
 
 END_ROW_DECLARATION(LeagueFolderCategorie)
 
