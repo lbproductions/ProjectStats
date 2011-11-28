@@ -10,6 +10,7 @@
 #include <Gui/MainWindow/mainwindow.h>
 
 #include <Database/row.h>
+#include <Gui/Misc/sheet.h>
 
 #include <Models/tablemodel.h>
 
@@ -71,7 +72,17 @@ LeagueOverviewWidget::LeagueOverviewWidget(Database::LeagueFolderCategorie *cate
     m_scrollAreaDetails->setBackgroundRole(QPalette::Base);
     m_scrollAreaDetails->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     m_scrollAreaDetails->setWidgetResizable(true);
+    m_scrollAreaDetails->setStyleSheet("QScrollArea {"
+                                       "background: transparent;"
+                                       "border-top: 43px transparent;"
+                                       "border-image: url(:/graphics/images/greybackground2) 43px 0px 0px 0px repeat;"
+                                       "margin: 0px;"
+                                       "padding-top: -43px;"
+                     "}");
     m_basicSplitter->addWidget(m_scrollAreaDetails);
+
+    m_sheet = new Gui::Misc::Sheet(m_scrollAreaDetails);
+    m_sheet->setVisible(false);
 
     restoreSettings();
 
@@ -141,6 +152,7 @@ void LeagueOverviewWidget::onGamesListRowsSelected(QList<Database::Row *> list){
 
     if(!m_rowWidget.isNull())
     {
+        m_sheet->setVisible(false);
         m_rowWidget->setVisible(false);
         m_rowWidget->deleteLater();
     }
@@ -156,7 +168,9 @@ void LeagueOverviewWidget::onGamesListRowsSelected(QList<Database::Row *> list){
 
     updateStatusbar();
 
-    m_scrollAreaDetails->setWidget(m_rowWidget);
+    m_sheet->setWidget(m_rowWidget);
+    m_sheet->setVisible(true);
+    m_scrollAreaDetails->setWidget(m_sheet);
 }
 
 void LeagueOverviewWidget::onPlayersListRowsSelected(QList<Database::Row *> list){
@@ -189,7 +203,9 @@ void LeagueOverviewWidget::onPlayersListRowsSelected(QList<Database::Row *> list
 
     updateStatusbar();
 
-    m_scrollAreaDetails->setWidget(m_rowWidget);
+    m_sheet->setWidget(m_rowWidget);
+    m_sheet->setVisible(true);
+    m_scrollAreaDetails->setWidget(m_sheet);
 }
 
 void LeagueOverviewWidget::on_rowList_selectionChanged(){

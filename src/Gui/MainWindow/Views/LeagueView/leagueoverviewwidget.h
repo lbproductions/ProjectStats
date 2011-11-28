@@ -28,6 +28,7 @@ namespace Misc
 {
     class Splitter;
     class RowList;
+    class Sheet;
 }
 
 namespace MainWindow
@@ -68,6 +69,7 @@ private:
     QPointer<Misc::RowList> m_rowListGames;
 
     QPointer<QScrollArea> m_scrollAreaDetails; //!< In dieser ScrollArea werden die DetailsWidgets angezeigt.
+    Gui::Misc::Sheet* m_sheet;
     QPointer<Details::DetailsWidget> m_rowWidget; //!< Speichert das aktuelle RowWidget
 
     QFrame* m_pastNextGame;
