@@ -112,4 +112,8 @@
     <qresource prefix="/graphics/styles/mac/groupbox/fullscreen">
         <file alias="background">graphics/styles/mac/groupbox/fullscreen/background.png</file>
     </qresource>
+    <qresource prefix="/graphics/styles/mac/tabbar">
+        <file alias="background">graphics/styles/mac/tabbar/background.png</file>
+        <file alias="button">graphics/styles/mac/tabbar/button.png</file>
+    </qresource>
 </RCC>
