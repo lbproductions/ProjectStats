@@ -24,11 +24,15 @@ START_ROW_DECLARATION(LeagueFolderCategorie, FolderCategorie)
 
     Gui::MainWindow::Views::View *view();
 
+    Models::TableModelBase* gamesModel();
+
     void addPlayer(Player* player);
 
 private:
     DECLARE_ATTRIBUTE(PlayersFolderCategorie*, LeagueFolderCategorie, playersFolder)
     DECLARE_ATTRIBUTE(SmartFolderCategorie*, LeagueFolderCategorie, gamesFolder)
+
+    Models::TableModelBase* m_gamesModel;
 
 END_ROW_DECLARATION(LeagueFolderCategorie)
 

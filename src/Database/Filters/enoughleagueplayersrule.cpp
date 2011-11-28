@@ -1,6 +1,7 @@
 #include "enoughleagueplayersrule.h"
 
 #include "atomicrule.h"
+#include "constraints.h"
 
 #include <Database/player.h>
 #include <Database/game.h>
@@ -45,6 +46,7 @@ void EnoughLeaguePlayersRule::addPlayer(Player *player)
     AtomicRule* playerIsInGameRule = new AtomicRule();
     playerIsInGameRule->attributeName->setValue("playerId");
     playerIsInGameRule->parameter->setValue(QString::number(player->id()));
+    playerIsInGameRule->constraintId->setValue(Constraints::IsEqual);
     addRule(playerIsInGameRule);
 }
 

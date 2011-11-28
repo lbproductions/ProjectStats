@@ -47,7 +47,7 @@ LeagueOverviewWidget::LeagueOverviewWidget(Database::LeagueFolderCategorie *cate
     m_rowListPlayer->setColumnHidden(8,true);
     m_rowListPlayer->setColumnHidden(9,true);
 
-    m_rowListGames = new Gui::Misc::RowList(0/*m_categorie->gamesModel()*/);
+    m_rowListGames = new Gui::Misc::RowList(m_categorie->gamesModel());
     m_rowListGames->setColumnHidden(2,true);
     m_rowListGames->setColumnHidden(3,true);
     m_rowListGames->setColumnHidden(6,true);

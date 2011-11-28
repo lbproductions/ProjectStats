@@ -7,6 +7,8 @@ START_ROW_IMPLEMENTATION(AtomicRule, Rule, Rule)
     IMPLEMENT_DATABASEATTRIBUTE(QString,AtomicRule,attributeName, tr("Attribute Name"))
     IMPLEMENT_DATABASEATTRIBUTE(int,AtomicRule,constraintId, tr("Constraint"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,AtomicRule,parameter, tr("Parameter"))
+
+    type->setValue(Rule::AtomicRuleType);
 }
 
 QString AtomicRule::mimeType() const

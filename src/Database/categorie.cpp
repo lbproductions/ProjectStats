@@ -69,12 +69,11 @@ QPointer<Categorie> Categories::createRowInstance(int id)
             case ChildCategorie::LeagueCategorieContentType:
                 c = new LeagueFolderCategorie(categorieId,this);
                 break;
-            case ChildCategorie::SmartFolderCategorieContentType:
-                c = new SmartFolderCategorie(categorieId,this);
-                break;
             }
             break;
-
+        case Categorie::SmartFolderCategorieType:
+            c = new SmartFolderCategorie(categorieId,this);
+            break;
         }
         cc->deleteLater();
 

@@ -36,6 +36,7 @@ NewLeagueDialog::~NewLeagueDialog()
 void NewLeagueDialog::on_pushButtonOkay_clicked()
 {
     QPointer<Database::LeagueFolderCategorie> league = new Database::LeagueFolderCategorie();
+    league->name->setValue(ui->lineEditName->text());
 
     for (int i = 0; i<ui->listWidgetLeaguePlayers->count();i++)
     {

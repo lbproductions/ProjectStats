@@ -21,6 +21,8 @@ SmartFolderCategorie::SmartFolderCategorie() :
     ChildCategorie(0, Categories::instance())
 {
     initializeAttributes();
+
+    type->setValue(ChildCategorie::SmartFolderCategorieType);
 }
 
 QIcon SmartFolderCategorie::icon() const

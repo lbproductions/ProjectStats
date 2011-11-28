@@ -28,8 +28,7 @@ START_ROW_DECLARATION(ChildCategorie, Categorie)
         PlayersCategorieContentType, //!< Die Kategorie enthält Spieler
         DrinksCategorieContentType, //!< Die Kategorie enthält Drinks
         PlacesCategorieContentType, //!< Die Kategorie enthält Places
-        LeagueCategorieContentType, //!< Die Kategorie enthält Places
-        SmartFolderCategorieContentType
+        LeagueCategorieContentType //!< Die Kategorie enthält Places
     };
 
     /*!

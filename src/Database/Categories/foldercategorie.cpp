@@ -10,6 +10,8 @@
 START_ROW_IMPLEMENTATION(FolderCategorie, Categorie, ChildCategorie)
 {
     IMPLEMENT_LISTATTRIBUTE(int,FolderCategorie,rows,tr("Rows"))
+
+    type->setValue(Categorie::FolderCategorieType);
 }
 
 QList<int> FolderCategorie::calculate_rows()

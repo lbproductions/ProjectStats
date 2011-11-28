@@ -2,6 +2,7 @@
 
 START_ROW_IMPLEMENTATION(RuleConjunction, Rule, RuleConnective)
 {
+    type->setValue(Rule::RuleConjunctionType);
 }
 
 QString RuleConjunction::mimeType() const

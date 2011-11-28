@@ -21,7 +21,8 @@ START_ROW_DECLARATION(Categorie, Row)
     enum CategorieType {
         ParentCategorieType, //!< Die Kategorie ist eine Überschrift in der Sidebar
         LibraryCategorieType, //!< Die Kategorie enthält alle Elemente einer Tabelle
-        FolderCategorieType //!< Die Kategorie kann vom User befüllt werden
+        FolderCategorieType, //!< Die Kategorie kann vom User befüllt werden
+        SmartFolderCategorieType
     };
 
     DECLARE_DATABASEATTRIBUTE(QString,Categorie,name)
