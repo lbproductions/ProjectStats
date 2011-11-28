@@ -5,13 +5,12 @@
 
 namespace Database
 {
+class Player;
+}
 
-class Categories;
+START_ROW_DECLARATION(PlayersFolderCategorie, FolderCategorie)
+    DECLARE_ROW_CONSTRUCTORS(PlayersFolderCategorie, FolderCategorie)
 
-class PlayersFolderCategorie : public FolderCategorie
-{
-    Q_OBJECT
-public:
     DECLARE_LISTATTRIBUTE(Player*,PlayersFolderCategorie,players)
 
     QIcon icon() const;
@@ -22,10 +21,8 @@ public:
 
     void dropMimeData(const QMimeData *data);
 
-    friend class Categories;
-private:
-    PlayersFolderCategorie(int id, Categories *table);
-};
+    void addPlayer(Player* player);
 
-}
+END_ROW_DECLARATION(PlayersFolderCategorie)
+
 #endif // PLAYERSFOLDERCATEGORIE_H

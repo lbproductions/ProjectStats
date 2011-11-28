@@ -66,7 +66,7 @@ public:
 protected:
     friend class Table<R>;
 
-    void changeValue(QVariant value, bool updateDatabase);
+    void changeValue(QVariant value, bool updateDatabase, bool threaded = true);
 
     /*!
       Liest den Wert aus der Datenbank aus.<br>
@@ -101,7 +101,7 @@ void DatabaseAttribute<T,R,C>::setValue(T value)
 }
 
 template<class T, class R, class C>
-void DatabaseAttribute<T,R,C>::changeValue(QVariant value, bool updateDatabase)
+void DatabaseAttribute<T,R,C>::changeValue(QVariant value, bool updateDatabase, bool threaded)
 {
     QVariant v;
     v.setValue(Attribute<T,R,C>::m_value);
@@ -110,7 +110,12 @@ void DatabaseAttribute<T,R,C>::changeValue(QVariant value, bool updateDatabase)
     {
         Attribute<T,R,C>::changeValue(value.value<T>());
         updateDatabase = value != v;
-        QtConcurrent::run(static_cast<Row*>(Attribute<T,R,C>::m_owner), &Row::set, Attribute<T,R,C>::m_name, value);
+        if(threaded) {
+            QtConcurrent::run(static_cast<Row*>(Attribute<T,R,C>::m_owner), &Row::set, Attribute<T,R,C>::m_name, value);
+        }
+        else {
+            static_cast<Row*>(Attribute<T,R,C>::m_owner)->set(Attribute<T,R,C>::m_name, value);
+        }
     }
     else
     {

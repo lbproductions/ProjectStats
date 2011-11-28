@@ -25,11 +25,8 @@ START_ROW_DECLARATION(Categorie, Row)
     };
 
     DECLARE_DATABASEATTRIBUTE(QString,Categorie,name)
-    DECLARE_DATABASEATTRIBUTE(QString,Categorie,icon)
-    DECLARE_DATABASEATTRIBUTE(int,Categorie,parentId)
     DECLARE_DATABASEATTRIBUTE(int,Categorie,type)
     DECLARE_DATABASEATTRIBUTE(int,Categorie,orderIndicator)
-    DECLARE_DATABASEATTRIBUTE(int,Categorie,contentType)
 
     QStandardItem *standardItem() const;
     void setStandardItem(QStandardItem *item);
@@ -44,6 +41,7 @@ END_ROW_DECLARATION(Categorie)
 START_TABLE_DECLARATION(Categorie)
     QPointer<Categorie> createRowInstance(int id);
     QList<QPointer<ParentCategorie> > parentCategories();
+    QList<ChildCategorie*> childCategories(int parentId);
 END_TABLE_DECLARATION()
 
 #endif // DATABASE_CATEGORIE_H

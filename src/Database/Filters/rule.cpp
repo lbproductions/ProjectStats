@@ -1,41 +1,41 @@
 #include "rule.h"
 
-//#include "ruleconjunction.h"
-//#include "ruledisjunction.h"
-//#include "atomicrule.h"
-//#include "enoughleagueplayersrule.h"
+#include "ruleconjunction.h"
+#include "ruledisjunction.h"
+#include "atomicrule.h"
+#include "enoughleagueplayersrule.h"
 
 START_TABLE_IMPLEMENTATION(Rule)
-//QPointer<Rule> Rules::createRowInstance(int id)
-//{
-//    Rule *row = new Rule(id,this);
-//    Rule *row2 = 0;
+QPointer<Rule> Rules::createRowInstance(int id)
+{
+    Rule *row = new Rule(id,this);
+    Rule *row2 = 0;
 
-//    switch(row->type->value())
-//    {
-//    case Rule::RuleConjunctionType:
-//        row2 = new RuleConjunction(id,this);
-//        break;
-//    case Rule::RuleDisjunctionType:
-//        row2 = new RuleDisjunction(id,this);
-//        break;
-//    case Rule::AtomicRuleType:
-//        row2 = new AtomicRule(id,this);
-//        break;
-//    case Rule::EnoughLeaguePlayersRuleType:
-////        row2 = new EnoughLeaguePlayersRule(id,this);
-//        break;
-//    default:
-//        break;
-//    }
+    switch(row->type->value())
+    {
+    case Rule::RuleConjunctionType:
+        row2 = new RuleConjunction(id,this);
+        break;
+    case Rule::RuleDisjunctionType:
+        row2 = new RuleDisjunction(id,this);
+        break;
+    case Rule::AtomicRuleType:
+        row2 = new AtomicRule(id,this);
+        break;
+    case Rule::EnoughLeaguePlayersRuleType:
+        row2 = new EnoughLeaguePlayersRule(id,this);
+        break;
+    default:
+        break;
+    }
 
-//    if(row2 != 0)
-//    {
-//        return row2;
-//    }
+    if(row2 != 0)
+    {
+        return row2;
+    }
 
-//    return row;
-//}
+    return row;
+}
 
 END_TABLE_IMPLEMENTATION()
 

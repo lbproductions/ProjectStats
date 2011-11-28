@@ -12,6 +12,7 @@
 #include "Categories/drinksfoldercategorie.h"
 #include "Categories/placesfoldercategorie.h"
 #include "Categories/leaguefoldercategorie.h"
+#include "Categories/smartfoldercategorie.h"
 
 START_TABLE_IMPLEMENTATION(Categorie)
 QPointer<Categorie> Categories::createRowInstance(int id)
@@ -68,6 +69,9 @@ QPointer<Categorie> Categories::createRowInstance(int id)
             case ChildCategorie::LeagueCategorieContentType:
                 c = new LeagueFolderCategorie(categorieId,this);
                 break;
+            case ChildCategorie::SmartFolderCategorieContentType:
+                c = new SmartFolderCategorie(categorieId,this);
+                break;
             }
             break;
 
@@ -90,18 +94,31 @@ QList<QPointer<ParentCategorie> > Categories::parentCategories()
     }
     return list;
 }
+
+QList<ChildCategorie*> Categories::childCategories(int parentId)
+{
+    QList<ChildCategorie*> list;
+    foreach(Categorie* c, allRows())
+    {
+        if(!c->isParentCategorie())
+        {
+            ChildCategorie* cc = static_cast<ChildCategorie*>(c);
+            if(cc->parentId->value() == parentId)
+            {
+                list.append(cc);
+            }
+        }
+    }
+    return list;
+}
+
 END_TABLE_IMPLEMENTATION()
 
 START_ROW_IMPLEMENTATION(Categorie, Categorie, Row)
 {
     IMPLEMENT_DATABASEATTRIBUTE(QString,Categorie,name,tr("Name"))
-    IMPLEMENT_DATABASEATTRIBUTE(QString,Categorie,icon,tr("Icon"))
-    IMPLEMENT_DATABASEATTRIBUTE(int,Categorie,parentId,tr("parentId"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Categorie,type,tr("Type"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Categorie,orderIndicator,tr("OrderIndicator"))
-    IMPLEMENT_DATABASEATTRIBUTE(int,Categorie,contentType,tr("ContentType"))
-
-
 }
 
 QString Categorie::mimeType() const

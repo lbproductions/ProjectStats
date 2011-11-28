@@ -20,8 +20,7 @@ PlacesFolderCategorie::PlacesFolderCategorie(int id, Categories *table) :
 
 QIcon PlacesFolderCategorie::icon() const
 {
-        return QIcon(":/graphics/icons/mac/sidebar/sidebar_folder_places");
-
+    return QIcon(":/graphics/icons/mac/sidebar/sidebar_folder_places");
 }
 
 QList<Place*> PlacesFolderCategorie::calculate_places()

@@ -37,18 +37,10 @@ void NewLeagueDialog::on_pushButtonOkay_clicked()
 {
     QPointer<Database::LeagueFolderCategorie> league = new Database::LeagueFolderCategorie();
 
-//    QList<Database::Player*> list;
-//    for (int i = 0; i<ui->listWidgetLeaguePlayers->count();i++){
-//        filter->addPlayer(Database::Players::instance()->playerByName(
-//                                (ui->listWidgetLeaguePlayers->item(i)->text())));
-//        list.append(Database::Players::instance()->playerByName
-//                    (ui->listWidgetLeaguePlayers->item(i)->text()));
-//    }
-
-//    league->setPlayers(list);
-
-//    Database::Categories::instance()->insertRow(league);
-//    Database::Rules::instance()->insertRow(filter->conjunction());
+    for (int i = 0; i<ui->listWidgetLeaguePlayers->count();i++)
+    {
+        league->addPlayer(Database::Players::instance()->playerByName(ui->listWidgetLeaguePlayers->item(i)->text()));
+    }
 
     this->accept();
 }

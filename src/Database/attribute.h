@@ -125,7 +125,7 @@ public:
     virtual const AttributeVariant toVariant() = 0;
     virtual const QString toString() = 0;
     virtual const QVariant displayVariant() = 0;
-    virtual void changeValue(QVariant value, bool updateDatabase);
+    virtual void changeValue(QVariant value, bool updateDatabase, bool threaded = true);
 
     virtual AttributeFutureWatcher* startCalculationTask() = 0;
 
@@ -516,7 +516,9 @@ T Attribute<T,R,C>::calculate() const
 template<class T, class R, class C>
 void Attribute<T,R,C>::updateFromDependency()
 {
+    m_mutex.lock();
     recalculateFromScratch();
+    m_mutex.unlock();
 
 /*    m_lock.lock();
 //    if(!m_cacheInitialized)

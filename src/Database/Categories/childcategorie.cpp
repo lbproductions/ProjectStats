@@ -9,7 +9,10 @@ using namespace Database;
 
 START_ROW_IMPLEMENTATION(ChildCategorie, Categorie, Categorie)
 {
+    IMPLEMENT_DATABASEATTRIBUTE(QString,Categorie,icon,tr("Icon"))
+    IMPLEMENT_DATABASEATTRIBUTE(int,Categorie,parentId,tr("parentId"))
     IMPLEMENT_ATTRIBUTE(QPointer<ParentCategorie>,ChildCategorie,parentCategorie,tr("ParentCategorie"))
+    IMPLEMENT_DATABASEATTRIBUTE(int,Categorie,contentType,tr("ContentType"))
 }
 
 QString ChildCategorie::mimeType() const
@@ -18,15 +21,8 @@ QString ChildCategorie::mimeType() const
 }
 
 QPointer<ParentCategorie> ChildCategorie::calculate_parentCategorie()
-{        
-        int id = -1;
-        for(int i = 0; i<Categories::instance()->allRows().size();i++){
-            if(Categories::instance()->allRows().at(i)->parentId->value() == m_id){
-                id = Categories::instance()->allRows().at(i)->id();
-            }
-        }
-        return (ParentCategorie*)Categories::instance()->rowById(id).data();
-
+{
+    return static_cast<ParentCategorie*>(Categories::instance()->rowById(parentId->value()).data());
 }
 
 Models::TableModelBase* ChildCategorie::model()

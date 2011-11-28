@@ -635,6 +635,11 @@ QPointer<RowType> Table<RowType>::rowById(int id)
 template<class RowType>
 void Table<RowType>::insertRow(Row *row)
 {
+    if(row->id() > 0)
+    {
+        return; //Row ist bereits geinserted!
+    }
+
     //Query zusammensetzen...
     QSqlQuery create = QSqlQuery(Database::instance()->sqlDatabaseLocked());
     QString queryString = QLatin1String("INSERT INTO ") + m_name + QLatin1String(" (id");
@@ -665,9 +670,7 @@ void Table<RowType>::insertRow(Row *row)
     create.exec();
     Database::instance()->releaseDatabaseLock();
 
-    //ID setzen
     int id = create.lastInsertId().toInt();
-    row->setId(id);
 
     //Dem Modell (und damit glaube ich den Views) mitteilen, dass sich gleich was ändern wird
     model()->beginInsertRows(QModelIndex(),m_rows->value().size(),m_rows->value().size());
@@ -683,6 +686,9 @@ void Table<RowType>::insertRow(Row *row)
     {
 	childRow->table()->insertRow(childRow);
     }
+
+    //ID setzen nachdem (!) alle childrows geinserted sind!
+    row->setId(id);
 
     //Dem Modell (einmal zu viel?) mitteilen, dass es Änderungen gab
     m_model->updateData();

@@ -25,18 +25,6 @@ QList<ChildCategorie*> ParentCategorie::calculate_childCategories()
         }
     }
     return list;
-    /*
-    while(select.next())
-    {
-	ChildCategorie *cc = qobject_cast<ChildCategorie*>(m_categories->categorieById(select.value(0).toInt()).data());
-	if(cc != 0)
-	{
-	    list.append(cc);
-	}
-    }
-    select.finish();
-    return list;
-    */
 }
 
 END_ROW_IMPLEMENTATION()

@@ -9,12 +9,12 @@
 START_ROW_DECLARATION(Rule, Row)
     DECLARE_ROW_CONSTRUCTORS(Rule, Rule)
 
-//    enum RuleType {
-//        RuleConjunctionType,
-//        RuleDisjunctionType,
-//        AtomicRuleType,
-//        EnoughLeaguePlayersRuleType
-//    };
+    enum RuleType {
+        RuleConjunctionType,
+        RuleDisjunctionType,
+        AtomicRuleType,
+        EnoughLeaguePlayersRuleType
+    };
 
     virtual bool appliesTo(Row* row);
 
@@ -42,7 +42,7 @@ QList<Type*> Database::Rule::getAll()
 }
 
 START_TABLE_DECLARATION(Rule)
-//    QPointer<Rule> createRowInstance(int id);
+    QPointer<Rule> createRowInstance(int id);
 END_TABLE_DECLARATION()
 
 #endif // RULE_H

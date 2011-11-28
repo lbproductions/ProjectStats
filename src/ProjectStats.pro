@@ -187,7 +187,7 @@ SOURCES += main.cpp\
     Server/stdsoap2.cpp \
     Server/server.cpp \
     Gui/Misc/sheet.cpp \
-    Misc/Updater/winsparkleupdater.cpp
+    Database/Categories/smartfoldercategorie.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -236,7 +236,6 @@ HEADERS  += \
     Misc/messagesystem.h \
     Database/listattribute.h \
     Misc/Updater/Updater.h \
-    Misc/Updater/sparkleupdater.h \
     Misc/global.h \
     Database/Calculator/roundcalculator.h \
     Database/Calculator/offlinegamecalculator.h \
@@ -390,7 +389,7 @@ HEADERS  += \
     Server/server.h \
     Server/stdsoap2.h \
     Gui/Misc/sheet.h \
-    Misc/Updater/winsparkleupdater.h
+    Database/Categories/smartfoldercategorie.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -436,6 +435,7 @@ mac {
 
     INCLUDEPATH += ../frameworks/Sparkle.framework/Headers
 
+    HEADERS += Misc/Updater/sparkleupdater.h
     OTHER_FILES += Misc/Updater/sparkleupdater.mm
 
     PRIVATE_FRAMEWORKS.files = ../frameworks/Sparkle.framework
@@ -447,6 +447,10 @@ win32 {
     LIBS += -lws2_32 \
             -L../frameworks/WinSparkle-0.3 \
             -lWinSparkle
+
+
+    SOURCES += Misc/Updater/winsparkleupdater.cpp
+    HEADERS += Misc/Updater/winsparkleupdater.h
 }
 
 RESOURCES += Ressources/Ressources.qrc \

@@ -5,7 +5,33 @@
 #include <Database/player.h>
 #include <Database/game.h>
 
-START_ROW_IMPLEMENTATION(EnoughLeaguePlayersRule, Rule, RuleConnective)
+namespace Database {
+
+REGISTER_ASROWTYPE( EnoughLeaguePlayersRule, Rule )
+
+EnoughLeaguePlayersRule::EnoughLeaguePlayersRule() :
+    RuleConnective(0,Rules::instance())
+{
+    initializeAttributes();
+
+    type->setValue(Rule::EnoughLeaguePlayersRuleType);
+
+    m_table->insertRow(this);
+}
+
+EnoughLeaguePlayersRule::EnoughLeaguePlayersRule(const EnoughLeaguePlayersRule &other) :
+    RuleConnective(other.m_id, other.m_table)
+{
+    initializeAttributes();
+}
+
+EnoughLeaguePlayersRule::EnoughLeaguePlayersRule(int id, TableBase *table) :
+    RuleConnective(id,table)
+{
+    initializeAttributes();
+}
+
+void EnoughLeaguePlayersRule::initializeAttributes()
 {
 }
 

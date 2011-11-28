@@ -24,17 +24,21 @@ START_ROW_DECLARATION(ChildCategorie, Categorie)
       Gibt an, welchen Typ diese Kategorie hat.
       */
     enum CategorieContentType {
-	GamesCategorieContentType, //!< Die Kategorie enthält Spiele
-	PlayersCategorieContentType, //!< Die Kategorie enthält Spieler
-	DrinksCategorieContentType, //!< Die Kategorie enthält Drinks
+        GamesCategorieContentType, //!< Die Kategorie enthält Spiele
+        PlayersCategorieContentType, //!< Die Kategorie enthält Spieler
+        DrinksCategorieContentType, //!< Die Kategorie enthält Drinks
         PlacesCategorieContentType, //!< Die Kategorie enthält Places
-        LeagueCategorieContentType //!< Die Kategorie enthält Places
+        LeagueCategorieContentType, //!< Die Kategorie enthält Places
+        SmartFolderCategorieContentType
     };
 
     /*!
       \return Der Vater dieser Kategorie, sprich die Überschrift unter der sie in der Sidebar eingefügt ist.
       */
     DECLARE_ATTRIBUTE(QPointer<ParentCategorie>,ChildCategorie,parentCategorie)
+    DECLARE_DATABASEATTRIBUTE(QString,Categorie,icon)
+    DECLARE_DATABASEATTRIBUTE(int,Categorie,parentId)
+    DECLARE_DATABASEATTRIBUTE(int,Categorie,contentType)
 
     /*!
       \return Das TableModel, welches alle Elemente, die in dieser Kategorie enhalten sind, beschreibt.

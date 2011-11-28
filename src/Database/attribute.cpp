@@ -62,7 +62,7 @@ int AttributeBase::role() const
 
 void AttributeBase::changeValue(int value)
 {
-    changeValue(QVariant(value));
+    changeValue(QVariant(value), true, false);
 }
 
 void AttributeBase::setRole(int role)
@@ -85,7 +85,7 @@ bool AttributeBase::isDatabaseAttribute() const
     return false;
 }
 
-void AttributeBase::changeValue(QVariant value, bool /*updateDatabase*/)
+void AttributeBase::changeValue(QVariant value, bool /*updateDatabase*/, bool /*threaded*/)
 {
     changeValue(value);
 }

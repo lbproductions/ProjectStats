@@ -12,10 +12,34 @@
 
 using namespace Database;
 
-PlayersFolderCategorie::PlayersFolderCategorie(int id, Categories *table) :
+PlayersFolderCategorie::PlayersFolderCategorie() :
+    FolderCategorie(0,Categories::instance())
+{
+    initializeAttributes();
+
+    this->contentType->setValue(ChildCategorie::PlayersCategorieContentType);
+}
+
+PlayersFolderCategorie::PlayersFolderCategorie(const PlayersFolderCategorie &other) :
+    FolderCategorie(other.m_id, other.m_table)
+{
+    initializeAttributes();
+}
+
+PlayersFolderCategorie::PlayersFolderCategorie(int id, TableBase *table) :
     FolderCategorie(id,table)
 {
+    initializeAttributes();
+}
+
+void PlayersFolderCategorie::initializeAttributes()
+{
     IMPLEMENT_LISTATTRIBUTE(Player*,PlayersFolderCategorie,players,tr("Players"))
+}
+
+QString PlayersFolderCategorie::mimeType() const
+{
+    return FolderCategorie::mimeType();
 }
 
 QIcon PlayersFolderCategorie::icon() const
@@ -72,4 +96,9 @@ void PlayersFolderCategorie::dropMimeData(const QMimeData *data)
 	    insertRow(p);
 	}
     }
+}
+
+void PlayersFolderCategorie::addPlayer(Player *player)
+{
+    insertRow(player);
 }

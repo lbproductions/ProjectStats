@@ -37,7 +37,7 @@ void FolderCategorie::insertRow(Row *row)
 
     for(int i = 0; i<CategorieAssignments::instance()->allRows().size();i++){
         CategorieAssignment* as = CategorieAssignments::instance()->allRows().at(i);
-        if(as->categorieId->value() == m_id || as->elementId->value() == row->id()){
+        if(as->categorieId->value() == m_id && as->elementId->value() == row->id()){
             return;
         }
     }
