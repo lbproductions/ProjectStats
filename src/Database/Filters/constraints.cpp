@@ -9,9 +9,9 @@ bool Constraints::appliesTo(const QVariant &value, Database::Constraints::Constr
     switch(constraint)
     {
     case DateIsBefore:
-        return value.toDate() < parameter.toDate();
+        return value.toDateTime() < QDateTime::fromString(parameter.toString(),"dd.MM.yyyy");
     case DateIsAfter:
-        return value.toDate() > parameter.toDate();
+        return value.toDateTime() > QDateTime::fromString(parameter.toString(),"dd.MM.yyyy");
     case DateIsEqual:
         return value.toDate() == parameter.toDate();
     case StringIsEqual:

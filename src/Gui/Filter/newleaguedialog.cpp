@@ -24,8 +24,8 @@ NewLeagueDialog::NewLeagueDialog(QWidget *parent) :
         ui->listWidgetAllPlayers->addItem(p->name->value());
     }
 
-    ui->dateEditFrom->setDate(QDate(1970,1,1));
-    ui->dateEditTo->setDate(QDate::currentDate());
+    ui->dateEditFrom->setDate(QDate(QDate::currentDate().year(),1,1));
+    ui->dateEditTo->setDate(QDate(QDate::currentDate().year()+1,1,1));
 }
 
 NewLeagueDialog::~NewLeagueDialog()
@@ -35,13 +35,16 @@ NewLeagueDialog::~NewLeagueDialog()
 
 void NewLeagueDialog::on_pushButtonOkay_clicked()
 {
-    QPointer<Database::LeagueFolderCategorie> league = new Database::LeagueFolderCategorie();
-    league->name->setValue(ui->lineEditName->text());
+    QPointer<Database::LeagueFolderCategorie> league = new Database::LeagueFolderCategorie(ui->lineEditName->text());
+
+    league->setEndDate(ui->dateEditTo->date());
+    league->setStartDate(ui->dateEditFrom->date());
 
     for (int i = 0; i<ui->listWidgetLeaguePlayers->count();i++)
     {
         league->addPlayer(Database::Players::instance()->playerByName(ui->listWidgetLeaguePlayers->item(i)->text()));
     }
+
 
     this->accept();
 }

@@ -7,6 +7,7 @@
 namespace Database
 {
 
+class LeagueFolderCategorie;
 class Categories;
 
 class SmartFolderCategorie : public ChildCategorie
@@ -14,6 +15,7 @@ class SmartFolderCategorie : public ChildCategorie
     Q_OBJECT
 public:
     SmartFolderCategorie();
+    SmartFolderCategorie(LeagueFolderCategorie* );
 
     QIcon icon() const;
 

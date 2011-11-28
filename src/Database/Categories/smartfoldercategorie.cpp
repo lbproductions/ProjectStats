@@ -1,5 +1,7 @@
 #include "smartfoldercategorie.h"
 
+#include "leaguefoldercategorie.h"
+
 #include <Database/categorieassignment.h>
 #include <Database/Filters/rule.h>
 #include <Gui/MainWindow/Views/ListView/listview.h>
@@ -18,6 +20,12 @@ void SmartFolderCategorie::initializeAttributes()
 }
 
 SmartFolderCategorie::SmartFolderCategorie() :
+    ChildCategorie(0, Categories::instance())
+{
+    initializeAttributes();
+}
+
+SmartFolderCategorie::SmartFolderCategorie(LeagueFolderCategorie* /*parent*/) :
     ChildCategorie(0, Categories::instance())
 {
     initializeAttributes();

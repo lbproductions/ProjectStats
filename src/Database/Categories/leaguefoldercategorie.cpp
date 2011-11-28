@@ -4,7 +4,7 @@
 #include "playersfoldercategorie.h"
 #include "gamesfoldercategorie.h"
 
-#include <Database/Filters/enoughleagueplayersrule.h>
+#include <Database/Filters/leaguerule.h>
 #include <Gui/MainWindow/Views/LeagueView/leagueview.h>
 #include <Database/categorie.h>
 
@@ -21,20 +21,27 @@ LeagueFolderCategorie::LeagueFolderCategorie() :
     FolderCategorie(0,Categories::instance())
 {
     initializeAttributes();
+}
+
+LeagueFolderCategorie::LeagueFolderCategorie(const QString& name) :
+    FolderCategorie(0,Categories::instance())
+{
+    initializeAttributes();
 
     type->setValue(Categorie::FolderCategorieType);
     contentType->setValue(ChildCategorie::LeagueCategorieContentType);
     parentId->setValue(6);
+    this->name->setValue(name);
 
     m_table->insertRow(this);
 
-    SmartFolderCategorie* gamesFolder = new SmartFolderCategorie();
+    SmartFolderCategorie* gamesFolder = new SmartFolderCategorie(this);
     gamesFolder->parentId->setValue(m_id);
     gamesFolder->contentType->setValue(ChildCategorie::GamesCategorieContentType);
     addChildRow(gamesFolder);
-    gamesFolder->setFilter(new EnoughLeaguePlayersRule());
+    gamesFolder->setFilter(new LeagueRule(this));
 
-    PlayersFolderCategorie* playersFolder = new PlayersFolderCategorie();
+    PlayersFolderCategorie* playersFolder = new PlayersFolderCategorie(this);
     playersFolder->parentId->setValue(m_id);
     addChildRow(playersFolder);
 }
@@ -115,7 +122,17 @@ void LeagueFolderCategorie::addPlayer(Player* player)
 {
     playersFolder->value()->addPlayer(player);
 
-    static_cast<EnoughLeaguePlayersRule*>(gamesFolder->value()->filter->value())->addPlayer(player);
+    static_cast<LeagueRule*>(gamesFolder->value()->filter->value())->addPlayer(player);
+}
+
+void LeagueFolderCategorie::setStartDate(const QDate& date)
+{
+    static_cast<LeagueRule*>(gamesFolder->value()->filter->value())->setStartDate(date);
+}
+
+void LeagueFolderCategorie::setEndDate(const QDate &date)
+{
+    static_cast<LeagueRule*>(gamesFolder->value()->filter->value())->setEndDate(date);
 }
 
 Models::TableModelBase* LeagueFolderCategorie::gamesModel()

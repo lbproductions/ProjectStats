@@ -222,6 +222,10 @@ int TableModel<RowType, Owner>::columnCount(const QModelIndex &parent) const
 template<class RowType, class Owner>
 Database::AttributeBase* TableModel<RowType, Owner>::attributeAt(const QModelIndex& index) const
 {
+    if(!index.isValid())
+    {
+        return 0;
+    }
     RowType *row = m_data.at(index.row());
     if(row == 0)
     {

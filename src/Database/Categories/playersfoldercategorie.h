@@ -6,10 +6,13 @@
 namespace Database
 {
 class Player;
+class LeagueFolderCategorie;
 }
 
 START_ROW_DECLARATION(PlayersFolderCategorie, FolderCategorie)
     DECLARE_ROW_CONSTRUCTORS(PlayersFolderCategorie, FolderCategorie)
+
+    PlayersFolderCategorie(LeagueFolderCategorie* parent);
 
     DECLARE_LISTATTRIBUTE(Player*,PlayersFolderCategorie,players)
 

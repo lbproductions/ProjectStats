@@ -21,11 +21,15 @@ CategoriesModel::CategoriesModel(Database::Categories *categories) :
 
     foreach(Database::ParentCategorie *p, m_categories->parentCategories())
     {
-	QStandardItem *parentItem = createParentItem(p);
+        QStandardItem *parentItem = createParentItem(p);
         if(p->name->value() == "My Folders")
-	{
-	    m_folderParentItem = parentItem;
-	}
+        {
+            m_folderParentItem = parentItem;
+        }
+        else if(p->name->value() == "Leagues")
+        {
+            m_leaguesParentItem = parentItem;
+        }
 
 	rootItem->appendRow(parentItem);
 
@@ -37,22 +41,30 @@ CategoriesModel::CategoriesModel(Database::Categories *categories) :
 
     }
 
-    connect(m_categories,SIGNAL(folderCreated(::Database::FolderCategorie*)),this,SLOT(on_folderCreated(::Database::FolderCategorie*)));
+    connect(m_categories,SIGNAL(rowInserted(::Database::Row*)),this,SLOT(on_folderCreated(::Database::Row*)));
 }
 
-void CategoriesModel::on_folderCreated(::Database::FolderCategorie* folder)
+void CategoriesModel::on_folderCreated(::Database::Row* row)
 {
+    Database::FolderCategorie* folder = static_cast<Database::FolderCategorie*>(row);
     if(folder == 0)
     {
-	return;
+        return;
     }
 
     QStandardItem *newFolder = createChildItem(folder);
     folder->setStandardItem(newFolder);
 
-    m_folderParentItem->appendRow(newFolder);
-
-    emit folderItemAdded(folder, newFolder);
+    if(folder->contentType->value() == Database::ChildCategorie::LeagueCategorieContentType)
+    {
+        m_leaguesParentItem->appendRow(newFolder);
+        emit folderItemAdded(folder, newFolder);
+    }
+    else if(folder->parentId->value() == 5)
+    {
+        m_folderParentItem->appendRow(newFolder);
+        emit folderItemAdded(folder, newFolder);
+    }
 }
 
 QStandardItem *CategoriesModel::createParentItem(Database::ParentCategorie *p)

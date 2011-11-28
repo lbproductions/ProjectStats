@@ -13,7 +13,8 @@ START_ROW_DECLARATION(Rule, Row)
         RuleConjunctionType,
         RuleDisjunctionType,
         AtomicRuleType,
-        EnoughLeaguePlayersRuleType
+        EnoughLeaguePlayersRuleType,
+        LeagueRuleType
     };
 
     virtual bool appliesTo(Row* row);

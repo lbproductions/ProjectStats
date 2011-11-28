@@ -115,7 +115,7 @@ void RowList::on_customContextMenuRequested(const QPoint &pos)
 {
     QModelIndex index = m_proxyModel->mapToSource(indexAt(pos));
     Database::AttributeBase* attribute = m_model->attributeAt(index);
-    if(!attribute->isDatabaseAttribute())
+    if(!attribute || !attribute->isDatabaseAttribute())
     {
         return;
     }

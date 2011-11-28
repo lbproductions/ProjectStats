@@ -31,11 +31,12 @@ signals:
     void folderItemAdded(::Database::FolderCategorie*, QStandardItem*);
 
 private slots:
-    void on_folderCreated(::Database::FolderCategorie*);
+    void on_folderCreated(::Database::Row * row);
 
 private:
     QPointer<Database::Categories> m_categories;
     QStandardItem *m_folderParentItem;
+    QStandardItem *m_leaguesParentItem;
 
     QStandardItem *createParentItem(Database::ParentCategorie *categorie);
     QStandardItem *createChildItem(Database::ChildCategorie *categorie);

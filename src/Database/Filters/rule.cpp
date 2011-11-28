@@ -4,6 +4,7 @@
 #include "ruledisjunction.h"
 #include "atomicrule.h"
 #include "enoughleagueplayersrule.h"
+#include "leaguerule.h"
 
 START_TABLE_IMPLEMENTATION(Rule)
 QPointer<Rule> Rules::createRowInstance(int id)
@@ -24,6 +25,9 @@ QPointer<Rule> Rules::createRowInstance(int id)
         break;
     case Rule::EnoughLeaguePlayersRuleType:
         row2 = new EnoughLeaguePlayersRule(id,this);
+        break;
+    case Rule::LeagueRuleType:
+        row2 = new LeagueRule(id,this);
         break;
     default:
         break;

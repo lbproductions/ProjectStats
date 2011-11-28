@@ -103,11 +103,15 @@ SidebarTreeView::SidebarTreeView(Sidebar *parent) :
     //connect(Handler::getInstance()->database()->categories(),SIGNAL(rowCreated(::Database::Row*)),this,SLOT(resetModel()));
 }
 
-void SidebarTreeView::on_folderItemAdded(::Database::FolderCategorie*,QStandardItem* item)
+void SidebarTreeView::on_folderItemAdded(::Database::FolderCategorie* folder,QStandardItem* item)
 {
-    selectionModel()->reset();
-    selectionModel()->setCurrentIndex(item->index(),QItemSelectionModel::Select);
-    this->edit(item->index());
+
+    if(folder->contentType->value() != Database::ChildCategorie::LeagueCategorieContentType) {
+        selectionModel()->reset();
+        this->edit(item->index());
+        selectionModel()->setCurrentIndex(item->index(),QItemSelectionModel::Select);
+        on_clicked(item->index());
+    }
 }
 
 void SidebarTreeView::on_clicked(const QModelIndex &index)

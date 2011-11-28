@@ -20,6 +20,8 @@ class PlayersFolderCategorie;
 START_ROW_DECLARATION(LeagueFolderCategorie, FolderCategorie)
     DECLARE_ROW_CONSTRUCTORS(LeagueFolderCategorie, FolderCategorie)
 
+    LeagueFolderCategorie(const QString& name);
+
     QIcon icon() const;
 
     Gui::MainWindow::Views::View *view();
@@ -28,6 +30,8 @@ START_ROW_DECLARATION(LeagueFolderCategorie, FolderCategorie)
     Models::TableModelBase* playersModel();
 
     void addPlayer(Player* player);
+    void setStartDate(const QDate& date);
+    void setEndDate(const QDate &date);
 
 private:
     DECLARE_ATTRIBUTE(PlayersFolderCategorie*, LeagueFolderCategorie, playersFolder)

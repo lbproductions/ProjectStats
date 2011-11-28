@@ -57,7 +57,7 @@ private slots:
       */
     void on_clicked(const QModelIndex&);
 
-    void on_folderItemAdded(::Database::FolderCategorie*,QStandardItem* item);
+    void on_folderItemAdded(::Database::FolderCategorie* folder,QStandardItem* item);
 
 private:
     QModelIndex m_currentIndex; //!< Verwaltet den aktuell ausgewählten Index.

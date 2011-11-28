@@ -3,6 +3,7 @@
 #include "../table.h"
 #include "../database.h"
 #include "../player.h"
+#include "leaguefoldercategorie.h"
 
 #include <Models/tablemodel.h>
 #include <Gui/MainWindow/Views/ListView/listview.h>
@@ -13,6 +14,12 @@
 using namespace Database;
 
 PlayersFolderCategorie::PlayersFolderCategorie() :
+    FolderCategorie(0,Categories::instance())
+{
+    initializeAttributes();
+}
+
+PlayersFolderCategorie::PlayersFolderCategorie(LeagueFolderCategorie* /*parent*/) :
     FolderCategorie(0,Categories::instance())
 {
     initializeAttributes();
