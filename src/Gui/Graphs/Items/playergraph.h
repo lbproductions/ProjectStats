@@ -16,7 +16,7 @@ public:
 private:
     QList<Database::Doppelkopf::DokoRound> roundlist;
 
-    QPointer<Database::Player> m_player;
+    Database::Player> m_player;
 };
 
 #endif // PLAYERGRAPH_H

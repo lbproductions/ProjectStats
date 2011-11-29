@@ -2,7 +2,6 @@
 #define DATABASE_GAMECALCULATOR_H
 
 #include <QObject>
-#include <QPointer>
 #include <QTime>
 
 #include <Database/round.h>
@@ -45,7 +44,7 @@ signals:
 public slots:
 
 protected:
-    QPointer<Game> m_game;
+    Game* m_game;
 
 };
 

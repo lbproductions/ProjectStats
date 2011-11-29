@@ -52,7 +52,7 @@ public:
 private:
     Ui::OfflineGameResultWidget *ui;
 
-    QPointer<Gui::Misc::PlacesComboBox> m_placesComboBox;
+    Gui::Misc::PlacesComboBox* m_placesComboBox;
 };
 
 }

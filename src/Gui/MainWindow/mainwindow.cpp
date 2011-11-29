@@ -56,9 +56,9 @@ MainWindow::~MainWindow()
 {
     saveSettings();
 
-    if(!m_menubar.isNull())
+    if(m_menubar)
     {
-	m_menubar->deleteLater();
+        m_menubar->deleteLater();
     }
 }
 

@@ -71,7 +71,7 @@ START_ROW_DECLARATION(Player, Row)
 
 private:
 
-    QPointer<DokoPlayerStats> m_dokoStats;
+    DokoPlayerStats* m_dokoStats;
 
 
 END_ROW_DECLARATION(Player)

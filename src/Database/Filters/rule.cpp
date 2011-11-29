@@ -7,7 +7,7 @@
 #include "leaguerule.h"
 
 START_TABLE_IMPLEMENTATION(Rule)
-QPointer<Rule> Rules::createRowInstance(int id)
+Rule* Rules::createRowInstance(int id)
 {
     Rule *row = new Rule(id,this);
     Rule *row2 = 0;

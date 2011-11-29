@@ -15,7 +15,7 @@
 #include "Categories/smartfoldercategorie.h"
 
 START_TABLE_IMPLEMENTATION(Categorie)
-QPointer<Categorie> Categories::createRowInstance(int id)
+Categorie* Categories::createRowInstance(int id)
 {
     int categorieId = id;
     Categorie* c = new Categorie(categorieId, this);
@@ -82,11 +82,11 @@ QPointer<Categorie> Categories::createRowInstance(int id)
     return c;
 }
 
-QList<QPointer<ParentCategorie> > Categories::parentCategories()
+QList<ParentCategorie* > Categories::parentCategories()
 {
     QList<Categorie*> clist = Categories::instance()->rowsBySqlCondition("WHERE parentId = -1 ORDER BY orderIndicator ASC");
 
-    QList<QPointer<ParentCategorie> > list;
+    QList<ParentCategorie* > list;
     foreach(Categorie* c, clist)
     {
         list.append(static_cast<ParentCategorie*>(c));

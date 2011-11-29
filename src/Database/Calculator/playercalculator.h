@@ -1,8 +1,8 @@
 #ifndef DATABASE_PLAYERCALCULATOR_H
 #define DATABASE_PLAYERCALCULATOR_H
 
-#include <QPointer>
 #include <Database/attribute.h>
+
 class QDateTime;
 
 namespace Gui{
@@ -22,7 +22,7 @@ class PlayerCalculator : public QObject
 {
     Q_OBJECT
 public:
-    PlayerCalculator(QPointer<Player> player, QObject *parent = 0);
+    PlayerCalculator(Player *player, QObject *parent = 0);
 
     QList<Game*> calculate_games();
 
@@ -62,7 +62,7 @@ public:
 
 private:
 
-    QPointer<Player> m_player;
+    Player* m_player;
 };
 
 } // namespace Database

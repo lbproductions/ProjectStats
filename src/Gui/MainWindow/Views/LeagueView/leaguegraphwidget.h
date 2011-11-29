@@ -42,13 +42,13 @@ public slots:
     void graphClicked(QTreeWidgetItem* item);
 
 private:
-    QPointer<QTreeWidget> m_treeWidget;
-    QPointer<Gui::Misc::Splitter> m_splitter;
+    QTreeWidget* m_treeWidget;
+    Gui::Misc::Splitter* m_splitter;
 
-    QPointer<QScrollArea> m_scrollAreaDetails;
-    QPointer<Gui::Graphs::GraphView> m_graphview;
+    QScrollArea* m_scrollAreaDetails;
+    Gui::Graphs::GraphView* m_graphview;
 
-    QPointer<Database::LeagueFolderCategorie> m_categorie;
+    Database::LeagueFolderCategorie* m_categorie;
 
 
 };

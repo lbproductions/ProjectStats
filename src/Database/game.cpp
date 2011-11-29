@@ -34,7 +34,7 @@ Games::Games() :
 }
 REGISTER_TABLE(Games)
 
-QPointer<Game> Games::createRowInstance(int id)
+Game* Games::createRowInstance(int id)
 {
     Game *row = new Game(id,this);
     Game *row2 = 0;
@@ -118,7 +118,7 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
     IMPLEMENT_DATABASEATTRIBUTE(QString,Game,comment,tr("Comment"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Game,siteId,tr("SiteId"))
 
-    IMPLEMENT_ATTRIBUTE(QPointer<Place>,Game,site,tr("Site"))
+    IMPLEMENT_ATTRIBUTE(Place*,Game,site,tr("Site"))
     siteId->addDependingAttribute(site);
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,m_calc,players,tr("Players"))
@@ -158,10 +158,9 @@ QString Game::mimeType() const
     return "application/projectstats.game";
 }
 
-QPointer<Place> Game::calculate_site()
+Place* Game::calculate_site()
 {
-    QPointer<Place> pointer = Places::instance()->rowById(siteId->value());
-    return pointer;
+    return Places::instance()->rowById(siteId->value());
 }
 
 Gui::Details::SummaryWidget* Game::summaryWidget(){

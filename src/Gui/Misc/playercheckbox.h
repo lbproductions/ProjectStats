@@ -20,9 +20,9 @@ class PlayerCheckBox : public CheckBox
 public:
     PlayerCheckBox(Database::Player* player, QWidget *parent = 0);
 
-    QPointer<Database::Player> player();
+    Database::Player* player();
 private:
-    QPointer<Database::Player> m_player;
+    Database::Player* m_player;
 };
 
 }}

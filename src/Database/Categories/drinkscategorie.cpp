@@ -23,7 +23,7 @@ Models::TableModelBase *DrinksCategorie::model()
 
 Gui::MainWindow::Views::View *DrinksCategorie::view()
 {
-    if(m_view.isNull())
+    if(!m_view)
     {
         m_view = new Gui::MainWindow::Views::ListView(this);
         m_view->setWindowTitle("Drinks");

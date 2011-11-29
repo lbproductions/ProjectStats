@@ -1,6 +1,7 @@
 #include "skatlivegamecalculator.h"
 
 #include <Database/Skat/skatlivegame.h>
+#include <Database/point.h>
 
 namespace Database {
 
@@ -40,7 +41,7 @@ QMap<int,QMap<Player*,int> > SkatLiveGameCalculator::calculate_placementAfterRou
     foreach(Round* r, m_livegame->rounds->value()){
         if(r->state->value() == Round::FinishedState){
             foreach(Player* p, m_livegame->players->value()){
-                points.insert(p,points.value(p)+r->points->value(p));
+                points.insert(p,points.value(p)+r->points->value(p)->points->value());
             }
             QMap<Player*,int> placement;
             foreach(Player* p, m_livegame->players->value()){

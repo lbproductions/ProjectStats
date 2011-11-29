@@ -161,7 +161,7 @@ Gui::Details::AbstractPlayerStatsWidget* Player::typeStatsWidget(QString type){
 }
 
 DokoPlayerStats* Player::dokoStats(){
-    if(m_dokoStats.isNull()){
+    if(!m_dokoStats){
         m_dokoStats = new DokoPlayerStats(this);
     }
     return m_dokoStats;

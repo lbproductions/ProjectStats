@@ -51,10 +51,10 @@ RowList::~RowList()
 
 void RowList::setModel(Models::TableModelBase *model)
 {
-    if(m_proxyModel.isNull())
+    if(!m_proxyModel)
     {
-	m_proxyModel = new QSortFilterProxyModel(this);
-	QTreeView::setModel(m_proxyModel);
+        m_proxyModel = new QSortFilterProxyModel(this);
+        QTreeView::setModel(m_proxyModel);
     }
     m_proxyModel->setSourceModel(model);
     m_model = model;

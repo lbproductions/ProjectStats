@@ -16,14 +16,14 @@ using namespace Gui::Details::LiveGameDetails::DokoLiveGameDetails;
 NewDoppelkopfRoundWidget::NewDoppelkopfRoundWidget(Database::DokoLiveGame* game, QWidget *parent) :
     QDialog(parent),
     m_dokoLiveGame(game),
+    m_soloType(""),
+    m_reCount(0),
     m_re1Player(0),
     m_re2Player(0),
     m_hochzeitPlayer(0),
-    m_soloPlayer(0),
     m_trumpfabgabePlayer(0),
     m_schweinereiPlayer(0),
-    m_soloType(""),
-    m_reCount(0)
+    m_soloPlayer(0)
 {
     QPalette p(this->palette());
     p.setColor(QPalette::Background, QColor(55,55,55));

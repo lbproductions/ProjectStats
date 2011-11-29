@@ -8,7 +8,8 @@
 using namespace Gui::Graphs;
 
 LiveGameGraphView::LiveGameGraphView(QWidget *parent) :
-    GraphView(parent)
+    GraphView(parent),
+    m_liveGameCoordinateSystem(0)
 {
 }
 
@@ -19,10 +20,10 @@ void LiveGameGraphView::setupView(Database::LiveGame *liveGame){
 
 void LiveGameGraphView::setLiveGame(Database::LiveGame *liveGame)
 {
-    if(!m_liveGameCoordinateSystem.isNull())
+    if(m_liveGameCoordinateSystem)
     {
-	scene()->removeItem(m_liveGameCoordinateSystem);
-	m_liveGameCoordinateSystem->deleteLater();
+        scene()->removeItem(m_liveGameCoordinateSystem);
+        m_liveGameCoordinateSystem->deleteLater();
     }
 
     m_liveGameCoordinateSystem = new Items::LiveGameCoordinateSystem(liveGame);

@@ -27,9 +27,9 @@ QVariant AttributeVariant::displayVariant() const
     {
         variant.setValue(QString("%L1").arg(this->toDouble(),0,'f',2));
     }
-    else if(QString(this->typeName()) == "QPointer<Database::Player>"){
-        QPointer<Database::Player> player = this->value<QPointer<Database::Player> >();
-        if (!player.isNull()){
+    else if(QString(this->typeName()) == "Database::Player>"){
+        Database::Player* player = this->value<Database::Player* >();
+        if(player){
             variant.setValue(player->name->value());
         }
     }
@@ -47,16 +47,16 @@ QVariant AttributeVariant::displayVariant() const
         }
     }
     */
-    else if(QString(this->typeName()) == "QPointer<Database::Place>"){
-        QPointer<Database::Place> place = this->value<QPointer<Database::Place> >();
-        if (!place.isNull()){
+    else if(QString(this->typeName()) == "Database::Place>"){
+        Database::Place* place = this->value<Database::Place* >();
+        if (place){
             variant.setValue(place->displayString->value());
         }
     }
 
-    else if(QString(this->typeName()) == "QPointer<Database::Game>"){
-        QPointer<Database::Game> game = this->value<QPointer<Database::Game> >();
-        if (!game.isNull()){
+    else if(QString(this->typeName()) == "Database::Game>"){
+        Database::Game* game = this->value<Database::Game* >();
+        if (game){
             variant.setValue(game->name->value());
         }
     }
@@ -316,9 +316,9 @@ QVariant AttributeVariant::displayVariant() const
         QMap<QPair<Database::Player*,Database::Player*>,int> hash = this->value<QMap<QPair<Database::Player*,Database::Player*>,int> >();
         for(int i = 0; i< hash.keys().size();i++){
             QPair<Database::Player*,Database::Player*> pair = hash.keys().at(i);
-            QPointer<Database::Player> p1 = pair.first;
-            QPointer<Database::Player> p2 = pair.second;
-            string += pair.first->name->value() + "-" + pair.second->name->value() + ":" + QString::number(hash.value(pair)) + " ,";
+            Database::Player* p1 = pair.first;
+            Database::Player* p2 = pair.second;
+            string += p1->name->value() + "-" + p2->name->value() + ":" + QString::number(hash.value(pair)) + " ,";
 
         }
         variant.setValue(string);

@@ -32,7 +32,7 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_DATABASEATTRIBUTE(QString,Game,comment)
     DECLARE_DATABASEATTRIBUTE(int,Game,siteId)
 
-    DECLARE_ATTRIBUTE(QPointer<Place>,Game,site)
+    DECLARE_ATTRIBUTE(Place*,Game,site)
     DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(Round::RoundState,Game,GameCalculator,state)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Player*,Game,GameCalculator,players)
@@ -55,7 +55,7 @@ END_ROW_DECLARATION(Game)
 
 START_TABLE_DECLARATION(Game)
 
-    QPointer<Game> createRowInstance(int id);
+    Game* createRowInstance(int id);
 
     QStringList possibleTypes() const;
 
@@ -69,7 +69,5 @@ START_TABLE_DECLARATION(Game)
     QMap<QString,QList<Game*> > calculate_gamesOfType();
 
 END_TABLE_DECLARATION()
-
-Q_DECLARE_METATYPE(QPointer<Database::Place>)
 
 #endif // DATABASE_GAME_H

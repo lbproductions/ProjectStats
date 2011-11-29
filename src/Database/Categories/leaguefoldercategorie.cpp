@@ -83,7 +83,7 @@ QIcon LeagueFolderCategorie::icon() const
 
 Gui::MainWindow::Views::View *LeagueFolderCategorie::view()
 {
-    if(m_view.isNull())
+    if(!m_view)
     {
         m_view = new Gui::MainWindow::Views::LeagueView(this);
         m_view->setWindowTitle(QString::fromUtf8("League \u2013 ")+name->value());
@@ -183,7 +183,7 @@ Models::TableModelBase* LeagueFolderCategorie::playersModel()
 //    /*
 //    if (m_games.size() > 0){
 //        m_currentMatchday--;
-//        QPointer<Game> game = m_games.takeLast();
+//        Game> game = m_games.takeLast();
 //        m_gamesstack.push(game);
 //        m_gamesmodel->updateCache(game);
 //        m_gamesmodel->update();
@@ -197,7 +197,7 @@ Models::TableModelBase* LeagueFolderCategorie::playersModel()
 //    /*
 //    if (m_gamesstack.size() >0){
 //        m_currentMatchday++;
-//        QPointer<Game> game = m_gamesstack.pop();
+//        Game> game = m_gamesstack.pop();
 //        m_games.append(game);
 //        m_gamesmodel->updateCache(game);
 //        m_gamesmodel->update();

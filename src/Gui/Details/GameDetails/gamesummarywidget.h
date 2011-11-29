@@ -42,7 +42,7 @@ namespace Gui
                     void mainSetup();
 
                     Ui::GameSummaryWidget *ui;
-                    QPointer<Database::Game> m_game;
+                    Database::Game* m_game;
                     Gui::Details::GameDetailsWidget* m_widget;
                     QList<QLabel *> m_labelList;
 

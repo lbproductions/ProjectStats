@@ -50,7 +50,7 @@ protected slots:
     void resizeEvent(QResizeEvent *event);
 
 protected:
-    QPointer<Database::LiveGame> m_livegame;
+    Database::LiveGame* m_livegame;
 
     void fillWidget();
 };

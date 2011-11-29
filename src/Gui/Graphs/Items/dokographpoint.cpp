@@ -6,6 +6,7 @@
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/player.h>
 #include <Database/Doppelkopf/schmeisserei.h>
+#include <Database/point.h>
 
 #include <QPainter>
 
@@ -17,11 +18,16 @@ DokoGraphPoint::DokoGraphPoint(QPoint point, DokoLiveGamePlayerPointsGraph* grap
     m_radius = 7;
     m_dokoround = r;
     m_player = graph->player();
+    int points = 0;
+    Database::Point* p = r->points->value(m_player);
+    if(p) {
+        points = p->points->value();
+    }
 
     QString tooltip = "<h1>"+m_player->name->value()+"</h1>"+
             "<span style=\"font-size: 18pt;\">"+tr("Round")+" "+QString::number(r->number->value()+1)+"<br></span>"
             "<span style=\"font-size: 22pt;\">"
-            "<b>"+tr("Points")+":</b> "+QString::number(r->points->value(m_player))+"<br>"+
+            "<b>"+tr("Points")+":</b> "+QString::number(points)+"<br>"+
             "<b>"+tr("Total")+":</b> "+QString::number(point.y())+"<br>"+
             "<br>";
     if (m_dokoround->doko_hochzeitPlayerId->value() == m_player->id()){

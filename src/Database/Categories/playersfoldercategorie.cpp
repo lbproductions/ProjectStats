@@ -72,11 +72,11 @@ Models::TableModelBase *PlayersFolderCategorie::model()
 
 Gui::MainWindow::Views::View *PlayersFolderCategorie::view()
 {
-    if(m_view.isNull())
+    if(!m_view)
     {
-	m_view = new Gui::MainWindow::Views::ListView(this);
+        m_view = new Gui::MainWindow::Views::ListView(this);
         m_view->setWindowTitle(QString::fromUtf8("Players \u2013 ")+name->value());
-	m_view->setWindowIcon(icon());
+        m_view->setWindowIcon(icon());
     }
 
     return m_view;
@@ -86,7 +86,7 @@ void PlayersFolderCategorie::dropMimeData(const QMimeData *data)
 {
     if(!acceptMimeTypes(data->formats()))
     {
-	return;
+        return;
     }
 
     QByteArray encodedData = data->data("application/projectstats.player");

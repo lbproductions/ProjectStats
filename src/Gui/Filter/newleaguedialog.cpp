@@ -35,7 +35,7 @@ NewLeagueDialog::~NewLeagueDialog()
 
 void NewLeagueDialog::on_pushButtonOkay_clicked()
 {
-    QPointer<Database::LeagueFolderCategorie> league = new Database::LeagueFolderCategorie(ui->lineEditName->text());
+    Database::LeagueFolderCategorie* league = new Database::LeagueFolderCategorie(ui->lineEditName->text());
 
     league->setEndDate(ui->dateEditTo->date());
     league->setStartDate(ui->dateEditFrom->date());

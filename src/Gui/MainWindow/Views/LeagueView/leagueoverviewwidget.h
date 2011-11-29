@@ -62,19 +62,19 @@ private:
     void saveSettings();
     void restoreSettings();
 
-    QPointer<Misc::Splitter> m_basicSplitter;
-    QPointer<Misc::Splitter> m_viewSplitter;
+    Misc::Splitter* m_basicSplitter;
+    Misc::Splitter* m_viewSplitter;
 
-    QPointer<Misc::RowList> m_rowListPlayer;
-    QPointer<Misc::RowList> m_rowListGames;
+    Misc::RowList* m_rowListPlayer;
+    Misc::RowList* m_rowListGames;
 
-    QPointer<QScrollArea> m_scrollAreaDetails; //!< In dieser ScrollArea werden die DetailsWidgets angezeigt.
+    QScrollArea* m_scrollAreaDetails; //!< In dieser ScrollArea werden die DetailsWidgets angezeigt.
     Gui::Misc::Sheet* m_sheet;
-    QPointer<Details::DetailsWidget> m_rowWidget; //!< Speichert das aktuelle RowWidget
+    Details::DetailsWidget* m_rowWidget; //!< Speichert das aktuelle RowWidget
 
     QFrame* m_pastNextGame;
 
-    QPointer<Database::LeagueFolderCategorie> m_categorie;
+    Database::LeagueFolderCategorie* m_categorie;
 
 };
 

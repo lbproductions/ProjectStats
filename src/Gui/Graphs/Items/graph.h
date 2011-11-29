@@ -75,7 +75,7 @@ public:
       */
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    QList<QPointer<GraphPoint> > points() const;
+    QList<GraphPoint* > points() const;
 
 signals:
     /*!
@@ -95,8 +95,8 @@ protected:
       */
     virtual void drawJunction(const QPoint &p1, const QPoint &p2, QPainter *painter);
 
-    QList<QPointer<GraphPoint> > m_points; //!< Die Punkte in diesem Graphen
-    QPointer<CoordinateSystem> m_coordinateSystem; //!< Das Koordinatensystem, in dem dieser Graph liegt.
+    QList<GraphPoint* > m_points; //!< Die Punkte in diesem Graphen
+    CoordinateSystem* m_coordinateSystem; //!< Das Koordinatensystem, in dem dieser Graph liegt.
     int m_xMax; //!< Der Maximale X-Wert aller Graphen dieses Koordinatensystems.
     int m_yMax; //!< Der Maximale Y-Wert aller Graphen dieses Koordinatensystems.
     int m_xMin; //!< Der Minimale X-Wert aller Graphen dieses Koordinatensystems.

@@ -37,7 +37,7 @@ void DokoLiveGameDetailsWidget::initializeItems(){
     m_infoBox = new LiveGameDetails::DokoLiveGameDetails::DokoLiveGameInfoGroupBox(m_dokolivegame,this);
     m_roundTable = new LiveGameDetails::DokoLiveGameDetails::DokoLiveGameRoundTable(m_dokolivegame,this);
 
-    if(m_graph.isNull())
+    if(!m_graph)
     {
         m_graph = new Gui::Graphs::DokoLiveGameGraphView(this);
         m_graph->setLiveGame(m_livegame);

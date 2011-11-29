@@ -2,7 +2,6 @@
 #define DATABASE_PLACECALCULATOR_H
 
 #include <QObject>
-#include <QPointer>
 
 namespace Database {
 
@@ -24,7 +23,7 @@ signals:
 public slots:
 
 private:
-    QPointer<Place> m_place;
+    Place* m_place;
 
 };
 

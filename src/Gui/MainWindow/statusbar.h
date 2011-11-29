@@ -25,8 +25,8 @@ public:
     void disableLeftButton();
 
 private:
-    QPointer<QVBoxLayout> m_vBoxLayout;
-    QPointer<StatusbarButton> m_leftButton;
+    QVBoxLayout* m_vBoxLayout;
+    StatusbarButton* m_leftButton;
 
 };
 }

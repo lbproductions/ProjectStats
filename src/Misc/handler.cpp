@@ -39,6 +39,7 @@
 
 Handler::Handler(int argc, char *argv[])
     : QApplication(argc,argv),
+      m_mainwindow(0),
       m_updater(0),
       m_mainThread(QThread::currentThread())
 {
@@ -67,13 +68,9 @@ Handler::Handler(int argc, char *argv[])
 
 Handler::~Handler()
 {
-    if(!m_database.isNull())
+    if(m_database)
     {
         m_database->deleteLater();
-    }
-    if(!m_mainwindow.isNull())
-    {
-        m_mainwindow->deleteLater();
     }
     if(m_updater)
     {
@@ -165,11 +162,11 @@ Database::Database* Handler::database(){
 
 bool Handler::closeMainWindow()
 {
-    if(!m_mainwindow.isNull())
+    if(m_mainwindow)
     {
         if(m_mainwindow->close())
         {
-            if(!m_database.isNull())
+            if(m_database)
             {
                 m_database->deleteLater();
             }

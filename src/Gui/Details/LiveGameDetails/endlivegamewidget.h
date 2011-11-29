@@ -50,7 +50,7 @@ private slots:
     void on_pushButtonCancel_clicked();
 
 protected:
-    QPointer<Database::LiveGame> m_livegame;
+    Database::LiveGame* m_livegame;
 
     QLineEdit* m_nameLineEdit;
     QTextEdit* m_commentTextEdit;

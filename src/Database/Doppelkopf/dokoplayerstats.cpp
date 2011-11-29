@@ -115,11 +115,11 @@ int DokoPlayerStats::calculate_hochzeiten(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_hochzeit->value(m_player);
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     return count;
@@ -129,11 +129,11 @@ int DokoPlayerStats::calculate_soli(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_solo->value(m_player);
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     return count;
@@ -143,11 +143,11 @@ int DokoPlayerStats::calculate_trumpfabgaben(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_trumpfabgabe->value(m_player);
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     return count;
@@ -157,11 +157,11 @@ int DokoPlayerStats::calculate_schmeissereien(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_schmeisserei->value(m_player);
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     return count;
@@ -171,11 +171,11 @@ int DokoPlayerStats::calculate_schweinereien(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_schweinerei->value(m_player);
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     return count;
@@ -185,11 +185,11 @@ int DokoPlayerStats::calculate_re(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_re->value(m_player);
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     return count;
@@ -200,12 +200,12 @@ double DokoPlayerStats::calculate_rePercentage(){
     int count1 = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_rePercentage->value(m_player);
             count1++;
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     if(count1 > 0){
@@ -220,11 +220,11 @@ int DokoPlayerStats::calculate_reWins(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_reWins->value(m_player);
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     return count;
@@ -235,12 +235,12 @@ double DokoPlayerStats::calculate_reWinsPercentage(){
     int count1 = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_reWinsPercentage->value(m_player);
             count1++;
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     if(count1 > 0){
@@ -255,11 +255,11 @@ int DokoPlayerStats::calculate_contra(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_contra->value(m_player);
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     return count;
@@ -270,12 +270,12 @@ double DokoPlayerStats::calculate_contraPercentage(){
     int count1 = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_contraPercentage->value(m_player);
             count1++;
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     if(count1 > 0){
@@ -290,11 +290,11 @@ int DokoPlayerStats::calculate_contraWins(){
     int count = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_contraWins->value(m_player);
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     return count;
@@ -305,12 +305,12 @@ double DokoPlayerStats::calculate_contraWinsPercentage(){
     int count1 = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_contraWinsPercentage->value(m_player);
             count1++;
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     if(count1 > 0){
@@ -326,12 +326,12 @@ double DokoPlayerStats::calculate_pointAveragePerRound(){
     int count1 = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_pointAveragePerWin->value(m_player);
             count1++;
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     if(count1 > 0){
@@ -347,12 +347,12 @@ double DokoPlayerStats::calculate_roundWinsPercentage(){
     int count1 = 0;
     foreach(Game* g, this->dokoGames->value()){
         if(g->live->value()){
-            QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(g);
+            DokoLiveGame* game = static_cast<DokoLiveGame*>(g);
             count += game->doko_roundWinsPercentage->value(m_player);
             count1++;
         }
         else{
-            QPointer<DokoOfflineGame> game = static_cast<DokoOfflineGame*>(g);
+            DokoOfflineGame* game = static_cast<DokoOfflineGame*>(g);
         }
     }
     if(count1 > 0){

@@ -23,10 +23,10 @@ Models::TableModelBase *GamesCategorie::model()
 
 Gui::MainWindow::Views::View *GamesCategorie::view()
 {
-    if(m_view.isNull())
+    if(!m_view)
     {
-	m_view = new Gui::MainWindow::Views::ListView(this);
-	m_view->setWindowTitle("Games");
+        m_view = new Gui::MainWindow::Views::ListView(this);
+        m_view->setWindowTitle("Games");
         m_view->setWindowIcon(QIcon(icon->value()));
     }
 

@@ -27,9 +27,9 @@ public:
     Gui::Details::StatsWidget * statsWidget() const;
 
 protected:
-    QPointer<Database::Row> m_row;
-    QPointer<DetailsWidget> m_detailsWidget;
-    QPointer<StatsWidget> m_statsWidget;
+    Database::Row* m_row;
+    DetailsWidget* m_detailsWidget;
+    StatsWidget* m_statsWidget;
 
 };
 

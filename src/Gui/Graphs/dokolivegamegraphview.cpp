@@ -12,7 +12,7 @@ DokoLiveGameGraphView::DokoLiveGameGraphView(QWidget *parent):
 
 void DokoLiveGameGraphView::setLiveGame(Database::LiveGame *liveGame)
 {
-    if(!m_liveGameCoordinateSystem.isNull())
+    if(m_liveGameCoordinateSystem)
     {
         scene()->removeItem(m_liveGameCoordinateSystem);
         m_liveGameCoordinateSystem->deleteLater();

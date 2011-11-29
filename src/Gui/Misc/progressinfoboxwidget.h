@@ -20,7 +20,7 @@ class ProgressInfoBoxWidget : public QWidget
 public:
     explicit ProgressInfoBoxWidget(QWidget *parent = 0);
 
-    QPointer<PSProgressBar> progressbar();
+    PSProgressBar* progressbar();
 
     void setLeftLabelText(QString text);
 
@@ -33,8 +33,8 @@ public slots:
 
 private:
 
-    QPointer<ValueLabel> m_labelLeft;
-    QPointer<PSProgressBar> m_progressbar;
+    ValueLabel* m_labelLeft;
+    PSProgressBar* m_progressbar;
 
 };
 

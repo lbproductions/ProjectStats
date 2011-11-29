@@ -36,7 +36,7 @@ public:
     void setupToolBar();
 
 private:
-    QPointer<Database::DokoLiveGame> m_dokolivegame;
+    Database::DokoLiveGame* m_dokolivegame;
 
     QAction* m_actionSchmeisserei;
 

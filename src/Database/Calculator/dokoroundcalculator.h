@@ -23,7 +23,7 @@ public:
     QMap<Player*,bool> calculate_doko_re();
 
 private:
-    QPointer<DokoRound> m_dokoround;
+    DokoRound* m_dokoround;
 };
 
 } // namespace Database

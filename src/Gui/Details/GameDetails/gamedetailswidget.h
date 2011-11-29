@@ -44,8 +44,8 @@ namespace Gui
 
             private:
                 Ui::GameWidget *ui;
-                QPointer<Database::Game> m_game;
-                QPointer<Misc::PlacesComboBox> m_placesComboBox;
+                Database::Game* m_game;
+                Misc::PlacesComboBox* m_placesComboBox;
 
                 /**
                 * Liest die Daten des Games aus.

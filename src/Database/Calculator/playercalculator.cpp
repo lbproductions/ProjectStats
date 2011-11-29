@@ -18,7 +18,7 @@
 
 namespace Database {
 
-PlayerCalculator::PlayerCalculator(QPointer<Player> player,QObject *parent):
+PlayerCalculator::PlayerCalculator(Player* player,QObject *parent):
     QObject(parent),
     m_player(player)
 {

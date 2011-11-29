@@ -60,15 +60,15 @@ protected slots:
 protected:
     friend class ::Gui::Details::LiveGameRowWindow;
 
-    QPointer<Database::LiveGame> m_livegame;
+    Database::LiveGame* m_livegame;
 
-    QPointer<LiveGameDetails::LiveGameInfoGroupBox> m_infoBox;
+    LiveGameDetails::LiveGameInfoGroupBox* m_infoBox;
 
-    QPointer<LiveGameDetails::LiveGameRoundTable> m_roundTable;
+    LiveGameDetails::LiveGameRoundTable* m_roundTable;
 
     QTableWidget* m_playerTotalPointsTable;
 
-    QPointer<Gui::Graphs::LiveGameGraphView> m_graph;
+    Gui::Graphs::LiveGameGraphView* m_graph;
 
 
     void updateSizes();

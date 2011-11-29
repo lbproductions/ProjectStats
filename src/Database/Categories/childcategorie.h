@@ -34,7 +34,7 @@ START_ROW_DECLARATION(ChildCategorie, Categorie)
     /*!
       \return Der Vater dieser Kategorie, sprich die Überschrift unter der sie in der Sidebar eingefügt ist.
       */
-    DECLARE_ATTRIBUTE(QPointer<ParentCategorie>,ChildCategorie,parentCategorie)
+    DECLARE_ATTRIBUTE(ParentCategorie*,ChildCategorie,parentCategorie)
     DECLARE_DATABASEATTRIBUTE(QString,Categorie,icon)
     DECLARE_DATABASEATTRIBUTE(int,Categorie,parentId)
     DECLARE_DATABASEATTRIBUTE(int,Categorie,contentType)
@@ -48,7 +48,7 @@ START_ROW_DECLARATION(ChildCategorie, Categorie)
 
 friend class ParentCategorie;
 protected:
-    QPointer<Gui::MainWindow::Views::View> m_view;
+    Gui::MainWindow::Views::View* m_view;
 
 END_ROW_DECLARATION(ChildCategorie)
 #endif // CHILDCATEGORIE_H

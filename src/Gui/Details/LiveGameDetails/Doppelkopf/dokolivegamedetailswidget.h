@@ -43,8 +43,8 @@ public:
     void initializeItems();
 
 private:
-    QPointer<Database::DokoLiveGame> m_dokolivegame;
-    QPointer<LiveGameDetails::DokoLiveGameDetails::NewDokoRoundWidget> m_dokoRoundWidget;
+    Database::DokoLiveGame* m_dokolivegame;
+    LiveGameDetails::DokoLiveGameDetails::NewDokoRoundWidget* m_dokoRoundWidget;
 };
 
 }

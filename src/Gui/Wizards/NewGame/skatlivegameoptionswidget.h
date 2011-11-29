@@ -39,7 +39,7 @@ private slots:
 private:
     Ui::SkatLiveGameOptionsWidget *ui;
 
-    QPointer<Database::SkatLiveGame> m_skatlivegame;
+    Database::SkatLiveGame* m_skatlivegame;
 
     void saveOptions() const;
 };

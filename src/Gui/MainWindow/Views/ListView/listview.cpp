@@ -23,7 +23,9 @@ using namespace Gui::MainWindow::Views;
 
 ListView::ListView(Database::ChildCategorie *categorie, MainWindow *parent) :
     View(parent),
-    m_categorie(categorie)
+    m_categorie(categorie),
+    m_rowWidget(0),
+    m_editButtonAction(0)
 {
     setLayout(new QHBoxLayout(this));
     layout()->setContentsMargins(0,0,0,0);
@@ -97,10 +99,10 @@ void ListView::restoreSettings()
 
 void ListView::on_rowList_selectionChanged()
 {   
-    if(!m_rowWidget.isNull())
+    if(m_rowWidget)
     {
-	m_rowWidget->setVisible(false);
-	m_rowWidget->deleteLater();
+        m_rowWidget->setVisible(false);
+        m_rowWidget->deleteLater();
     }
 }
 
@@ -119,11 +121,12 @@ void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
         return;
     }
 
-    if(!m_rowWidget.isNull())
+    if(m_rowWidget)
     {
         m_sheet->setVisible(false);
         m_rowWidget->setVisible(false);
         m_rowWidget->deleteLater();
+        m_rowWidget = 0;
     }
 
     Details::SummaryWidget* summaryWidget = firstRow->summaryWidget();
@@ -138,7 +141,7 @@ void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
         m_rowWidget = newRowWidget;
         m_rowWidget->detailsWidget()->setEditable(false);
 
-        if(!m_rowWidget.isNull() && m_rowWidget->detailsWidget() != 0 && !m_editButtonAction.isNull())
+        if(m_rowWidget && m_rowWidget->detailsWidget() != 0 && m_editButtonAction)
         {
              m_rowWidget->detailsWidget()->setEditable(m_editButtonAction->isChecked());
         }
@@ -162,7 +165,7 @@ void ListView::on_rowList_rowDoubleClicked(Database::Row *row)
 {
     if(row == 0)
     {
-	return;
+        return;
     }
 
     Details::RowWindow *newRowWindow = row->rowWindow();
@@ -181,29 +184,29 @@ void ListView::on_rowList_rowDoubleClicked(Database::Row *row)
 
 void Gui::MainWindow::Views::ListView::updateStatusbar()
 {
-    if(Handler::getInstance()->mainWindow() != 0 &&
-	    Handler::getInstance()->mainWindow()->statusBar() != 0)
+    if(Handler::getInstance()->mainWindow() &&
+        Handler::getInstance()->mainWindow()->statusBar())
     {
-	if(!m_rowWidget.isNull() &&
-		m_rowWidget->detailsWidget() != 0 &&
-		m_rowWidget->detailsWidget()->mayBeEditable())
-	{
-	    Handler::getInstance()->mainWindow()->statusBar()->setLeftButton(tr("Edit"),editButtonAction());
-	}
-	else
-	{
-	    Handler::getInstance()->mainWindow()->statusBar()->disableLeftButton();
-	}
+        if(m_rowWidget &&
+            m_rowWidget->detailsWidget() != 0 &&
+            m_rowWidget->detailsWidget()->mayBeEditable())
+        {
+            Handler::getInstance()->mainWindow()->statusBar()->setLeftButton(tr("Edit"),editButtonAction());
+        }
+        else
+        {
+            Handler::getInstance()->mainWindow()->statusBar()->disableLeftButton();
+        }
     }
 }
 
 QAction * Gui::MainWindow::Views::ListView::editButtonAction()
 {
-    if(m_editButtonAction.isNull())
+    if(!m_editButtonAction)
     {
-	m_editButtonAction = new QAction(this);
-	m_editButtonAction->setCheckable(true);
-	connect(m_editButtonAction,SIGNAL(toggled(bool)),this,SLOT(on_editActionToggled(bool)));
+        m_editButtonAction = new QAction(this);
+        m_editButtonAction->setCheckable(true);
+        connect(m_editButtonAction,SIGNAL(toggled(bool)),this,SLOT(on_editActionToggled(bool)));
     }
 
     return m_editButtonAction;
@@ -211,8 +214,8 @@ QAction * Gui::MainWindow::Views::ListView::editButtonAction()
 
 void Gui::MainWindow::Views::ListView::on_editActionToggled(bool checked)
 {
-    if(!m_rowWidget.isNull() && m_rowWidget->detailsWidget() != 0)
+    if(m_rowWidget && m_rowWidget->detailsWidget() != 0)
     {
-	 m_rowWidget->detailsWidget()->setEditable(checked);
+        m_rowWidget->detailsWidget()->setEditable(checked);
     }
 }

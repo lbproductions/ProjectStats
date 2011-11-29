@@ -2,7 +2,6 @@
 #define DATABASE_LIVEGAMECALCULATOR_H
 
 #include <QObject>
-#include <QPointer>
 #include <QPair>
 
 #include <Database/round.h>
@@ -73,7 +72,7 @@ signals:
 public slots:
 
 protected:
-    QPointer<LiveGame> m_livegame;
+    LiveGame *m_livegame;
 
 };
 

@@ -2,7 +2,6 @@
 #define DATABASE_DRINKCALCULATOR_H
 
 #include <QObject>
-#include <QPointer>
 #include <QMap>
 
 
@@ -28,7 +27,7 @@ signals:
 public slots:
 
 private:
-    QPointer<Drink> m_drink;
+    Drink* m_drink;
 
 };
 

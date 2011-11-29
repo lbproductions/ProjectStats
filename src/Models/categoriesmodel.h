@@ -34,7 +34,7 @@ private slots:
     void on_folderCreated(::Database::Row * row);
 
 private:
-    QPointer<Database::Categories> m_categories;
+    Database::Categories* m_categories;
     QStandardItem *m_folderParentItem;
     QStandardItem *m_leaguesParentItem;
 

@@ -99,7 +99,7 @@ private slots:
     void updateDimensions(const QPoint &point);
 
 protected:
-    QList<QPointer<Items::Graph> > m_graphs; //!< Alle enthaltenen Graphen.
+    QList<Items::Graph* > m_graphs; //!< Alle enthaltenen Graphen.
     qreal m_xScale; //!< Die Skalierung in x Richtung.
     qreal m_yScale; //!< Die Skalierung in y Richtung.
     int m_xMax; //!< Der Maximale X-Wert aller Graphen dieses Koordinatensystems.

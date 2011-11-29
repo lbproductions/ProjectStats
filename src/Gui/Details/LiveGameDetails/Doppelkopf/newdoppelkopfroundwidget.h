@@ -45,9 +45,9 @@ private:
 
     void createSoloCheckBox();
 
-    QPointer<Database::DokoLiveGame> m_dokoLiveGame;
+    Database::DokoLiveGame* m_dokoLiveGame;
 
-    QPointer<Misc::GroupBox> m_soloGroupBox;
+    Misc::GroupBox* m_soloGroupBox;
     QString m_soloType;
     QList<Misc::CheckBox*> m_soloCheckBoxes;
 
@@ -56,12 +56,12 @@ private:
 
     QList<Misc::PlayerCheckBox*> m_hochzeitBoxes;
 
-    QPointer<Database::Player> m_re1Player;
-    QPointer<Database::Player> m_re2Player;
-    QPointer<Database::Player> m_hochzeitPlayer;
-    QPointer<Database::Player> m_trumpfabgabePlayer;
-    QPointer<Database::Player> m_schweinereiPlayer;
-    QPointer<Database::Player> m_soloPlayer;
+    Database::Player* m_re1Player;
+    Database::Player* m_re2Player;
+    Database::Player* m_hochzeitPlayer;
+    Database::Player* m_trumpfabgabePlayer;
+    Database::Player* m_schweinereiPlayer;
+    Database::Player* m_soloPlayer;
 };
 
 }}}}

@@ -25,7 +25,7 @@ private slots:
 private:
     Ui::NewRowWidget *ui;
 
-    QPointer<Database::Row> m_row;
+    Database::Row* m_row;
 };
 
 #endif // NEWROWWIDGET_H

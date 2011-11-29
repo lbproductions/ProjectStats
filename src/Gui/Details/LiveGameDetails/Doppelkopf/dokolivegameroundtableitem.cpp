@@ -22,9 +22,9 @@ DokoLiveGameRoundTablePlayerItem::DokoLiveGameRoundTablePlayerItem(Database::Pla
 
     setTextAlignment(Qt::AlignCenter);
 
-    if(m_round->pointObjects->value().contains(m_player))
+    if(m_round->points->value().contains(m_player))
     {
-        m_point = m_round->pointObjects->value(m_player);
+        m_point = m_round->points->value(m_player);
     }
 
     if(!m_point)
@@ -137,7 +137,7 @@ void DokoLiveGameRoundTablePlayerItem::setPoints(int points)
         points = -points;
     }
 
-    foreach(Database::Point* point, m_round->pointInstances->value())
+    foreach(Database::Point* point, m_round->points->value())
     {
         Database::Player* player = Database::Players::instance()->rowById(point->playerId->value());
 
@@ -170,23 +170,23 @@ DokoLiveGameRoundTableTotalPointsItem::DokoLiveGameRoundTableTotalPointsItem(Dat
     updateContent();
     connect(m_round->roundPoints,SIGNAL(changed()),this,SLOT(updateContent()));
 
-    if(round->pointObjects->value().isEmpty())
+    if(round->points->value().isEmpty())
     {
         //! \todo eventuell müssen wir hier einen slot connecten, der sobald pointObject befüllt sind, das connecten übernimmt
         return;
     }
 
-    Database::Point* point = round->pointObjects->value().values().at(0);
+    Database::Point* point = round->points->value().values().at(0);
     connect(point->points,SIGNAL(changed()),this,SLOT(updateContent()));
 }
 
 void DokoLiveGameRoundTableTotalPointsItem::updateContent()
 {
-    if(m_round->pointObjects->value().isEmpty())
+    if(m_round->points->value().isEmpty())
     {
         return;
     }
-    Database::Point* point = m_round->pointObjects->value().values().at(0);
+    Database::Point* point = m_round->points->value().values().at(0);
     Database::Player* player = Database::Players::instance()->rowById(point->playerId->value());
     int points = qAbs(point->points->value());
     if(m_round->doko_soloPlayerId->value() == player->id())
@@ -209,16 +209,16 @@ void DokoLiveGameRoundTableTotalPointsItem::setPoints(int points)
         {
             if(m_round->doko_soloPlayerId->value() == player->id())
             {
-                m_round->pointObjects->value(player)->points->setValue(points*3);
+                m_round->points->value(player)->points->setValue(points*3);
             }
             else
             {
-                m_round->pointObjects->value(player)->points->setValue(points);
+                m_round->points->value(player)->points->setValue(points);
             }
         }
         else
         {
-            m_round->pointObjects->value(player)->points->setValue(-points);
+            m_round->points->value(player)->points->setValue(-points);
         }
     }
 }

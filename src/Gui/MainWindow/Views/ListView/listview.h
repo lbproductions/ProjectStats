@@ -73,15 +73,15 @@ private:
 
     QAction *editButtonAction();
 
-    QPointer<Database::ChildCategorie> m_categorie;
+    Database::ChildCategorie* m_categorie;
 
-    QPointer<QScrollArea> m_scrollAreaDetails; //!< In dieser ScrollArea werden die DetailsWidgets angezeigt.
+    QScrollArea* m_scrollAreaDetails; //!< In dieser ScrollArea werden die DetailsWidgets angezeigt.
     Gui::Misc::Sheet* m_sheet;
-    QPointer<Details::RowWidget> m_rowWidget; //!< Speichert das aktuelle RowWidget
-    QPointer<Misc::Splitter> m_horizontalSplitter; //!< Enthält oben die ItemsList und unten ein DetailsWidget.
-    QPointer<Misc::RowList> m_rowList;
+    Details::RowWidget* m_rowWidget; //!< Speichert das aktuelle RowWidget
+    Misc::Splitter* m_horizontalSplitter; //!< Enthält oben die ItemsList und unten ein DetailsWidget.
+    Misc::RowList* m_rowList;
 
-    QPointer<QAction> m_editButtonAction;
+    QAction* m_editButtonAction;
 };
 
 }

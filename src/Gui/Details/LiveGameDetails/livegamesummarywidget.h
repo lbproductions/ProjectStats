@@ -21,7 +21,7 @@ protected:
     void setupGeneralTab();
     void setupCommentTab();
 
-    QPointer<Database::LiveGame> m_livegame;
+    Database::LiveGame* m_livegame;
 
 protected slots:
     void update();

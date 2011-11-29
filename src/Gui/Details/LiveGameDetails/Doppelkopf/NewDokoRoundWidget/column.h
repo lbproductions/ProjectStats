@@ -35,7 +35,7 @@ public:
 
 protected:
 
-    QPointer<Database::DokoLiveGame> m_dokoLiveGame;
+    Database::DokoLiveGame* m_dokoLiveGame;
 
     QMap<Database::Player*,Misc::PlayerCheckBox*> m_checkBoxes;
 

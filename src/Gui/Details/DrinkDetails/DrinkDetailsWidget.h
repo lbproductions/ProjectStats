@@ -54,9 +54,8 @@ private:
     Ui::DrinkDetailsWidget *ui;
 
     QString m_filePath;
-    QPointer<Misc::ClickableLabel> m_labelPicture;
-
-    QPointer<Database::Drink> m_drink;
+    Misc::ClickableLabel* m_labelPicture;
+    Database::Drink* m_drink;
 };
 
 }

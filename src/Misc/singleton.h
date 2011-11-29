@@ -12,7 +12,7 @@
 public:\
     static Classname* instance();\
 private:\
-    static QPointer<Classname> m_instance;\
+    static Classname* m_instance;\
     static QMutex *lock();\
     class Classname ## Guard\
     {\
@@ -21,7 +21,7 @@ private:\
     };
 
 #define IMPLEMENT_SINGLETON( Classname )\
-QPointer<Classname> Classname::m_instance(0);\
+Classname* Classname::m_instance(0);\
 QMutex *Classname::lock()\
 {\
     static QMutex *mutex = new QMutex(QMutex::Recursive);\
@@ -31,7 +31,7 @@ Classname* Classname::instance()\
 {\
     lock()->lock();\
     static Classname ## Guard g;\
-    if(m_instance.isNull())\
+    if(!m_instance)\
     {\
         m_instance = new Classname();\
     }\

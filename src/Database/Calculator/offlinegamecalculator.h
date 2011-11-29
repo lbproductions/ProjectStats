@@ -20,7 +20,7 @@ public:
     QTime calculate_length();
 
 private:
-    QPointer<OfflineGame> m_offlinegame;
+    OfflineGame* m_offlinegame;
 };
 
 }

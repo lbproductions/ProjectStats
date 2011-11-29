@@ -49,7 +49,7 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 protected:
-    QPointer<Graph> m_graph; //!< Der Graph, zu dem dieser Punkt gehört.
+    Graph* m_graph; //!< Der Graph, zu dem dieser Punkt gehört.
     QPoint m_point; //!< Der eigentliche Punkt, der dieser GraphPoint repräsentiert.
     int m_radius; //! Der Radius des Kreises, mit dem dieser Punkt dargestellt wird.
 };

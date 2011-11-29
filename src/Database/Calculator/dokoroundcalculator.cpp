@@ -1,6 +1,7 @@
 #include "dokoroundcalculator.h"
 
 #include <Database/player.h>
+#include <Database/point.h>
 #include <Database/Doppelkopf/dokolivegame.h>
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/Doppelkopf/schmeisserei.h>
@@ -14,7 +15,7 @@ DokoRoundCalculator::DokoRoundCalculator(DokoRound* round):
 }
 
 QList<Player*> DokoRoundCalculator::calculate_currentPlayingPlayers(){
-    QPointer<DokoLiveGame> game = static_cast<DokoLiveGame*>(m_dokoround->game->value());
+    DokoLiveGame* game = static_cast<DokoLiveGame*>(m_dokoround->game->value());
 
         QList<Player*> players;
         if(game->playersSortedByPosition->value().isEmpty())
@@ -46,10 +47,14 @@ int DokoRoundCalculator::calculate_roundPoints()
     int soloId = m_dokoround->doko_soloPlayerId->value();
     if(soloId > 0)
     {
-        return qAbs(m_dokoround->points->value(Players::instance()->rowById(soloId)) / 3);
+        return qAbs(m_dokoround->points->value(Players::instance()->rowById(soloId))->points->value() / 3);
     }
 
-    return qAbs(m_dokoround->points->value(Players::instance()->rowById(m_dokoround->doko_re1PlayerId->value())));
+    Point* point = m_dokoround->points->value(Players::instance()->rowById(m_dokoround->doko_re1PlayerId->value()));
+    if(point) {
+        return qAbs(point->points->value());
+    }
+    return 0;
 }
 
 QList<Schmeisserei*> DokoRoundCalculator::calculate_doko_schmeissereien(){

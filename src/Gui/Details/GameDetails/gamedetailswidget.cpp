@@ -66,9 +66,8 @@ void GameDetailsWidget::setEditable(bool editable)
     resize(size().width()-1,size().height()-1);
 }
 
-void GameDetailsWidget::onPlacesComboBoxCurrentIndexChanged(Database::Place *const /*oldPlace*/ , Database::Place *const place){
-    Q_ASSERT(!m_game.isNull());
-
+void GameDetailsWidget::onPlacesComboBoxCurrentIndexChanged(Database::Place *const /*oldPlace*/ , Database::Place *const place)
+{
     if(place != 0)
     {
         m_game->siteId->setValue(place->id());
@@ -83,15 +82,11 @@ void GameDetailsWidget::onPlacesComboBoxCurrentIndexChanged(Database::Place *con
 
 void GameDetailsWidget::on_textEditComment_textChanged()
 {
-    Q_ASSERT(!m_game.isNull());
-
     m_game->comment->setValue(ui->textEditComment->toPlainText());
 }
 
 void GameDetailsWidget::on_lineEditName_editingFinished()
 {
-    Q_ASSERT(!m_game.isNull());
-
     m_game->name->setValue(ui->lineEditName->text());
     readData();
 }

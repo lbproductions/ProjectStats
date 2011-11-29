@@ -40,8 +40,8 @@ private:
 END_ROW_DECLARATION(Categorie)
 
 START_TABLE_DECLARATION(Categorie)
-    QPointer<Categorie> createRowInstance(int id);
-    QList<QPointer<ParentCategorie> > parentCategories();
+    Categorie* createRowInstance(int id);
+    QList<ParentCategorie* > parentCategories();
     QList<ChildCategorie*> childCategories(int parentId);
 END_TABLE_DECLARATION()
 

@@ -30,7 +30,7 @@ public:
     void addTypeSpecificInformation(QGridLayout* layout, int row, int minColumn, Database::Player* player);
 
 private:
-    QPointer<Database::DokoLiveGame> m_dokolivegame;
+    Database::DokoLiveGame* m_dokolivegame;
 };
 
 }}}}

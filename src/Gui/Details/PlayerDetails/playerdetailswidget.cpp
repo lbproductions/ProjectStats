@@ -20,7 +20,8 @@ using namespace Gui::Details;
 PlayerDetailsWidget::PlayerDetailsWidget(Database::Player *player, QWidget *parent) :
     DetailsWidget(player,parent),
     ui(new Ui::PlayerWidget),
-    m_player(player)
+    m_player(player),
+    m_colorDialog(0)
 {
     ui->setupUi(this);
 
@@ -64,8 +65,6 @@ PlayerDetailsWidget::PlayerDetailsWidget(Database::Player *player, QWidget *pare
 
 void PlayerDetailsWidget::readPlayerData()
 {
-    Q_ASSERT(!m_player.isNull());
-
     ui->spinBoxSize->setValue(m_player->size->value());
     ui->spinBoxWeight->setValue(m_player->weight->value());
     ui->comboBoxGender->setCurrentIndex(ui->comboBoxGender->findText(m_player->gender->value()));
@@ -149,11 +148,10 @@ void PlayerDetailsWidget::setEditable(bool editable)
 
 void PlayerDetailsWidget::onPushButtonChooseColorClicked()
 {
-    Q_ASSERT(!m_player.isNull());
-    if(m_colorDialog.isNull())
+    if(!m_colorDialog)
     {
-	m_colorDialog = new QColorDialog(this);
-	m_colorDialog->setAttribute(Qt::WA_DeleteOnClose);
+        m_colorDialog = new QColorDialog(this);
+        m_colorDialog->setAttribute(Qt::WA_DeleteOnClose);
     }
     m_colorDialog->setCurrentColor(m_player->color->value());
     connect(m_colorDialog,SIGNAL(colorSelected(const QColor &)),this,SLOT(colorSelected(const QColor &)));
@@ -162,38 +160,30 @@ void PlayerDetailsWidget::onPushButtonChooseColorClicked()
 
 void PlayerDetailsWidget::colorSelected(const QColor &color)
 {
-    Q_ASSERT(!m_player.isNull());
     m_player->color->setValue(color);
     readPlayerData();
 }
 
 void PlayerDetailsWidget::onLineEditNameEditingFinished()
 {
-    Q_ASSERT(!m_player.isNull());
     m_player->name->setValue(ui->lineEditName->text());
     readPlayerData();
 }
 
 void PlayerDetailsWidget::on_spinBoxWeight_valueChanged(int weight)
 {
-    Q_ASSERT(!m_player.isNull());
-
     m_player->weight->setValue(weight);
     readPlayerData();
 }
 
 void PlayerDetailsWidget::on_spinBoxSize_valueChanged(int size)
 {
-    Q_ASSERT(!m_player.isNull());
-
     m_player->size->setValue(size);
     readPlayerData();
 }
 
 void PlayerDetailsWidget::on_comboBoxGender_currentIndexChanged(QString gender)
 {
-    Q_ASSERT(!m_player.isNull());
-
     if(gender != "-" && gender != ""){
         m_player->gender->setValue(gender);
 	readPlayerData();

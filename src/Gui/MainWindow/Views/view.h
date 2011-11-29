@@ -24,7 +24,7 @@ public slots:
     virtual void updateStatusbar() = 0;
 
 protected:
-    QPointer<MainWindow> m_mainWindow;
+    MainWindow* m_mainWindow;
 };
 
 }

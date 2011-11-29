@@ -43,7 +43,7 @@ QList<Type*> Database::Rule::getAll()
 }
 
 START_TABLE_DECLARATION(Rule)
-    QPointer<Rule> createRowInstance(int id);
+    Rule* createRowInstance(int id);
 END_TABLE_DECLARATION()
 
 #endif // RULE_H

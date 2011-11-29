@@ -11,7 +11,8 @@
 using namespace Gui::MainWindow;
 
 Statusbar::Statusbar(MainWindow *parent) :
-    QFrame(parent)
+    QFrame(parent),
+    m_leftButton(0)
 {
     setStyleSheet("Gui--MainWindow--Statusbar {"
 				"background-image: url(:/graphics/styles/mac/statusbar/background);"
@@ -35,26 +36,26 @@ void Statusbar::disableLeftButton()
 
 void Statusbar::setLeftButton(const QString &text, QAction *action)
 {
-    if(m_leftButton.isNull())
+    if(!m_leftButton)
     {
-	m_leftButton = new StatusbarButton(this);
-	m_vBoxLayout->insertWidget(0,m_leftButton,0,Qt::AlignLeft);
-	m_vBoxLayout->insertStretch(1,1);
+        m_leftButton = new StatusbarButton(this);
+        m_vBoxLayout->insertWidget(0,m_leftButton,0,Qt::AlignLeft);
+        m_vBoxLayout->insertStretch(1,1);
     }
 
     m_leftButton->disconnect();
 
     if(text.isNull() || text.isEmpty() || action == 0)
     {
-	m_leftButton->setVisible(false);
+        m_leftButton->setVisible(false);
     }
     else
     {
-	m_leftButton->setText(text);
-	m_leftButton->setVisible(true);
-	m_leftButton->setChecked(action->isChecked());
-	m_leftButton->setCheckable(action->isCheckable());
+        m_leftButton->setText(text);
+        m_leftButton->setVisible(true);
+        m_leftButton->setChecked(action->isChecked());
+        m_leftButton->setCheckable(action->isCheckable());
 
-	connect(m_leftButton,SIGNAL(toggled(bool)), action ,SLOT(toggle()));
+        connect(m_leftButton,SIGNAL(toggled(bool)), action ,SLOT(toggle()));
     }
 }

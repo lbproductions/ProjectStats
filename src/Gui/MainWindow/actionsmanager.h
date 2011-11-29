@@ -142,7 +142,7 @@ private:
     QList<QString> createDefaultPlayerColumns();
     QList<QString> createDefaultGameColumns();
 
-    QPointer<MainWindow> m_mainWindow; //!< Das MainWindow mit dem die Actions arbeiten.
+    MainWindow* m_mainWindow; //!< Das MainWindow mit dem die Actions arbeiten.
 
 };
 

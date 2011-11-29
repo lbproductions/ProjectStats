@@ -10,6 +10,6 @@ PlayerCheckBox::PlayerCheckBox(Database::Player* player, QWidget* parent):
 {
 }
 
-QPointer<Database::Player> PlayerCheckBox::player(){
+Database::Player* PlayerCheckBox::player(){
     return m_player;
 }

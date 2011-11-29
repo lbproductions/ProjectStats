@@ -227,7 +227,7 @@ public:
         Gibt die Row mit der ID \p id zurück, oder \c 0, falls die Row nicht in
         dieser Tabelle existiert.
       */
-    QPointer<RowType> rowById(int id);
+    RowType* rowById(int id);
 
     /*!
         Gibt alle Elemente dieser Tabelle zurück, die die SQL-Condition
@@ -274,7 +274,7 @@ protected:
         Instanzen von Rows zu erstellen (z.B. Game, LiveGame, DokoLiveGame,
         ...).
       */
-    virtual QPointer<RowType> createRowInstance(int id);
+    virtual RowType* createRowInstance(int id);
 
     TableCache<RowType> *m_rows; //!< Alle Rows gecacht
     QList<RowType*> m_allRows;
@@ -582,7 +582,7 @@ void AttributeInitilizerTask<TableType>::execute()
 }
 
 template<class RowType>
-QPointer<RowType> Table<RowType>::createRowInstance(int id)
+RowType* Table<RowType>::createRowInstance(int id)
 {
     return new RowType(id,this);
 }
@@ -627,7 +627,7 @@ QList<RowType*> Table<RowType>::rowsBySqlCondition(const QString &condition)
 }
 
 template<class RowType>
-QPointer<RowType> Table<RowType>::rowById(int id)
+RowType* Table<RowType>::rowById(int id)
 {
     return m_rows->value().value(id,0);
 }

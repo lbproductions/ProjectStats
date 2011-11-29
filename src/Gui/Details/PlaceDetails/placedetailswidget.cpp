@@ -133,35 +133,30 @@ void PlaceDetailsWidget::setEditable(bool editable){
 
 void PlaceDetailsWidget::on_lineEditPLZ_editingFinished()
 {
-    Q_ASSERT(!m_place.isNull());
     m_place->plz->setValue(ui->lineEditPLZ->text().toInt());
     readPlaceData();
 }
 
 void PlaceDetailsWidget::on_lineEditTown_editingFinished()
 {
-    Q_ASSERT(!m_place.isNull());
     m_place->ort->setValue(ui->lineEditTown->text());
     readPlaceData();
 }
 
 void PlaceDetailsWidget::on_lineEditStreet_editingFinished()
 {
-    Q_ASSERT(!m_place.isNull());
     m_place->strasse->setValue(ui->lineEditStreet->text());
     readPlaceData();
 }
 
 void PlaceDetailsWidget::on_lineEditNumber_editingFinished()
 {
-    Q_ASSERT(!m_place.isNull());
     m_place->nummer->setValue(ui->lineEditNumber->text().toInt());
     readPlaceData();
 }
 
 void PlaceDetailsWidget::on_textEditComment_textChanged()
 {
-    Q_ASSERT(!m_place.isNull());
     m_place->comment->setValue(ui->textEditComment->toPlainText());
 }
 

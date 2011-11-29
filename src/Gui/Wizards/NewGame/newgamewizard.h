@@ -65,15 +65,15 @@ private slots:
     void on_accepted();
 
 private:
-    QPointer<NewGame::LiveOfflineGameWidget> m_liveOfflineGameWidget;
-    QPointer<NewGame::OfflineGameResultWidget> m_offlineGameResultWidget;
-    QPointer<NewGame::OfflineSummaryWidget> m_offlineSummaryWidget;
-    QPointer<NewGame::OfflineDetailledGameDokoWidget> m_offlineDokoWidget;
-    QPointer<NewGame::LiveGameGeneralOptionsWidget> m_liveGameGeneralOptionsWidget;
-    QPointer<NewGame::LiveDokoGameOptionsWidget> m_liveDokoGameOptionsWidget;
-    QPointer<NewGame::SkatLiveGameOptionsWidget> m_skatLiveGameOptionsWidget;
+    NewGame::LiveOfflineGameWidget* m_liveOfflineGameWidget;
+    NewGame::OfflineGameResultWidget* m_offlineGameResultWidget;
+    NewGame::OfflineSummaryWidget* m_offlineSummaryWidget;
+    NewGame::OfflineDetailledGameDokoWidget* m_offlineDokoWidget;
+    NewGame::LiveGameGeneralOptionsWidget* m_liveGameGeneralOptionsWidget;
+    NewGame::LiveDokoGameOptionsWidget* m_liveDokoGameOptionsWidget;
+    NewGame::SkatLiveGameOptionsWidget* m_skatLiveGameOptionsWidget;
 
-    QPointer<NewGame::WizardSideWidget> m_sideWidget;
+    NewGame::WizardSideWidget* m_sideWidget;
 
     Database::DokoLiveGame *createDokoLiveGame();
 

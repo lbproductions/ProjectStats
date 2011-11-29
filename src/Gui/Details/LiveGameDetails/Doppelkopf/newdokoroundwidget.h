@@ -52,7 +52,7 @@ private:
     */
     void setupWidget();
 
-    QPointer<Database::DokoLiveGame> m_livegame;
+    Database::DokoLiveGame* m_livegame;
 
 private slots:
     /**

@@ -39,7 +39,7 @@ private:
 
     void setupViewMenu();
 
-    QPointer<ActionsManager> m_actionsManager; //!< Das Actions-Objekt des zugehörigen MainWindows.
+    ActionsManager* m_actionsManager; //!< Das Actions-Objekt des zugehörigen MainWindows.
     QMenu *m_fileMenu; //!< Das File-Menü.
     QMenu *m_editMenu;
     QMenu *m_helpMenu;

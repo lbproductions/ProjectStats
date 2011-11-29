@@ -48,7 +48,7 @@ public:
 private:
     Ui::OfflineDetailledGameDokoWidget *ui;
 
-    QPointer<Gui::Misc::PlacesComboBox> m_placesComboBox;
+    Gui::Misc::PlacesComboBox* m_placesComboBox;
 
     int m_playernumber;
 

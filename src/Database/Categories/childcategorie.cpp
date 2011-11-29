@@ -11,8 +11,10 @@ START_ROW_IMPLEMENTATION(ChildCategorie, Categorie, Categorie)
 {
     IMPLEMENT_DATABASEATTRIBUTE(QString,Categorie,icon,tr("Icon"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Categorie,parentId,tr("parentId"))
-    IMPLEMENT_ATTRIBUTE(QPointer<ParentCategorie>,ChildCategorie,parentCategorie,tr("ParentCategorie"))
+    IMPLEMENT_ATTRIBUTE(ParentCategorie*,ChildCategorie,parentCategorie,tr("ParentCategorie"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Categorie,contentType,tr("ContentType"))
+
+    m_view = 0;
 }
 
 QString ChildCategorie::mimeType() const
@@ -20,9 +22,9 @@ QString ChildCategorie::mimeType() const
     return "application/projectstats.childCategorie";
 }
 
-QPointer<ParentCategorie> ChildCategorie::calculate_parentCategorie()
+ParentCategorie* ChildCategorie::calculate_parentCategorie()
 {
-    return static_cast<ParentCategorie*>(Categories::instance()->rowById(parentId->value()).data());
+    return static_cast<ParentCategorie*>(Categories::instance()->rowById(parentId->value()));
 }
 
 Models::TableModelBase* ChildCategorie::model()

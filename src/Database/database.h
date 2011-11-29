@@ -51,7 +51,7 @@ public:
       */
     ~Database();
 
-    QList<QPointer<TableBase> > tables() const;
+    QList<TableBase* > tables() const;
 
 private:
     friend class TableRegistrar;
@@ -67,7 +67,7 @@ private:
     void createTables();
 
     QString m_databaseFilename; //!< Die Datenbankdatei
-    QList<QPointer<TableBase> > m_tables; //!< Alle registrierten Tabellen
+    QList<TableBase* > m_tables; //!< Alle registrierten Tabellen
     QSqlDatabase m_sqlDatabase; //!< Die eigentliche Datenbank
     QMutex m_databaseLock; //!< Wird gesperrt, wenn jemand die Datenbank exklusiv haben will.
 };

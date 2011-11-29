@@ -21,7 +21,7 @@ public:
 
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
 private:
-    QPointer<SidebarTreeView> m_view;
+    SidebarTreeView* m_view;
 };
 
 }

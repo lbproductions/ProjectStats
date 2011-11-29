@@ -24,8 +24,8 @@ public:
 
 friend class Sidebar;
 private:
-    QPointer<SidebarStatusBarDragButton> m_dragButton;
-    QPointer<MainWindow> m_mainWindow;
+    SidebarStatusBarDragButton* m_dragButton;
+    MainWindow* m_mainWindow;
 
     QMenu *createOptionsMenu();
 };

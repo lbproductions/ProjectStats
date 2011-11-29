@@ -56,7 +56,7 @@ private slots:
 
     void on_coordinateSystem_dimensionsChanged(QRectF);
 protected:
-    QPointer<Items::LiveGameCoordinateSystem> m_liveGameCoordinateSystem; //!< Das Koordinatensystem, welches alle Graphen enthält.
+    Items::LiveGameCoordinateSystem* m_liveGameCoordinateSystem; //!< Das Koordinatensystem, welches alle Graphen enthält.
 };
 
 }

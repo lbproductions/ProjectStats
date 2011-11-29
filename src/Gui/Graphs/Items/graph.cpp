@@ -99,7 +99,7 @@ int Graph::yMin() const
     return m_yMin;
 }
 
-QList<QPointer<GraphPoint> > Graph::points() const
+QList<GraphPoint* > Graph::points() const
 {
     return m_points;
 }

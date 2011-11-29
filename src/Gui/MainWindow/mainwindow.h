@@ -92,14 +92,14 @@ private slots:
     void on_sidebar_categorieChanged(Database::ChildCategorie*);
 
 private:
-    QPointer<ToolBar> m_toolbar; //!< Die Toolbar am oberen Rand des Fensters.
-    QPointer<Sidebar> m_sidebar; //!< Die Sidebar am linken Rand des Fensters.
-    QPointer<Misc::Splitter> m_verticalSplitter; //!< Enthält links die Sidebar und rechts die ItemsList und DetailsWidget (beide in m_horizontalSplitter).
-    QPointer<MenuBar> m_menubar; //!< Verwaltet die Menubar Elemente
-    QPointer<ActionsManager> m_actionsManager; //!< Verwaltet alle möglichen Gui-Aktionen.
-    QPointer<QStackedWidget> m_stackedWidget;
-    QPointer<QVBoxLayout> m_vBoxLayout;
-    QPointer<Statusbar> m_statusbar;
+    ToolBar* m_toolbar; //!< Die Toolbar am oberen Rand des Fensters.
+    Sidebar* m_sidebar; //!< Die Sidebar am linken Rand des Fensters.
+    Misc::Splitter* m_verticalSplitter; //!< Enthält links die Sidebar und rechts die ItemsList und DetailsWidget (beide in m_horizontalSplitter).
+    MenuBar* m_menubar; //!< Verwaltet die Menubar Elemente
+    ActionsManager* m_actionsManager; //!< Verwaltet alle möglichen Gui-Aktionen.
+    QStackedWidget* m_stackedWidget;
+    QVBoxLayout* m_vBoxLayout;
+    Statusbar* m_statusbar;
 
     /*!
       Initialisiert alle Komponenten und setzt sie korrekt zusammen.

@@ -31,7 +31,7 @@ protected slots:
     void contextMenu(QPoint);
 
 private:
-    QPointer<ActionsManager> m_actions; //!< Das Actions-Objekt des MainWindow.
+    ActionsManager* m_actions; //!< Das Actions-Objekt des MainWindow.
 };
 
 }

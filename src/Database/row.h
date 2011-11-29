@@ -236,7 +236,7 @@ protected:
     void addChildRows(QList<Row *> rows);
 
     int m_id; //!< Die ID dieser Row
-    QPointer<TableBase> m_table; //!< Die Tabelle, in die diese Row liegt
+    TableBase* m_table; //!< Die Tabelle, in die diese Row liegt
     QHash<QString, AttributeBase* > m_attributes; //!< Alle Attribute der Row. Muss von Kindklassen befüllt werden.
     QList<AttributeBase*> m_databaseAttributes; //!< Alle Datenbankattribute
     QList<Row*> m_childRows; //!< Alle Rows, die logisch zu dieser Row gehören (z.B. Round gehört zu Game)

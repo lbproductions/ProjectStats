@@ -23,19 +23,23 @@ ProgressInfoBoxWidget::ProgressInfoBoxWidget(QWidget *parent) :
 
 }
 
-void ProgressInfoBoxWidget::setFullscreen(){
+void ProgressInfoBoxWidget::setFullscreen()
+{
     m_progressbar->setFullscreen();
 }
 
-void ProgressInfoBoxWidget::setNormalMode(){
+void ProgressInfoBoxWidget::setNormalMode()
+{
 
 }
 
-QPointer<PSProgressBar> ProgressInfoBoxWidget::progressbar(){
+PSProgressBar* ProgressInfoBoxWidget::progressbar()
+{
     return m_progressbar;
 }
 
-void ProgressInfoBoxWidget::setLeftLabelText(QString text){
+void ProgressInfoBoxWidget::setLeftLabelText(QString text)
+{
     m_labelLeft->setText(text);
 }
 

@@ -24,7 +24,7 @@ QList<Player*> GameCalculator::calculate_players(){
                     Player* player = Players::instance()->rowById(p->playerId->value());
                     list.append(player);
 
-                    static_cast<LiveGame*>(m_game.data())->drinksPerPlayer->addDependingAttribute(player->alcPegel);
+                    static_cast<LiveGame*>(m_game)->drinksPerPlayer->addDependingAttribute(player->alcPegel);
 		}
 	    }
 	}

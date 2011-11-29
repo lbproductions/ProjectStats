@@ -44,11 +44,11 @@ public:
 private:
     Ui::PlaceDetailsWidget *ui;
 
-    QPointer<Database::Place> m_place;
+    Database::Place* m_place;
 
     QString m_filePath;
-    QPointer<Misc::ClickableLabel> m_labelPicture;
-    QPointer<GoogleMap> m_map;
+    Misc::ClickableLabel* m_labelPicture;
+    GoogleMap* m_map;
 
 private slots:
     void on_lineEditPLZ_editingFinished();

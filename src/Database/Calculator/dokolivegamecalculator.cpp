@@ -4,6 +4,7 @@
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/Doppelkopf/schmeisserei.h>
 #include <Database/player.h>
+#include <Database/point.h>
 
 #include <QDebug>
 
@@ -602,8 +603,8 @@ QMap<Player*,double> DokoLiveGameCalculator::calculate_doko_pointAveragePerWin()
     for(int j = 0; j<m_dokolivegame->players->value().size();j++){
         int points = 0;
         for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
-            if(m_dokolivegame->rounds->value(i)->points->value(m_dokolivegame->players->value(j)) > 0){
-                points += m_dokolivegame->rounds->value(i)->points->value(m_dokolivegame->players->value(j));
+            if(m_dokolivegame->rounds->value(i)->points->value(m_dokolivegame->players->value(j))){
+                points += m_dokolivegame->rounds->value(i)->points->value(m_dokolivegame->players->value(j))->points->value();
             }
         }
         hash.insert(m_dokolivegame->players->value(j),(double)points/(double)m_dokolivegame->doko_roundWins->value(m_dokolivegame->players->value(j)));
@@ -650,8 +651,12 @@ QMap<int,QMap<Player*,int> > DokoLiveGameCalculator::calculate_placementAfterRou
     int count = 0;
     foreach(Round* r, m_livegame->rounds->value()){
         if(r->state->value() == Round::FinishedState){
-            foreach(Player* p, m_livegame->players->value()){
-                points.insert(p,points.value(p)+r->points->value(p));
+
+            foreach(Player* p, m_livegame->players->value()) {
+                Point* point = r->points->value(p);
+                if(point) {
+                    points.insert(p,points.value(p)+point->points->value());
+                }
             }
             QMap<Player*,int> placement;
             foreach(Player* p, m_livegame->players->value()){

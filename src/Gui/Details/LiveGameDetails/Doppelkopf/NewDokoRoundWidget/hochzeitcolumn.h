@@ -33,7 +33,7 @@ signals:
     void hochzeitPlayerChanged(Database::Player*, bool);
 
 private:
-    QPointer<Database::Player> m_hochzeitPlayer;
+    Database::Player* m_hochzeitPlayer;
 };
 
 }}}}

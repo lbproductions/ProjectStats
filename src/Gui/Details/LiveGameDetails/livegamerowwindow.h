@@ -34,10 +34,10 @@ public:
     void show();
 
 protected:
-    QPointer<Database::LiveGame> m_livegame;
-    QPointer<LiveGameDetails::LiveGameDetailsWidget> m_liveGameDetailsWidget;
+    Database::LiveGame* m_livegame;
+    LiveGameDetails::LiveGameDetailsWidget* m_liveGameDetailsWidget;
 
-    QPointer<QToolBar> m_toolbar;
+    QToolBar* m_toolbar;
 
     QAction* m_actionFullScreen;
     QAction* m_actionPause;

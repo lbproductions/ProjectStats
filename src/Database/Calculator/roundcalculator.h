@@ -1,9 +1,8 @@
 #ifndef ROUNDCALCULATOR_H
 #define ROUNDCALCULATOR_H
 
-#include <QPointer>
-
 #include <QMap>
+#include <QObject>
 
 namespace Database {
 
@@ -17,20 +16,16 @@ class RoundCalculator : public QObject
 public:
     RoundCalculator(Round* round);
 
-    QMap<Player*,int> calculate_points();
-
-    QMap<Player*,Point*> calculate_pointObjects();
+    QMap<Player*,Point*> calculate_points();
 
     virtual int calculate_cardmixerPosition();
 
     virtual int calculate_roundPoints();
 
-    QList<Point*> calculate_pointInstances();
-
     virtual QList<Player*> calculate_currentPlayingPlayers();
 
 protected:
-    QPointer<Round> m_round;
+    Round* m_round;
 };
 
 }

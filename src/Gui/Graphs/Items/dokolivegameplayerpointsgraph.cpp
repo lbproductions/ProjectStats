@@ -39,7 +39,7 @@ void DokoLiveGamePlayerPointsGraph::update()
         Database::DokoRound* round = point->round();
         if(round)
         {
-            m_totalPoints += round->points->value(m_player);
+            m_totalPoints += round->points->value(m_player)->points->value();
             QPoint p = point->point();
             p.setY(m_totalPoints);
             point->setPoint(p);
@@ -73,10 +73,10 @@ void DokoLiveGamePlayerPointsGraph::addRound(::Database::Round *r){
     if(r->state->value() == Database::Round::FinishedState)
     {
         Database::DokoRound* dokoround = static_cast<Database::DokoRound*>(r);
-        m_totalPoints += r->points->value(m_player);
-        Database::Point* point = r->pointObjects->value(m_player);
+        Database::Point* point = r->points->value(m_player);
         if(point)
         {
+            m_totalPoints += r->points->value(m_player)->points->value();
             connect(point->points,SIGNAL(changed()),this,SLOT(update()));
         }
         addPoint(QPoint(r->number->value()+1,m_totalPoints),dokoround);

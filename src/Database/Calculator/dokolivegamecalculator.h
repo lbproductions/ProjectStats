@@ -101,7 +101,7 @@ public:
     QMap<int,int> calculate_doko_schmeissereiPositionAfterRounds();
     QMap<int,int> calculate_doko_schweinereiPositionAfterRounds();
 private:
-    QPointer<DokoLiveGame> m_dokolivegame;
+    DokoLiveGame* m_dokolivegame;
 };
 
 } // namespace Database

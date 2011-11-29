@@ -65,9 +65,13 @@ QMap<Player*,int> LiveGameCalculator::calculate_points(){
         }
     }
     for(int i = 0; i<m_livegame->rounds->value().size();i++){
-        for(int j = 0; j<m_livegame->players->value().size();j++){
-            hash.insert(m_livegame->players->value(j),
-                        hash.value(m_livegame->players->value(j)) + m_livegame->rounds->value(i)->points->value(m_livegame->players->value(j)));
+        for(int j = 0; j<m_livegame->players->value().size();j++)
+        {
+            Point* point = m_livegame->rounds->value(i)->points->value(m_livegame->players->value(j));
+            if(point) {
+                hash.insert(m_livegame->players->value(j),
+                        hash.value(m_livegame->players->value(j)) + point->points->value());
+            }
         }
     }
     return hash;

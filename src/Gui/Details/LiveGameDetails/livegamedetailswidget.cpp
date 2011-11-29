@@ -30,7 +30,10 @@ using namespace Gui::Details::LiveGameDetails;
 LiveGameDetailsWidget::LiveGameDetailsWidget(Database::LiveGame* livegame, QWidget* widget):
     DetailsWidget(livegame,widget),
     m_livegame(livegame),
-    m_playerTotalPointsTable(0)
+    m_infoBox(0),
+    m_roundTable(0),
+    m_playerTotalPointsTable(0),
+    m_graph(0)
 {
     this->setAutoFillBackground(true);
     this->setBackgroundRole(QPalette::Background);
@@ -43,15 +46,15 @@ void LiveGameDetailsWidget::initializeItems()
 {
     m_playerTotalPointsTable = new QTableWidget(1,m_livegame->playersSortedByPosition->value().size()+1);
 
-    if (m_roundTable.isNull())
+    if (!m_roundTable)
     {
         m_roundTable = new LiveGameDetails::LiveGameRoundTable(m_livegame,this);
     }
-    if (m_infoBox.isNull())
+    if (!m_infoBox)
     {
         m_infoBox = new LiveGameDetails::LiveGameInfoGroupBox(m_livegame,this);
     }
-    if(m_graph.isNull())
+    if(!m_graph)
     {
         m_graph = new Gui::Graphs::LiveGameGraphView(this);
         m_graph->setLiveGame(m_livegame);

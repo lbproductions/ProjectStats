@@ -28,6 +28,7 @@ using namespace Gui::MainWindow::Views::LeagueViewDetails;
 
 LeagueOverviewWidget::LeagueOverviewWidget(Database::LeagueFolderCategorie *categorie, MainWindow *parent) :
     QWidget(parent),
+    m_rowWidget(0),
     m_categorie(categorie)
 {
     setLayout(new QHBoxLayout(this));
@@ -150,11 +151,12 @@ void LeagueOverviewWidget::onGamesListRowsSelected(QList<Database::Row *> list){
         return;
     }
 
-    if(!m_rowWidget.isNull())
+    if(m_rowWidget)
     {
         m_sheet->setVisible(false);
         m_rowWidget->setVisible(false);
         m_rowWidget->deleteLater();
+        m_rowWidget = 0;
     }
 
     Details::DetailsWidget* newRowWidget = firstRow->detailsWidget();
@@ -186,10 +188,11 @@ void LeagueOverviewWidget::onPlayersListRowsSelected(QList<Database::Row *> list
         return;
     }
 
-    if(!m_rowWidget.isNull())
+    if(m_rowWidget)
     {
         m_rowWidget->setVisible(false);
         m_rowWidget->deleteLater();
+        m_rowWidget = 0;
     }
 
     Details::DetailsWidget* newRowWidget = firstRow->detailsWidget();
@@ -208,10 +211,12 @@ void LeagueOverviewWidget::onPlayersListRowsSelected(QList<Database::Row *> list
     m_scrollAreaDetails->setWidget(m_sheet);
 }
 
-void LeagueOverviewWidget::on_rowList_selectionChanged(){
-    if(!m_rowWidget.isNull())
+void LeagueOverviewWidget::on_rowList_selectionChanged()
+{
+    if(m_rowWidget)
     {
         m_rowWidget->setVisible(false);
         m_rowWidget->deleteLater();
+        m_rowWidget = 0;
     }
 }

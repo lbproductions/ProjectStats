@@ -33,7 +33,7 @@ public:
     */
     explicit DokoLiveGamePlayerStatsWidget(Database::DokoLiveGame* livegame, QWidget *parent = 0);
 
-    QPointer<Database::DokoLiveGame> m_livegame;
+    Database::DokoLiveGame* m_livegame;
 
     QList<Database::Player*> playerlist;
 

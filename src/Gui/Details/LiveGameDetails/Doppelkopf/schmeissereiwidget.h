@@ -50,7 +50,7 @@ private slots:
 private:
     Ui::SchmeissereiWidget *ui;
 
-    QPointer<Database::DokoLiveGame> m_livegame;
+    Database::DokoLiveGame* m_livegame;
     void schmeissereiAdded();
 };
 

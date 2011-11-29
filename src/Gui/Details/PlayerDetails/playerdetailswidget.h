@@ -62,9 +62,9 @@ private slots:
 private:
     Ui::PlayerWidget *ui;
 
-    QPointer<Database::Player> m_player;
-    QPointer<QColorDialog> m_colorDialog;
-    QPointer<Misc::ClickableLabel> m_labelAvatar;
+    Database::Player* m_player;
+    QColorDialog* m_colorDialog;
+    Misc::ClickableLabel* m_labelAvatar;
     QList<PlayerResidenceWidget*> m_playerResidenceWidgets;
     bool m_editable;
 };

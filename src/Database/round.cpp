@@ -12,7 +12,7 @@
 
 START_TABLE_IMPLEMENTATION(Round)
 
-QPointer<Round> Rounds::createRowInstance(int id)
+Round* Rounds::createRowInstance(int id)
 {
     Round *row = new Round(id,this);
     Round *row2 = 0;
@@ -54,14 +54,7 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
     db_state->addDependingAttribute(state);
     state->setRole(Qt::DecorationRole);
 
-
-    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,m_calc,points,tr("Points"))
-
-    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Point*,Round,RoundCalculator,m_calc,pointInstances,tr("Point Instances"))
-    points->addDependingAttribute(pointInstances);
-
-    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,Point*,Round,RoundCalculator,m_calc,pointObjects,tr("PointObjects"))
-    points->addDependingAttribute(pointObjects);
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,Point*,Round,RoundCalculator,m_calc,points,tr("Points"))
 
     IMPLEMENT_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,cardmixerPosition,tr("Cardmixer Position"))
 
@@ -93,7 +86,7 @@ QString Round::mimeType() const
 
 LiveGame* Round::calculate_game()
 {
-    LiveGame *game = static_cast<LiveGame*>(Games::instance()->rowById(this->gameId->value()).data());
+    LiveGame *game = static_cast<LiveGame*>(Games::instance()->rowById(this->gameId->value()));
     state->addDependingAttribute(game->state);
     length->addDependingAttribute(game->length);
     return game;
@@ -111,7 +104,6 @@ void Round::addPoints(Player* player, int points)
 
     point->points->addDependingAttribute(this->points);
 
-    this->pointInstances->recalculateFromScratch();
     this->points->recalculateFromScratch();
     this->roundPoints->recalculateFromScratch();
 }

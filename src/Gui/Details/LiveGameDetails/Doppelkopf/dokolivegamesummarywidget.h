@@ -22,7 +22,7 @@ public:
     void setupDokoStatsTab();
 
 private:
-    QPointer<Database::DokoLiveGame> m_dokoLiveGame;
+    Database::DokoLiveGame* m_dokoLiveGame;
 };
 
 } // namespace DokoLiveGameDetails

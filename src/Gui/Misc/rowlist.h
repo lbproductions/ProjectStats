@@ -90,8 +90,8 @@ protected slots:
     void on_editAttributeActionTriggered();
 
 private:
-    QPointer<QSortFilterProxyModel> m_proxyModel; //!< In diesem Proxymodel wird das eigentlich angezeigte Model gewrappt, und ist somit sortierbar.
-    QPointer<Models::TableModelBase> m_model; //!< Das Model, das wir eigentlich anzeigen.
+    QSortFilterProxyModel* m_proxyModel; //!< In diesem Proxymodel wird das eigentlich angezeigte Model gewrappt, und ist somit sortierbar.
+    Models::TableModelBase* m_model; //!< Das Model, das wir eigentlich anzeigen.
 };
 
 }

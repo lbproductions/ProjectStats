@@ -36,10 +36,10 @@ private:
     void saveSettings();
     void restoreSettings();
 
-    QPointer<Database::LeagueFolderCategorie> m_categorie;
-    QPointer<Gui::MainWindow::Views::LeagueViewDetails::LeagueOverviewWidget> m_overviewwidget;
-    QPointer<Gui::MainWindow::Views::LeagueViewDetails::LeagueGraphWidget> m_graphwidget;
-    QPointer<Gui::MainWindow::Views::LeagueViewDetails::LeagueStatsWidget> m_statswidget;
+    Database::LeagueFolderCategorie* m_categorie;
+    Gui::MainWindow::Views::LeagueViewDetails::LeagueOverviewWidget* m_overviewwidget;
+    Gui::MainWindow::Views::LeagueViewDetails::LeagueGraphWidget* m_graphwidget;
+    Gui::MainWindow::Views::LeagueViewDetails::LeagueStatsWidget* m_statswidget;
 
 
 };

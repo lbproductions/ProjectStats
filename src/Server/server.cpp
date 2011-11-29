@@ -191,7 +191,7 @@ int projectstatsService::gameList(GameList& result)
 
 int projectstatsService::gameCurrentPlayingPlayers(int gameId, PlayerList& result)
 {
-    Database::LiveGame* game = static_cast<Database::LiveGame*>(Database::Games::instance()->rowById(gameId).data());
+    Database::LiveGame* game = static_cast<Database::LiveGame*>(Database::Games::instance()->rowById(gameId));
     foreach(Database::Player* player, game->currentPlayingPlayers->value())
     {
         PlayerInformation info;

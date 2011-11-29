@@ -114,7 +114,6 @@ void DrinkDetailsWidget::on_lineEditName_editingFinished()
 
 void DrinkDetailsWidget::on_comboBoxType_currentIndexChanged(QString )
 {
-    Q_ASSERT(!m_drink.isNull());
     if (ui->comboBoxType->currentText() != ""){
         m_drink->type->setValue(ui->comboBoxType->currentText());
     }
@@ -122,12 +121,10 @@ void DrinkDetailsWidget::on_comboBoxType_currentIndexChanged(QString )
 
 void DrinkDetailsWidget::on_doubleSpinBoxSize_editingFinished()
 {
-    Q_ASSERT(!m_drink.isNull());
     m_drink->size->setValue(ui->doubleSpinBoxSize->value());
 }
 
 void DrinkDetailsWidget::on_doubleSpinBoxAlc_editingFinished()
 {
-    Q_ASSERT(!m_drink.isNull());
     m_drink->alc->setValue(ui->doubleSpinBoxAlc->value());
 }

@@ -28,9 +28,9 @@ signals:
     void dragged(int px);
 
 private:
-    QPointer<SidebarTreeView> m_treeView;
+    SidebarTreeView* m_treeView;
 #ifdef Q_WS_MAC
-    QPointer<SidebarStatusBar> m_options;
+    SidebarStatusBar* m_options;
 #endif
 
 };

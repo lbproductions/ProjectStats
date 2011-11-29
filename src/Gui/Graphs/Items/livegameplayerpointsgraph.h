@@ -54,8 +54,8 @@ protected:
       */
     void readPlayerPoints();
 
-    QPointer<Database::Player> m_player; //!< Der Spieler, den dieser Graph anzeigt.
-    QPointer<Database::LiveGame> m_liveGame; //!< Das LiveGame dessen Punkte angezeigt werden.
+    Database::Player* m_player; //!< Der Spieler, den dieser Graph anzeigt.
+    Database::LiveGame* m_liveGame; //!< Das LiveGame dessen Punkte angezeigt werden.
     int m_totalPoints; //!< Wird gebraucht, um die Gesamtpunktzahl des Spielers zu speichern.
 };
 

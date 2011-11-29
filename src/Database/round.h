@@ -49,11 +49,7 @@ class Round : public Row
     DECLARE_ATTRIBUTE(LiveGame*,Round,game)
     DECLARE_ATTRIBUTE(RoundState,Round,state)
 
-    DECLARE_LISTATTRIBUTE_IN_CALC(Point*,Round,RoundCalculator,pointInstances)
-
-    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,Point*,Round,RoundCalculator,pointObjects)
-
-    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Round,RoundCalculator,points)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,Point*,Round,RoundCalculator,points)
 
     DECLARE_VIRTUAL_ATTRIBUTE_IN_CALC(int,Round,RoundCalculator,cardmixerPosition)
     DECLARE_VIRTUAL_LISTATTRIBUTE_IN_CALC(Player*,Round,RoundCalculator,currentPlayingPlayers)
@@ -80,7 +76,7 @@ Q_DECLARE_METATYPE(QMap<int COMMA Database::Round*>)
 Q_DECLARE_METATYPE(QMap<Database::Player* COMMA Database::Point*>)
 
 START_TABLE_DECLARATION(Round)
-QPointer<Round> createRowInstance(int id);
+    Round* createRowInstance(int id);
 END_TABLE_DECLARATION()
 
 Q_DECLARE_METATYPE(Database::Round::RoundState)

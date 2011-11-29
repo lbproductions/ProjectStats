@@ -57,7 +57,7 @@ public:
     virtual bool mayBeEditable() const;
 
 protected:
-    QPointer<Database::Row> m_row; //!< Die Reihe, dess Details dieses Widget darstellt.
+    Database::Row* m_row; //!< Die Reihe, dess Details dieses Widget darstellt.
 
     bool m_editable;
     bool m_mayBeEditable;
