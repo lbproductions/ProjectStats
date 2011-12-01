@@ -23,7 +23,6 @@ START_ROW_IMPLEMENTATION(Place, Place, PSRow)
     IMPLEMENT_DATABASEATTRIBUTE(QString,Place,comment,tr("Comment"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Place,iconPath,tr("IconPath"))
 
-
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*, Place, PlaceCalculator, calc, players,tr("Players"))
     PlayerPlaceAssignments::instance()->rows()->addDependingAttribute(players);
 

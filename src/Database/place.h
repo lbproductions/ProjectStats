@@ -15,7 +15,7 @@ START_ROW_DECLARATION(Place, PSRow)
     DECLARE_DATABASEATTRIBUTE(QString,Place,comment)
     DECLARE_DATABASEATTRIBUTE(QString,Place,iconPath)
 
-    DECLARE_LISTATTRIBUTE_IN_CALC(Player*, Place, PlaceCalculator, players)
+    OneToManyRelation<Place, Player>* players;
     DECLARE_ATTRIBUTE(QImage,Place,icon)
 
     DECLARE_ATTRIBUTE_IN_CALC(int,Place,PlaceCalculator,gameCount)
