@@ -473,10 +473,31 @@ public:
 };
 #endif
 
+#ifndef SOAP_TYPE_ps__hasPflichtSoloResponse
+#define SOAP_TYPE_ps__hasPflichtSoloResponse (64)
+/* ps:hasPflichtSoloResponse */
+struct ps__hasPflichtSoloResponse
+{
+public:
+	bool result;	/* SOAP 1.2 RPC return element (when namespace qualified) */	/* required element of type xsd:boolean */
+};
+#endif
+
+#ifndef SOAP_TYPE_ps__hasPflichtSolo
+#define SOAP_TYPE_ps__hasPflichtSolo (65)
+/* ps:hasPflichtSolo */
+struct ps__hasPflichtSolo
+{
+public:
+	int playerId;	/* required element of type xsd:int */
+	int gameId;	/* required element of type xsd:int */
+};
+#endif
+
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (62)
+#define SOAP_TYPE_SOAP_ENV__Header (66)
 /* SOAP Header: */
 struct SOAP_ENV__Header
 {
@@ -492,7 +513,7 @@ private:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (63)
+#define SOAP_TYPE_SOAP_ENV__Code (67)
 /* SOAP Fault Code: */
 struct SOAP_ENV__Code
 {
@@ -507,7 +528,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (65)
+#define SOAP_TYPE_SOAP_ENV__Detail (69)
 /* SOAP-ENV:Detail */
 struct SOAP_ENV__Detail
 {
@@ -523,7 +544,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (68)
+#define SOAP_TYPE_SOAP_ENV__Reason (72)
 /* SOAP-ENV:Reason */
 struct SOAP_ENV__Reason
 {
@@ -537,7 +558,7 @@ public:
 #ifndef WITH_NOGLOBAL
 
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (69)
+#define SOAP_TYPE_SOAP_ENV__Fault (73)
 /* SOAP Fault: */
 struct SOAP_ENV__Fault
 {

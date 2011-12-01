@@ -169,6 +169,7 @@ static int serve_ps__gameCurrentPlayingPlayers(projectstatsService*);
 static int serve_ps__addSchmeisserei(projectstatsService*);
 static int serve_ps__addDrink(projectstatsService*);
 static int serve_ps__addRound(projectstatsService*);
+static int serve_ps__hasPflichtSolo(projectstatsService*);
 
 int projectstatsService::dispatch()
 {	soap_peek_element(this);
@@ -190,6 +191,8 @@ int projectstatsService::dispatch()
 		return serve_ps__addDrink(this);
 	if (!soap_match_tag(this, this->tag, "ps:addRound"))
 		return serve_ps__addRound(this);
+	if (!soap_match_tag(this, this->tag, "ps:hasPflichtSolo"))
+		return serve_ps__hasPflichtSolo(this);
 	return this->error = SOAP_NO_METHOD;
 }
 
@@ -555,6 +558,47 @@ static int serve_ps__addRound(projectstatsService *soap)
 	 || soap_putheader(soap)
 	 || soap_body_begin_out(soap)
 	 || soap_put_ps__addRoundResponse(soap, &soap_tmp_ps__addRoundResponse, "ps:addRoundResponse", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap->error;
+	return soap_closesock(soap);
+}
+
+static int serve_ps__hasPflichtSolo(projectstatsService *soap)
+{	struct ps__hasPflichtSolo soap_tmp_ps__hasPflichtSolo;
+	struct ps__hasPflichtSoloResponse soap_tmp_ps__hasPflichtSoloResponse;
+	soap_default_ps__hasPflichtSoloResponse(soap, &soap_tmp_ps__hasPflichtSoloResponse);
+	soap_default_ps__hasPflichtSolo(soap, &soap_tmp_ps__hasPflichtSolo);
+	soap->encodingStyle = NULL;
+	if (!soap_get_ps__hasPflichtSolo(soap, &soap_tmp_ps__hasPflichtSolo, "ps:hasPflichtSolo", NULL))
+		return soap->error;
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap->error;
+	soap->error = soap->hasPflichtSolo(soap_tmp_ps__hasPflichtSolo.playerId, soap_tmp_ps__hasPflichtSolo.gameId, soap_tmp_ps__hasPflichtSoloResponse.result);
+	if (soap->error)
+		return soap->error;
+	soap_serializeheader(soap);
+	soap_serialize_ps__hasPflichtSoloResponse(soap, &soap_tmp_ps__hasPflichtSoloResponse);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__hasPflichtSoloResponse(soap, &soap_tmp_ps__hasPflichtSoloResponse, "ps:hasPflichtSoloResponse", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	};
+	if (soap_end_count(soap)
+	 || soap_response(soap, SOAP_OK)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__hasPflichtSoloResponse(soap, &soap_tmp_ps__hasPflichtSoloResponse, "ps:hasPflichtSoloResponse", NULL)
 	 || soap_body_end_out(soap)
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))

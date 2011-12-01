@@ -165,6 +165,15 @@ int ps__addDrink(int gameId, int playerId, int drinkId, std::string& result);
 //gsoap ps service method-action: addRound ""
 int ps__addRound(int gameId, int re1PlayerId, int re2PlayerId, int hochzeitPlayerId, int schweinereiPlayerId, int trumpfabgabePlayerId, std::string soloType, bool pflichtsolo, int points, std::string comment, std::string& result);
 
+//gsoap ps service name: projectstats
+//gsoap ps service port: http://eineurl.von.uns?
+//gsoap ps service namespace: urn:projectstats
+
+//gsoap ps service method-style: rpc
+//gsoap ps service method-encoding: encoded
+//gsoap ps service method-action: hasPflichtSolo ""
+int ps__hasPflichtSolo(int playerId, int gameId, bool& result);
+
 
 
 #endif // SERVICEDESCRIPTION_H

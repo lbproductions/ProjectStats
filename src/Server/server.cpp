@@ -344,3 +344,22 @@ int projectstatsService::addRound(int gameId, int re1PlayerId, int re2PlayerId, 
     }
     return SOAP_OK;
 }
+
+int projectstatsService::hasPflichtSolo(int playerId, int gameId, bool& result)
+{
+    Database::Game* game = Database::Games::instance()->rowById(gameId);
+
+    if(game->live->value() && game->type->value() == "Doppelkopf")
+    {
+        Database::DokoLiveGame* dokogame = static_cast<Database::DokoLiveGame*>(game);
+
+        if(!dokogame->isFinished->value())
+        {
+            Database::Player* player = Database::Players::instance()->rowById(playerId);
+            qDebug() << player->name->value() << " " << dokogame->doko_hasPflichtSolo->value(player);
+            result = dokogame->doko_hasPflichtSolo->value(player);
+        }
+     }
+
+    return SOAP_OK;
+}

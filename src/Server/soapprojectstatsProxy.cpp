@@ -108,7 +108,7 @@ int projectstatsProxy::playerById(const char *endpoint, const char *soap_action,
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -164,7 +164,7 @@ int projectstatsProxy::playerList(const char *endpoint, const char *soap_action,
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -219,7 +219,7 @@ int projectstatsProxy::drinkList(const char *endpoint, const char *soap_action, 
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -274,7 +274,7 @@ int projectstatsProxy::placeList(const char *endpoint, const char *soap_action, 
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -329,7 +329,7 @@ int projectstatsProxy::gameList(const char *endpoint, const char *soap_action, G
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -384,7 +384,7 @@ int projectstatsProxy::gameCurrentPlayingPlayers(const char *endpoint, const cha
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -440,7 +440,7 @@ int projectstatsProxy::addSchmeisserei(const char *endpoint, const char *soap_ac
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -498,7 +498,7 @@ int projectstatsProxy::addDrink(const char *endpoint, const char *soap_action, i
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -556,7 +556,7 @@ int projectstatsProxy::addRound(const char *endpoint, const char *soap_action, i
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -611,6 +611,63 @@ int projectstatsProxy::addRound(const char *endpoint, const char *soap_action, i
 	 || soap_end_recv(soap))
 		return soap_closesock(soap);
 	result = soap_tmp_ps__addRoundResponse->result;
+	return soap_closesock(soap);
+}
+
+int projectstatsProxy::hasPflichtSolo(const char *endpoint, const char *soap_action, int playerId, int gameId, bool &result)
+{	struct soap *soap = this;
+	struct ps__hasPflichtSolo soap_tmp_ps__hasPflichtSolo;
+	struct ps__hasPflichtSoloResponse *soap_tmp_ps__hasPflichtSoloResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (!soap_endpoint)
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+	if (!soap_action)
+		soap_action = "";
+	soap->encodingStyle = NULL;
+	soap_tmp_ps__hasPflichtSolo.playerId = playerId;
+	soap_tmp_ps__hasPflichtSolo.gameId = gameId;
+	soap_begin(soap);
+	soap_serializeheader(soap);
+	soap_serialize_ps__hasPflichtSolo(soap, &soap_tmp_ps__hasPflichtSolo);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__hasPflichtSolo(soap, &soap_tmp_ps__hasPflichtSolo, "ps:hasPflichtSolo", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__hasPflichtSolo(soap, &soap_tmp_ps__hasPflichtSolo, "ps:hasPflichtSolo", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&result)
+		return soap_closesock(soap);
+	soap_default_bool(soap, &result);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	soap_tmp_ps__hasPflichtSoloResponse = soap_get_ps__hasPflichtSoloResponse(soap, NULL, "ps:hasPflichtSoloResponse", "");
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	result = soap_tmp_ps__hasPflichtSoloResponse->result;
 	return soap_closesock(soap);
 }
 /* End of client proxy code */
