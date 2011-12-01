@@ -3,11 +3,7 @@
 
 #include "game.h"
 
-#include "row.h"
-#include "table.h"
-#include "databaseattribute.h"
-#include "listattribute.h"
-#include "round.h"
+#include <LBDatabase/LBDatabase.h>
 
 #include <Database/Calculator/livegamecalculator.h>
 
@@ -64,7 +60,7 @@ class LiveGame : public Game
 
     Round* startNextRound();
 
-    virtual Gui::Details::SummaryWidget* summaryWidget();
+    virtual QWidget* summaryWidget();
 
 signals:
     void drinkAdded(::Database::LiveGameDrink*);
@@ -83,6 +79,5 @@ Q_DECLARE_METATYPE(QMap<Database::LiveGame* COMMA int>)
 Q_DECLARE_METATYPE(QList<Database::LiveGame*>)
 Q_DECLARE_METATYPE(QMap<int COMMA Database::LiveGame*>)
 
-Q_DECLARE_METATYPE(QMap<Database::Player* COMMA QList<Database::LiveGameDrink*> >)
-
+Q_DECLARE_METATYPE(QMap<Database::LiveGame* COMMA double>)
 #endif // DATABASE_LIVEGAME_H

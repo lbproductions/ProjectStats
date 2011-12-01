@@ -4,7 +4,6 @@
 #include "newgamewizard.h"
 
 #include <Misc/handler.h>
-#include <Database/database.h>
 #include <Database/player.h>
 #include <Database/game.h>
 #include <Gui/Misc/placescombobox.h>

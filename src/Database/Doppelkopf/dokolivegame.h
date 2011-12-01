@@ -3,18 +3,14 @@
 
 #include "../livegame.h"
 
-#include "../row.h"
-#include "../table.h"
-#include "../databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 #include <QPair>
-
-#include <Database/mappingattribute.h>
-#include <Database/Calculator/dokolivegamecalculator.h>
 
 namespace Database
 {
     class DokoRound;
+    class DokoLiveGameCalculator;
 }
 
 START_ROW_DECLARATION(DokoLiveGame, LiveGame)
@@ -111,11 +107,11 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_schweinereiPositionAfterRounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_schmeissereiPositionAfterRounds)
 
-    virtual Gui::Details::DetailsWidget* detailsWidget();
+    virtual QWidget* detailsWidget();
 
-    virtual Gui::Details::RowWindow* rowWindow();
+    virtual QWidget* rowWindow();
 
-    Gui::Details::SummaryWidget* summaryWidget();
+    QWidget* summaryWidget();
 
     static const QString TYPE;
 

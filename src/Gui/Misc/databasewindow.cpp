@@ -2,7 +2,7 @@
 
 #include <Gui/Misc/rowlist.h>
 
-#include <Database/table.h>
+#include <LBDatabase/LBDatabase.h>
 
 #include <QMessageBox>
 #include <QCloseEvent>

@@ -2,7 +2,7 @@
 #define CHILDCATEGORIE_H
 
 #include "../categorie.h"
-#include <Models/tablemodel.h>
+#include <LBDatabase/Models/tablemodel.h>
 
 namespace Gui
 {

@@ -7,7 +7,7 @@
 #include <Database/livegamedrink.h>
 
 #include <Misc/handler.h>
-#include <Database/database.h>
+
 #include <Gui/Details/LiveGameDetails/beerwidget.h>
 
 #include <Gui/Misc/clickablelabel.h>

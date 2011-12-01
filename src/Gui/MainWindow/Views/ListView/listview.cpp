@@ -129,10 +129,10 @@ void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
         m_rowWidget = 0;
     }
 
-    Details::SummaryWidget* summaryWidget = firstRow->summaryWidget();
+    Details::SummaryWidget* summaryWidget = static_cast<Gui::Details::SummaryWidget*>(firstRow->summaryWidget());
 
     if(summaryWidget == 0){
-        Details::RowWidget* newRowWidget = firstRow->rowWidget();
+        Details::RowWidget* newRowWidget = static_cast<Gui::Details::RowWidget*>(firstRow->rowWidget());
         if(newRowWidget == 0 || firstRow->detailsWidget() == 0)
         {
             return;
@@ -168,14 +168,14 @@ void ListView::on_rowList_rowDoubleClicked(Database::Row *row)
         return;
     }
 
-    Details::RowWindow *newRowWindow = row->rowWindow();
+    Details::RowWindow *newRowWindow = static_cast<Gui::Details::RowWindow*>(row->rowWindow());
     if(newRowWindow)
     {
         newRowWindow->show();
         return;
     }
 
-    Details::RowWidget* newRowWidget = row->rowWidget();
+    Details::RowWidget* newRowWidget = static_cast<Gui::Details::RowWidget*>(row->rowWidget());
     if(newRowWidget)
     {
         newRowWidget->show();

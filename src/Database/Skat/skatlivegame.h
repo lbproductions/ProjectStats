@@ -3,9 +3,7 @@
 
 #include "../livegame.h"
 
-#include "../row.h"
-#include "../table.h"
-#include "../databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 START_ROW_DECLARATION(SkatLiveGame, LiveGame)
     DECLARE_ROW_CONSTRUCTORS(SkatLiveGame, Game)

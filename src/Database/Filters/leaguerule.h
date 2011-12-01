@@ -1,15 +1,15 @@
 #ifndef LEAGUERULE_H
 #define LEAGUERULE_H
 
-#include <Database/row.h>
 #include "ruleconjunction.h"
 
-namespace Database
-{
-class EnoughLeaguePlayersRule;
-class Player;
-class LeagueFolderCategorie;
-class AtomicRule;
+#include <LBDatabase/LBDatabase.h>
+
+namespace Database {
+    class EnoughLeaguePlayersRule;
+    class Player;
+    class LeagueFolderCategorie;
+    class AtomicRule;
 }
 
 START_ROW_DECLARATION(LeagueRule, RuleConjunction)

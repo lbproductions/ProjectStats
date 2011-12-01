@@ -2,8 +2,8 @@
 #define NEWROWWIDGET_H
 
 #include <QDialog>
-#include <QPointer>
-#include <Database/row.h>
+
+#include <LBDatabase/LBDatabase.h>
 
 namespace Ui {
     class NewRowWidget;

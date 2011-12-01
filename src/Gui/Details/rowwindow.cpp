@@ -2,7 +2,7 @@
 
 #include <QScrollArea>
 
-#include <Database/row.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Gui/Details/rowwidget.h>
 #include <Gui/Misc/macwindowcontroller.h>
 
@@ -24,7 +24,7 @@ RowWindow::RowWindow(Database::Row* row, QWidget *parent, bool setupCentralWidge
         p.setColor(QPalette::Window, QColor(255,255,255));
         setPalette(p);
 
-        m_rowWidget = row->rowWidget();
+        m_rowWidget = static_cast<Gui::Details::RowWidget*>(row->rowWidget());
 
         QScrollArea *scrollArea = new QScrollArea(this);
         scrollArea->setWidget(m_rowWidget);

@@ -1,6 +1,5 @@
 #include "foldercategorie.h"
 
-#include <Models/tablemodel.h>
 #include <Database/categorieassignment.h>
 
 #include <QSqlQuery>

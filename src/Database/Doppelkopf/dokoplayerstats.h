@@ -3,8 +3,7 @@
 
 #include <QObject>
 
-#include <Database/attribute.h>
-#include <Database/listattribute.h>
+#include <LBDatabase/LBDatabase.h>
 
 namespace Database{
 

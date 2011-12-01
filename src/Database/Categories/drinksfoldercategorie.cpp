@@ -1,10 +1,7 @@
 #include "drinksfoldercategorie.h"
 
-#include "../table.h"
-#include "../database.h"
 #include "../drink.h"
 
-#include <Models/tablemodel.h>
 #include <Gui/MainWindow/Views/ListView/listview.h>
 
 #include <QIcon>

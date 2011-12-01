@@ -2,7 +2,8 @@
 #define FOLDERCATEGORIE_H
 
 #include "childcategorie.h"
-#include "../listattribute.h"
+
+#include <LBDatabase/LBDatabase.h>
 
 class QMimeData;
 

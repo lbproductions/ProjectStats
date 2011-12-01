@@ -1,14 +1,7 @@
 #ifndef DATABASE_PLACE_H
 #define DATABASE_PLACE_H
 
-#include <QPointer>
-
-#include "row.h"
-#include "table.h"
-#include "attribute.h"
-#include "databaseattribute.h"
-
-#include "player.h"
+#include <LBDatabase/LBDatabase.h>
 
 #include <Database/Calculator/placecalculator.h>
 
@@ -29,7 +22,7 @@ START_ROW_DECLARATION(Place, Row)
 
     DECLARE_ATTRIBUTE(QString,Place,displayString)
 
-    Gui::Details::DetailsWidget* detailsWidget();
+    QWidget* detailsWidget();
 
 END_ROW_DECLARATION(Place)
 

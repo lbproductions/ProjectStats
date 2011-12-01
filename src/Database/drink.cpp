@@ -1,12 +1,14 @@
 #include "drink.h"
 
-#include <QWaitCondition>
-#include <QImage>
-
-#include <Database/Calculator/drinkcalculator.h>
-#include <Database/livegame.h>
+#include "Calculator/drinkcalculator.h"
+#include "livegame.h"
+#include "player.h"
+#include "drink.h"
 
 #include <Gui/Details/DrinkDetails/DrinkDetailsWidget.h>
+
+#include <QWaitCondition>
+#include <QImage>
 
 namespace Database {
 IMPLEMENT_SINGLETON( Drinks )
@@ -83,7 +85,7 @@ QImage Drink::calculate_icon()
     return QImage();
 }
 
-Gui::Details::DetailsWidget* Drink::detailsWidget(){
+QWidget* Drink::detailsWidget(){
     return new Gui::Details::DrinkDetailsWidget(this);
 }
 

@@ -2,7 +2,6 @@
 #include "ui_schmeissereiwidget.h"
 
 #include <Database/Doppelkopf/dokoround.h>
-#include <Database/database.h>
 #include <Database/Doppelkopf/dokolivegame.h>
 #include <Database/player.h>
 #include <Misc/handler.h>

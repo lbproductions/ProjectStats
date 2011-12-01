@@ -5,7 +5,6 @@
 
 #include <Misc/handler.h>
 #include <Database/player.h>
-#include <Database/database.h>
 #include <Database/place.h>
 #include <Database/Doppelkopf/dokoofflinegame.h>
 #include <Gui/Misc/placescombobox.h>

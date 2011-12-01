@@ -10,9 +10,8 @@
 #include "Sidebar/sidebartreeview.h"
 
 #include <Misc/handler.h>
-#include <Models/tablemodel.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Gui/MainWindow/Views/view.h>
-#include <Database/database.h>
 #include <Database/Categories/childcategorie.h>
 #include <Gui/Misc/splitter.h>
 #include <Gui/Misc/macwindowcontroller.h>

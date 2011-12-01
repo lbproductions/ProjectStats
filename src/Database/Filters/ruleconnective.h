@@ -3,7 +3,7 @@
 
 #include "rule.h"
 
-#include <Database/listattribute.h>
+#include <LBDatabase/LBDatabase.h>
 
 START_ROW_DECLARATION(RuleConnective, Rule)
     DECLARE_ROW_CONSTRUCTORS(RuleConnective, Rule)

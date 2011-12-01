@@ -1,10 +1,7 @@
 #ifndef DATABASE_DOKOOFFLINEGAMEBUDDY_H
 #define DATABASE_DOKOOFFLINEGAMEBUDDY_H
 
-#include "../row.h"
-#include "../table.h"
-#include "../attribute.h"
-#include "../databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 START_ROW_DECLARATION(DokoOfflineGameBuddy, Row)
     DECLARE_ROW_CONSTRUCTORS(DokoOfflineGameBuddy, DokoOfflineGameBuddy)

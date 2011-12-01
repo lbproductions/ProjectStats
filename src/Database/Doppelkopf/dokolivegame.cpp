@@ -1,10 +1,14 @@
 #include "dokolivegame.h"
 
+#include "dokoround.h"
+#include "schmeisserei.h"
+#include "../Calculator/dokolivegamecalculator.h"
+#include "../player.h"
+
 #include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamerowwindow.h>
 #include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.h>
 #include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamesummarywidget.h>
-#include <Database/Doppelkopf/dokoround.h>
-#include <Database/Doppelkopf/schmeisserei.h>
+
 
 const QString Database::DokoLiveGame::TYPE("Doppelkopf");
 
@@ -195,17 +199,17 @@ QString DokoLiveGame::mimeType() const
     return "application/projectstats.dokoLiveGame";
 }
 
-Gui::Details::DetailsWidget* DokoLiveGame::detailsWidget()
+QWidget* DokoLiveGame::detailsWidget()
 {
     return new Gui::Details::DokoLiveGameDetailsWidget(this);
 }
 
-Gui::Details::RowWindow* DokoLiveGame::rowWindow()
+QWidget* DokoLiveGame::rowWindow()
 {
     return new Gui::Details::DokoLiveGameRowWindow(this);
 }
 
-Gui::Details::SummaryWidget* DokoLiveGame::summaryWidget(){
+QWidget* DokoLiveGame::summaryWidget(){
     return new Gui::Details::LiveGameDetails::DokoLiveGameDetails::DokoLiveGameSummaryWidget(this);
 }
 

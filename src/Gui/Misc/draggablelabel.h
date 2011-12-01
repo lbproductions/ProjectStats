@@ -3,7 +3,7 @@
 
 #include <QLabel>
 
-#include <Database/row.h>
+#include <LBDatabase/LBDatabase.h>
 
 class DraggableLabel : public QLabel
 {

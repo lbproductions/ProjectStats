@@ -1,10 +1,10 @@
 #include "playerscategorie.h"
 
 #include "../categorie.h"
-#include "../database.h"
+#include <LBDatabase/LBDatabase.h>
 #include <Database/player.h>
 
-#include <Models/tablemodel.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Gui/MainWindow/Views/ListView/listview.h>
 
 #include <QIcon>

@@ -9,7 +9,7 @@
 #include <Database/categorie.h>
 
 #include <Misc/handler.h>
-#include <Database/database.h>
+
 #include <Database/game.h>
 #include <Database/player.h>
 

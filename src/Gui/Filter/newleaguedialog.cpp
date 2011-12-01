@@ -2,7 +2,7 @@
 #include "ui_newleaguedialog.h"
 
 #include <Misc/handler.h>
-#include <Database/database.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Database/player.h>
 #include <Database/categorie.h>
 #include <Database/Categories/childcategorie.h>

@@ -3,9 +3,7 @@
 
 #include "game.h"
 
-#include "row.h"
-#include "table.h"
-#include "databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 #include <Database/Calculator/offlinegamecalculator.h>
 

@@ -4,24 +4,16 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql webkit network xml
+QT          += core gui sql webkit network xml
+TARGET      = ProjectStats
+TEMPLATE    = app
 
-TARGET = ProjectStats
-TEMPLATE = app
-DEFINES *= QT_USE_QSTRINGBUILDER
-
-CONFIG += link_pkgconfig
-PKGCONFIG += gsoap++
+DESTDIR     = $PWD/../
+DEFINES     += WITH_NONAMESPACES # needed for gsoap
 
 SOURCES += main.cpp\
-    Database/table.cpp \
-    Database/database.cpp \
     Misc/singleton.cpp \
     Database/drink.cpp \
-    Database/row.cpp \
-    Database/attribute.cpp \
-    Database/databaseattribute.cpp \
-    Models/tablemodel.cpp \
     Gui/Misc/rowlist.cpp \
     Database/player.cpp \
     Database/place.cpp \
@@ -55,10 +47,8 @@ SOURCES += main.cpp\
     Database/Calculator/gamecalculator.cpp \
     Database/Calculator/drinkcalculator.cpp \
     Database/Calculator/livegamecalculator.cpp \
-    Database/mappingattribute.cpp \
     Misc/handler.cpp \
     Misc/messagesystem.cpp \
-    Database/listattribute.cpp \
     Misc/global.cpp \
     Database/Calculator/roundcalculator.cpp \
     Database/Calculator/offlinegamecalculator.cpp \
@@ -156,8 +146,6 @@ SOURCES += main.cpp\
     Gui/Details/PlayerDetails/playerstatswidget.cpp \
     Gui/Details/LiveGameDetails/abstractlivegamewidget.cpp \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.cpp \
-    Database/attributevariant.cpp \
-    Database/taskscheduler.cpp \
     Database/Doppelkopf/dokoplayerstats.cpp \
     Gui/Details/PlayerDetails/dokoplayerstatswidget.cpp \
     Gui/Details/LiveGameDetails/livegamesummarywidget.cpp \
@@ -191,14 +179,8 @@ SOURCES += main.cpp\
     Database/Filters/leaguerule.cpp
 
 HEADERS  += \
-    Database/table.h \
-    Database/database.h \
     Misc/singleton.h \
     Database/drink.h \
-    Database/row.h \
-    Database/attribute.h \
-    Database/databaseattribute.h \
-    Models/tablemodel.h \
     Gui/Misc/rowlist.h \
     Database/player.h \
     Database/place.h \
@@ -232,10 +214,8 @@ HEADERS  += \
     Database/Calculator/gamecalculator.h \
     Database/Calculator/drinkcalculator.h \
     Database/Calculator/livegamecalculator.h \
-    Database/mappingattribute.h \
     Misc/handler.h \
     Misc/messagesystem.h \
-    Database/listattribute.h \
     Misc/Updater/Updater.h \
     Misc/global.h \
     Database/Calculator/roundcalculator.h \
@@ -355,8 +335,6 @@ HEADERS  += \
     Gui/Details/LiveGameDetails/adddrinkwidget.h \
     Gui/Details/LiveGameDetails/abstractlivegamewidget.h \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.h \
-    Database/attributevariant.h \
-    Database/taskscheduler.h \
     Database/Doppelkopf/dokoplayerstats.h \
     Gui/Details/PlayerDetails/dokoplayerstatswidget.h \
     Gui/Details/LiveGameDetails/livegamesummarywidget.h \
@@ -425,44 +403,6 @@ FORMS    += \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.ui \
     Gui/Details/PlayerDetails/dokoplayerstatswidget.ui
 
-
-mac {
-    HEADERS += Misc/cocoainitializer.h
-    OBJECTIVE_SOURCES += Misc/cocoainitializer.mm \
-                        Gui/Misc/macwindowcontroller.mm
-
-    LIBS += -F../frameworks \
-            -framework AppKit \
-            -framework Sparkle
-
-    INCLUDEPATH += ../frameworks/Sparkle.framework/Headers
-
-    HEADERS += Misc/Updater/sparkleupdater.h
-    OTHER_FILES += Misc/Updater/sparkleupdater.mm
-
-    PRIVATE_FRAMEWORKS.files = ../frameworks/Sparkle.framework
-    PRIVATE_FRAMEWORKS.path = Contents/Frameworks
-    QMAKE_BUNDLE_DATA += PRIVATE_FRAMEWORKS
-}
-
-win32 {
-    LIBS += -lws2_32 \
-            -L../frameworks/WinSparkle-0.3 \
-            -lWinSparkle
-
-
-    SOURCES += Misc/Updater/winsparkleupdater.cpp
-    HEADERS += Misc/Updater/winsparkleupdater.h
-}
-
-RESOURCES += Ressources/Ressources.qrc \
-    Ressources/drinks.qrc
-
-Documentation.target = Documentation
-Documentation.commands = ../util/doxygen-1.7.5.1/doxygen ../util/documentation/QtDoxygen/DoxyFile.debug
-Documentation.depends = FORCE
-QMAKE_EXTRA_TARGETS += Documentation
-
 OTHER_FILES += \
     Server/ps.xsd \
     Server/projectstats.wsdl \
@@ -475,49 +415,52 @@ OTHER_FILES += \
     Server/projectstats.playerById.res.xml \
     Server/projectstats.playerById.req.xml
 
-
-
-DEFINES += WITH_NONAMESPACES
-
-
+RESOURCES += Ressources/Ressources.qrc \
+    Ressources/drinks.qrc
 
 
 
 
+#
+# Platform dependend stuff
+#
 
+macx {
+    HEADERS += Misc/cocoainitializer.h \
+                 Misc/Updater/sparkleupdater.h
+    OBJECTIVE_SOURCES += Misc/cocoainitializer.mm \
+                        Gui/Misc/macwindowcontroller.mm \
+                        Misc/Updater/sparkleupdater.mm
 
+    LIBS += -F$$PWD/../frameworks/ \
+            -framework AppKit \
+            -framework Sparkle \
+            -L$$PWD/../lib/LBDatabase/lib/ -llbdatabase
 
+    INCLUDEPATH += $$PWD/../lib/LBDatabase/include \
+                    $$PWD/../frameworks/Sparkle.framework/Headers
 
+    PRE_TARGETDEPS += $$PWD/../lib/LBDatabase/lib/liblbdatabase.a
 
+    PRIVATE_FRAMEWORKS.files = $$PWD/../frameworks/Sparkle.framework
+    PRIVATE_FRAMEWORKS.path = Contents/Frameworks
+    QMAKE_BUNDLE_DATA += PRIVATE_FRAMEWORKS
+}
 
+win32 {
+    LIBS += -lws2_32 \
+            -L$$PWD/frameworks/WinSparkle-0.3 \
+            -lWinSparkle
 
+    CONFIG(release, debug|release): {
+        PRE_TARGETDEPS += $$OUT_PWD/../lib/LBDatabase/src/release/lbdatabase.lib
+        LIBS += -L$$OUT_PWD/../lib/LBDatabase/src/release/ -llbdatabase
+    }
+    else:CONFIG(debug, debug|release):  {
+        PRE_TARGETDEPS += $$OUT_PWD/../lib/LBDatabase/src/debug/lbdatabase.lib
+        LIBS += -L$$OUT_PWD/../lib/LBDatabase/src/debug/ -llbdatabase
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    SOURCES += Misc/Updater/winsparkleupdater.cpp
+    HEADERS += Misc/Updater/winsparkleupdater.h
+}

@@ -1,7 +1,7 @@
 #ifndef DATABASE_PLAYERCALCULATOR_H
 #define DATABASE_PLAYERCALCULATOR_H
 
-#include <Database/attribute.h>
+#include <LBDatabase/LBDatabase.h>
 
 class QDateTime;
 

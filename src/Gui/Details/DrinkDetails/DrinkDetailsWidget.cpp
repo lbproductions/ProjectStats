@@ -3,7 +3,7 @@
 
 #include <Gui/Misc/clickablelabel.h>
 #include <Database/drink.h>
-#include <Database/database.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Misc/handler.h>
 
 #include <QFileDialog>

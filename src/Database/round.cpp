@@ -1,10 +1,11 @@
 #include "round.h"
 
-#include <Database/Doppelkopf/dokoround.h>
-#include <Database/Skat/skatround.h>
-#include <Database/Doppelkopf/dokolivegame.h>
+#include "Doppelkopf/dokoround.h"
+#include "Skat/skatround.h"
+#include "Doppelkopf/dokolivegame.h"
 #include "livegame.h"
 #include "point.h"
+#include "player.h"
 
 #include <QDateTime>
 #include <QDebug>

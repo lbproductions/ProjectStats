@@ -1,12 +1,7 @@
 #ifndef DATABASE_ROUND_H
 #define DATABASE_ROUND_H
 
-#include "row.h"
-#include "table.h"
-#include "attribute.h"
-#include "databaseattribute.h"
-#include "mappingattribute.h"
-#include "listattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 #include <Database/Calculator/roundcalculator.h>
 
@@ -14,6 +9,7 @@ class QTimer;
 
 namespace Database{
     class Game;
+    class LiveGame;
 }
 
 namespace Database

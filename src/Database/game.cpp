@@ -1,13 +1,13 @@
 #include "game.h"
 
-#include <Database/player.h>
-#include <Database/position.h>
-#include <Database/point.h>
-#include <Database/offlinegameinformation.h>
-
+#include "player.h"
+#include "position.h"
+#include "point.h"
+#include "offlinegameinformation.h"
+#include "offlinegame.h"
 #include "Doppelkopf/dokolivegame.h"
 #include "Skat/skatlivegame.h"
-#include "offlinegame.h"
+#include "Calculator/gamecalculator.h"
 
 #include <Gui/Details/rowwindow.h>
 #include <Gui/Details/GameDetails/gamedetailswidget.h>
@@ -163,15 +163,15 @@ Place* Game::calculate_site()
     return Places::instance()->rowById(siteId->value());
 }
 
-Gui::Details::SummaryWidget* Game::summaryWidget(){
+QWidget* Game::summaryWidget(){
     return new Gui::Details::GameDetails::GameSummaryWidget(this);
 }
 
-Gui::Details::DetailsWidget* Game::detailsWidget(){
+QWidget* Game::detailsWidget(){
     return new Gui::Details::GameDetailsWidget(this);
 }
 
-Gui::Details::RowWindow* Game::detailsWindow()
+QWidget* Game::detailsWindow()
 {
     return new Gui::Details::RowWindow(this);
 }

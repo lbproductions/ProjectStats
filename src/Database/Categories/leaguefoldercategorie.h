@@ -2,7 +2,7 @@
 #define LEAGUEFOLDERCATEGORIE_H
 
 #include "foldercategorie.h"
-#include <Models/tablemodel.h>
+#include <LBDatabase/Models/tablemodel.h>
 
 #include <QStack>
 

@@ -3,16 +3,12 @@
 
 #include "../round.h"
 
-#include "../row.h"
-#include "../table.h"
-#include "../databaseattribute.h"
-#include "../listattribute.h"
-
-#include <Database/Calculator/dokoroundcalculator.h>
+#include <LBDatabase/LBDatabase.h>
 
 namespace Database{
     class Schmeisserei;
     class DokoLiveGame;
+    class DokoRoundCalculator;
 }
 
 START_ROW_DECLARATION(DokoRound, Round)

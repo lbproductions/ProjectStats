@@ -1,6 +1,8 @@
 #include "endlivegamewidget.h"
 #include "ui_endlivegamewidget.h"
 
+#include <Database/player.h>
+
 #include <QLineEdit>
 #include <QTextEdit>
 

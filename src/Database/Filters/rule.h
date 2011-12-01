@@ -1,10 +1,7 @@
 #ifndef RULE_H
 #define RULE_H
 
-#include "../row.h"
-#include "../attribute.h"
-#include "../databaseattribute.h"
-#include "../table.h"
+#include <LBDatabase/LBDatabase.h>
 
 START_ROW_DECLARATION(Rule, Row)
     DECLARE_ROW_CONSTRUCTORS(Rule, Rule)

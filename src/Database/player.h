@@ -1,12 +1,7 @@
 #ifndef DATABASE_PLAYER_H
 #define DATABASE_PLAYER_H
 
-#include "row.h"
-#include "table.h"
-#include "attribute.h"
-#include "databaseattribute.h"
-#include "listattribute.h"
-#include "mappingattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 #include <Database/Calculator/playercalculator.h>
 #include <Database/Doppelkopf/dokoplayerstats.h>
@@ -22,6 +17,7 @@ namespace Gui{
 }
 
 namespace Database{
+    class LiveGameDrink;
     class Place;
 }
 
@@ -61,11 +57,11 @@ START_ROW_DECLARATION(Player, Row)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(LiveGame*,double,Player,PlayerCalculator,alcPegel)
 
-    Gui::Details::DetailsWidget* detailsWidget();
+    QWidget* detailsWidget();
 
-    Gui::Details::StatsWidget* statsWidget();
+    QWidget* statsWidget();
 
-    Gui::Details::AbstractPlayerStatsWidget* typeStatsWidget(QString type);
+    QWidget* typeStatsWidget(QString type);
 
     DokoPlayerStats* dokoStats();
 
@@ -82,5 +78,14 @@ START_TABLE_DECLARATION(Player)
     MappingAttribute<QString,QList<Player*>,Players, Players> *playersOfType;
     QMap<QString,QList<Player*> > calculate_playersOfType();
 END_TABLE_DECLARATION()
+
+#define COMMA ,
+
+Q_DECLARE_METATYPE(QMap<Database::Player* COMMA bool>)
+Q_DECLARE_METATYPE(QMap<Database::Player* COMMA double>)
+Q_DECLARE_METATYPE(QPair<Database::Player* COMMA Database::Player*>)
+Q_DECLARE_METATYPE(QMap<QPair<Database::Player* COMMA Database::Player*> COMMA int>)
+Q_DECLARE_METATYPE(QMap<int COMMA QMap<Database::Player* COMMA int> >)
+Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Player*> >)
 
 #endif // DATABASE_PLAYER_H

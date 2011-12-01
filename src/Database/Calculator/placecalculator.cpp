@@ -1,8 +1,9 @@
 #include "placecalculator.h"
 
-#include <Database/place.h>
-#include <Database/game.h>
-#include <Database/playerplaceassignment.h>
+#include "../place.h"
+#include "../game.h"
+#include "../playerplaceassignment.h"
+#include "../player.h"
 
 namespace Database {
 

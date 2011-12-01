@@ -4,6 +4,7 @@
 
 #include <Database/Doppelkopf/dokolivegame.h>
 #include <Database/Doppelkopf/dokoround.h>
+#include <Database/player.h>
 
 #include <Gui/Misc/groupbox.h>
 #include <Gui/Misc/playercheckbox.h>

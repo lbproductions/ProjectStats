@@ -1,10 +1,10 @@
 #include "livegame.h"
 
-#include <Database/position.h>
-#include <Database/drink.h>
-#include <Database/livegamedrink.h>
-#include <Database/round.h>
-#include <Database/point.h>
+#include "player.h"
+#include "position.h"
+#include "drink.h"
+#include "livegamedrink.h"
+#include "point.h"
 #include "round.h"
 
 #include <QTime>
@@ -150,7 +150,7 @@ void LiveGame::finishGame()
     }
 }
 
-Gui::Details::SummaryWidget* LiveGame::summaryWidget(){
+QWidget* LiveGame::summaryWidget(){
     return new Gui::Details::LiveGameDetails::LiveGameSummaryWidget(this);
 }
 

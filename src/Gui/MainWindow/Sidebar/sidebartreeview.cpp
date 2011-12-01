@@ -6,10 +6,9 @@
 
 #include <Database/Categories/childcategorie.h>
 #include <Database/Categories/foldercategorie.h>
-#include <Models/tablemodel.h>
 #include <Models/categoriesmodel.h>
 #include <Database/categorie.h>
-#include <Database/database.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Misc/handler.h>
 
 #include <QHeaderView>

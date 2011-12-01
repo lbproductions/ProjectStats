@@ -1,7 +1,7 @@
 #include "gamedetailswidget.h"
 #include "ui_gamedetailswidget.h"
 
-#include <Database/database.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Database/game.h>
 #include <Database/place.h>
 #include <Database/player.h>

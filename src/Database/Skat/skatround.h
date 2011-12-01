@@ -3,9 +3,7 @@
 
 #include "../round.h"
 
-#include "../row.h"
-#include "../table.h"
-#include "../databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 START_ROW_DECLARATION(SkatRound, Round)
     DECLARE_ROW_CONSTRUCTORS(SkatRound, Round)

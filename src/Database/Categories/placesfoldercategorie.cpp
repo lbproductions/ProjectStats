@@ -1,10 +1,9 @@
 #include "placesfoldercategorie.h"
 
-#include "../table.h"
-#include "../database.h"
+#include <LBDatabase/LBDatabase.h>
 #include "../place.h"
 
-#include <Models/tablemodel.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Gui/MainWindow/Views/ListView/listview.h>
 
 #include <QIcon>

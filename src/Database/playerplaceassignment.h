@@ -1,9 +1,7 @@
 #ifndef PLAYERPLACEASSIGNMENT_H
 #define PLAYERPLACEASSIGNMENT_H
 
-#include "row.h"
-#include "table.h"
-#include "databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 START_ROW_DECLARATION(PlayerPlaceAssignment, Row)
     DECLARE_ROW_CONSTRUCTORS(PlayerPlaceAssignment, PlayerPlaceAssignment)

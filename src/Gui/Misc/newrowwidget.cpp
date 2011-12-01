@@ -2,7 +2,7 @@
 #include "ui_newrowwidget.h"
 
 #include <Gui/Details/detailswidget.h>
-#include <Database/table.h>
+#include <LBDatabase/LBDatabase.h>
 
 #include <QScrollArea>
 
@@ -23,7 +23,7 @@ NewRowWidget::NewRowWidget(Database::Row* row, QWidget *parent) :
     ui->scrollArea->setFrameShape(QFrame::Panel);
     ui->scrollArea->setAttribute(Qt::WA_MacShowFocusRect, false);
 
-    Gui::Details::DetailsWidget *detailsWidget = row->detailsWidget();
+    Gui::Details::DetailsWidget *detailsWidget = static_cast<Gui::Details::DetailsWidget*>(row->detailsWidget());
     detailsWidget->setEditable(true);
     detailsWidget->setParent(this);
     ui->scrollArea->setWidget(detailsWidget);

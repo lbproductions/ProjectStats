@@ -1,15 +1,13 @@
 #ifndef DATABASE_CATEGORIE_H
 #define DATABASE_CATEGORIE_H
 
-#include "row.h"
-#include "table.h"
-#include "attribute.h"
-#include "databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 class QStandardItem;
 
 namespace Database{
     class ParentCategorie;
+    class ChildCategorie;
 }
 
 START_ROW_DECLARATION(Categorie, Row)

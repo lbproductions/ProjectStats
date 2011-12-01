@@ -1,14 +1,12 @@
 #ifndef DATABASE_LIVEGAMEDRINK_H
 #define DATABASE_LIVEGAMEDRINK_H
 
-#include "row.h"
-#include "table.h"
-#include "attribute.h"
-#include "databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
-namespace Database
-{
+namespace Database {
     class Drink;
+    class Player;
+    class Round;
 }
 
 START_ROW_DECLARATION(LiveGameDrink, Row)
@@ -27,5 +25,7 @@ END_ROW_DECLARATION(LiveGameDrink)
 
 START_TABLE_DECLARATION(LiveGameDrink)
 END_TABLE_DECLARATION()
+
+Q_DECLARE_METATYPE(QMap<Database::Player* COMMA QList<Database::LiveGameDrink*> >)
 
 #endif // DATABASE_LIVEGAMEDRINK_H

@@ -2,6 +2,7 @@
 
 #include "schmeisserei.h"
 #include "dokolivegame.h"
+#include "../Calculator/dokoroundcalculator.h"
 
 #include <Database/player.h>
 

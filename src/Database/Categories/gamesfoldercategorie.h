@@ -7,6 +7,7 @@ namespace Database
 {
 
 class Categories;
+class Game;
 
 class GamesFolderCategorie : public FolderCategorie
 {

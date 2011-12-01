@@ -11,7 +11,7 @@
 #include <Database/player.h>
 #include <Database/place.h>
 #include <Database/drink.h>
-#include <Database/database.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Database/categorie.h>
 #include <Database/game.h>
 #include <Database/Categories/childcategorie.h>

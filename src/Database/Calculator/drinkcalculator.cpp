@@ -1,8 +1,9 @@
 #include "drinkcalculator.h"
 
-#include <Database/livegamedrink.h>
-#include <Database/drink.h>
-#include <Database/livegame.h>
+#include "../livegamedrink.h"
+#include "../drink.h"
+#include "../livegame.h"
+#include "../player.h"
 
 #include <QDebug>
 

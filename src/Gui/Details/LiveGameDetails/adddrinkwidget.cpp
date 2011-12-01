@@ -5,7 +5,7 @@
 #include "beerwidget.h"
 
 #include <Misc/handler.h>
-#include <Database/database.h>
+
 #include <Database/livegame.h>
 #include <Database/drink.h>
 #include <Database/player.h>

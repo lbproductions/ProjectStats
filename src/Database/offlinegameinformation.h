@@ -1,9 +1,7 @@
 #ifndef DATABASE_OFFLINEGAMEINFORMATION_H
 #define DATABASE_OFFLINEGAMEINFORMATION_H
 
-#include "row.h"
-#include "table.h"
-#include "databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 START_ROW_DECLARATION(OfflineGameInformation, Row)
     DECLARE_ROW_CONSTRUCTORS(OfflineGameInformation, OfflineGameInformation)

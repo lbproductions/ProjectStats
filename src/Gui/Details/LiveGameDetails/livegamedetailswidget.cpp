@@ -4,7 +4,6 @@
 #include "livegameroundtable.h"
 #include "livegameinfogroupbox.h"
 
-#include <Database/mappingattribute.h>
 #include <Database/livegame.h>
 #include <Database/player.h>
 #include <Database/point.h>

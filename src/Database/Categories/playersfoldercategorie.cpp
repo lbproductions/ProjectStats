@@ -1,11 +1,11 @@
 #include "playersfoldercategorie.h"
 
-#include "../table.h"
-#include "../database.h"
+#include <LBDatabase/LBDatabase.h>
+
 #include "../player.h"
 #include "leaguefoldercategorie.h"
 
-#include <Models/tablemodel.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Gui/MainWindow/Views/ListView/listview.h>
 
 #include <QIcon>

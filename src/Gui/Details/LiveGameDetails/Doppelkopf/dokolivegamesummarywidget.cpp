@@ -2,6 +2,7 @@
 #include "ui_gamesummarywidget.h"
 
 #include <Database/Doppelkopf/dokolivegame.h>
+#include <Database/player.h>
 
 namespace Gui {
 namespace Details {

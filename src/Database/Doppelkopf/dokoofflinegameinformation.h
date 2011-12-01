@@ -3,9 +3,7 @@
 
 #include "../offlinegameinformation.h"
 
-#include "../row.h"
-#include "../table.h"
-#include "../databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 START_ROW_DECLARATION(DokoOfflineGameInformation, OfflineGameInformation)
     DECLARE_ROW_CONSTRUCTORS(DokoOfflineGameInformation, OfflineGameInformation)

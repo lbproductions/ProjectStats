@@ -1,10 +1,7 @@
 #ifndef DATABASE_CATEGORIEASSIGNMENT_H
 #define DATABASE_CATEGORIEASSIGNMENT_H
 
-#include "row.h"
-#include "table.h"
-#include "attribute.h"
-#include "databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 START_ROW_DECLARATION(CategorieAssignment, Row)
     DECLARE_ROW_CONSTRUCTORS(CategorieAssignment, CategorieAssignment)

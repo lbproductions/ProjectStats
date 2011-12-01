@@ -3,7 +3,6 @@
 
 #include "newgamewizard.h"
 
-#include <Database/database.h>
 #include <Misc/handler.h>
 #include <Database/player.h>
 #include <Database/Doppelkopf/dokolivegame.h>

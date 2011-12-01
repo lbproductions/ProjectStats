@@ -5,6 +5,7 @@
 #include <Misc/logger.h>
 #include "game.h"
 #include "playerplaceassignment.h"
+#include "player.h"
 
 #include <Gui/Details/PlaceDetails/placedetailswidget.h>
 
@@ -51,7 +52,7 @@ QString Place::calculate_displayString(){
     return strasse->value() + " " + QString::number(nummer->value()) + ", " + ort->value();
 }
 
-Gui::Details::DetailsWidget* Place::detailsWidget(){
+QWidget* Place::detailsWidget(){
     return new Gui::Details::PlaceDetailsWidget(this);
 }
 

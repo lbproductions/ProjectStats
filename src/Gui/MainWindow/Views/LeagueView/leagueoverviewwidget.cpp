@@ -9,10 +9,7 @@
 
 #include <Gui/MainWindow/mainwindow.h>
 
-#include <Database/row.h>
 #include <Gui/Misc/sheet.h>
-
-#include <Models/tablemodel.h>
 
 #include <QHBoxLayout>
 #include <QScrollArea>
@@ -159,7 +156,7 @@ void LeagueOverviewWidget::onGamesListRowsSelected(QList<Database::Row *> list){
         m_rowWidget = 0;
     }
 
-    Details::DetailsWidget* newRowWidget = firstRow->detailsWidget();
+    Details::DetailsWidget* newRowWidget = static_cast<Gui::Details::DetailsWidget*>(firstRow->detailsWidget());
     if(newRowWidget == 0)
     {
         return;
@@ -195,7 +192,7 @@ void LeagueOverviewWidget::onPlayersListRowsSelected(QList<Database::Row *> list
         m_rowWidget = 0;
     }
 
-    Details::DetailsWidget* newRowWidget = firstRow->detailsWidget();
+    Details::DetailsWidget* newRowWidget = static_cast<Gui::Details::DetailsWidget*>(firstRow->detailsWidget());
     if(newRowWidget == 0)
     {
         return;

@@ -1,17 +1,13 @@
 #ifndef DATABASE_GAME_H
 #define DATABASE_GAME_H
 
-#include "row.h"
-#include "table.h"
-#include "attribute.h"
-#include "databaseattribute.h"
-#include "mappingattribute.h"
-#include "listattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 #include "place.h"
 #include "round.h"
+#include "Calculator/gamecalculator.h"
 
-#include <Database/Calculator/gamecalculator.h>
+#include <QString>
 
 namespace Database{
     class Player;
@@ -43,11 +39,11 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement)
     DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,points)
 
-    Gui::Details::SummaryWidget* summaryWidget();
+    QWidget* summaryWidget();
 
-    virtual Gui::Details::DetailsWidget* detailsWidget();
+    virtual QWidget* detailsWidget();
 
-    virtual Gui::Details::RowWindow* detailsWindow();
+    virtual QWidget* detailsWindow();
 
     virtual void addPlayer(Player* player);
 
@@ -69,5 +65,7 @@ START_TABLE_DECLARATION(Game)
     QMap<QString,QList<Game*> > calculate_gamesOfType();
 
 END_TABLE_DECLARATION()
+
+Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Game*> >)
 
 #endif // DATABASE_GAME_H

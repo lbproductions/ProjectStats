@@ -2,7 +2,7 @@
 #include "ui_playerdetailswidget.h"
 
 #include <Misc/handler.h>
-#include <Database/database.h>
+
 #include <Database/place.h>
 #include <Misc/handler.h>
 #include <Database/player.h>

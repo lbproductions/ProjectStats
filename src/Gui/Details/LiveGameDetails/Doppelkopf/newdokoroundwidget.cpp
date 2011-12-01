@@ -2,7 +2,6 @@
 #include "ui_newdokoroundwidget.h"
 
 #include <Database/player.h>
-#include <Database/database.h>
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/Doppelkopf/dokolivegame.h>
 #include <Misc/handler.h>

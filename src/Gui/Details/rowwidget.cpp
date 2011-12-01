@@ -3,7 +3,7 @@
 #include "detailswidget.h"
 #include "statswidget.h"
 
-#include <Database/row.h>
+#include <LBDatabase/LBDatabase.h>
 
 #include <QSplitter>
 #include <QVBoxLayout>
@@ -19,8 +19,8 @@ RowWidget::RowWidget(Database::Row* row, QWidget *parent) :
     p.setColor(QPalette::Window, QColor(255,255,255));
     setPalette(p);
 
-    m_detailsWidget = row->detailsWidget();
-    m_statsWidget = row->statsWidget();
+    m_detailsWidget = static_cast<Gui::Details::DetailsWidget*>(row->detailsWidget());
+    m_statsWidget = static_cast<Gui::Details::StatsWidget*>(row->statsWidget());
 
     QSplitter* splitter = new QSplitter(this);
     if (m_detailsWidget != 0){

@@ -1,16 +1,12 @@
 #ifndef DATABASE_DRINK_H
 #define DATABASE_DRINK_H
 
-#include "row.h"
-#include "table.h"
-#include "attribute.h"
-#include "databaseattribute.h"
-#include "listattribute.h"
-#include "mappingattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
-#include <Database/Calculator/drinkcalculator.h>
-
-#include <Database/Calculator/drinkcalculator.h>
+namespace Database {
+    class DrinkCalculator;
+    class Player;
+}
 
 START_ROW_DECLARATION(Drink, Row)
     DECLARE_ROW_CONSTRUCTORS(Drink, Drink)
@@ -27,7 +23,7 @@ START_ROW_DECLARATION(Drink, Row)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Drink,DrinkCalculator,countPerPlayer)
     DECLARE_ATTRIBUTE_IN_CALC(QString,Drink,DrinkCalculator,mostDrinks)
 
-    Gui::Details::DetailsWidget* detailsWidget();
+    QWidget* detailsWidget();
 
 END_ROW_DECLARATION(Drink)
 
@@ -40,5 +36,7 @@ MappingAttribute<QString,QList<Drink*>,Drinks,Drinks > *drinksOfType;
 QMap<QString,QList<Drink*> > calculate_drinksOfType();
 
 END_TABLE_DECLARATION()
+
+Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Drink*> >)
 
 #endif // DATABASE_DRINK_H

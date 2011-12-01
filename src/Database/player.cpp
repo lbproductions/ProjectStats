@@ -8,6 +8,7 @@
 #include "place.h"
 #include "livegamedrink.h"
 #include "playerplaceassignment.h"
+#include "livegame.h"
 
 #include <Gui/Details/PlayerDetails/playerdetailswidget.h>
 #include <Gui/Details/PlayerDetails/playerstatswidget.h>
@@ -145,15 +146,15 @@ QImage Player::calculate_avatar()
     return QImage();
 }
 
-Gui::Details::DetailsWidget* Player::detailsWidget(){
+QWidget* Player::detailsWidget(){
     return new Gui::Details::PlayerDetailsWidget(this);
 }
 
-Gui::Details::StatsWidget* Player::statsWidget(){
+QWidget* Player::statsWidget(){
     return new Gui::Details::PlayerStatsWidget(this);
 }
 
-Gui::Details::AbstractPlayerStatsWidget* Player::typeStatsWidget(QString type){
+QWidget* Player::typeStatsWidget(QString type){
     if(type == "Doppelkopf"){
         return new Gui::Details::DokoPlayerStatsWidget(this);
     }

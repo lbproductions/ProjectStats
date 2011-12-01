@@ -1,10 +1,12 @@
 #ifndef DATABASE_POSITION_H
 #define DATABASE_POSITION_H
 
-#include "row.h"
-#include "table.h"
-#include "attribute.h"
-#include "databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
+
+namespace Database {
+    class Player;
+    class Game;
+}
 
 START_ROW_DECLARATION(Position, Row)
     DECLARE_ROW_CONSTRUCTORS(Position, Position)

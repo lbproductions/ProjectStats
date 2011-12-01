@@ -2,7 +2,7 @@
 #include "ui_placedetailswidget.h"
 
 #include <Misc/handler.h>
-#include <Database/database.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Database/player.h>
 #include <Database/place.h>
 #include <Gui/Misc/clickablelabel.h>

@@ -1,10 +1,8 @@
 #include "gamesfoldercategorie.h"
 
-#include "../table.h"
-#include "../database.h"
+#include <LBDatabase/LBDatabase.h>
 #include "../game.h"
 
-#include <Models/tablemodel.h>
 #include <Gui/MainWindow/Views/ListView/listview.h>
 
 #include <QIcon>

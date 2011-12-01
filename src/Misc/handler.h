@@ -6,7 +6,7 @@
 #include <QVariant>
 #include <QDateTime>
 
-#include <Database/attributevariant.h>
+#include <LBDatabase/LBDatabase.h>
 
 class MessageSystem;
 class QDateTime;
@@ -126,22 +126,7 @@ private:
 
 #define COMMA ,
 
-Q_DECLARE_METATYPE(QPair<Database::Player* COMMA Database::Player*>)
-Q_DECLARE_METATYPE(QMap<Database::LiveGame* COMMA double>)
-Q_DECLARE_METATYPE(QMap<Database::Player* COMMA bool>)
-Q_DECLARE_METATYPE(QMap<Database::Player* COMMA double>)
-Q_DECLARE_METATYPE(QMap<QString COMMA int>)
-Q_DECLARE_METATYPE(QMap<QString COMMA double>)
-Q_DECLARE_METATYPE(QMap<QString COMMA QDateTime>)
-Q_DECLARE_METATYPE(QMap<QPair<Database::Player* COMMA Database::Player*> COMMA int>)
-Q_DECLARE_METATYPE(QMap<int COMMA int>)
 Q_DECLARE_METATYPE(QMap<QString COMMA Gui::Details::AbstractPlayerStatsWidget*>)
-Q_DECLARE_METATYPE(QList<int>)
-Q_DECLARE_METATYPE(QList<QString>)
-Q_DECLARE_METATYPE(QMap<int COMMA QMap<Database::Player* COMMA int> >)
-Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Player*> >)
-Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Drink*> >)
-Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Game*> >)
 
 
 #endif // HANDLER_H

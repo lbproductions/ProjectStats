@@ -2,7 +2,7 @@
 
 #include <Misc/handler.h>
 
-#include "Database/database.h"
+#include <LBDatabase/LBDatabase.h>
 #include <Database/place.h>
 #include <Gui/Misc/newrowwidget.h>
 

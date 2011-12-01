@@ -1,11 +1,7 @@
 #ifndef DATABASE_POINT_H
 #define DATABASE_POINT_H
 
-
-#include "row.h"
-#include "table.h"
-#include "attribute.h"
-#include "databaseattribute.h"
+#include <LBDatabase/LBDatabase.h>
 
 namespace Database
 {

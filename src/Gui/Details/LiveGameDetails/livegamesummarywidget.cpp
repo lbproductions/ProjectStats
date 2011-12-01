@@ -4,6 +4,7 @@
 #include <Database/livegame.h>
 #include <Database/livegamedrink.h>
 #include <Database/drink.h>
+#include <Database/player.h>
 
 #include <QGridLayout>
 

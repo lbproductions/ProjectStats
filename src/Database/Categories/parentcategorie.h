@@ -2,7 +2,8 @@
 #define PARENTCATEGORIE_H
 
 #include "../categorie.h"
-#include <Database/listattribute.h>
+
+#include <LBDatabase/LBDatabase.h>
 
 START_ROW_DECLARATION(ParentCategorie, Categorie)
     DECLARE_ROW_CONSTRUCTORS(ParentCategorie, Categorie)

@@ -1,7 +1,8 @@
 #include "skatlivegamecalculator.h"
 
-#include <Database/Skat/skatlivegame.h>
-#include <Database/point.h>
+#include "../Skat/skatlivegame.h"
+#include "../point.h"
+#include "../player.h"
 
 namespace Database {
 

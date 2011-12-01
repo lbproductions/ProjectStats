@@ -22,8 +22,7 @@
 #include <Gui/MainWindow/mainwindow.h>
 #include <Server/soapprojectstatsService.h>
 
-#include <Database/database.h>
-#include <Database/attribute.h>
+#include <LBDatabase/LBDatabase.h>
 #include <Database/player.h>
 #include <Database/drink.h>
 #include <Database/place.h>
@@ -34,7 +33,6 @@
 #include <Database/Categories/childcategorie.h>
 #include <Database/Categories/parentcategorie.h>
 #include <Database/livegamedrink.h>
-#include <Database/taskscheduler.h>
 #include <Server/server.h>
 
 Handler::Handler(int argc, char *argv[])

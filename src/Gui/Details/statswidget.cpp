@@ -1,6 +1,6 @@
 #include "statswidget.h"
 
-#include <Database/row.h>
+#include <LBDatabase/LBDatabase.h>
 
 using namespace Gui::Details;
 

@@ -2,8 +2,7 @@
 
 #include "rowlistheader.h"
 
-#include <Models/tablemodel.h>
-#include <Database/attribute.h>
+#include <LBDatabase/LBDatabase.h>
 
 #include <QSortFilterProxyModel>
 #include <QSettings>
