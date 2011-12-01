@@ -35,7 +35,7 @@ QString Schmeisserei::mimeType() const
 }
 
 Player* Schmeisserei::calculate_player(){
-    return Players::instance()->rowById(playerId->value());
+    return Players::instance()->castedRowById(playerId->value());
 }
 
 END_ROW_IMPLEMENTATION()

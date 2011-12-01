@@ -24,7 +24,7 @@ LiveGameCalculator::LiveGameCalculator(LiveGame* livegame, QObject *parent) :
 QList<LiveGameDrink*> LiveGameCalculator::calculate_drinks(){
     QList<LiveGameDrink*> list;
     foreach(LiveGameDrink* d, LiveGameDrinks::instance()->allRows()){
-        if (Rounds::instance()->rowById(d->roundId->value())->game->value()->id() == m_livegame->id()){
+        if (Rounds::instance()->castedRowById(d->roundId->value())->game->value()->id() == m_livegame->id()){
             list.append(d);
         }
     }
@@ -37,7 +37,7 @@ QMap<Player*,QList<LiveGameDrink*> > LiveGameCalculator::calculate_drinksPerPlay
 
     foreach(LiveGameDrink* drink, m_livegame->drinks->value())
     {
-        Player* player = Players::instance()->rowById(drink->playerId->value());
+        Player* player = Players::instance()->castedRowById(drink->playerId->value());
         QList<LiveGameDrink*> list = hash.value(player);
         list.append(drink);
         hash.insert(player,list);
@@ -136,7 +136,7 @@ QList<Player*> LiveGameCalculator::calculate_playersSortedByPosition(){
 
     foreach(Position* p, Positions::instance()->rowsBySqlCondition(" WHERE gameId = "+QString::number(m_game->id())+" ORDER BY position"))
     {
-        alist.append(Players::instance()->rowById(p->playerId->value()));
+        alist.append(Players::instance()->castedRowById(p->playerId->value()));
     }
     return alist;
 

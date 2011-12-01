@@ -9,12 +9,16 @@ namespace Ui {
     class NewRowWidget;
 }
 
+namespace Database {
+    class PSRow;
+}
+
 class NewRowWidget : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit NewRowWidget(Database::Row* row, QWidget *parent = 0);
+    explicit NewRowWidget(Database::PSRow* row, QWidget *parent = 0);
     ~NewRowWidget();
 
 private slots:
@@ -25,7 +29,7 @@ private slots:
 private:
     Ui::NewRowWidget *ui;
 
-    Database::Row* m_row;
+    Database::PSRow* m_row;
 };
 
 #endif // NEWROWWIDGET_H

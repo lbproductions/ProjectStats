@@ -26,7 +26,7 @@ QList<Drink*> DrinksFolderCategorie::calculate_drinks()
     QList<Drink*> drinks;
     foreach(int i, this->rows->value())
     {
-        drinks.append(Drinks::instance()->rowById(i));
+        drinks.append(Drinks::instance()->castedRowById(i));
     }
 
     return drinks;
@@ -65,7 +65,7 @@ void DrinksFolderCategorie::dropMimeData(const QMimeData *data)
 	int id = -1;
 	stream >> id;
 
-        Drink *d = Drinks::instance()->rowById(id);
+        Drink *d = Drinks::instance()->castedRowById(id);
         if(d)
 	{
 	    insertRow(d);

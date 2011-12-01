@@ -85,9 +85,9 @@ LeagueOverviewWidget::LeagueOverviewWidget(Database::LeagueFolderCategorie *cate
     restoreSettings();
 
     connect(m_rowListPlayer,SIGNAL(selectionChanged()),this,SLOT(on_rowList_selectionChanged()));
-    connect(m_rowListPlayer,SIGNAL(rowsSelected(QList<Database::Row*>)),this,SLOT(onPlayersListRowsSelected(QList<Database::Row*>)));
+    connect(m_rowListPlayer,SIGNAL(rowsSelected(QList<Database::PSRow*>)),this,SLOT(onPlayersListRowsSelected(QList<Database::PSRow*>)));
     connect(m_rowListGames,SIGNAL(selectionChanged()),this,SLOT(on_rowList_selectionChanged()));
-    connect(m_rowListGames,SIGNAL(rowsSelected(QList<Database::Row*>)),this,SLOT(onGamesListRowsSelected(QList<Database::Row*>)));
+    connect(m_rowListGames,SIGNAL(rowsSelected(QList<Database::PSRow*>)),this,SLOT(onGamesListRowsSelected(QList<Database::PSRow*>)));
 
     connect(bar,SIGNAL(prevClicked()),this,SIGNAL(onPrevClicked()));
     connect(bar,SIGNAL(nextClicked()),this,SIGNAL(onNextClicked()));
@@ -136,12 +136,12 @@ void LeagueOverviewWidget::updateStatusbar(){
 
 }
 
-void LeagueOverviewWidget::onGamesListRowsSelected(QList<Database::Row *> list){
+void LeagueOverviewWidget::onGamesListRowsSelected(QList<Database::PSRow *> list){
     if(list.isEmpty())
     {
         return;
     }
-    Database::Row *firstRow = list.first();
+    Database::PSRow *firstRow = list.first();
 
     if(firstRow == 0)
     {
@@ -172,13 +172,13 @@ void LeagueOverviewWidget::onGamesListRowsSelected(QList<Database::Row *> list){
     m_scrollAreaDetails->setWidget(m_sheet);
 }
 
-void LeagueOverviewWidget::onPlayersListRowsSelected(QList<Database::Row *> list){
+void LeagueOverviewWidget::onPlayersListRowsSelected(QList<Database::PSRow *> list){
 
     if(list.isEmpty())
     {
         return;
     }
-    Database::Row *firstRow = list.first();
+    Database::PSRow *firstRow = list.first();
 
     if(firstRow == 0)
     {

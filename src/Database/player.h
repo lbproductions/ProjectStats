@@ -1,7 +1,7 @@
 #ifndef DATABASE_PLAYER_H
 #define DATABASE_PLAYER_H
 
-#include <LBDatabase/LBDatabase.h>
+#include "psrow.h"
 
 #include <Database/Calculator/playercalculator.h>
 #include <Database/Doppelkopf/dokoplayerstats.h>
@@ -23,7 +23,7 @@ namespace Database{
 
 class QDateTime;
 
-START_ROW_DECLARATION(Player, Row)
+START_ROW_DECLARATION(Player, PSRow)
     DECLARE_ROW_CONSTRUCTORS(Player, Player)
 
     DECLARE_DATABASEATTRIBUTE(QString,Player,name)
@@ -57,9 +57,9 @@ START_ROW_DECLARATION(Player, Row)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(LiveGame*,double,Player,PlayerCalculator,alcPegel)
 
-    QWidget* detailsWidget();
+    Gui::Details::DetailsWidget* detailsWidget();
 
-    QWidget* statsWidget();
+    Gui::Details::StatsWidget* statsWidget();
 
     QWidget* typeStatsWidget(QString type);
 

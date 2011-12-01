@@ -13,7 +13,7 @@ namespace Models
 
 namespace Database
 {
-    class Row;
+    class PSRow;
     class AttributeBase;
 }
 
@@ -56,11 +56,11 @@ signals:
     /*!
       Dieses Signal wird gesendet, wenn ein Element doppelt geklickt wurde.
       */
-    void rowDoubleClicked(Database::Row *row);
+    void rowDoubleClicked(Database::PSRow *row);
     /*!
       Dieses Signal wird gesendet, wenn mehrere Element der Liste angewählt wurden.
       */
-    void rowsSelected(QList<Database::Row*> rows);
+    void rowsSelected(QList<Database::PSRow*> rows);
 
     /*!
       Dieses Signal wird gesendet, wenn sich die Auswahl der Liste allgemein geändert hat.

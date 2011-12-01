@@ -27,7 +27,7 @@ QList<Place*> PlacesFolderCategorie::calculate_places()
     QList<Place*> places;
     foreach(int i, this->rows->value())
     {
-        places.append(Places::instance()->rowById(i));
+        places.append(Places::instance()->castedRowById(i));
     }
 
     return places;
@@ -65,7 +65,7 @@ void PlacesFolderCategorie::dropMimeData(const QMimeData *data)
 	int id = -1;
 	stream >> id;
 
-        Place *p = Places::instance()->rowById(id);
+        Place *p = Places::instance()->castedRowById(id);
         if(p)
 	{
 	    insertRow(p);

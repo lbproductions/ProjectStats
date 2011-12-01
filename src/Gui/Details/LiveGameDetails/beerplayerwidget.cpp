@@ -114,7 +114,7 @@ void BeerPlayerWidget::dropEvent(QDropEvent *event)
 
     event->acceptProposedAction();
 
-    Database::Drink *d = Database::Drinks::instance()->rowById(id);
+    Database::Drink *d = Database::Drinks::instance()->castedRowById(id);
     if(d)
     {
         if(event->keyboardModifiers() == Qt::ShiftModifier){

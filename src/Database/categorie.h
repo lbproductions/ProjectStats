@@ -1,7 +1,7 @@
 #ifndef DATABASE_CATEGORIE_H
 #define DATABASE_CATEGORIE_H
 
-#include <LBDatabase/LBDatabase.h>
+#include "psrow.h"
 
 class QStandardItem;
 
@@ -10,7 +10,7 @@ namespace Database{
     class ChildCategorie;
 }
 
-START_ROW_DECLARATION(Categorie, Row)
+START_ROW_DECLARATION(Categorie, PSRow)
     DECLARE_ROW_CONSTRUCTORS(Categorie, Categorie)
 
     /*!

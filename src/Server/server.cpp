@@ -42,7 +42,7 @@ void Server::run()
 
 int projectstatsService::playerById(int id, PlayerInformation &result)
 {
-    Database::Player* player = Database::Players::instance()->rowById(id);
+    Database::Player* player = Database::Players::instance()->castedRowById(id);
 
     if(!player)
     {
@@ -191,7 +191,7 @@ int projectstatsService::gameList(GameList& result)
 
 int projectstatsService::gameCurrentPlayingPlayers(int gameId, PlayerList& result)
 {
-    Database::LiveGame* game = static_cast<Database::LiveGame*>(Database::Games::instance()->rowById(gameId));
+    Database::LiveGame* game = static_cast<Database::LiveGame*>(Database::Games::instance()->castedRowById(gameId));
     foreach(Database::Player* player, game->currentPlayingPlayers->value())
     {
         PlayerInformation info;
@@ -207,7 +207,7 @@ int projectstatsService::gameCurrentPlayingPlayers(int gameId, PlayerList& resul
 
 int projectstatsService::addSchmeisserei(int gameId, int playerId, std::string type, std::string& /*result*/)
 {
-    Database::Game* game = Database::Games::instance()->rowById(gameId);
+    Database::Game* game = Database::Games::instance()->castedRowById(gameId);
 
     if(game->live->value() && game->type->value() == "Doppelkopf")
     {
@@ -216,7 +216,7 @@ int projectstatsService::addSchmeisserei(int gameId, int playerId, std::string t
         if(!dokogame->isFinished->value())
         {
             Database::DokoRound* round = static_cast<Database::DokoRound*>(dokogame->currentRound->value());
-            Database::Player* player = Database::Players::instance()->rowById(playerId);
+            Database::Player* player = Database::Players::instance()->castedRowById(playerId);
             QString stype = QString::fromUtf8(type.c_str());
             round->addSchmeisserei(player, stype);
         }
@@ -227,12 +227,12 @@ int projectstatsService::addSchmeisserei(int gameId, int playerId, std::string t
 
 int projectstatsService::addDrink(int gameId, int playerId, int drinkId, std::string& /*result*/)
 {
-    Database::Game* game = Database::Games::instance()->rowById(gameId);
+    Database::Game* game = Database::Games::instance()->castedRowById(gameId);
 
     if(game->live->value()){
         Database::LiveGame* liveGame = static_cast<Database::LiveGame*>(game);
-        Database::Drink* drink = Database::Drinks::instance()->rowById(drinkId);
-        Database::Player* player = Database::Players::instance()->rowById(playerId);
+        Database::Drink* drink = Database::Drinks::instance()->castedRowById(drinkId);
+        Database::Player* player = Database::Players::instance()->castedRowById(playerId);
         liveGame->addDrink(player,drink);
     }
 
@@ -241,7 +241,7 @@ int projectstatsService::addDrink(int gameId, int playerId, int drinkId, std::st
 
 int projectstatsService::addRound(int gameId, int re1PlayerId, int re2PlayerId, int hochzeitPlayerId, int schweinereiPlayerId, int trumpfabgabePlayerId, std::string soloType, bool pflichtsolo, int points, std::string comment, std::string &/*result*/)
 {
-    Database::Game* game = Database::Games::instance()->rowById(gameId);
+    Database::Game* game = Database::Games::instance()->castedRowById(gameId);
 
     if(game->live->value() && game->type->value() == "Doppelkopf")
     {
@@ -254,8 +254,8 @@ int projectstatsService::addRound(int gameId, int re1PlayerId, int re2PlayerId, 
             // Kein Solo
             if (soloType == "")
             {
-                Database::Player* re1 = Database::Players::instance()->rowById(re1PlayerId);
-                Database::Player* re2 = Database::Players::instance()->rowById(re2PlayerId);
+                Database::Player* re1 = Database::Players::instance()->castedRowById(re1PlayerId);
+                Database::Player* re2 = Database::Players::instance()->castedRowById(re2PlayerId);
 
                 Database::Player* contra1 = 0;
                 Database::Player* contra2 = 0;
@@ -301,7 +301,7 @@ int projectstatsService::addRound(int gameId, int re1PlayerId, int re2PlayerId, 
             // Solo
             else
             {
-                Database::Player* re1 = Database::Players::instance()->rowById(re1PlayerId);
+                Database::Player* re1 = Database::Players::instance()->castedRowById(re1PlayerId);
                 Database::Player* contra1 = 0;
                 Database::Player* contra2 = 0;
                 Database::Player* contra3 = 0;

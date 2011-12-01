@@ -150,7 +150,7 @@ void LiveGame::finishGame()
     }
 }
 
-QWidget* LiveGame::summaryWidget(){
+Gui::Details::SummaryWidget *LiveGame::summaryWidget(){
     return new Gui::Details::LiveGameDetails::LiveGameSummaryWidget(this);
 }
 

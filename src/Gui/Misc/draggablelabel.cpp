@@ -5,7 +5,7 @@
 
 #include <Database/drink.h>
 
-DraggableLabel::DraggableLabel(Database::Row* row, QWidget *parent) :
+DraggableLabel::DraggableLabel(Database::PSRow* row, QWidget *parent) :
     QLabel(parent)
 {
     m_row = row;

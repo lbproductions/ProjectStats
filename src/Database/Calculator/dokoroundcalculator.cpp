@@ -47,10 +47,10 @@ int DokoRoundCalculator::calculate_roundPoints()
     int soloId = m_dokoround->doko_soloPlayerId->value();
     if(soloId > 0)
     {
-        return qAbs(m_dokoround->points->value(Players::instance()->rowById(soloId))->points->value() / 3);
+        return qAbs(m_dokoround->points->value(Players::instance()->castedRowById(soloId))->points->value() / 3);
     }
 
-    Point* point = m_dokoround->points->value(Players::instance()->rowById(m_dokoround->doko_re1PlayerId->value()));
+    Point* point = m_dokoround->points->value(Players::instance()->castedRowById(m_dokoround->doko_re1PlayerId->value()));
     if(point) {
         return qAbs(point->points->value());
     }

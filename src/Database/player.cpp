@@ -31,7 +31,7 @@ Player* Players::playerByName(QString name)
     QSqlQuery select = query("SELECT id FROM players WHERE name = '"+name+"'");
     if(select.first())
     {
-        return rowById(select.value(0).toInt());
+        return castedRowById(select.value(0).toInt());
     }
 
     return 0;
@@ -53,7 +53,7 @@ QMap<QString,QList<Player*> > Players::calculate_playersOfType(){
 
 END_TABLE_IMPLEMENTATION()
 
-START_ROW_IMPLEMENTATION(Player, Player, Row)
+START_ROW_IMPLEMENTATION(Player, Player, PSRow)
 {
 
     PlayerCalculator* calc = new PlayerCalculator(this,this);
@@ -146,11 +146,11 @@ QImage Player::calculate_avatar()
     return QImage();
 }
 
-QWidget* Player::detailsWidget(){
+Gui::Details::DetailsWidget* Player::detailsWidget(){
     return new Gui::Details::PlayerDetailsWidget(this);
 }
 
-QWidget* Player::statsWidget(){
+Gui::Details::StatsWidget* Player::statsWidget(){
     return new Gui::Details::PlayerStatsWidget(this);
 }
 

@@ -5,7 +5,7 @@
 
 namespace Database{
 
-    class Row;
+    class PSRow;
 
 }
 
@@ -17,7 +17,7 @@ class StatsWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit StatsWidget(Database::Row *row, QWidget *parent = 0);
+    explicit StatsWidget(Database::PSRow *row, QWidget *parent = 0);
 
 signals:
 

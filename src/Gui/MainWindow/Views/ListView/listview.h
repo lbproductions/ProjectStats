@@ -8,7 +8,7 @@
 namespace Database
 {
     class ChildCategorie;
-    class Row;
+    class PSRow;
 }
 
 class QScrollArea;
@@ -57,13 +57,13 @@ private slots:
       Dieser Slot wird aufgerufen, wenn in der ItemsList ein Spiel ausgewählt wurde.<br>
       Dann wird das zum Spiel passende Widget als DetailsWidget gesetzt.
       */
-    void on_rowList_rowsSelected(QList<Database::Row*>);
+    void on_rowList_rowsSelected(QList<Database::PSRow*>);
 
     /*!
       Dieser Slot wird aufgerufen, wenn ein Spiel in der ItemsList doppelt geklickt wurde.<br>
       Dann wird ein neues zum Spiel passendes Fenster geöffnet (z.B. ein LiveGameWidget)
       */
-    void on_rowList_rowDoubleClicked(Database::Row*);
+    void on_rowList_rowDoubleClicked(Database::PSRow*);
 
     void on_editActionToggled(bool checked);
 

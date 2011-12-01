@@ -44,7 +44,7 @@ Rule* SmartFolderCategorie::calculate_filter()
     if(!qlist.isEmpty())
     {
         int filterId = qlist.at(0)->elementId->value();
-        return Rules::instance()->rowById(filterId);
+        return Rules::instance()->castedRowById(filterId);
     }
 
     return 0;

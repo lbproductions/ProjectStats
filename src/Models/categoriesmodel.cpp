@@ -41,10 +41,10 @@ CategoriesModel::CategoriesModel(Database::Categories *categories) :
 
     }
 
-    connect(m_categories,SIGNAL(rowInserted(::Database::Row*)),this,SLOT(on_folderCreated(::Database::Row*)));
+    connect(m_categories,SIGNAL(rowInserted(::Database::PSRow*)),this,SLOT(on_folderCreated(::Database::PSRow*)));
 }
 
-void CategoriesModel::on_folderCreated(::Database::Row* row)
+void CategoriesModel::on_folderCreated(::Database::PSRow* row)
 {
     Database::FolderCategorie* folder = static_cast<Database::FolderCategorie*>(row);
     if(folder == 0)

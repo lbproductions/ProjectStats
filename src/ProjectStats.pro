@@ -175,7 +175,8 @@ SOURCES += main.cpp\
     Server/server.cpp \
     Gui/Misc/sheet.cpp \
     Database/Categories/smartfoldercategorie.cpp \
-    Database/Filters/leaguerule.cpp
+    Database/Filters/leaguerule.cpp \
+    Database/psrow.cpp
 
 HEADERS  += \
     Misc/singleton.h \
@@ -367,7 +368,8 @@ HEADERS  += \
     Server/stdsoap2.h \
     Gui/Misc/sheet.h \
     Database/Categories/smartfoldercategorie.h \
-    Database/Filters/leaguerule.h
+    Database/Filters/leaguerule.h \
+    Database/psrow.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \

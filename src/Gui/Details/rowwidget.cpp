@@ -3,7 +3,7 @@
 #include "detailswidget.h"
 #include "statswidget.h"
 
-#include <LBDatabase/LBDatabase.h>
+#include <Database/psrow.h>
 
 #include <QSplitter>
 #include <QVBoxLayout>
@@ -11,7 +11,7 @@
 
 using namespace Gui::Details;
 
-RowWidget::RowWidget(Database::Row* row, QWidget *parent) :
+RowWidget::RowWidget(Database::PSRow* row, QWidget *parent) :
     QWidget(parent),
     m_row(row)
 {

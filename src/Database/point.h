@@ -14,6 +14,8 @@ START_ROW_DECLARATION(Point, Row)
 
     Point(Round* round, Player* player, int points);
 
+    ChildRelation<Point,Round>* round2;
+
     DECLARE_DATABASEATTRIBUTE(int,Point,playerId)
     DECLARE_DATABASEATTRIBUTE(int,Point,roundId)
     DECLARE_DATABASEATTRIBUTE(int,Point,points)

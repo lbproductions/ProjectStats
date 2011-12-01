@@ -12,7 +12,7 @@
 START_TABLE_IMPLEMENTATION(Place)
 END_TABLE_IMPLEMENTATION()
 
-START_ROW_IMPLEMENTATION(Place, Place, Row)
+START_ROW_IMPLEMENTATION(Place, Place, PSRow)
 {
     PlaceCalculator* calc = new PlaceCalculator(this,this);
 
@@ -22,6 +22,7 @@ START_ROW_IMPLEMENTATION(Place, Place, Row)
     IMPLEMENT_DATABASEATTRIBUTE(int,Place,nummer,tr("Nr"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Place,comment,tr("Comment"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,Place,iconPath,tr("IconPath"))
+
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*, Place, PlaceCalculator, calc, players,tr("Players"))
     PlayerPlaceAssignments::instance()->rows()->addDependingAttribute(players);
@@ -52,7 +53,7 @@ QString Place::calculate_displayString(){
     return strasse->value() + " " + QString::number(nummer->value()) + ", " + ort->value();
 }
 
-QWidget* Place::detailsWidget(){
+Gui::Details::DetailsWidget* Place::detailsWidget(){
     return new Gui::Details::PlaceDetailsWidget(this);
 }
 

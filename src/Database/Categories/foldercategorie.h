@@ -3,7 +3,7 @@
 
 #include "childcategorie.h"
 
-#include <LBDatabase/LBDatabase.h>
+#include "../psrow.h"
 
 class QMimeData;
 
@@ -14,8 +14,8 @@ START_ROW_DECLARATION(FolderCategorie, ChildCategorie)
     virtual void dropMimeData(const QMimeData *data);
 
 signals:
-    void rowInserted(::Database::Row*);
-    void rowRemoved(::Database::Row*);
+    void rowInserted(::Database::PSRow*);
+    void rowRemoved(::Database::PSRow*);
 
 protected:
     DECLARE_LISTATTRIBUTE(int,FolderCategorie,rows)
