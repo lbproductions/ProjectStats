@@ -11,8 +11,6 @@ START_ROW_IMPLEMENTATION(Point, Point, Row)
     IMPLEMENT_DATABASEATTRIBUTE(int,Point,playerId,tr("PlayerId"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Point,roundId,tr("RoundId"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Point,points,tr("Points"))
-
-    round2 = new ChildRelation<Point,Round>("round2","round2",this);
 }
 
 Point::Point(Round *round, Player *player, int points) :
