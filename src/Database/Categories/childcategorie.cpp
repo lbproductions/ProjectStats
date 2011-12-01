@@ -24,7 +24,7 @@ QString ChildCategorie::mimeType() const
 
 ParentCategorie* ChildCategorie::calculate_parentCategorie()
 {
-    return static_cast<ParentCategorie*>(Categories::instance()->rowById(parentId->value()));
+    return static_cast<ParentCategorie*>(Categories::instance()->castedRowById(parentId->value()));
 }
 
 Models::TableModelBase* ChildCategorie::model()

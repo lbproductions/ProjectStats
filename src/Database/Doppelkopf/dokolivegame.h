@@ -107,11 +107,11 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_schweinereiPositionAfterRounds)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(int,int,DokoLiveGame,DokoLiveGameCalculator,doko_schmeissereiPositionAfterRounds)
 
-    virtual QWidget* detailsWidget();
+    virtual Gui::Details::DetailsWidget* detailsWidget();
 
-    virtual QWidget* rowWindow();
+    virtual Gui::Details::RowWindow* rowWindow();
 
-    QWidget* summaryWidget();
+    Gui::Details::SummaryWidget* summaryWidget();
 
     static const QString TYPE;
 

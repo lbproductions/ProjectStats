@@ -38,7 +38,7 @@ Round* Rounds::createRowInstance(int id)
 
 END_TABLE_IMPLEMENTATION()
 
-START_ROW_IMPLEMENTATION(Round, Round, Row)
+START_ROW_IMPLEMENTATION(Round, Round, PSRow)
 {
     m_calc = new RoundCalculator(this);
 
@@ -68,7 +68,7 @@ START_ROW_IMPLEMENTATION(Round, Round, Row)
 }
 
 Round::Round(Game* game, int number) :
-    Row(0,Rounds::instance())
+    PSRow(0,Rounds::instance())
 {
     initializeAttributes();
     this->gameId->setValue(game->id());
@@ -87,7 +87,7 @@ QString Round::mimeType() const
 
 LiveGame* Round::calculate_game()
 {
-    LiveGame *game = static_cast<LiveGame*>(Games::instance()->rowById(this->gameId->value()));
+    LiveGame *game = static_cast<LiveGame*>(Games::instance()->castedRowById(this->gameId->value()));
     state->addDependingAttribute(game->state);
     length->addDependingAttribute(game->length);
     return game;

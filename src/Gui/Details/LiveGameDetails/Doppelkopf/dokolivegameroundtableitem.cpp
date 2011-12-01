@@ -139,7 +139,7 @@ void DokoLiveGameRoundTablePlayerItem::setPoints(int points)
 
     foreach(Database::Point* point, m_round->points->value())
     {
-        Database::Player* player = Database::Players::instance()->rowById(point->playerId->value());
+        Database::Player* player = Database::Players::instance()->castedRowById(point->playerId->value());
 
         if(m_round->doko_re->value(player))
         {
@@ -187,7 +187,7 @@ void DokoLiveGameRoundTableTotalPointsItem::updateContent()
         return;
     }
     Database::Point* point = m_round->points->value().values().at(0);
-    Database::Player* player = Database::Players::instance()->rowById(point->playerId->value());
+    Database::Player* player = Database::Players::instance()->castedRowById(point->playerId->value());
     int points = qAbs(point->points->value());
     if(m_round->doko_soloPlayerId->value() == player->id())
     {

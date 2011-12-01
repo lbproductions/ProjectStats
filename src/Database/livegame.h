@@ -60,7 +60,7 @@ class LiveGame : public Game
 
     Round* startNextRound();
 
-    virtual QWidget* summaryWidget();
+    virtual Gui::Details::SummaryWidget* summaryWidget();
 
 signals:
     void drinkAdded(::Database::LiveGameDrink*);

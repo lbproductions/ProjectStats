@@ -199,17 +199,17 @@ QString DokoLiveGame::mimeType() const
     return "application/projectstats.dokoLiveGame";
 }
 
-QWidget* DokoLiveGame::detailsWidget()
+Gui::Details::DetailsWidget* DokoLiveGame::detailsWidget()
 {
     return new Gui::Details::DokoLiveGameDetailsWidget(this);
 }
 
-QWidget* DokoLiveGame::rowWindow()
+Gui::Details::RowWindow* DokoLiveGame::rowWindow()
 {
     return new Gui::Details::DokoLiveGameRowWindow(this);
 }
 
-QWidget* DokoLiveGame::summaryWidget(){
+Gui::Details::SummaryWidget* DokoLiveGame::summaryWidget(){
     return new Gui::Details::LiveGameDetails::DokoLiveGameDetails::DokoLiveGameSummaryWidget(this);
 }
 

@@ -51,7 +51,7 @@ QList<Place*> PlayerCalculator::calculate_places(){
     QList<Place*> list;
     foreach(PlayerPlaceAssignment* a, PlayerPlaceAssignments::instance()->allRows()){
         if(a->playerId->value() == m_player->id()){
-            list.append(Places::instance()->rowById(a->placeId->value()));
+            list.append(Places::instance()->castedRowById(a->placeId->value()));
         }
     }
     return list;

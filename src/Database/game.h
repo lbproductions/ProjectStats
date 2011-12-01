@@ -14,7 +14,7 @@ namespace Database{
     class Games;
 }
 
-START_ROW_DECLARATION(Game, Row)
+START_ROW_DECLARATION(Game, PSRow)
     DECLARE_ROW_CONSTRUCTORS(Game, Game)
 
     Game(QString type, bool live);
@@ -39,11 +39,9 @@ START_ROW_DECLARATION(Game, Row)
     DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,placement)
     DECLARE_VIRTUAL_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Game,GameCalculator,points)
 
-    QWidget* summaryWidget();
+    Gui::Details::SummaryWidget* summaryWidget();
 
-    virtual QWidget* detailsWidget();
-
-    virtual QWidget* detailsWindow();
+    virtual Gui::Details::DetailsWidget* detailsWidget();
 
     virtual void addPlayer(Player* player);
 

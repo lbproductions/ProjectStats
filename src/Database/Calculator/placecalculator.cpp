@@ -28,7 +28,7 @@ QList<Player*> PlaceCalculator::calculate_players(){
     QList<Player*> list;
     foreach(PlayerPlaceAssignment* a, PlayerPlaceAssignments::instance()->allRows()){
         if(a->placeId->value() == m_place->id()){
-            list.append(Players::instance()->rowById(a->playerId->value()));
+            list.append(Players::instance()->castedRowById(a->playerId->value()));
         }
     }
     return list;

@@ -19,9 +19,9 @@ QList<Player*> GameCalculator::calculate_players(){
     if (m_game->live->value()){
 	foreach(Position* p, Positions::instance()->allRows()){
 	    if(p->gameId->value() == m_game->id()){
-		if(!list.contains(Players::instance()->rowById(p->playerId->value()))){
-		    //list.insert(p->position->value(),Players::instance()->rowById(p->playerId->value()));
-                    Player* player = Players::instance()->rowById(p->playerId->value());
+		if(!list.contains(Players::instance()->castedRowById(p->playerId->value()))){
+		    //list.insert(p->position->value(),Players::instance()->castedRowById(p->playerId->value()));
+                    Player* player = Players::instance()->castedRowById(p->playerId->value());
                     list.append(player);
 
                     static_cast<LiveGame*>(m_game)->drinksPerPlayer->addDependingAttribute(player->alcPegel);
@@ -32,9 +32,9 @@ QList<Player*> GameCalculator::calculate_players(){
     else{
 	foreach(OfflineGameInformation* o, OfflineGameInformations::instance()->allRows()){
 	    if(o->gameId->value() == m_game->id()){
-		if(!list.contains(Players::instance()->rowById(o->playerId->value()))){
-		    //list.insert(p->position->value(),Players::instance()->rowById(p->playerId->value()));
-		    list.append(Players::instance()->rowById(o->playerId->value()));
+		if(!list.contains(Players::instance()->castedRowById(o->playerId->value()))){
+		    //list.insert(p->position->value(),Players::instance()->castedRowById(p->playerId->value()));
+		    list.append(Players::instance()->castedRowById(o->playerId->value()));
 		}
 	    }
 	}

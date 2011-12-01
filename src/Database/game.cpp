@@ -107,7 +107,7 @@ QMap<QString,QList<Game*> > Games::calculate_gamesOfType(){
 
 END_TABLE_IMPLEMENTATION()
 
-START_ROW_IMPLEMENTATION(Game, Game, Row)
+START_ROW_IMPLEMENTATION(Game, Game, PSRow)
 {
     m_calc = new GameCalculator(this,this);
 
@@ -145,7 +145,7 @@ START_ROW_IMPLEMENTATION(Game, Game, Row)
 }
 
 Game::Game(QString type, bool live) :
-    Row(0,Games::instance())
+    PSRow(0,Games::instance())
 {
     initializeAttributes();
 
@@ -160,20 +160,15 @@ QString Game::mimeType() const
 
 Place* Game::calculate_site()
 {
-    return Places::instance()->rowById(siteId->value());
+    return Places::instance()->castedRowById(siteId->value());
 }
 
-QWidget* Game::summaryWidget(){
+Gui::Details::SummaryWidget* Game::summaryWidget(){
     return new Gui::Details::GameDetails::GameSummaryWidget(this);
 }
 
-QWidget* Game::detailsWidget(){
+Gui::Details::DetailsWidget* Game::detailsWidget(){
     return new Gui::Details::GameDetailsWidget(this);
-}
-
-QWidget* Game::detailsWindow()
-{
-    return new Gui::Details::RowWindow(this);
 }
 
 void Game::addPlayer(Player* /*player*/)

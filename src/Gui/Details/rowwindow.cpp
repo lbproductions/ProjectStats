@@ -2,7 +2,7 @@
 
 #include <QScrollArea>
 
-#include <LBDatabase/LBDatabase.h>
+#include <Database/psrow.h>
 #include <Gui/Details/rowwidget.h>
 #include <Gui/Misc/macwindowcontroller.h>
 
@@ -13,7 +13,7 @@ RowWindow::RowWindow(QWidget *parent):
 {
 }
 
-RowWindow::RowWindow(Database::Row* row, QWidget *parent, bool setupCentralWidget) :
+RowWindow::RowWindow(Database::PSRow* row, QWidget *parent, bool setupCentralWidget) :
     QMainWindow(parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -24,7 +24,7 @@ RowWindow::RowWindow(Database::Row* row, QWidget *parent, bool setupCentralWidge
         p.setColor(QPalette::Window, QColor(255,255,255));
         setPalette(p);
 
-        m_rowWidget = static_cast<Gui::Details::RowWidget*>(row->rowWidget());
+        m_rowWidget = row->rowWidget();
 
         QScrollArea *scrollArea = new QScrollArea(this);
         scrollArea->setWidget(m_rowWidget);

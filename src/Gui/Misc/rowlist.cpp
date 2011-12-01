@@ -2,7 +2,7 @@
 
 #include "rowlistheader.h"
 
-#include <LBDatabase/LBDatabase.h>
+#include <Database/psrow.h>
 
 #include <QSortFilterProxyModel>
 #include <QSettings>
@@ -72,14 +72,14 @@ void RowList::selectionChanged(const QItemSelection &selected, const QItemSelect
 
     QItemSelection selectionInSource = m_proxyModel->mapSelectionToSource(selected);
 
-    QList<Database::Row*> list;
+    QList<Database::PSRow*> list;
     foreach(QModelIndex index, selectionInSource.indexes())
     {
-        Database::Row *selectedRow = m_model->row(index);
-	if(selectedRow != 0)
-	{
-	    list.append(selectedRow);
-	}
+        Database::PSRow *selectedRow = static_cast<Database::PSRow*>(m_model->row(index));
+        if(selectedRow != 0)
+        {
+            list.append(selectedRow);
+        }
     }
     emit rowsSelected(list);
 }
@@ -90,10 +90,10 @@ void RowList::on_doubleClicked(QModelIndex index)
 
     QModelIndex indexInSource = m_proxyModel->mapToSource(index);
 
-    Database::Row *selectedRow = m_model->row(indexInSource);
+    Database::PSRow *selectedRow = static_cast<Database::PSRow*>(m_model->row(indexInSource));
     if(selectedRow != 0)
     {
-	emit rowDoubleClicked(selectedRow);
+        emit rowDoubleClicked(selectedRow);
     }
 }
 

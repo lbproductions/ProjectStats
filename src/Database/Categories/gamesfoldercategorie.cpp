@@ -27,7 +27,7 @@ QList<Game*> GamesFolderCategorie::calculate_games()
     QList<Game*> games;
     foreach(int i, this->rows->value())
     {
-        games.append(Games::instance()->rowById(i));
+        games.append(Games::instance()->castedRowById(i));
     }
 
     return games;
@@ -65,7 +65,7 @@ void GamesFolderCategorie::dropMimeData(const QMimeData *data)
 	int id = -1;
 	stream >> id;
 
-        Game *g = Games::instance()->rowById(id);
+        Game *g = Games::instance()->castedRowById(id);
         if(g)
 	{
 	    insertRow(g);

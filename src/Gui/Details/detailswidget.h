@@ -6,7 +6,7 @@
 
 namespace Database
 {
-    class Row;
+    class PSRow;
 }
 
 namespace Gui
@@ -26,12 +26,12 @@ public:
     /*!
       Erstellt ein AbstractDetailsWidget, welches Details der Reihe \p row darstellt.
       */
-    explicit DetailsWidget(Database::Row *row, QWidget *parent = 0);
+    explicit DetailsWidget(Database::PSRow *row, QWidget *parent = 0);
 
     /*!
       \return Die Reihe, dessen Details dieses Widget darstellt.
       */
-    Database::Row *row() const;
+    Database::PSRow *row() const;
 
     /*!
       Setzt den Titel auf \p title.
@@ -57,7 +57,7 @@ public:
     virtual bool mayBeEditable() const;
 
 protected:
-    Database::Row* m_row; //!< Die Reihe, dess Details dieses Widget darstellt.
+    Database::PSRow* m_row; //!< Die Reihe, dess Details dieses Widget darstellt.
 
     bool m_editable;
     bool m_mayBeEditable;

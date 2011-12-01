@@ -19,7 +19,7 @@ QMap<Player*,int> DrinkCalculator::calculate_countPerPlayer(){
     QMap<Player*,int> hash;
     foreach(LiveGameDrink* d, LiveGameDrinks::instance()->allRows()){
         if(d->drinkId->value() == m_drink->id()){
-            Player* p = Players::instance()->rowById(d->playerId->value());
+            Player* p = Players::instance()->castedRowById(d->playerId->value());
             hash.insert(p,hash.value(p)+1);
         }
     }

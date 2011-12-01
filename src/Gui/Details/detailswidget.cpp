@@ -4,7 +4,7 @@
 
 using namespace Gui::Details;
 
-DetailsWidget::DetailsWidget(Database::Row *row, QWidget *parent) :
+DetailsWidget::DetailsWidget(Database::PSRow *row, QWidget *parent) :
     QWidget(parent),
     m_row(row),
     m_mayBeEditable(false)
@@ -12,7 +12,7 @@ DetailsWidget::DetailsWidget(Database::Row *row, QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
 }
 
-Database::Row *DetailsWidget::row() const
+Database::PSRow *DetailsWidget::row() const
 {
     return m_row;
 }

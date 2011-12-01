@@ -15,7 +15,7 @@ PlacesComboBox::PlacesComboBox(QWidget *parent) :
     placeIndexBefore(-1)
 {
     connect(this,SIGNAL(currentIndexChanged(int)),this,SLOT(on_currentIndexChanged()));
-    connect(Database::Places::instance(),SIGNAL(rowInserted(::Database::Row*)),this,SLOT(on_placeCreated(::Database::Row*)));
+    connect(Database::Places::instance(),SIGNAL(rowInserted(::Database::PSRow*)),this,SLOT(on_placeCreated(::Database::PSRow*)));
 
     updateView();
 }
@@ -47,7 +47,7 @@ void PlacesComboBox::on_currentIndexChanged()
     }
     if (placeIndexBefore != -1 && placeIndexBefore < m_placePositions.count())
     {
-        emit currentIndexChanged(Database::Places::instance()->rowById(m_placePositions.at(placeIndexBefore)),currentPlace());
+        emit currentIndexChanged(Database::Places::instance()->castedRowById(m_placePositions.at(placeIndexBefore)),currentPlace());
     }
     else
     {
@@ -57,7 +57,7 @@ void PlacesComboBox::on_currentIndexChanged()
     placeIndexBefore = currentIndex();
 }
 
-void PlacesComboBox::on_placeCreated(::Database::Row* row)
+void PlacesComboBox::on_placeCreated(::Database::PSRow* row)
 {
     Database::Place* place = static_cast<Database::Place*>(row);
     updateView();
@@ -100,5 +100,5 @@ Database::Place *PlacesComboBox::currentPlace() const
 
     int placeId = m_placePositions.at(index);
 
-    return Database::Places::instance()->rowById(placeId);
+    return Database::Places::instance()->castedRowById(placeId);
 }

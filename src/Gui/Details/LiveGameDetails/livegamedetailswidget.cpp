@@ -9,7 +9,6 @@
 #include <Database/point.h>
 #include <Gui/Misc/splitter.h>
 #include <Gui/Misc/groupbox.h>
-#include <Gui/Misc/connectabletablewidgetitem.h>
 #include <Gui/Graphs/livegamegraphview.h>
 
 #include <Misc/global.h>

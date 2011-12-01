@@ -1,7 +1,7 @@
 #ifndef DATABASE_ROUND_H
 #define DATABASE_ROUND_H
 
-#include <LBDatabase/LBDatabase.h>
+#include "psrow.h"
 
 #include <Database/Calculator/roundcalculator.h>
 
@@ -18,7 +18,7 @@ namespace Database
 template<class RowType>
 class Table;
 
-class Round : public Row
+class Round : public PSRow
 {
     Q_OBJECT
 

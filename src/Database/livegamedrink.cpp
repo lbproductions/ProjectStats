@@ -42,7 +42,7 @@ QString LiveGameDrink::mimeType() const
 
 Drink* LiveGameDrink::calculate_drink()
 {
-    return Drinks::instance()->rowById(drinkId->value());
+    return Drinks::instance()->castedRowById(drinkId->value());
 }
 
 END_ROW_IMPLEMENTATION()

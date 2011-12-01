@@ -364,7 +364,7 @@ QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_gamesTog
             if(round->doko_soloPlayerId->value() == -1){
                 Player* re1 = 0;
                 if(round->doko_re1PlayerId->value() != -1){
-                    re1 = Players::instance()->rowById(round->doko_re1PlayerId->value());
+                    re1 = Players::instance()->castedRowById(round->doko_re1PlayerId->value());
                 }
                 else{
                     qWarning() << "Invalid Player found in DokoLiveGameCalculator::calculate_doko_gamesTogether()!";
@@ -373,7 +373,7 @@ QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_gamesTog
                 }
                 Player* re2 = 0;
                 if(round->doko_re1PlayerId->value() != -1){
-                    re2 = Players::instance()->rowById(round->doko_re2PlayerId->value());
+                    re2 = Players::instance()->castedRowById(round->doko_re2PlayerId->value());
                 }
                 else{
                     qWarning() << "Invalid Player found in DokoLiveGameCalculator::calculate_doko_gamesTogether()!";
@@ -486,7 +486,7 @@ QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_winsToge
             if(round->doko_soloPlayerId->value() == -1){
                 Player* re1 = 0;
                 if(round->doko_re1PlayerId->value() != -1){
-                    re1 = Players::instance()->rowById(round->doko_re1PlayerId->value());
+                    re1 = Players::instance()->castedRowById(round->doko_re1PlayerId->value());
                 }
                 else{
                     qWarning() << "Invalid Player found in DokoLiveGameCalculator::calculate_doko_winsTogether()!";
@@ -495,7 +495,7 @@ QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_winsToge
                 }
                 Player* re2 = 0;
                 if(round->doko_re1PlayerId->value() != -1){
-                    re2 = Players::instance()->rowById(round->doko_re2PlayerId->value());
+                    re2 = Players::instance()->castedRowById(round->doko_re2PlayerId->value());
                 }
                 else{
                     qWarning() << "Invalid Player found in DokoLiveGameCalculator::calculate_doko_winsTogether()!";
@@ -544,7 +544,7 @@ QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_winsToge
 
             }
             else{
-                if(round->points->value(Players::instance()->rowById(round->doko_re1PlayerId->value())) < 0){
+                if(round->points->value(Players::instance()->castedRowById(round->doko_re1PlayerId->value())) < 0){
                     Player* contra1 = 0;
                     Player* contra2 = 0;
                     Player* contra3 = 0;
@@ -929,7 +929,7 @@ int DokoLiveGameCalculator::calculate_doko_reRoundWins(){
     int count = 0;
     foreach(Round* r, m_dokolivegame->rounds->value()){
         DokoRound* dokoRound = static_cast<DokoRound*>(r);
-        if(dokoRound->points->value(Players::instance()->rowById(dokoRound->doko_re1PlayerId->value())) > 0){
+        if(dokoRound->points->value(Players::instance()->castedRowById(dokoRound->doko_re1PlayerId->value())) > 0){
             count++;
         }
     }
@@ -940,7 +940,7 @@ int DokoLiveGameCalculator::calculate_doko_contraRoundWins(){
     int count = 0;
     foreach(Round* r, m_dokolivegame->rounds->value()){
         DokoRound* dokoRound = static_cast<DokoRound*>(r);
-        if(dokoRound->points->value(Players::instance()->rowById(dokoRound->doko_re1PlayerId->value())) < 0){
+        if(dokoRound->points->value(Players::instance()->castedRowById(dokoRound->doko_re1PlayerId->value())) < 0){
             count++;
         }
     }

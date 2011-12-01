@@ -1,14 +1,14 @@
 #ifndef DATABASE_DRINK_H
 #define DATABASE_DRINK_H
 
-#include <LBDatabase/LBDatabase.h>
+#include "psrow.h"
 
 namespace Database {
     class DrinkCalculator;
     class Player;
 }
 
-START_ROW_DECLARATION(Drink, Row)
+START_ROW_DECLARATION(Drink, PSRow)
     DECLARE_ROW_CONSTRUCTORS(Drink, Drink)
 
     DECLARE_DATABASEATTRIBUTE(QString,Drink,name)
@@ -23,7 +23,7 @@ START_ROW_DECLARATION(Drink, Row)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,Drink,DrinkCalculator,countPerPlayer)
     DECLARE_ATTRIBUTE_IN_CALC(QString,Drink,DrinkCalculator,mostDrinks)
 
-    QWidget* detailsWidget();
+    Gui::Details::DetailsWidget* detailsWidget();
 
 END_ROW_DECLARATION(Drink)
 

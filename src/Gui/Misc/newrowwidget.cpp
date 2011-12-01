@@ -1,12 +1,13 @@
 #include "newrowwidget.h"
 #include "ui_newrowwidget.h"
 
+
 #include <Gui/Details/detailswidget.h>
-#include <LBDatabase/LBDatabase.h>
+#include <Database/psrow.h>
 
 #include <QScrollArea>
 
-NewRowWidget::NewRowWidget(Database::Row* row, QWidget *parent) :
+NewRowWidget::NewRowWidget(Database::PSRow* row, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::NewRowWidget)
 {

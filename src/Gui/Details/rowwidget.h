@@ -6,7 +6,7 @@
 
 namespace Database{
 
-    class Row;
+    class PSRow;
 
 }
 
@@ -21,13 +21,13 @@ class RowWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RowWidget(Database::Row* row, QWidget *parent = 0);
+    explicit RowWidget(Database::PSRow* row, QWidget *parent = 0);
 
     Gui::Details::DetailsWidget * detailsWidget() const;
     Gui::Details::StatsWidget * statsWidget() const;
 
 protected:
-    Database::Row* m_row;
+    Database::PSRow* m_row;
     DetailsWidget* m_detailsWidget;
     StatsWidget* m_statsWidget;
 

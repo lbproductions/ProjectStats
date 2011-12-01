@@ -1,11 +1,11 @@
 #ifndef DATABASE_PLACE_H
 #define DATABASE_PLACE_H
 
-#include <LBDatabase/LBDatabase.h>
+#include "psrow.h"
 
 #include <Database/Calculator/placecalculator.h>
 
-START_ROW_DECLARATION(Place, Row)
+START_ROW_DECLARATION(Place, PSRow)
     DECLARE_ROW_CONSTRUCTORS(Place, Place)
 
     DECLARE_DATABASEATTRIBUTE(int,Place,plz)
@@ -15,14 +15,14 @@ START_ROW_DECLARATION(Place, Row)
     DECLARE_DATABASEATTRIBUTE(QString,Place,comment)
     DECLARE_DATABASEATTRIBUTE(QString,Place,iconPath)
 
-    DECLARE_LISTATTRIBUTE_IN_CALC(Player*, Place, PlaceCalculator, players)
+    OneToManyRelation<Place, Player>* players;
     DECLARE_ATTRIBUTE(QImage,Place,icon)
 
     DECLARE_ATTRIBUTE_IN_CALC(int,Place,PlaceCalculator,gameCount)
 
     DECLARE_ATTRIBUTE(QString,Place,displayString)
 
-    QWidget* detailsWidget();
+    Gui::Details::DetailsWidget* detailsWidget();
 
 END_ROW_DECLARATION(Place)
 

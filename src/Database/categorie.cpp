@@ -113,7 +113,7 @@ QList<ChildCategorie*> Categories::childCategories(int parentId)
 
 END_TABLE_IMPLEMENTATION()
 
-START_ROW_IMPLEMENTATION(Categorie, Categorie, Row)
+START_ROW_IMPLEMENTATION(Categorie, Categorie, PSRow)
 {
     IMPLEMENT_DATABASEATTRIBUTE(QString,Categorie,name,tr("Name"))
     IMPLEMENT_DATABASEATTRIBUTE(int,Categorie,type,tr("Type"))

@@ -8,7 +8,7 @@ namespace Database
 {
     class Categories;
     class Categorie;
-    class Row;
+    class PSRow;
     class FolderCategorie;
     class ChildCategorie;
     class ParentCategorie;
@@ -31,7 +31,7 @@ signals:
     void folderItemAdded(::Database::FolderCategorie*, QStandardItem*);
 
 private slots:
-    void on_folderCreated(::Database::Row * row);
+    void on_folderCreated(::Database::PSRow * row);
 
 private:
     Database::Categories* m_categories;

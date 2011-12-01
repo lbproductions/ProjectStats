@@ -10,7 +10,7 @@ class QFrame;
 namespace Database
 {
     class ChildCategorie;
-    class Row;
+    class PSRow;
     class LeagueFolderCategorie;
     class Game;
 }
@@ -54,8 +54,8 @@ public slots:
     void updateStatusbar();
 
 private slots:
-    void onGamesListRowsSelected(QList<Database::Row *> list);
-    void onPlayersListRowsSelected(QList<Database::Row *> list);
+    void onGamesListRowsSelected(QList<Database::PSRow *> list);
+    void onPlayersListRowsSelected(QList<Database::PSRow *> list);
     void on_rowList_selectionChanged();
 
 private:

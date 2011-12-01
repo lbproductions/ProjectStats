@@ -4,7 +4,7 @@
 
 using namespace Gui::Details;
 
-StatsWidget::StatsWidget(Database::Row */*row*/, QWidget *parent) :
+StatsWidget::StatsWidget(Database::PSRow */*row*/, QWidget *parent) :
     QWidget(parent)
 {
 }

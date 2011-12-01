@@ -1,5 +1,6 @@
 #include "listview.h"
 
+#include <Database/psrow.h>
 #include <Database/Categories/childcategorie.h>
 #include <Gui/Misc/rowlist.h>
 #include <Gui/Misc/splitter.h>
@@ -38,8 +39,8 @@ ListView::ListView(Database::ChildCategorie *categorie, MainWindow *parent) :
     m_rowList = new Misc::RowList(categorie->model(),this);
     m_rowList->setDragEnabled(true);
     connect(m_rowList,SIGNAL(selectionChanged()),this,SLOT(on_rowList_selectionChanged()));
-    connect(m_rowList,SIGNAL(rowsSelected(QList<Database::Row*>)),this,SLOT(on_rowList_rowsSelected(QList<Database::Row*>)));
-    connect(m_rowList,SIGNAL(rowDoubleClicked(Database::Row*)),this,SLOT(on_rowList_rowDoubleClicked(Database::Row*)));
+    connect(m_rowList,SIGNAL(rowsSelected(QList<Database::PSRow*>)),this,SLOT(on_rowList_rowsSelected(QList<Database::PSRow*>)));
+    connect(m_rowList,SIGNAL(rowDoubleClicked(Database::PSRow*)),this,SLOT(on_rowList_rowDoubleClicked(Database::PSRow*)));
 
     m_horizontalSplitter->addWidget(m_rowList);
 
@@ -106,7 +107,7 @@ void ListView::on_rowList_selectionChanged()
     }
 }
 
-void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
+void ListView::on_rowList_rowsSelected(QList<Database::PSRow *> list)
 {
     if(list.isEmpty())
     {
@@ -114,7 +115,7 @@ void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
 
         return;
     }
-    Database::Row *firstRow = list.first();
+    Database::PSRow *firstRow = list.first();
 
     if(firstRow == 0)
     {
@@ -129,7 +130,7 @@ void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
         m_rowWidget = 0;
     }
 
-    Details::SummaryWidget* summaryWidget = static_cast<Gui::Details::SummaryWidget*>(firstRow->summaryWidget());
+    Details::SummaryWidget* summaryWidget = firstRow->summaryWidget();
 
     if(summaryWidget == 0){
         Details::RowWidget* newRowWidget = static_cast<Gui::Details::RowWidget*>(firstRow->rowWidget());
@@ -161,7 +162,7 @@ void ListView::on_rowList_rowsSelected(QList<Database::Row *> list)
 
 }
 
-void ListView::on_rowList_rowDoubleClicked(Database::Row *row)
+void ListView::on_rowList_rowDoubleClicked(Database::PSRow *row)
 {
     if(row == 0)
     {

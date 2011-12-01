@@ -51,7 +51,7 @@ QMap<QString,QList<Drink*> > Drinks::calculate_drinksOfType(){
 
 END_TABLE_IMPLEMENTATION()
 
-START_ROW_IMPLEMENTATION(Drink, Drink, Row)
+START_ROW_IMPLEMENTATION(Drink, Drink, PSRow)
 {
     DrinkCalculator* calc = new DrinkCalculator(this,this);
 
@@ -85,7 +85,7 @@ QImage Drink::calculate_icon()
     return QImage();
 }
 
-QWidget* Drink::detailsWidget(){
+Gui::Details::DetailsWidget* Drink::detailsWidget(){
     return new Gui::Details::DrinkDetailsWidget(this);
 }
 
