@@ -63,11 +63,11 @@ QStandardItem *CategoriesModel::createParentItem(Database::ParentCategorie *p)
     parentItem->setForeground(QBrush(QColor::fromRgb(112,129,147)));
     QFont f = parentItem->font();
     f.setFamily("Lucida Grande");
-    f.setPixelSize(11);
+    f.setPixelSize(13);
     f.setBold(true);
     f.setCapitalization(QFont::AllUppercase);
     parentItem->setFont(f);
-    parentItem->setSizeHint(QSize(0,22));
+    parentItem->setSizeHint(QSize(0,18));
 
     p->setStandardItem(parentItem);
 
@@ -76,7 +76,8 @@ QStandardItem *CategoriesModel::createParentItem(Database::ParentCategorie *p)
 
 QStandardItem *CategoriesModel::createChildItem(Database::ChildCategorie *c)
 {
-    QStandardItem* childItem = new QStandardItem(c->name->value());
+    QStandardItem* childItem = new QStandardItem();
+    childItem->setData(c->name->value(),Qt::UserRole + 2);
     childItem->setData(QVariant::fromValue((void *) c));
 
     QIcon icon = QIcon(c->icon->value());
@@ -92,10 +93,10 @@ QStandardItem *CategoriesModel::createChildItem(Database::ChildCategorie *c)
 
     QFont f = childItem->font();
     f.setFamily("Lucida Grande");
-    f.setPixelSize(11);
+    f.setPixelSize(13);
     childItem->setFont(f);
 
-    childItem->setSizeHint(QSize(0,33));
+    childItem->setSizeHint(QSize(0,24));
 
     Qt::ItemFlags defaultFlags = childItem->flags();
     if(c->type->value() == Database::Categorie::FolderCategorieType)

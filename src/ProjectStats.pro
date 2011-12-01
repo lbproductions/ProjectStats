@@ -185,7 +185,9 @@ SOURCES += main.cpp\
     Server/soapprojectstatsProxy.cpp \
     Server/soapC.cpp \
     Server/stdsoap2.cpp \
-    Server/server.cpp
+    Server/server.cpp \
+    Gui/Misc/sheet.cpp \
+    Misc/Updater/winsparkleupdater.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -386,7 +388,9 @@ HEADERS  += \
     Server/projectstats.nsmap \
     Server/stdsoap2.h \
     Server/server.h \
-    Server/stdsoap2.h
+    Server/stdsoap2.h \
+    Gui/Misc/sheet.h \
+    Misc/Updater/winsparkleupdater.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -439,6 +443,12 @@ mac {
     QMAKE_BUNDLE_DATA += PRIVATE_FRAMEWORKS
 }
 
+win32 {
+    LIBS += -lws2_32 \
+            -L../frameworks/WinSparkle-0.3 \
+            -lWinSparkle
+}
+
 RESOURCES += Ressources/Ressources.qrc \
     Ressources/drinks.qrc
 
@@ -462,6 +472,8 @@ OTHER_FILES += \
 
 
 DEFINES += WITH_NONAMESPACES
+
+
 
 
 

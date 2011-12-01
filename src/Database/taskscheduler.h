@@ -173,7 +173,6 @@ public slots:
 private:
     QQueue<Task*> m_queue;
     QMutex m_mutex;
-    QTimer* m_timer;
 
 signals:
     void newTaskScheduled();
