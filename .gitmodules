@@ -1,0 +1,3 @@
+[submodule "lib/LBDatabase"]
+	path = lib/LBDatabase
+	url = git@github.com:lbproductions/LBDatabase.git
