@@ -347,7 +347,7 @@ int projectstatsService::addRound(int gameId, int re1PlayerId, int re2PlayerId, 
 
 int projectstatsService::hasPflichtSolo(int playerId, int gameId, bool& result)
 {
-    Database::Game* game = Database::Games::instance()->rowById(gameId);
+    Database::Game* game = Database::Games::instance()->castedRowById(gameId);
 
     if(game->live->value() && game->type->value() == "Doppelkopf")
     {
@@ -355,7 +355,7 @@ int projectstatsService::hasPflichtSolo(int playerId, int gameId, bool& result)
 
         if(!dokogame->isFinished->value())
         {
-            Database::Player* player = Database::Players::instance()->rowById(playerId);
+            Database::Player* player = Database::Players::instance()->castedRowById(playerId);
             qDebug() << player->name->value() << " " << dokogame->doko_hasPflichtSolo->value(player);
             result = dokogame->doko_hasPflichtSolo->value(player);
         }
