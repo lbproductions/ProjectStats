@@ -265,6 +265,23 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="hasPflichtSolo">
+   <complexType>
+    <sequence>
+     <element name="playerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__hasPflichtSolo::playerId -->
+     <element name="gameId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__hasPflichtSolo::gameId -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="hasPflichtSoloResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="xsd:boolean" minOccurs="1" maxOccurs="1"/><!-- ps__hasPflichtSolo::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 
 </types>
@@ -341,6 +358,14 @@
  <part name="parameters" element="ps:addRoundResponse"/>
 </message>
 
+<message name="hasPflichtSoloRequest">
+ <part name="parameters" element="ps:hasPflichtSolo"/><!-- ps__hasPflichtSolo::ps__hasPflichtSolo -->
+</message>
+
+<message name="hasPflichtSoloResponse">
+ <part name="parameters" element="ps:hasPflichtSoloResponse"/>
+</message>
+
 <portType name="projectstatsPortType">
  <operation name="playerById">
   <documentation>Service definition of function ps__playerById</documentation>
@@ -386,6 +411,11 @@
   <documentation>Service definition of function ps__addRound</documentation>
   <input message="tns:addRoundRequest"/>
   <output message="tns:addRoundResponse"/>
+ </operation>
+ <operation name="hasPflichtSolo">
+  <documentation>Service definition of function ps__hasPflichtSolo</documentation>
+  <input message="tns:hasPflichtSoloRequest"/>
+  <output message="tns:hasPflichtSoloResponse"/>
  </operation>
 </portType>
 
@@ -472,11 +502,21 @@
      <SOAP:body parts="parameters" use="literal"/>
   </output>
  </operation>
+ <operation name="hasPflichtSolo">
+  <SOAP:operation soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal"/>
+  </output>
+ </operation>
 </binding>
 
 <service name="projectstats">
  <documentation>gSOAP 2.8.4 generated service definition</documentation>
  <port name="projectstats" binding="tns:projectstats">
+  <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>
   <SOAP:address location="http://eineurl.von.uns?"/>

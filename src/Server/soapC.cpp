@@ -15,7 +15,7 @@ compiling, linking, and/or using OpenSSL is allowed.
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.4 2011-11-24 15:26:03 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.4 2011-12-01 16:39:14 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -198,6 +198,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		return soap_in_StringDoublePair(soap, NULL, NULL, "StringDoublePair");
 	case SOAP_TYPE_StringIntPair:
 		return soap_in_StringIntPair(soap, NULL, NULL, "StringIntPair");
+	case SOAP_TYPE_ps__hasPflichtSolo:
+		return soap_in_ps__hasPflichtSolo(soap, NULL, NULL, "ps:hasPflichtSolo");
+	case SOAP_TYPE_ps__hasPflichtSoloResponse:
+		return soap_in_ps__hasPflichtSoloResponse(soap, NULL, NULL, "ps:hasPflichtSoloResponse");
 	case SOAP_TYPE_ps__addRound:
 		return soap_in_ps__addRound(soap, NULL, NULL, "ps:addRound");
 	case SOAP_TYPE_ps__addRoundResponse:
@@ -312,6 +316,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, int *type)
 		if (!soap_match_tag(soap, t, "xsd:boolean"))
 		{	*type = SOAP_TYPE_bool;
 			return soap_in_bool(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:hasPflichtSolo"))
+		{	*type = SOAP_TYPE_ps__hasPflichtSolo;
+			return soap_in_ps__hasPflichtSolo(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ps:hasPflichtSoloResponse"))
+		{	*type = SOAP_TYPE_ps__hasPflichtSoloResponse;
+			return soap_in_ps__hasPflichtSoloResponse(soap, NULL, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ps:addRound"))
 		{	*type = SOAP_TYPE_ps__addRound;
@@ -499,6 +511,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((StringDoublePair *)ptr)->soap_out(soap, tag, id, "StringDoublePair");
 	case SOAP_TYPE_StringIntPair:
 		return ((StringIntPair *)ptr)->soap_out(soap, tag, id, "StringIntPair");
+	case SOAP_TYPE_ps__hasPflichtSolo:
+		return soap_out_ps__hasPflichtSolo(soap, tag, id, (const struct ps__hasPflichtSolo *)ptr, "ps:hasPflichtSolo");
+	case SOAP_TYPE_ps__hasPflichtSoloResponse:
+		return soap_out_ps__hasPflichtSoloResponse(soap, tag, id, (const struct ps__hasPflichtSoloResponse *)ptr, "ps:hasPflichtSoloResponse");
 	case SOAP_TYPE_ps__addRound:
 		return soap_out_ps__addRound(soap, tag, id, (const struct ps__addRound *)ptr, "ps:addRound");
 	case SOAP_TYPE_ps__addRoundResponse:
@@ -592,6 +608,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE_StringIntPair:
 		((StringIntPair *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_ps__hasPflichtSolo:
+		soap_serialize_ps__hasPflichtSolo(soap, (const struct ps__hasPflichtSolo *)ptr);
+		break;
+	case SOAP_TYPE_ps__hasPflichtSoloResponse:
+		soap_serialize_ps__hasPflichtSoloResponse(soap, (const struct ps__hasPflichtSoloResponse *)ptr);
 		break;
 	case SOAP_TYPE_ps__addRound:
 		soap_serialize_ps__addRound(soap, (const struct ps__addRound *)ptr);
@@ -726,6 +748,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_ps__addRoundResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ps__addRound:
 		return (void*)soap_instantiate_ps__addRound(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__hasPflichtSoloResponse:
+		return (void*)soap_instantiate_ps__hasPflichtSoloResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ps__hasPflichtSolo:
+		return (void*)soap_instantiate_ps__hasPflichtSolo(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		return (void*)soap_instantiate_SOAP_ENV__Header(soap, -1, type, arrayType, n);
@@ -940,6 +966,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap_clist *p)
 			SOAP_DELETE((struct ps__addRound*)p->ptr);
 		else
 			SOAP_DELETE_ARRAY((struct ps__addRound*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__hasPflichtSoloResponse:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__hasPflichtSoloResponse*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__hasPflichtSoloResponse*)p->ptr);
+		break;
+	case SOAP_TYPE_ps__hasPflichtSolo:
+		if (p->size < 0)
+			SOAP_DELETE((struct ps__hasPflichtSolo*)p->ptr);
+		else
+			SOAP_DELETE_ARRAY((struct ps__hasPflichtSolo*)p->ptr);
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -3517,6 +3555,231 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_copy_SOAP_ENV__Header(struct soap *soap, int st,
 }
 
 #endif
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__hasPflichtSolo(struct soap *soap, struct ps__hasPflichtSolo *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_int(soap, &a->playerId);
+	soap_default_int(soap, &a->gameId);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__hasPflichtSolo(struct soap *soap, const struct ps__hasPflichtSolo *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__hasPflichtSolo(struct soap *soap, const char *tag, int id, const struct ps__hasPflichtSolo *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__hasPflichtSolo), type))
+		return soap->error;
+	if (soap_out_int(soap, "playerId", -1, &a->playerId, ""))
+		return soap->error;
+	if (soap_out_int(soap, "gameId", -1, &a->gameId, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__hasPflichtSolo * SOAP_FMAC4 soap_in_ps__hasPflichtSolo(struct soap *soap, const char *tag, struct ps__hasPflichtSolo *a, const char *type)
+{
+	size_t soap_flag_playerId = 1;
+	size_t soap_flag_gameId = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__hasPflichtSolo *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ps__hasPflichtSolo, sizeof(struct ps__hasPflichtSolo), 0, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default_ps__hasPflichtSolo(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_playerId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "playerId", &a->playerId, "xsd:int"))
+				{	soap_flag_playerId--;
+					continue;
+				}
+			if (soap_flag_gameId && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_int(soap, "gameId", &a->gameId, "xsd:int"))
+				{	soap_flag_gameId--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__hasPflichtSolo *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__hasPflichtSolo, 0, sizeof(struct ps__hasPflichtSolo), 0, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_playerId > 0 || soap_flag_gameId > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__hasPflichtSolo(struct soap *soap, const struct ps__hasPflichtSolo *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__hasPflichtSolo);
+	if (soap_out_ps__hasPflichtSolo(soap, tag?tag:"ps:hasPflichtSolo", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__hasPflichtSolo * SOAP_FMAC4 soap_get_ps__hasPflichtSolo(struct soap *soap, struct ps__hasPflichtSolo *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__hasPflichtSolo(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__hasPflichtSolo * SOAP_FMAC2 soap_instantiate_ps__hasPflichtSolo(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__hasPflichtSolo(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__hasPflichtSolo, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__hasPflichtSolo);
+		if (size)
+			*size = sizeof(struct ps__hasPflichtSolo);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__hasPflichtSolo[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__hasPflichtSolo);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__hasPflichtSolo*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__hasPflichtSolo(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__hasPflichtSolo %p -> %p\n", q, p));
+	*(struct ps__hasPflichtSolo*)p = *(struct ps__hasPflichtSolo*)q;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__hasPflichtSoloResponse(struct soap *soap, struct ps__hasPflichtSoloResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	soap_default_bool(soap, &a->result);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ps__hasPflichtSoloResponse(struct soap *soap, const struct ps__hasPflichtSoloResponse *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ps__hasPflichtSoloResponse(struct soap *soap, const char *tag, int id, const struct ps__hasPflichtSoloResponse *a, const char *type)
+{	(void)soap; (void)tag; (void)id; (void)type;
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ps__hasPflichtSoloResponse), type))
+		return soap->error;
+	if (soap_out_bool(soap, "result", -1, &a->result, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ps__hasPflichtSoloResponse * SOAP_FMAC4 soap_in_ps__hasPflichtSoloResponse(struct soap *soap, const char *tag, struct ps__hasPflichtSoloResponse *a, const char *type)
+{
+	size_t soap_flag_result = 1;
+	if (soap_element_begin_in(soap, tag, 0, type))
+		return NULL;
+	a = (struct ps__hasPflichtSoloResponse *)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ps__hasPflichtSoloResponse, sizeof(struct ps__hasPflichtSoloResponse), 0, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default_ps__hasPflichtSoloResponse(soap, a);
+	if (soap->body && !*soap->href)
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_result && soap->error == SOAP_TAG_MISMATCH)
+				if (soap_in_bool(soap, "result", &a->result, "xsd:boolean"))
+				{	soap_flag_result--;
+					continue;
+				}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (struct ps__hasPflichtSoloResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ps__hasPflichtSoloResponse, 0, sizeof(struct ps__hasPflichtSoloResponse), 0, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_result > 0))
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ps__hasPflichtSoloResponse(struct soap *soap, const struct ps__hasPflichtSoloResponse *a, const char *tag, const char *type)
+{
+	register int id = soap_embed(soap, (void*)a, NULL, 0, tag, SOAP_TYPE_ps__hasPflichtSoloResponse);
+	if (soap_out_ps__hasPflichtSoloResponse(soap, tag?tag:"ps:hasPflichtSoloResponse", id, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ps__hasPflichtSoloResponse * SOAP_FMAC4 soap_get_ps__hasPflichtSoloResponse(struct soap *soap, struct ps__hasPflichtSoloResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ps__hasPflichtSoloResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC1 struct ps__hasPflichtSoloResponse * SOAP_FMAC2 soap_instantiate_ps__hasPflichtSoloResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ps__hasPflichtSoloResponse(%d, %s, %s)\n", n, type?type:"", arrayType?arrayType:""));
+	struct soap_clist *cp = soap_link(soap, NULL, SOAP_TYPE_ps__hasPflichtSoloResponse, n, soap_fdelete);
+	if (!cp)
+		return NULL;
+	if (n < 0)
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__hasPflichtSoloResponse);
+		if (size)
+			*size = sizeof(struct ps__hasPflichtSoloResponse);
+	}
+	else
+	{	cp->ptr = (void*)SOAP_NEW(struct ps__hasPflichtSoloResponse[n]);
+		if (!cp->ptr)
+		{	soap->error = SOAP_EOM;
+			return NULL;
+		}
+		if (size)
+			*size = n * sizeof(struct ps__hasPflichtSoloResponse);
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated location=%p\n", cp->ptr));
+	return (struct ps__hasPflichtSoloResponse*)cp->ptr;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_copy_ps__hasPflichtSoloResponse(struct soap *soap, int st, int tt, void *p, size_t len, const void *q, size_t n)
+{
+	(void)soap; (void)tt; (void)st; (void)len; (void)n; /* appease -Wall -Werror */
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copying struct ps__hasPflichtSoloResponse %p -> %p\n", q, p));
+	*(struct ps__hasPflichtSoloResponse*)p = *(struct ps__hasPflichtSoloResponse*)q;
+}
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ps__addRound(struct soap *soap, struct ps__addRound *a)
 {

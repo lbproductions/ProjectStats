@@ -162,5 +162,22 @@
     </sequence>
    </complexType>
   </element>
+  <!-- operation request element -->
+  <element name="hasPflichtSolo">
+   <complexType>
+    <sequence>
+     <element name="playerId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__hasPflichtSolo::playerId -->
+     <element name="gameId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__hasPflichtSolo::gameId -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="hasPflichtSoloResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="xsd:boolean" minOccurs="1" maxOccurs="1"/><!-- ps__hasPflichtSolo::result -->
+    </sequence>
+   </complexType>
+  </element>
  </schema>
 
