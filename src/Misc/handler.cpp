@@ -16,7 +16,7 @@
 #ifdef Q_WS_MAC
 #   include <Misc/Updater/sparkleupdater.h>
 #elif defined Q_WS_WIN
-#   include <Misc/Updater/winsparkleupdater.h>
+#   //include <Misc/Updater/winsparkleupdater.h>
 #endif
 
 #include <Gui/MainWindow/mainwindow.h>
@@ -55,7 +55,7 @@ Handler::Handler(int argc, char *argv[])
 #ifdef Q_WS_MAC
     //m_updater = new SparkleUpdater("http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast_macos.xml");
 #elif defined Q_WS_WIN
-    m_updater = new WinSparkleUpdater("http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast_win.xml");
+    //m_updater = new WinSparkleUpdater("http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast_win.xml");
 #endif
 
     if (m_updater) {
@@ -80,7 +80,7 @@ Handler::~Handler()
         delete m_updater;
     }
     if (m_messagesystem){
-	delete m_messagesystem;
+        delete m_messagesystem;
     }
 
     Database::TaskScheduler::instance()->quit();

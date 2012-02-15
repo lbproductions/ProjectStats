@@ -14,6 +14,7 @@
 #include <Gui/Details/GameDetails/gamesummarywidget.h>
 
 #include <QDateTime>
+#include <Misc/global.h>
 
 namespace Database {
 IMPLEMENT_SINGLETON( Games )
@@ -31,6 +32,10 @@ Games::Games() :
     gamesOfType = new MappingAttribute<QString, QList<Game*>,Games, Games>("gamesOfType",tr("Games of Type"), this);
     gamesOfType->setCalculationFunction(this,&Games::calculate_gamesOfType);
     this->rows()->addDependingAttribute(gamesOfType);
+
+    playerPositionCount = new MappingAttribute<QString,int,Games, Games>("playerPositionCount",tr("Count of PlayerPosition"), this);
+    playerPositionCount->setCalculationFunction(this,&Games::calculate_playerPositionCount);
+    this->rows()->addDependingAttribute(playerPositionCount);
 }
 REGISTER_TABLE(Games)
 
@@ -101,6 +106,16 @@ QMap<QString,QList<Game*> > Games::calculate_gamesOfType(){
             }
         }
         map.insert(type,list);
+    }
+    return map;
+}
+
+QMap<QString,int> Games::calculate_playerPositionCount()
+{
+    QMap<QString,int> map;
+    foreach(Game* g, Games::instance()->allRows()){
+        QString players = g->playersSortedByPosition->displayVariant().toString();
+        map.insert(players,map.value(players)+1);
     }
     return map;
 }

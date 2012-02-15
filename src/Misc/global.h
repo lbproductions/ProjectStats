@@ -19,4 +19,8 @@ QTime operator+(const QTime &time1, const QTime &time2);
   */
 double round(double zahl, int stellen);
 
+/*!
+  Erstellt auf Basis eines Strings eine PlayerList.
+  */
+QList<Database::Player*> stringToPlayerList(QString string);
 #endif // GLOBAL_H

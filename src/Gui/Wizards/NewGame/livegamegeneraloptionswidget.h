@@ -58,11 +58,15 @@ namespace Gui
                     Ui::LiveGameGeneralOptionsWidget *ui;
                     Gui::Misc::PlacesComboBox* placesbox;
 
+                    void generatePlayerPositions();
+                    QList<Database::Player*> minimumPlayerConstellation();
+
                 private slots:
                     void on_pushButtonDeselect_clicked();
                     void on_pushButtonSelect_clicked();
                     void on_comboBoxGameType_currentIndexChanged(int index);
 
+                    void on_pushButtonGeneratePositions_clicked();
             };
 
         }

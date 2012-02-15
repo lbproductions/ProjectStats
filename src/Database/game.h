@@ -68,6 +68,9 @@ START_TABLE_DECLARATION(Game)
     MappingAttribute<QString,QList<Game*>,Games, Games> *gamesOfType;
     QMap<QString,QList<Game*> > calculate_gamesOfType();
 
+    MappingAttribute<QString,int,Games, Games> *playerPositionCount;
+    QMap<QString,int> calculate_playerPositionCount();
+
 END_TABLE_DECLARATION()
 
 Q_DECLARE_METATYPE(QPointer<Database::Place>)

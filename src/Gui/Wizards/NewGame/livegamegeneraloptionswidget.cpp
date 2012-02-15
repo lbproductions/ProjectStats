@@ -5,6 +5,7 @@
 
 #include <Database/database.h>
 #include <Misc/handler.h>
+#include <Misc/global.h>
 #include <Database/player.h>
 #include <Database/Doppelkopf/dokolivegame.h>
 #include <Gui/Misc/placescombobox.h>
@@ -182,4 +183,83 @@ void LiveGameGeneralOptionsWidget::on_pushButtonDeselect_clicked()
     {
         ui->listWidgetAllPlayers->addItem(ui->listWidgetSelectedPlayers->takeItem(ui->listWidgetSelectedPlayers->row(it.next())));
     }
+}
+
+void LiveGameGeneralOptionsWidget::generatePlayerPositions()
+{
+    QList<Database::Player*> players = minimumPlayerConstellation();
+
+    if(players.size() > 0){
+
+        ui->listWidgetSelectedPlayers->selectAll();
+        on_pushButtonDeselect_clicked();
+
+        foreach(Database::Player* player, players){
+            QListWidgetItem * item = ui->listWidgetAllPlayers->findItems(player->name->value(),Qt::MatchExactly).first();
+            item->setSelected(true);
+        }
+        on_pushButtonSelect_clicked();
+
+        this->repaint();
+
+    }
+}
+
+ QList<Database::Player*> LiveGameGeneralOptionsWidget::minimumPlayerConstellation()
+ {
+     qDebug() << "LiveGameGeneralOptionsWidget::minimumPlayerConstellation() started";
+
+     QList<Database::Player*> players = this->selectedPlayers();
+     AttributeVariant v;
+     v.setValue(players);
+     QString displayVariant = v.displayVariant().toString();
+
+     QMap<QString,int> map = Database::Games::instance()->playerPositionCount->value();
+     qDebug() << "Count of original constellation: " << map.value(displayVariant);
+
+     if(map.value(displayVariant) > 1){ //Get all Lists that contains only selected Players
+         QList<QString> lists; //contains just lists that contains only selected Players
+         foreach(QString string, map.keys()){
+             QList<Database::Player*> list = stringToPlayerList(string);
+             if(list.size()==players.size()){
+                 bool allPlayersInside = true;
+                 foreach(Database::Player* player, list){
+                     if(!players.contains(player)){
+                         allPlayersInside = false;
+                     }
+                 }
+                 if(allPlayersInside){
+                     lists.append(string);
+                 }
+             }
+         }
+         if(lists.size() == 0){
+             qWarning() << "No games found with this players!";
+             return QList<Database::Player*>();
+         }
+
+         //Get minimum count
+         QString generationList = displayVariant;
+         foreach(QString string, lists){
+             if(map.value(string) < map.value(generationList)){
+                 generationList = string;
+             }
+         }
+
+         qDebug() << generationList << " : " << map.value(generationList);
+
+         //Get final PlayerList
+         QList<Database::Player*> finalList = stringToPlayerList(generationList);
+
+         return finalList;
+     }
+     else{  //selected Players is already the minimum
+        qDebug() << "Original constellation used!";
+        return players;
+     }
+ }
+
+void Gui::Wizards::NewGame::LiveGameGeneralOptionsWidget::on_pushButtonGeneratePositions_clicked()
+{
+    generatePlayerPositions();
 }

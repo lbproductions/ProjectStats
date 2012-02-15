@@ -27,3 +27,16 @@ double round(double zahl, int stellen)
     double v[] = { 1, 10, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8 };  // mgl. verlängern
     return floor(zahl * v[stellen] + 0.5) / v[stellen];
 }
+
+QList<Database::Player*> stringToPlayerList(QString string)
+{
+    QList<Database::Player*> players;
+
+    QList<QString> strings = string.split(", ");
+    foreach(QString name, strings)
+    {
+        players.append(Database::Players::instance()->playerByName(name));
+    }
+
+    return players;
+}

@@ -186,8 +186,7 @@ SOURCES += main.cpp\
     Server/soapC.cpp \
     Server/stdsoap2.cpp \
     Server/server.cpp \
-    Gui/Misc/sheet.cpp \
-    Misc/Updater/winsparkleupdater.cpp
+    Gui/Misc/sheet.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -389,8 +388,7 @@ HEADERS  += \
     Server/stdsoap2.h \
     Server/server.h \
     Server/stdsoap2.h \
-    Gui/Misc/sheet.h \
-    Misc/Updater/winsparkleupdater.h
+    Gui/Misc/sheet.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
