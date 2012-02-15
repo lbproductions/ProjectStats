@@ -67,6 +67,9 @@ namespace Gui
                     void on_comboBoxGameType_currentIndexChanged(int index);
 
                     void on_pushButtonGeneratePositions_clicked();
+                    void on_pushButton_clicked();
+
+                     void on_chooseUnfinishedGamesDialogAccepted();
             };
 
         }

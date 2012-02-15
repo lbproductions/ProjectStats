@@ -186,7 +186,8 @@ SOURCES += main.cpp\
     Server/soapC.cpp \
     Server/stdsoap2.cpp \
     Server/server.cpp \
-    Gui/Misc/sheet.cpp
+    Gui/Misc/sheet.cpp \
+    Gui/Wizards/NewGame/chooseunfinishedgamedialog.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -388,7 +389,8 @@ HEADERS  += \
     Server/stdsoap2.h \
     Server/server.h \
     Server/stdsoap2.h \
-    Gui/Misc/sheet.h
+    Gui/Misc/sheet.h \
+    Gui/Wizards/NewGame/chooseunfinishedgamedialog.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -420,7 +422,8 @@ FORMS    += \
     Gui/Details/PlayerDetails/playerdetailswidget.ui \
     Gui/Details/PlayerDetails/playerstatswidget.ui \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.ui \
-    Gui/Details/PlayerDetails/dokoplayerstatswidget.ui
+    Gui/Details/PlayerDetails/dokoplayerstatswidget.ui \
+    Gui/Wizards/NewGame/chooseunfinishedgamedialog.ui
 
 
 mac {
@@ -470,6 +473,9 @@ OTHER_FILES += \
 
 
 DEFINES += WITH_NONAMESPACES
+
+
+
 
 
 

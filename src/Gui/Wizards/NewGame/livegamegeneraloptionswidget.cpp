@@ -2,6 +2,7 @@
 #include "ui_livegamegeneraloptionswidget.h"
 
 #include "newgamewizard.h"
+#include "chooseunfinishedgamedialog.h"
 
 #include <Database/database.h>
 #include <Misc/handler.h>
@@ -262,4 +263,15 @@ void LiveGameGeneralOptionsWidget::generatePlayerPositions()
 void Gui::Wizards::NewGame::LiveGameGeneralOptionsWidget::on_pushButtonGeneratePositions_clicked()
 {
     generatePlayerPositions();
+}
+
+void Gui::Wizards::NewGame::LiveGameGeneralOptionsWidget::on_pushButton_clicked()
+{
+    ChooseUnfinishedGameDialog* dialog = new ChooseUnfinishedGameDialog(this->selectedPlayers(),static_cast<QWidget*>(this->parent()));
+    connect(dialog,SIGNAL(accepted()),this,SLOT(on_chooseUnfinishedGamesDialogAccepted()));
+    dialog->exec();
+}
+
+void LiveGameGeneralOptionsWidget::on_chooseUnfinishedGamesDialogAccepted(){
+    this->wizard()->close();
 }
