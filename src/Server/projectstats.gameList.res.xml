@@ -189,6 +189,30 @@
        <value>0.0</value>
       </average>
      </currentPlayingPlayers>
+     <points>
+      <key></key>
+      <value>0</value>
+     </points>
+     <points>
+      <key></key>
+      <value>0</value>
+     </points>
+     <counts>
+      <key></key>
+      <value>0</value>
+     </counts>
+     <counts>
+      <key></key>
+      <value>0</value>
+     </counts>
+     <infos>
+      <key></key>
+      <value></value>
+     </infos>
+     <infos>
+      <key></key>
+      <value></value>
+     </infos>
     </gameList>
     <gameList>
      <id>0</id>
@@ -371,6 +395,30 @@
        <value>0.0</value>
       </average>
      </currentPlayingPlayers>
+     <points>
+      <key></key>
+      <value>0</value>
+     </points>
+     <points>
+      <key></key>
+      <value>0</value>
+     </points>
+     <counts>
+      <key></key>
+      <value>0</value>
+     </counts>
+     <counts>
+      <key></key>
+      <value>0</value>
+     </counts>
+     <infos>
+      <key></key>
+      <value></value>
+     </infos>
+     <infos>
+      <key></key>
+      <value></value>
+     </infos>
     </gameList>
    </result>
   </ps:gameListResponse>

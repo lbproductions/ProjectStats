@@ -155,6 +155,100 @@ int projectstatsService::placeList(PlaceList& result)
     return SOAP_OK;
 }
 
+int projectstatsService::gameById(int id, GameInformation &result)
+{
+    Database::Game* g = Database::Games::instance()->castedRowById(id);
+
+    if(g->live->value()){
+
+        Database::LiveGame* game = static_cast<Database::LiveGame*>(g);
+
+        if(!game)
+        {
+            return SOAP_USER_ERROR;
+        }
+
+        result.name = game->name->value().toUtf8().data();
+        result.id = id;
+
+        foreach(Database::Player* player, game->playersSortedByPosition->value()){
+            StringIntPair pair;
+            QByteArray ba = player->name->value().toLocal8Bit();
+            pair.key = strdup(ba.data());
+            pair.value = game->points->value(player);
+            result.points.push_back(pair);
+        }
+
+        StringStringPair rounds;
+        QString name = "Rounds";
+        QByteArray ba = name.toLocal8Bit();
+        rounds.key = strdup(ba.data());
+        QByteArray va = QString::number(game->roundCount->value()).toLocal8Bit();
+        rounds.value = strdup(va.data());
+        result.infos.push_back(rounds);
+
+        StringStringPair length;
+        name = "Length";
+        ba = name.toLocal8Bit();
+        length.key = strdup(ba.data());
+        va = game->length->value().toString().toLocal8Bit();
+        length.value = strdup(va.data());
+        result.infos.push_back(length);
+
+        StringStringPair dealer;
+        name = "Dealer";
+        ba = name.toLocal8Bit();
+        dealer.key = strdup(ba.data());
+        va = game->cardmixer->value()->name->value().toLocal8Bit();
+        dealer.value = strdup(va.data());
+        result.infos.push_back(dealer);
+
+        if(game->type->value() == "Doppelkopf"){
+            Database::DokoLiveGame* dokogame = static_cast<Database::DokoLiveGame*>(game);
+
+            StringIntPair hochzeiten;
+            QString name = "Hochzeit";
+            QByteArray ba = name.toLocal8Bit();
+            hochzeiten.key = strdup(ba.data());
+            hochzeiten.value = dokogame->doko_hochzeitCount->value();
+            result.counts.push_back(hochzeiten);
+
+            StringIntPair soli;
+            name = "Solo";
+            ba = name.toLocal8Bit();
+            soli.key = strdup(ba.data());
+            soli.value = dokogame->doko_soloCount->value();
+            result.counts.push_back(soli);
+
+            StringIntPair trumpfabgaben;
+            name = "Trumpfabgabe";
+            ba = name.toLocal8Bit();
+            trumpfabgaben.key = strdup(ba.data());
+            trumpfabgaben.value = dokogame->doko_trumpfabgabeCount->value();
+            result.counts.push_back(trumpfabgaben);
+
+            StringIntPair schweinereien;
+            name = "Schweinerei";
+            ba = name.toLocal8Bit();
+            schweinereien.key = strdup(ba.data());
+            schweinereien.value = dokogame->doko_schweinereiCount->value();
+            result.counts.push_back(schweinereien);
+
+            StringIntPair schmeissereien;
+            name = "Schmeisserei";
+            ba = name.toLocal8Bit();
+            schmeissereien.key = strdup(ba.data());
+            schmeissereien.value = dokogame->doko_schmeissereiCount->value();
+            result.counts.push_back(schmeissereien);
+        }
+
+        return SOAP_OK;
+    }
+    else{
+        return SOAP_USER_ERROR;
+    }
+}
+
 int projectstatsService::gameList(GameList& result)
 {
     foreach(Database::Game* game, Database::Games::instance()->allRows())
@@ -193,6 +287,22 @@ int projectstatsService::gameCurrentPlayingPlayers(int gameId, PlayerList& resul
 {
     Database::LiveGame* game = static_cast<Database::LiveGame*>(Database::Games::instance()->castedRowById(gameId));
     foreach(Database::Player* player, game->currentPlayingPlayers->value())
+    {
+        PlayerInformation info;
+        QByteArray ba = player->name->value().toLocal8Bit();
+        info.name = strdup(ba.data());
+        info.id = player->id();
+
+        result.playerList.push_back(info);
+    }
+
+    return SOAP_OK;
+}
+
+int projectstatsService::gamePlayersSortedByPlacement(int gameId, PlayerList& result)
+{
+    Database::LiveGame* game = static_cast<Database::LiveGame*>(Database::Games::instance()->castedRowById(gameId));
+    foreach(Database::Player* player, game->playersSortedByPlacement->value())
     {
         PlayerInformation info;
         QByteArray ba = player->name->value().toLocal8Bit();

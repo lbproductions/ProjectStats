@@ -17,6 +17,12 @@ class StringDoublePair
     double value;
 };
 
+class StringStringPair
+{
+    xsd__string key;
+    xsd__string value;
+};
+
 class PlayerInformation
 {
     int id;
@@ -76,6 +82,10 @@ class GameInformation
 
     std::vector<PlayerInformation> playersSortedByPosition;
     std::vector<PlayerInformation> currentPlayingPlayers;
+
+    std::vector<StringIntPair> points;
+    std::vector<StringIntPair> counts;
+    std::vector<StringStringPair> infos;
 };
 
 class GameList
@@ -135,8 +145,26 @@ int ps__gameList(GameList& result);
 
 //gsoap ps service method-style: rpc
 //gsoap ps service method-encoding: encoded
+//gsoap ps service method-action: gameById ""
+int ps__gameById(int id, GameInformation& result);
+
+//gsoap ps service name: projectstats
+//gsoap ps service port: http://eineurl.von.uns?
+//gsoap ps service namespace: urn:projectstats
+
+//gsoap ps service method-style: rpc
+//gsoap ps service method-encoding: encoded
 //gsoap ps service method-action: gameCurrentPlayingPlayers ""
 int ps__gameCurrentPlayingPlayers(int gameId, PlayerList& result);
+
+//gsoap ps service name: projectstats
+//gsoap ps service port: http://eineurl.von.uns?
+//gsoap ps service namespace: urn:projectstats
+
+//gsoap ps service method-style: rpc
+//gsoap ps service method-encoding: encoded
+//gsoap ps service method-action: gamePlayersSortedByPlacement ""
+int ps__gamePlayersSortedByPlacement(int gameId, PlayerList& result);
 
 //gsoap ps service name: projectstats
 //gsoap ps service port: http://eineurl.von.uns?

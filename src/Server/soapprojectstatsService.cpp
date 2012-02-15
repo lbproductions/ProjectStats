@@ -165,7 +165,9 @@ static int serve_ps__playerList(projectstatsService*);
 static int serve_ps__drinkList(projectstatsService*);
 static int serve_ps__placeList(projectstatsService*);
 static int serve_ps__gameList(projectstatsService*);
+static int serve_ps__gameById(projectstatsService*);
 static int serve_ps__gameCurrentPlayingPlayers(projectstatsService*);
+static int serve_ps__gamePlayersSortedByPlacement(projectstatsService*);
 static int serve_ps__addSchmeisserei(projectstatsService*);
 static int serve_ps__addDrink(projectstatsService*);
 static int serve_ps__addRound(projectstatsService*);
@@ -183,8 +185,12 @@ int projectstatsService::dispatch()
 		return serve_ps__placeList(this);
 	if (!soap_match_tag(this, this->tag, "ps:gameList"))
 		return serve_ps__gameList(this);
+	if (!soap_match_tag(this, this->tag, "ps:gameById"))
+		return serve_ps__gameById(this);
 	if (!soap_match_tag(this, this->tag, "ps:gameCurrentPlayingPlayers"))
 		return serve_ps__gameCurrentPlayingPlayers(this);
+	if (!soap_match_tag(this, this->tag, "ps:gamePlayersSortedByPlacement"))
+		return serve_ps__gamePlayersSortedByPlacement(this);
 	if (!soap_match_tag(this, this->tag, "ps:addSchmeisserei"))
 		return serve_ps__addSchmeisserei(this);
 	if (!soap_match_tag(this, this->tag, "ps:addDrink"))
@@ -401,6 +407,47 @@ static int serve_ps__gameList(projectstatsService *soap)
 	return soap_closesock(soap);
 }
 
+static int serve_ps__gameById(projectstatsService *soap)
+{	struct ps__gameById soap_tmp_ps__gameById;
+	struct ps__gameByIdResponse soap_tmp_ps__gameByIdResponse;
+	soap_default_ps__gameByIdResponse(soap, &soap_tmp_ps__gameByIdResponse);
+	soap_default_ps__gameById(soap, &soap_tmp_ps__gameById);
+	soap->encodingStyle = NULL;
+	if (!soap_get_ps__gameById(soap, &soap_tmp_ps__gameById, "ps:gameById", NULL))
+		return soap->error;
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap->error;
+	soap->error = soap->gameById(soap_tmp_ps__gameById.id, soap_tmp_ps__gameByIdResponse.result);
+	if (soap->error)
+		return soap->error;
+	soap_serializeheader(soap);
+	soap_serialize_ps__gameByIdResponse(soap, &soap_tmp_ps__gameByIdResponse);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__gameByIdResponse(soap, &soap_tmp_ps__gameByIdResponse, "ps:gameByIdResponse", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	};
+	if (soap_end_count(soap)
+	 || soap_response(soap, SOAP_OK)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__gameByIdResponse(soap, &soap_tmp_ps__gameByIdResponse, "ps:gameByIdResponse", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap->error;
+	return soap_closesock(soap);
+}
+
 static int serve_ps__gameCurrentPlayingPlayers(projectstatsService *soap)
 {	struct ps__gameCurrentPlayingPlayers soap_tmp_ps__gameCurrentPlayingPlayers;
 	struct ps__gameCurrentPlayingPlayersResponse soap_tmp_ps__gameCurrentPlayingPlayersResponse;
@@ -435,6 +482,47 @@ static int serve_ps__gameCurrentPlayingPlayers(projectstatsService *soap)
 	 || soap_putheader(soap)
 	 || soap_body_begin_out(soap)
 	 || soap_put_ps__gameCurrentPlayingPlayersResponse(soap, &soap_tmp_ps__gameCurrentPlayingPlayersResponse, "ps:gameCurrentPlayingPlayersResponse", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap->error;
+	return soap_closesock(soap);
+}
+
+static int serve_ps__gamePlayersSortedByPlacement(projectstatsService *soap)
+{	struct ps__gamePlayersSortedByPlacement soap_tmp_ps__gamePlayersSortedByPlacement;
+	struct ps__gamePlayersSortedByPlacementResponse soap_tmp_ps__gamePlayersSortedByPlacementResponse;
+	soap_default_ps__gamePlayersSortedByPlacementResponse(soap, &soap_tmp_ps__gamePlayersSortedByPlacementResponse);
+	soap_default_ps__gamePlayersSortedByPlacement(soap, &soap_tmp_ps__gamePlayersSortedByPlacement);
+	soap->encodingStyle = NULL;
+	if (!soap_get_ps__gamePlayersSortedByPlacement(soap, &soap_tmp_ps__gamePlayersSortedByPlacement, "ps:gamePlayersSortedByPlacement", NULL))
+		return soap->error;
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap->error;
+	soap->error = soap->gamePlayersSortedByPlacement(soap_tmp_ps__gamePlayersSortedByPlacement.gameId, soap_tmp_ps__gamePlayersSortedByPlacementResponse.result);
+	if (soap->error)
+		return soap->error;
+	soap_serializeheader(soap);
+	soap_serialize_ps__gamePlayersSortedByPlacementResponse(soap, &soap_tmp_ps__gamePlayersSortedByPlacementResponse);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__gamePlayersSortedByPlacementResponse(soap, &soap_tmp_ps__gamePlayersSortedByPlacementResponse, "ps:gamePlayersSortedByPlacementResponse", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	};
+	if (soap_end_count(soap)
+	 || soap_response(soap, SOAP_OK)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__gamePlayersSortedByPlacementResponse(soap, &soap_tmp_ps__gamePlayersSortedByPlacementResponse, "ps:gamePlayersSortedByPlacementResponse", NULL)
 	 || soap_body_end_out(soap)
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))

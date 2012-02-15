@@ -86,6 +86,22 @@
    </complexType>
   </element>
   <!-- operation request element -->
+  <element name="gameById">
+   <complexType>
+    <sequence>
+     <element name="id" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__gameById::id -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="gameByIdResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:GameInformation" minOccurs="1" maxOccurs="1"/><!-- ps__gameById::result -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
   <element name="gameCurrentPlayingPlayers">
    <complexType>
     <sequence>
@@ -98,6 +114,22 @@
    <complexType>
     <sequence>
      <element name="result" type="ps:PlayerList" minOccurs="1" maxOccurs="1"/><!-- ps__gameCurrentPlayingPlayers::result -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation request element -->
+  <element name="gamePlayersSortedByPlacement">
+   <complexType>
+    <sequence>
+     <element name="gameId" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ps__gamePlayersSortedByPlacement::gameId -->
+    </sequence>
+   </complexType>
+  </element>
+  <!-- operation response element -->
+  <element name="gamePlayersSortedByPlacementResponse">
+   <complexType>
+    <sequence>
+     <element name="result" type="ps:PlayerList" minOccurs="1" maxOccurs="1"/><!-- ps__gamePlayersSortedByPlacement::result -->
     </sequence>
    </complexType>
   </element>

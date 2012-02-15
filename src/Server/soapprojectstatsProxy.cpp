@@ -108,7 +108,7 @@ int projectstatsProxy::playerById(const char *endpoint, const char *soap_action,
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -164,7 +164,7 @@ int projectstatsProxy::playerList(const char *endpoint, const char *soap_action,
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -219,7 +219,7 @@ int projectstatsProxy::drinkList(const char *endpoint, const char *soap_action, 
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -274,7 +274,7 @@ int projectstatsProxy::placeList(const char *endpoint, const char *soap_action, 
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -329,7 +329,7 @@ int projectstatsProxy::gameList(const char *endpoint, const char *soap_action, G
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -377,6 +377,62 @@ int projectstatsProxy::gameList(const char *endpoint, const char *soap_action, G
 	return soap_closesock(soap);
 }
 
+int projectstatsProxy::gameById(const char *endpoint, const char *soap_action, int id, GameInformation &result)
+{	struct soap *soap = this;
+	struct ps__gameById soap_tmp_ps__gameById;
+	struct ps__gameByIdResponse *soap_tmp_ps__gameByIdResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (!soap_endpoint)
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+	if (!soap_action)
+		soap_action = "";
+	soap->encodingStyle = NULL;
+	soap_tmp_ps__gameById.id = id;
+	soap_begin(soap);
+	soap_serializeheader(soap);
+	soap_serialize_ps__gameById(soap, &soap_tmp_ps__gameById);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__gameById(soap, &soap_tmp_ps__gameById, "ps:gameById", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__gameById(soap, &soap_tmp_ps__gameById, "ps:gameById", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&result)
+		return soap_closesock(soap);
+	result.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	soap_tmp_ps__gameByIdResponse = soap_get_ps__gameByIdResponse(soap, NULL, "ps:gameByIdResponse", "");
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	result = soap_tmp_ps__gameByIdResponse->result;
+	return soap_closesock(soap);
+}
+
 int projectstatsProxy::gameCurrentPlayingPlayers(const char *endpoint, const char *soap_action, int gameId, PlayerList &result)
 {	struct soap *soap = this;
 	struct ps__gameCurrentPlayingPlayers soap_tmp_ps__gameCurrentPlayingPlayers;
@@ -384,7 +440,7 @@ int projectstatsProxy::gameCurrentPlayingPlayers(const char *endpoint, const cha
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -433,6 +489,62 @@ int projectstatsProxy::gameCurrentPlayingPlayers(const char *endpoint, const cha
 	return soap_closesock(soap);
 }
 
+int projectstatsProxy::gamePlayersSortedByPlacement(const char *endpoint, const char *soap_action, int gameId, PlayerList &result)
+{	struct soap *soap = this;
+	struct ps__gamePlayersSortedByPlacement soap_tmp_ps__gamePlayersSortedByPlacement;
+	struct ps__gamePlayersSortedByPlacementResponse *soap_tmp_ps__gamePlayersSortedByPlacementResponse;
+	if (endpoint)
+		soap_endpoint = endpoint;
+	if (!soap_endpoint)
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+	if (!soap_action)
+		soap_action = "";
+	soap->encodingStyle = NULL;
+	soap_tmp_ps__gamePlayersSortedByPlacement.gameId = gameId;
+	soap_begin(soap);
+	soap_serializeheader(soap);
+	soap_serialize_ps__gamePlayersSortedByPlacement(soap, &soap_tmp_ps__gamePlayersSortedByPlacement);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if (soap->mode & SOAP_IO_LENGTH)
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put_ps__gamePlayersSortedByPlacement(soap, &soap_tmp_ps__gamePlayersSortedByPlacement, "ps:gamePlayersSortedByPlacement", NULL)
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put_ps__gamePlayersSortedByPlacement(soap, &soap_tmp_ps__gamePlayersSortedByPlacement, "ps:gamePlayersSortedByPlacement", NULL)
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	if (!&result)
+		return soap_closesock(soap);
+	result.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	soap_tmp_ps__gamePlayersSortedByPlacementResponse = soap_get_ps__gamePlayersSortedByPlacementResponse(soap, NULL, "ps:gamePlayersSortedByPlacementResponse", "");
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	result = soap_tmp_ps__gamePlayersSortedByPlacementResponse->result;
+	return soap_closesock(soap);
+}
+
 int projectstatsProxy::addSchmeisserei(const char *endpoint, const char *soap_action, int gameId, int playerId, std::string type, std::string &result)
 {	struct soap *soap = this;
 	struct ps__addSchmeisserei soap_tmp_ps__addSchmeisserei;
@@ -440,7 +552,7 @@ int projectstatsProxy::addSchmeisserei(const char *endpoint, const char *soap_ac
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -498,7 +610,7 @@ int projectstatsProxy::addDrink(const char *endpoint, const char *soap_action, i
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -556,7 +668,7 @@ int projectstatsProxy::addRound(const char *endpoint, const char *soap_action, i
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
@@ -621,7 +733,7 @@ int projectstatsProxy::hasPflichtSolo(const char *endpoint, const char *soap_act
 	if (endpoint)
 		soap_endpoint = endpoint;
 	if (!soap_endpoint)
-		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
+		soap_endpoint = "http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns? http://eineurl.von.uns?";
 	if (!soap_action)
 		soap_action = "";
 	soap->encodingStyle = NULL;
