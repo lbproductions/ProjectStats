@@ -1,7 +1,7 @@
 #ifndef LIVEGAMEINFOGROUPBOX_H
 #define LIVEGAMEINFOGROUPBOX_H
 
-#include <Gui/Details/LiveGameDetails/abstractlivegamewidget.h>
+#include <Gui/Details/LiveGameDetails/Sidebar/sidebarpage.h>
 
 class QVBoxLayout;
 
@@ -22,7 +22,7 @@ namespace Details{
 
 namespace LiveGameDetails{
 
-class LiveGameInfoGroupBox : public AbstractLiveGameWidget
+class LiveGameInfoGroupBox : public Sidebar::SidebarPage
 {
     Q_OBJECT
 public:

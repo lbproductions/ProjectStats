@@ -29,6 +29,10 @@ namespace LiveGameDetails
 class LiveGameInfoGroupBox;
 class LiveGameRoundTable;
 
+namespace Sidebar{
+    class SidebarController;
+}
+
 //! Diese Klasse stellt eine gemeinsame Oberklasse für alle LiveGameWidgets dar.
 /*!
     Sie sollte eigentlich nie tatsächlich instantiiert werden, stattdessen sollte für jeden Spieltyp eine eigene Unterklasse implementiert sein.<br>
@@ -62,7 +66,7 @@ protected:
 
     QPointer<Database::LiveGame> m_livegame;
 
-    QPointer<LiveGameDetails::LiveGameInfoGroupBox> m_infoBox;
+    QPointer<LiveGameDetails::Sidebar::SidebarController> m_sidebar;
 
     QPointer<LiveGameDetails::LiveGameRoundTable> m_roundTable;
 

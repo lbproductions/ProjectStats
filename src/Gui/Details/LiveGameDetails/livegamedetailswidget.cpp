@@ -17,6 +17,8 @@
 #include <Misc/messagesystem.h>
 #include <Misc/handler.h>
 
+#include <Gui/Details/LiveGameDetails/Sidebar/sidebarcontroller.h>
+
 #include <QFile>
 #include <QSettings>
 #include <QLabel>
@@ -47,16 +49,14 @@ void LiveGameDetailsWidget::initializeItems()
     {
         m_roundTable = new LiveGameDetails::LiveGameRoundTable(m_livegame,this);
     }
-    if (m_infoBox.isNull())
-    {
-        m_infoBox = new LiveGameDetails::LiveGameInfoGroupBox(m_livegame,this);
-    }
     if(m_graph.isNull())
     {
         m_graph = new Gui::Graphs::LiveGameGraphView(this);
         m_graph->setLiveGame(m_livegame);
         m_graph->setFullscreen();
     }
+
+    m_sidebar = new LiveGameDetails::Sidebar::SidebarController(m_livegame,this);
 }
 
 void LiveGameDetailsWidget::setupWidget()
@@ -89,7 +89,7 @@ void LiveGameDetailsWidget::setupWidget()
     Gui::Misc::Splitter* rightSplitter = new Gui::Misc::Splitter(Qt::Horizontal);
     rightSplitter->setFullscreen(true);
     rightSplitter->addWidget(leftSplitter);
-    rightSplitter->addWidget(m_infoBox);
+    rightSplitter->addWidget(m_sidebar);
     rightSplitter->setStretchFactor(0,1);
     rightSplitter->setStretchFactor(1,0);
 
