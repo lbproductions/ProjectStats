@@ -187,7 +187,10 @@ SOURCES += main.cpp\
     Server/stdsoap2.cpp \
     Server/server.cpp \
     Gui/Misc/sheet.cpp \
-    Gui/Wizards/NewGame/chooseunfinishedgamedialog.cpp
+    Gui/Wizards/NewGame/chooseunfinishedgamedialog.cpp \
+    Gui/Details/LiveGameDetails/Sidebar/sidebarcontroller.cpp \
+    Gui/Details/LiveGameDetails/Sidebar/sidebarpage.cpp \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerpairpage.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -390,7 +393,10 @@ HEADERS  += \
     Server/server.h \
     Server/stdsoap2.h \
     Gui/Misc/sheet.h \
-    Gui/Wizards/NewGame/chooseunfinishedgamedialog.h
+    Gui/Wizards/NewGame/chooseunfinishedgamedialog.h \
+    Gui/Details/LiveGameDetails/Sidebar/sidebarcontroller.h \
+    Gui/Details/LiveGameDetails/Sidebar/sidebarpage.h \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerpairpage.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -423,7 +429,8 @@ FORMS    += \
     Gui/Details/PlayerDetails/playerstatswidget.ui \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.ui \
     Gui/Details/PlayerDetails/dokoplayerstatswidget.ui \
-    Gui/Wizards/NewGame/chooseunfinishedgamedialog.ui
+    Gui/Wizards/NewGame/chooseunfinishedgamedialog.ui \
+    Gui/Details/LiveGameDetails/Sidebar/sidebarcontroller.ui
 
 
 mac {
@@ -473,6 +480,19 @@ OTHER_FILES += \
 
 
 DEFINES += WITH_NONAMESPACES
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

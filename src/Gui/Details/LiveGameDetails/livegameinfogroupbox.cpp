@@ -13,7 +13,7 @@ using namespace Gui::Details::LiveGameDetails;
 
 
 LiveGameInfoGroupBox::LiveGameInfoGroupBox(Database::LiveGame* livegame, QWidget* parent) :
-    AbstractLiveGameWidget(parent),
+    SidebarPage(parent),
     m_game(livegame)
 {    
     m_layout = new QVBoxLayout(this);
