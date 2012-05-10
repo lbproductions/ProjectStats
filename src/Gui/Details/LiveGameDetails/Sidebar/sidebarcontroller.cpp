@@ -7,7 +7,9 @@
 #include <Database/Doppelkopf/dokolivegame.h>
 
 #include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegameinfogroupbox.h>
-#include <Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerpairpage.h>
+#include "Doppelkopf/dokoplayerpairpage.h"
+#include "Doppelkopf/dokoplayerstatspage.h"
+#include "commentsidebarpage.h"
 
 using namespace Gui::Details::LiveGameDetails::Sidebar;
 
@@ -40,8 +42,16 @@ void SidebarController::setupWidget()
         Gui::Details::LiveGameDetails::LiveGameInfoGroupBox* groupBox1 = new Gui::Details::LiveGameDetails::LiveGameInfoGroupBox(m_liveGame,this);
         m_sides.append(groupBox1);
     }
+
+    Gui::Details::LiveGameDetails::Sidebar::DokoPlayerStatsPage* playerStatsPage = new Gui::Details::LiveGameDetails::Sidebar::DokoPlayerStatsPage(static_cast<Database::DokoLiveGame*>(m_liveGame), this);
+    m_sides.append(playerStatsPage);
+
+    CommentSidebarPage* commentPage = new CommentSidebarPage(m_liveGame,this);
+    m_sides.append(commentPage);
+
     Gui::Details::LiveGameDetails::Sidebar::DokoPlayerPairPage* pairPage = new Gui::Details::LiveGameDetails::Sidebar::DokoPlayerPairPage(static_cast<Database::DokoLiveGame*>(m_liveGame), this);
-    m_sides.append(pairPage);
+    m_sides.append(pairPage);  
+
 }
 
 void SidebarController::on_pushButtonLeft_clicked()

@@ -190,7 +190,13 @@ SOURCES += main.cpp\
     Gui/Wizards/NewGame/chooseunfinishedgamedialog.cpp \
     Gui/Details/LiveGameDetails/Sidebar/sidebarcontroller.cpp \
     Gui/Details/LiveGameDetails/Sidebar/sidebarpage.cpp \
-    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerpairpage.cpp
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerpairpage.cpp \
+    Database/rowpair.cpp \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatspage.cpp \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsgroupbox.cpp \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsroundbox.cpp \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsspecialstats.cpp \
+    Gui/Details/LiveGameDetails/Sidebar/commentsidebarpage.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -396,7 +402,13 @@ HEADERS  += \
     Gui/Wizards/NewGame/chooseunfinishedgamedialog.h \
     Gui/Details/LiveGameDetails/Sidebar/sidebarcontroller.h \
     Gui/Details/LiveGameDetails/Sidebar/sidebarpage.h \
-    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerpairpage.h
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerpairpage.h \
+    Database/rowpair.h \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatspage.h \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsgroupbox.h \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsroundbox.h \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsspecialstats.h \
+    Gui/Details/LiveGameDetails/Sidebar/commentsidebarpage.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -430,7 +442,10 @@ FORMS    += \
     Gui/Details/PlayerDetails/abstractplayerstatswidget.ui \
     Gui/Details/PlayerDetails/dokoplayerstatswidget.ui \
     Gui/Wizards/NewGame/chooseunfinishedgamedialog.ui \
-    Gui/Details/LiveGameDetails/Sidebar/sidebarcontroller.ui
+    Gui/Details/LiveGameDetails/Sidebar/sidebarcontroller.ui \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsgroupbox.ui \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsroundbox.ui \
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsspecialstats.ui
 
 
 mac {

@@ -2,7 +2,8 @@
 
 #include <Database/Doppelkopf/dokolivegame.h>
 #include <Database/player.h>
-
+#include <Database/rowpair.h>
+#include <Misc/global.h>
 #include <Gui/Misc/groupbox.h>
 
 #include <QVBoxLayout>
@@ -21,17 +22,19 @@ DokoPlayerPairPage::DokoPlayerPairPage(Database::DokoLiveGame* dokolivegame, QWi
         QVBoxLayout* playerLayout = new QVBoxLayout(this);
         foreach(Database::Player* playerTwo, m_dokoLiveGame->players->value()){
             if(playerOne->id() != playerTwo->id()){
-                QPair<Database::Player*,Database::Player*> pair;
-                pair.first = playerOne;
-                pair.second = playerTwo;
+                Database::RowPair pair;
+                pair.setRows(playerOne, playerTwo);
                 QLabel* label = new QLabel(this);
+                qDebug() << m_dokoLiveGame->doko_gamesTogether->value();
                 m_dokoLiveGame->doko_gamesTogether->mappingFutureWatcher(pair)->connectTo(label);
                 QHBoxLayout* internalLayout = new QHBoxLayout(this);
                 internalLayout->addWidget(new QLabel(playerOne->name->value() + " - " + playerTwo->name->value(),this));
                 internalLayout->addWidget(label);
+                /*
                 QLabel* wins = new QLabel(this);
                 m_dokoLiveGame->doko_winsTogether->mappingFutureWatcher(pair)->connectTo(wins);
                 internalLayout->addWidget(wins);
+                */
                 playerLayout->addLayout(internalLayout);
             }
         }
@@ -41,10 +44,5 @@ DokoPlayerPairPage::DokoPlayerPairPage(Database::DokoLiveGame* dokolivegame, QWi
 
     this->setLayout(layout);
 
-    QPalette palette = this->palette();
-    QPixmap pixmap;
-    pixmap.load(":/graphics/styles/mac/toolbar/fullscreen/sidebar_background_fullscreen");
-    palette.setBrush(QPalette::Window,QBrush(pixmap));
-    this->setPalette(palette);
     this->setStyleSheet("QLabel{font-size: 15px; color: white;}");
 }
