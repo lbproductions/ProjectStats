@@ -43,6 +43,7 @@ class LeagueOverviewWidget : public QWidget
     Q_OBJECT
 public:
     explicit LeagueOverviewWidget(Database::LeagueFolderCategorie *categorie, MainWindow *parent);
+    ~LeagueOverviewWidget();
 
 
 signals:

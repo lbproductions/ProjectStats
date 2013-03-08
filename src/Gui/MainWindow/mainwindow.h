@@ -84,6 +84,8 @@ public:
 
     Statusbar * statusBar() const;
 
+    Sidebar* sidebar() const;
+
 private slots:
     /*!
       Dieser Slot wird aufgerufen, wenn in der Sidebar eine neue Categorie angewählt wurde.<br>

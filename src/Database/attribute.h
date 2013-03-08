@@ -299,6 +299,8 @@ public:
     void recalculateFromScratch();
 
     void setCacheInitialized(bool initialized);
+
+    virtual void changeValue(const T value);
 protected:
     friend class TableModel<R, Table<R> >;
     friend class RecalculationTask<Attribute<T,R,C>,T>;
@@ -307,7 +309,7 @@ protected:
     /*!
       Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
       */
-    virtual void changeValue(const T value);
+    //virtual void changeValue(const T value);
 
     /*!
       Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!

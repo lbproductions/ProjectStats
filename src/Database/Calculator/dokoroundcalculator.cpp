@@ -76,4 +76,49 @@ QMap<Player*,bool> DokoRoundCalculator::calculate_doko_re(){
     return hash;
 }
 
+QList<Player*> DokoRoundCalculator::calculate_doko_winningPlayers()
+{
+    QList<Player*> list;
+    foreach(Player* player, m_dokoround->currentPlayingPlayers->value()){
+        if(m_dokoround->points->value(player) > 0){
+            list.append(player);
+        }
+    }
+    return list;
+}
+
+QList<QList<Player*> > DokoRoundCalculator::calculate_doko_togetherPlayingPlayers(){
+    QList<QList<Player*> > lists;
+
+    if(m_dokoround->doko_soloPlayerId->value() > 0){    // we have a solo
+        QList<Player*> soloPlayer;
+        soloPlayer.append(Players::instance()->rowById(m_dokoround->doko_soloPlayerId->value()));
+        lists.append(soloPlayer);
+
+        QList<Player*> rest;
+        foreach(Player* player, m_dokoround->currentPlayingPlayers->value()){
+            if(player->id() != m_dokoround->doko_soloPlayerId->value()){
+                rest.append(player);
+            }
+        }
+        lists.append(rest);
+    }
+
+    else{   // normal game
+        QList<Player*> contraPlayers = m_dokoround->currentPlayingPlayers->value();
+        QList<Player*> rePlayers;
+        foreach(Player* player, contraPlayers)
+        {
+            if(m_dokoround->doko_re->value(player)){
+                contraPlayers.removeOne(player);
+                rePlayers.append(player);
+            }
+        }
+        lists.append(contraPlayers);
+        lists.append(rePlayers);
+    }
+
+    return lists;
+}
+
 } // namespace Database

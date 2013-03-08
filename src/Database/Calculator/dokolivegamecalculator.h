@@ -53,9 +53,9 @@ public:
 
     QMap<int,int> calculate_doko_schmeissereiCountAfterRounds();
 
-    QMap<QPair<Player*,Player*>,int> calculate_doko_gamesTogether();
+    QMap<RowPair,int> calculate_doko_gamesTogether();
 
-    QMap<QPair<Player*,Player*>,int> calculate_doko_winsTogether();
+    QMap<QList<Player*>,int> calculate_doko_winsTogether();
 
     QMap<Player*,double> calculate_doko_pointAveragePerWin();
 
@@ -102,6 +102,8 @@ public:
     QMap<int,int> calculate_doko_schweinereiPositionAfterRounds();
 private:
     QPointer<DokoLiveGame> m_dokolivegame;
+
+    QList<RowPair> createPairs(QList<Player*> players);
 };
 
 } // namespace Database

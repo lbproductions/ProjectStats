@@ -2,6 +2,7 @@
 
 #include <QTime>
 #include <Database/player.h>
+#include <Database/rowpair.h>
 #include <math.h>
 
 QTime operator+(const QTime &time1, const QTime &time2)
@@ -40,3 +41,32 @@ QList<Database::Player*> stringToPlayerList(QString string)
 
     return players;
 }
+
+bool operator<(const Database::RowPair &e1, const Database::RowPair &e2)
+{
+    return e1.first()->id() < e2.first()->id();
+}
+
+bool operator==(const Database::RowPair &e1, const Database::RowPair &e2)
+{
+    if((e1.first()->id() == e2.first()->id() && e1.second()->id() == e2.second()->id()) || (e1.first()->id() == e2.second()->id() && e1.second()->id() == e2.first()->id()))
+    {
+        return true;
+    }
+    return false;
+}
+
+QDebug operator<<(QDebug d, const QList<Database::RowPair> list)
+{
+    foreach(Database::RowPair pair, list){
+        d << pair.first()->id() << " - " << pair.second()->id() << ", ";
+    }
+    return d;
+}
+
+QDebug operator<<(QDebug d, const Database::RowPair pair)
+{
+    d << pair.first()->id() << " - " << pair.second()->id();
+    return d;
+}
+

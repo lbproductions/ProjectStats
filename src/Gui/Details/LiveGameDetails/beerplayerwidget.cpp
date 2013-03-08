@@ -51,7 +51,12 @@ BeerPlayerWidget::BeerPlayerWidget(Database::Player* player, Database::LiveGame*
     ui->setupUi(this);
 
     player->name->futureWatcher()->connectTo(ui->labelName);
-    player->alcPegel->mappingFutureWatcher(livegame)->connectTo(ui->labelAlc);
+    if(player->weight->value() > 0 && player->size->value() > 0){
+        player->alcPegel->mappingFutureWatcher(livegame)->connectTo(ui->labelAlc);
+    }
+    else{
+        ui->labelAlc->setText(tr("No Body-Data"));
+    }
 
     int drinks = 0;
     foreach(Database::LiveGameDrink* lgdrink, livegame->drinksPerPlayer->value(player))

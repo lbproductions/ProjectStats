@@ -111,10 +111,10 @@ void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
             Database::Player* re1 = Database::Players::instance()->playerByName(ui->comboBoxRe1->currentText());
             Database::Player* re2 = Database::Players::instance()->playerByName(ui->comboBoxRe2->currentText());
 
-	    Database::Player* contra1 = 0;
-	    Database::Player* contra2 = 0;
+            Database::Player* contra1 = 0;
+            Database::Player* contra2 = 0;
 
-	    int contraCount = 0;
+            int contraCount = 0;
             foreach(Database::Player* player, m_livegame->currentPlayingPlayers->value())
             {
                 if (player->name->value() != re1->name->value() && player->name->value() != re2->name->value())
@@ -122,19 +122,19 @@ void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
                     if (contraCount == 0)
                     {
                         contra1 = player;
-		    }
+                    }
                     if (contraCount == 1)
                     {
                         contra2 = player;
-		    }
-		    contraCount++;
-		}
-	    }
+                    }
+                    contraCount++;
+                }
+            }
 
             round->doko_re1PlayerId->setValue(re1->id());
             round->doko_re2PlayerId->setValue(re2->id());
 
-	    int points = ui->spinBoxPoints->value();
+            int points = ui->spinBoxPoints->value();
             if (ui->comboBoxWinner->currentText() != "Re")
             {
                 points = -points;
@@ -148,23 +148,23 @@ void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
             if (ui->comboBoxHochzeit->currentText() != "")
             {
                 round->doko_hochzeitPlayerId->setValue(re2->id());
-	    }
+            }
             if (ui->comboBoxSchweinerei->currentText() != "")
             {
                 round->doko_schweinereiPlayerId->setValue(Database::Players::instance()->playerByName(ui->comboBoxSchweinerei->currentText())->id());
-	    }
+            }
             if (ui->comboBoxTrumpfabgabe->currentText() != "")
             {
                 round->doko_trumpfabgabePlayerId->setValue(Database::Players::instance()->playerByName(ui->comboBoxTrumpfabgabe->currentText())->id());
-	    }
-	}
+            }
+        }
         // Solo
         else
         {
             Database::Player* re1 = Database::Players::instance()->playerByName(ui->comboBoxRe1->currentText());
-	    Database::Player* contra1 = 0;
-	    Database::Player* contra2 = 0;
-	    Database::Player* contra3 = 0;
+            Database::Player* contra1 = 0;
+            Database::Player* contra2 = 0;
+            Database::Player* contra3 = 0;
 
             int contraCount = 0;
             foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
@@ -174,54 +174,59 @@ void NewDokoRoundWidget::on_pushButtonCreateRound_clicked()
                     if (contraCount == 0)
                     {
                         contra1 = player;
-		    }
+                    }
                     if (contraCount == 1)
                     {
                         contra2 = player;
-		    }
+                    }
                     if (contraCount == 2)
                     {
                         contra3 = player;
-		    }
-		    contraCount++;
-		}
-	    }
+                    }
+                    contraCount++;
+                }
+            }
 
             round->doko_re1PlayerId->setValue(re1->id());
             round->doko_soloPlayerId->setValue(re1->id());
             round->doko_soloType->setValue(ui->comboBoxSolo->currentText());
             round->doko_soloPflicht->setValue(ui->checkBoxPflichtsolo->isChecked());
 
-	    int points = ui->spinBoxPoints->value();
+            if (ui->comboBoxHochzeit->currentText() != "")
+            {
+                round->doko_hochzeitPlayerId->setValue(re1->id());
+            }
+
+            int points = ui->spinBoxPoints->value();
             if (ui->comboBoxWinner->currentText() != "Re")
             {
                 points = -points;
-	    }
+            }
             round->addPoints(re1,3*points);
             round->addPoints(contra1,-points);
             round->addPoints(contra2,-points);
             round->addPoints(contra3,-points);
-	}
+        }
         round->comment->setValue(ui->lineEditComment->text());
         m_livegame->startNextRound();
         m_livegame->currentRound->value()->startTime->setValue(QDateTime().currentDateTime());
         this->accept();
-   }
+    }
 }
 
 void NewDokoRoundWidget::on_comboBoxRe1_currentIndexChanged(QString name)
 {
     if (name != "" && ui->comboBoxRe2->currentText() == "")
     {
-	ui->comboBoxRe2->clear();
-	ui->comboBoxRe2->addItem("");
+        ui->comboBoxRe2->clear();
+        ui->comboBoxRe2->addItem("");
         foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
         {
             if (player->name->value() != name)
             {
                 ui->comboBoxRe2->addItem(player->name->value());
-	    }
-	}
+            }
+        }
     }
     if (name != "" && ui->comboBoxSolo->currentText() != "")
     {
@@ -236,14 +241,14 @@ void NewDokoRoundWidget::on_comboBoxRe1_currentIndexChanged(QString name)
 void NewDokoRoundWidget::on_comboBoxRe2_currentIndexChanged(QString name)
 {
     if (name != "" && ui->comboBoxRe1->currentText() == ""){
-	ui->comboBoxRe1->clear();
-	ui->comboBoxRe1->addItem("");
+        ui->comboBoxRe1->clear();
+        ui->comboBoxRe1->addItem("");
         foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
         {
             if (player->name->value() != name){
                 ui->comboBoxRe1->addItem(player->name->value());
-	    }
-	}
+            }
+        }
     }
 }
 
@@ -252,51 +257,51 @@ void NewDokoRoundWidget::on_comboBoxRe2_currentIndexChanged(QString name)
 void NewDokoRoundWidget::on_comboBoxHochzeit_activated(QString name)
 {
     if (name != ""){
-	if (ui->comboBoxSolo->currentText() == ""){
-	    ui->labelRe1->setText("HochzeitTeammate");
-	    ui->comboBoxRe2->setEnabled(false);
-	    ui->labelRe2->setEnabled(false);
+        if (ui->comboBoxSolo->currentText() == ""){
+            ui->labelRe1->setText("HochzeitTeammate");
+            ui->comboBoxRe2->setEnabled(false);
+            ui->labelRe2->setEnabled(false);
 
-	    if (ui->comboBoxRe2->findText(name) != -1){
-		ui->comboBoxRe2->setCurrentIndex(ui->comboBoxRe2->findText(name));
-	    }
-	    else{
-		ui->comboBoxRe2->addItem(name);
-	    }
+            if (ui->comboBoxRe2->findText(name) != -1){
+                ui->comboBoxRe2->setCurrentIndex(ui->comboBoxRe2->findText(name));
+            }
+            else{
+                ui->comboBoxRe2->addItem(name);
+            }
 
-	    ui->comboBoxRe1->removeItem(ui->comboBoxRe1->findText(name));
+            ui->comboBoxRe1->removeItem(ui->comboBoxRe1->findText(name));
 
-	    ui->labelSolo->setEnabled(false);
-	    ui->comboBoxSolo->setEnabled(false);
-	    ui->comboBoxSolo->setCurrentIndex(ui->comboBoxSolo->findText(""));
+            ui->labelSolo->setEnabled(false);
+            ui->comboBoxSolo->setEnabled(false);
+            ui->comboBoxSolo->setCurrentIndex(ui->comboBoxSolo->findText(""));
 
-	    ui->labelTrumpfabgabe->setEnabled(false);
-	    ui->comboBoxTrumpfabgabe->setEnabled(false);
-	    ui->comboBoxTrumpfabgabe->setCurrentIndex(ui->comboBoxTrumpfabgabe->findText(""));
-	}
+            ui->labelTrumpfabgabe->setEnabled(false);
+            ui->comboBoxTrumpfabgabe->setEnabled(false);
+            ui->comboBoxTrumpfabgabe->setCurrentIndex(ui->comboBoxTrumpfabgabe->findText(""));
+        }
     }
     else{
-	ui->labelRe1->setText("Re1");
-	ui->labelRe2->setText("Re2");
+        ui->labelRe1->setText("Re1");
+        ui->labelRe2->setText("Re2");
 
-	ui->comboBoxRe2->setEnabled(true);
-	ui->labelRe2->setEnabled(true);
+        ui->comboBoxRe2->setEnabled(true);
+        ui->labelRe2->setEnabled(true);
 
-	ui->labelSolo->setEnabled(true);
-	ui->comboBoxSolo->setEnabled(true);
+        ui->labelSolo->setEnabled(true);
+        ui->comboBoxSolo->setEnabled(true);
 
-	ui->labelSolo->setEnabled(true);
-	ui->comboBoxTrumpfabgabe->setEnabled(true);
+        ui->labelSolo->setEnabled(true);
+        ui->comboBoxTrumpfabgabe->setEnabled(true);
 
-	ui->comboBoxRe1->clear();
-	ui->comboBoxRe1->addItem("");
+        ui->comboBoxRe1->clear();
+        ui->comboBoxRe1->addItem("");
         foreach(Database::Player *player, m_livegame->currentPlayingPlayers->value())
         {
             if (player->name->value() != name)
             {
                 ui->comboBoxRe1->addItem(player->name->value());
-	    }
-	}
+            }
+        }
 
     }
 }
@@ -304,31 +309,31 @@ void NewDokoRoundWidget::on_comboBoxHochzeit_activated(QString name)
 void NewDokoRoundWidget::on_comboBoxSolo_currentIndexChanged(QString name)
 {
     if (name != ""){
-	ui->comboBoxRe2->setEnabled(false);
-	ui->labelRe2->setEnabled(false);
-	ui->comboBoxRe2->setCurrentIndex(ui->comboBoxRe2->findText(""));
-	ui->labelRe1->setText("SoloPlayer");
+        ui->comboBoxRe2->setEnabled(false);
+        ui->labelRe2->setEnabled(false);
+        ui->comboBoxRe2->setCurrentIndex(ui->comboBoxRe2->findText(""));
+        ui->labelRe1->setText("SoloPlayer");
 
-	ui->labelTrumpfabgabe->setEnabled(false);
-	ui->comboBoxTrumpfabgabe->setEnabled(false);
-	ui->comboBoxTrumpfabgabe->setCurrentIndex(ui->comboBoxTrumpfabgabe->findText(""));
+        ui->labelTrumpfabgabe->setEnabled(false);
+        ui->comboBoxTrumpfabgabe->setEnabled(false);
+        ui->comboBoxTrumpfabgabe->setCurrentIndex(ui->comboBoxTrumpfabgabe->findText(""));
 
-	if (name != "Trumpf"){
-	    ui->labelSchweinerei->setEnabled(false);
-	    ui->comboBoxSchweinerei->setEnabled(false);
-	    ui->comboBoxSchweinerei->setCurrentIndex(ui->comboBoxSchweinerei->findText(""));
+        if (name != "Trumpf"){
+            ui->labelSchweinerei->setEnabled(false);
+            ui->comboBoxSchweinerei->setEnabled(false);
+            ui->comboBoxSchweinerei->setCurrentIndex(ui->comboBoxSchweinerei->findText(""));
 
-	    ui->labelHochzeit->setEnabled(false);
-	    ui->comboBoxHochzeit->setEnabled(false);
-	    ui->comboBoxHochzeit->setCurrentIndex(ui->comboBoxHochzeit->findText(""));
-	}
-	else{
-	    ui->labelSchweinerei->setEnabled(true);
-	    ui->comboBoxSchweinerei->setEnabled(true);
+            ui->labelHochzeit->setEnabled(false);
+            ui->comboBoxHochzeit->setEnabled(false);
+            ui->comboBoxHochzeit->setCurrentIndex(ui->comboBoxHochzeit->findText(""));
+        }
+        else{
+            ui->labelSchweinerei->setEnabled(true);
+            ui->comboBoxSchweinerei->setEnabled(true);
 
-	    ui->labelHochzeit->setEnabled(true);
-	    ui->comboBoxHochzeit->setEnabled(true);
-	}
+            ui->labelHochzeit->setEnabled(true);
+            ui->comboBoxHochzeit->setEnabled(true);
+        }
         if(name == "Schwarz"){
             ui->comboBoxWinner->setCurrentIndex(ui->comboBoxWinner->findText("Contra"));
             ui->comboBoxWinner->setEnabled(false);
@@ -336,7 +341,7 @@ void NewDokoRoundWidget::on_comboBoxSolo_currentIndexChanged(QString name)
             ui->checkBoxPflichtsolo->setEnabled(false);
             if(ui->lineEditComment->text() == ""){
                 ui->lineEditComment->setText(ui->comboBoxRe1->currentText() + tr(" verliert schwarz"));
-             }
+            }
         }
         else{
             ui->comboBoxWinner->setEnabled(true);
@@ -350,65 +355,65 @@ void NewDokoRoundWidget::on_comboBoxSolo_currentIndexChanged(QString name)
         }
     }
     else{
-	ui->comboBoxRe2->setEnabled(true);
-	ui->labelRe2->setEnabled(true);
-	ui->labelRe1->setText("Re1");
+        ui->comboBoxRe2->setEnabled(true);
+        ui->labelRe2->setEnabled(true);
+        ui->labelRe1->setText("Re1");
 
-	ui->labelTrumpfabgabe->setEnabled(true);
-	ui->comboBoxTrumpfabgabe->setEnabled(true);
+        ui->labelTrumpfabgabe->setEnabled(true);
+        ui->comboBoxTrumpfabgabe->setEnabled(true);
 
-	ui->labelSchweinerei->setEnabled(true);
-	ui->comboBoxSchweinerei->setEnabled(true);
+        ui->labelSchweinerei->setEnabled(true);
+        ui->comboBoxSchweinerei->setEnabled(true);
 
-	ui->labelHochzeit->setEnabled(true);
-	ui->comboBoxHochzeit->setEnabled(true);
+        ui->labelHochzeit->setEnabled(true);
+        ui->comboBoxHochzeit->setEnabled(true);
     }
 }
 
 void NewDokoRoundWidget::on_comboBoxTrumpfabgabe_currentIndexChanged(QString name)
 {
     if (name != ""){
-	ui->labelHochzeit->setEnabled(false);
-	ui->comboBoxHochzeit->setEnabled(false);
-	ui->comboBoxHochzeit->setCurrentIndex(ui->comboBoxHochzeit->findText(""));
+        ui->labelHochzeit->setEnabled(false);
+        ui->comboBoxHochzeit->setEnabled(false);
+        ui->comboBoxHochzeit->setCurrentIndex(ui->comboBoxHochzeit->findText(""));
 
-	ui->labelSolo->setEnabled(false);
-	ui->comboBoxSolo->setEnabled(false);
-	ui->comboBoxSolo->setCurrentIndex(ui->comboBoxSolo->findText(""));
+        ui->labelSolo->setEnabled(false);
+        ui->comboBoxSolo->setEnabled(false);
+        ui->comboBoxSolo->setCurrentIndex(ui->comboBoxSolo->findText(""));
 
-	ui->comboBoxRe2->setEnabled(false);
-	if (ui->comboBoxRe2->findText(name) != -1){
-	    ui->comboBoxRe2->setCurrentIndex(ui->comboBoxRe2->findText(name));
-	}
-	else{
-	    ui->comboBoxRe2->addItem(name);
-	}
-	ui->labelRe2->setEnabled(false);
-	ui->labelRe1->setText("TrumpfabgabenTaker");
+        ui->comboBoxRe2->setEnabled(false);
+        if (ui->comboBoxRe2->findText(name) != -1){
+            ui->comboBoxRe2->setCurrentIndex(ui->comboBoxRe2->findText(name));
+        }
+        else{
+            ui->comboBoxRe2->addItem(name);
+        }
+        ui->labelRe2->setEnabled(false);
+        ui->labelRe1->setText("TrumpfabgabenTaker");
     }
     else{
 
-	ui->labelHochzeit->setEnabled(true);
-	ui->comboBoxHochzeit->setEnabled(true);
+        ui->labelHochzeit->setEnabled(true);
+        ui->comboBoxHochzeit->setEnabled(true);
 
-	ui->labelSolo->setEnabled(true);
-	ui->comboBoxSolo->setEnabled(true);
+        ui->labelSolo->setEnabled(true);
+        ui->comboBoxSolo->setEnabled(true);
 
-	ui->comboBoxRe2->setEnabled(true);
-	ui->labelRe2->setEnabled(true);
-	ui->labelRe1->setText("Re1");
+        ui->comboBoxRe2->setEnabled(true);
+        ui->labelRe2->setEnabled(true);
+        ui->labelRe1->setText("Re1");
     }
 }
 
 bool NewDokoRoundWidget::checkInputs(){
     if (ui->comboBoxRe1->currentText() == ui->comboBoxRe2->currentText()){
-	qDebug() << "NewDokoRoundWidget:: Re1 = Re2!";
-	return false;
+        qDebug() << "NewDokoRoundWidget:: Re1 = Re2!";
+        return false;
     }
     if (ui->comboBoxHochzeit->currentText() == "" && ui->comboBoxSolo->currentText() == "" && ui->comboBoxTrumpfabgabe->currentText() == ""
-	    && (ui->comboBoxRe1->currentText() == "" || ui->comboBoxRe2->currentText() == "")){
-	qDebug() << "NewDokoRoundWidget:: Re1 or Re2 not selected";
-	return false;
+            && (ui->comboBoxRe1->currentText() == "" || ui->comboBoxRe2->currentText() == "")){
+        qDebug() << "NewDokoRoundWidget:: Re1 or Re2 not selected";
+        return false;
     }
     return true;
 }

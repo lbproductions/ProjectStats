@@ -103,3 +103,5 @@ void Gui::Wizards::NewGame::LiveDokoGameOptionsWidget::on_checkBoxSchmeisserei_c
 {
     ui->groupBoxSchmeisserei->setEnabled(checked);
 }
+
+

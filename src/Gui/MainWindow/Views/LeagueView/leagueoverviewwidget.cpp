@@ -4,6 +4,7 @@
 #include <Gui/Misc/rowlist.h>
 #include <Gui/Details/rowwidget.h>
 #include <Gui/Details/detailswidget.h>
+#include <Gui/Details/summarywidget.h>
 
 #include <Database/Categories/leaguefoldercategorie.h>
 
@@ -22,6 +23,8 @@
 
 #include <Database/player.h>
 #include <Gui/Filter/changematchdaybar.h>
+
+#include "leaguetable.h"
 
 using namespace Gui::MainWindow::Views::LeagueViewDetails;
 
@@ -42,15 +45,65 @@ LeagueOverviewWidget::LeagueOverviewWidget(Database::LeagueFolderCategorie *cate
     m_viewSplitter->setStretchFactor(1, 1);
     m_basicSplitter->addWidget(m_viewSplitter);
 
+
     m_rowListPlayer = new Gui::Misc::RowList(m_categorie->playersModel());
-    m_rowListPlayer->setColumnHidden(1,true);
-    m_rowListPlayer->setColumnHidden(8,true);
-    m_rowListPlayer->setColumnHidden(9,true);
+    QList<QString> playerColumns;
+    playerColumns.append("Name");
+    playerColumns.append("Games");
+    playerColumns.append("Points");
+    playerColumns.append("Wins");
+    playerColumns.append("Losses");
+    playerColumns.append("LastGame");
+    playerColumns.append("LastWin");
+    playerColumns.append("Avatar");
+    playerColumns.append("Color");
+    playerColumns.append("Average");
+    playerColumns.append("Re");
+    playerColumns.append("Contra");
+    playerColumns.append("Hochzeiten");
+    playerColumns.append("Soli");
+    playerColumns.append("Trumpfabgaben");
+    playerColumns.append("Schweinereien");
+    playerColumns.append("Schmeissereien");
+    m_categorie->playersModel()->setVisibleColumns(playerColumns);
+
+
+
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Avatar"),0);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Color"),1);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Name"),2);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Average"),3);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Points"),6);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Games"),7);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Wins"),10);
+    /*
+
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Losses"),6);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Last Game"),7);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Last Win"),8);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Re"),9);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Contra"),10);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Hochzeiten"),11);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Soli"),12);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Trumpfabgaben"),13);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Schweinereien"),14);
+    m_rowListPlayer->header()->moveSection(m_categorie->playersModel()->headerIndex("Schmeissereien"),15);
+    */
 
     m_rowListGames = new Gui::Misc::RowList(m_categorie->gamesModel());
-    m_rowListGames->setColumnHidden(2,true);
-    m_rowListGames->setColumnHidden(3,true);
-    m_rowListGames->setColumnHidden(6,true);
+    QList<QString> gameColumns;
+    gameColumns.append("Name");
+    gameColumns.append("Date");
+    gameColumns.append("Length");
+    gameColumns.append("%Complete");
+    gameColumns.append("State");
+    gameColumns.append("Type");
+    gameColumns.append("Players");
+    gameColumns.append("Site");
+    m_categorie->gamesModel()->setVisibleColumns(gameColumns);
+    m_rowListGames->header()->moveSection(m_categorie->gamesModel()->headerIndex("State"),0);
+    m_rowListGames->header()->moveSection(m_categorie->gamesModel()->headerIndex("Name"),1);
+    m_rowListGames->header()->moveSection(m_categorie->gamesModel()->headerIndex("Date"),2);
 
     m_viewSplitter->addWidget(m_rowListPlayer);
 
@@ -64,6 +117,7 @@ LeagueOverviewWidget::LeagueOverviewWidget(Database::LeagueFolderCategorie *cate
     widget->setLayout(layout);
     m_viewSplitter->addWidget(widget);
 
+
     m_scrollAreaDetails = new QScrollArea(m_basicSplitter);
     m_scrollAreaDetails->setFrameStyle(QFrame::NoFrame);
     m_scrollAreaDetails->setAttribute(Qt::WA_MacShowFocusRect, false);
@@ -71,9 +125,12 @@ LeagueOverviewWidget::LeagueOverviewWidget(Database::LeagueFolderCategorie *cate
     m_scrollAreaDetails->setBackgroundRole(QPalette::Base);
     m_scrollAreaDetails->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     m_scrollAreaDetails->setWidgetResizable(true);
+    m_scrollAreaDetails->setWidget(new LeagueTable(m_categorie->league(),this));
     m_basicSplitter->addWidget(m_scrollAreaDetails);
 
-    restoreSettings();
+
+
+    //restoreSettings();
 
     connect(m_rowListPlayer,SIGNAL(selectionChanged()),this,SLOT(on_rowList_selectionChanged()));
     connect(m_rowListPlayer,SIGNAL(rowsSelected(QList<Database::Row*>)),this,SLOT(onPlayersListRowsSelected(QList<Database::Row*>)));
@@ -82,6 +139,11 @@ LeagueOverviewWidget::LeagueOverviewWidget(Database::LeagueFolderCategorie *cate
 
     connect(bar,SIGNAL(prevClicked()),this,SIGNAL(onPrevClicked()));
     connect(bar,SIGNAL(nextClicked()),this,SIGNAL(onNextClicked()));
+}
+
+LeagueOverviewWidget::~LeagueOverviewWidget()
+{
+    saveSettings();
 }
 
 void LeagueOverviewWidget::saveSettings()
@@ -105,6 +167,7 @@ void LeagueOverviewWidget::saveSettings()
 
 void LeagueOverviewWidget::restoreSettings()
 {
+
     QSettings settings;
     QString path = QString(m_categorie->metaObject()->className()) + "/LeagueView/";
 
@@ -121,6 +184,7 @@ void LeagueOverviewWidget::restoreSettings()
                                             (Qt::SortOrder)settings.value(path+"rowListGames/sortIndicatorOrder").toInt());
     m_rowListGames->header()->restoreGeometry(settings.value(path+"rowListGames/header/geometry").toByteArray());
     m_rowListGames->header()->restoreState(settings.value(path+"rowListGames/header/state").toByteArray());
+
 }
 
 void LeagueOverviewWidget::updateStatusbar(){
@@ -145,7 +209,7 @@ void LeagueOverviewWidget::onGamesListRowsSelected(QList<Database::Row *> list){
         m_rowWidget->deleteLater();
     }
 
-    Details::DetailsWidget* newRowWidget = firstRow->detailsWidget();
+    Details::DetailsWidget* newRowWidget = firstRow->summaryWidget();
     if(newRowWidget == 0)
     {
         return;

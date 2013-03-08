@@ -8,7 +8,7 @@
 using namespace Gui::Details::GameDetails;
 
 GameSummaryWidget::GameSummaryWidget(Database::Game* game, QWidget *parent) :
-    SummaryWidget(parent),
+    SummaryWidget(game, parent),
     ui(new Ui::GameSummaryWidget),
     m_game(game),
     m_widget(new Gui::Details::GameDetailsWidget(m_game, this))

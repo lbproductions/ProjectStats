@@ -6,6 +6,7 @@
 #include "../row.h"
 #include "../table.h"
 #include "../databaseattribute.h"
+#include "../rowpair.h"
 
 #include <QPair>
 
@@ -94,8 +95,8 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
     DECLARE_ATTRIBUTE_IN_CALC(QString,DokoLiveGame,DokoLiveGameCalculator,doko_schweinereiStats)
     DECLARE_ATTRIBUTE_IN_CALC(QString,DokoLiveGame,DokoLiveGameCalculator,doko_schmeissereiStats)
 
-    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QPair<Player* COMMA Player*> ,int,DokoLiveGame,DokoLiveGameCalculator,doko_gamesTogether)
-    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QPair<Player* COMMA Player*> ,int,DokoLiveGame,DokoLiveGameCalculator,doko_winsTogether)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(RowPair ,int,DokoLiveGame,DokoLiveGameCalculator,doko_gamesTogether)
+    DECLARE_MAPPINGATTRIBUTE_IN_CALC(QList<Player*> ,int,DokoLiveGame,DokoLiveGameCalculator,doko_winsTogether)
 
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,double,DokoLiveGame,DokoLiveGameCalculator,doko_pointAveragePerWin)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,int,DokoLiveGame,DokoLiveGameCalculator,doko_rounds)

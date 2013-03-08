@@ -71,6 +71,7 @@ public:
     RowType *value(const QModelIndex &index);
     Database::Row *row(const QModelIndex &index);
     void setVisibleColumns(QList<QString> list);
+    int headerIndex(QString headerName);
 
     void updateData();
 
@@ -344,6 +345,15 @@ void TableModel<RowType, Owner>::setVisibleColumns(QList<QString> list){
         }
     }
     TableModelBase::setVisibleColumns(visible);
+}
+
+template<class RowType, class Owner>
+int TableModel<RowType, Owner>::headerIndex(QString headerName) {
+    for(int i = 0; i<m_owner->registeredAttributes()->size();i++){
+        if(headerName == this->headerData(i,Qt::Horizontal,Qt::DisplayRole).toString()){
+            return i;
+        }
+    }
 }
 
 }

@@ -9,6 +9,7 @@
 #include "livedokogameoptionswidget.h"
 #include "wizardsidewidget.h"
 #include "skatlivegameoptionswidget.h"
+#include "chooseunfinishedgamedialog.h"
 
 //#include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamerowwindow.h>
 //#include <Gui/Details/LiveGameDetails/Skat/skatlivegamerowwindow.h>
@@ -52,6 +53,7 @@ void NewGameWizard::initializeWidget()
     m_liveGameGeneralOptionsWidget = new NewGame::LiveGameGeneralOptionsWidget(this);
     m_liveDokoGameOptionsWidget = new NewGame::LiveDokoGameOptionsWidget(this);
     m_skatLiveGameOptionsWidget = new NewGame::SkatLiveGameOptionsWidget(this);
+    m_chooseUnfinishedGameDialog = new NewGame::ChooseUnfinishedGameDialog(this);
 
     this->setPage(Page_LiveOfflineGame, new NewGame::LiveOfflineGameWidget());
     this->setPage(Page_OfflineGameOptions, new NewGame::OfflineGameOptionsWidget());
@@ -60,43 +62,49 @@ void NewGameWizard::initializeWidget()
     this->setPage(Page_LiveGameGeneralOptions, m_liveGameGeneralOptionsWidget);
     this->setPage(Page_LiveGameDokoOptions, m_liveDokoGameOptionsWidget);
     this->setPage(Page_SkatLiveGameOptionsWidget, m_skatLiveGameOptionsWidget);
+    this->setPage(Page_ChooseUnfinishedGame, m_chooseUnfinishedGameDialog);
 }
 
 void NewGameWizard::on_accepted()
 {
     Database::Game* game = 0;
-    if(field("isLive").toBool())
-    {
-        Database::LiveGame *livegame = 0;
-        QString type = field("live_type").toString();
-        if(type == Database::DokoLiveGame::TYPE)
+    if(!m_liveGameGeneralOptionsWidget->isCheckedForUnfinishedGames() || m_chooseUnfinishedGameDialog->newGameItemIsChosen()){
+        if(field("isLive").toBool())
         {
-            livegame = createDokoLiveGame();
+            Database::LiveGame *livegame = 0;
+            QString type = field("live_type").toString();
+            if(type == Database::DokoLiveGame::TYPE)
+            {
+                livegame = createDokoLiveGame();
+            }
+            else if(type == "Skat")
+            {
+
+            }
+
+            Database::Games::instance()->insertRow(livegame);
+
+            livegame->startNextRound();
+
+            livegame->date->setValue(QDateTime::currentDateTime());
+
+            QPointer<Database::Place> place = m_liveGameGeneralOptionsWidget->selectedPlace();
+            livegame->siteId->setValue(place->id());
+
+            foreach(Database::Player *player, m_liveGameGeneralOptionsWidget->selectedPlayers())
+            {
+                livegame->addPlayer(player);
+            }
+
+            game = livegame;
         }
-        else if(type == "Skat")
+        else
         {
 
         }
-
-        Database::Games::instance()->insertRow(livegame);
-
-        livegame->startNextRound();
-
-        livegame->date->setValue(QDateTime::currentDateTime());
-
-        QPointer<Database::Place> place = m_liveGameGeneralOptionsWidget->selectedPlace();
-        livegame->siteId->setValue(place->id());
-
-        foreach(Database::Player *player, m_liveGameGeneralOptionsWidget->selectedPlayers())
-        {
-            livegame->addPlayer(player);
-        }
-
-        game = livegame;
     }
-    else
-    {
-
+    else{
+       game = m_chooseUnfinishedGameDialog->selectedGame();
     }
 
     game->rowWindow()->show();
@@ -126,4 +134,9 @@ Database::DokoLiveGame *NewGameWizard::createDokoLiveGame()
                 );
 
     return game;
+}
+
+NewGame::LiveGameGeneralOptionsWidget* NewGameWizard::liveGameGeneralOptionsWidget()
+{
+    return m_liveGameGeneralOptionsWidget;
 }

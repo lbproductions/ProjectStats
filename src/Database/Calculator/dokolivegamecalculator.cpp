@@ -4,7 +4,8 @@
 #include <Database/Doppelkopf/dokoround.h>
 #include <Database/Doppelkopf/schmeisserei.h>
 #include <Database/player.h>
-
+#include <Database/rowpair.h>
+#include <Misc/global.h>
 #include <QDebug>
 
 namespace Database {
@@ -348,11 +349,58 @@ QMap<int,int> DokoLiveGameCalculator::calculate_doko_schmeissereiCountAfterRound
     return hash;
 }
 
-QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_gamesTogether(){
-    QMap<QPair<Player*,Player*>,int> hash;
-    for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
+QMap<RowPair, int> DokoLiveGameCalculator::calculate_doko_gamesTogether(){
+    QMap<RowPair,int> hash;
+    foreach(Round* round, m_dokolivegame->rounds->value()){
+
+        // Check if this round has to be calculated
         bool check = true;
-        Round* r = m_dokolivegame->rounds->value(i);
+        if (m_dokolivegame->state->value() != Round::FinishedState){ // is the game finished?
+            if(round->id() == m_dokolivegame->currentRound->value()->id()){ // if its not finished, is this round the current round?
+                check = false;
+            }
+        }
+
+        if (check){
+            DokoRound* dokoRound = static_cast<DokoRound*>(round);
+            foreach(QList<Player*> list, dokoRound->doko_togetherPlayingPlayers->value()) // iterate over lists of together playing players
+            {
+                if(m_dokolivegame->id() == 306){
+                    qDebug() << "dokoRound->doko_togetherPlayingPlayers->value(): " << list;
+                }
+                QList<RowPair> pairList = createPairs(list);    // create Pairs of together playing players
+                //foreach(QPair<Player*,Player*> pair, pairList)
+                if(m_dokolivegame->id() == 306){
+                    qDebug() << "createPairs(list).size(): " << pairList;
+                }
+                for(int i = 0; i<pairList.size(); i++)
+                {
+                    RowPair pair = pairList.at(i);
+                    hash.insert(pair,hash.value(pair) + 1);
+                }
+            }
+        }
+    }
+    if(m_dokolivegame->id() == 306){
+        qDebug() << hash;
+        RowPair pair;
+        pair.setRows(Players::instance()->rowById(1),Players::instance()->rowById(6));
+        qDebug() << pair;
+        qDebug() << hash.contains(pair);
+        qDebug() << hash.value(pair);
+
+        RowPair pair1;
+        pair1.setRows(Players::instance()->rowById(3),Players::instance()->rowById(2));
+        qDebug() << pair1;
+        qDebug() << hash.contains(pair1);
+        qDebug() << hash.value(pair1);
+    }
+    return hash;
+
+    /*
+        bool check = true;
+        //Round* r = m_dokolivegame->rounds->value(i);
+        Round* r = round;
         if (!m_dokolivegame->state->value() == Round::FinishedState){
             if(r->id() == m_dokolivegame->currentRound->value()->id()){
                 check = false;
@@ -468,10 +516,13 @@ QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_gamesTog
         }
     }
     return hash;
+
+    */
 }
 
-QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_winsTogether(){
-    QMap<QPair<Player*,Player*>,int> hash;
+QMap<QList<Player *>, int> DokoLiveGameCalculator::calculate_doko_winsTogether(){
+    QMap<QList<Player*>,int> hash;
+    /*
     for(int i = 0; i<m_dokolivegame->rounds->value().size();i++){
         bool check = true;
         Round* r = m_dokolivegame->rounds->value(i);
@@ -594,6 +645,7 @@ QMap<QPair<Player*,Player*>,int> DokoLiveGameCalculator::calculate_doko_winsToge
             }
         }
     }
+    */
     return hash;
 }
 
@@ -614,8 +666,10 @@ QMap<Player*,double> DokoLiveGameCalculator::calculate_doko_pointAveragePerWin()
 QMap<Player*,int> DokoLiveGameCalculator::calculate_doko_rounds(){
     QMap<Player*,int> hash;
     foreach(Round* r, m_dokolivegame->rounds->value()){
-        foreach(Player* p, r->currentPlayingPlayers->value()){
-            hash.insert(p,hash.value(p)+1);
+        if(r->state->value() == Round::FinishedState){
+            foreach(Player* p, r->currentPlayingPlayers->value()){
+             hash.insert(p,hash.value(p)+1);
+            }
         }
     }
     return hash;
@@ -942,6 +996,29 @@ int DokoLiveGameCalculator::calculate_doko_contraRoundWins(){
     return count;
 }
 
+QList<RowPair> DokoLiveGameCalculator::createPairs(QList<Player*> players)
+{
+    QList<RowPair> pairList;
+    if(players.size() > 1){
+        foreach(Player* playerOne, players)
+        {
+            foreach(Player* playerTwo, players){
+                if(playerOne->id() != playerTwo->id())
+                {
+                    RowPair pairOne;
+                    pairOne.setRows(playerOne,playerTwo);
+                    pairList.append(pairOne);
+                    /*
+                    if(!pairList.contains(pairOne)){
+                        pairList.append(pairOne);
+                    }
+                    */
+                }
+            }
+        }
+    }
 
+    return pairList;
+}
 
 } // namespace Database

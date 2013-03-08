@@ -22,6 +22,10 @@ START_ROW_IMPLEMENTATION(DokoRound, Round, Round)
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Schmeisserei*,DokoRound,DokoRoundCalculator,calc,doko_schmeissereien,tr("Schmeissereien"))
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,bool,DokoRound,DokoRoundCalculator,calc,doko_re,tr("Doko_Re"))
+
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(Player*,DokoRound,DokoRoundCalculator,calc,doko_winningPlayers,tr("Doko_WinningPlayers"))
+
+    IMPLEMENT_LISTATTRIBUTE_IN_CALC(QList<Player*>,DokoRound,DokoRoundCalculator,calc,doko_togetherPlayingPlayers,tr("Doko_TogetherPlayingPlayers"))
 }
 
 DokoRound::DokoRound(DokoLiveGame* game, int number) :

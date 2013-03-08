@@ -7,6 +7,7 @@
 #include <QDateTime>
 
 #include <Database/attributevariant.h>
+#include <Database/rowpair.h>
 
 class MessageSystem;
 class QDateTime;
@@ -147,6 +148,9 @@ Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Player*> >)
 Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Drink*> >)
 Q_DECLARE_METATYPE(QMap<QString COMMA QList<Database::Game*> >)
 Q_DECLARE_METATYPE(QMap<QList<Database::Player*> COMMA int>)
+Q_DECLARE_METATYPE(QList<QList<Database::Player*> >)
+Q_DECLARE_METATYPE(QMap<Database::RowPair COMMA int>)
+
 
 
 #endif // HANDLER_H

@@ -31,6 +31,8 @@ START_ROW_DECLARATION(DokoRound, Round)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Schmeisserei*,DokoRound,DokoRoundCalculator,doko_schmeissereien)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,bool,DokoRound,DokoRoundCalculator,doko_re)
+    DECLARE_LISTATTRIBUTE_IN_CALC(Player*,DokoRound,DokoRoundCalculator,doko_winningPlayers)
+    DECLARE_LISTATTRIBUTE_IN_CALC(QList<Player*>,DokoRound,DokoRoundCalculator,doko_togetherPlayingPlayers)
 
     void addSchmeisserei(Player* player, const QString& type);
 

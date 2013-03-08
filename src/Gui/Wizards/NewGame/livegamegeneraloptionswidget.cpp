@@ -44,19 +44,25 @@ void LiveGameGeneralOptionsWidget::saveOptions() const
     QSettings settings;
     settings.setValue("LiveGameGeneralOptionsWidget/comboBoxGameTypeSelectedType",ui->comboBoxGameType->currentText());
     settings.setValue("LiveGameGeneralOptionsWidget/placesboxSelectedPlace",placesbox->currentText());
+    settings.setValue("LiveGameGeneralOptionsWidget/checkBoxUnfinishedGames",ui->checkBox->isChecked());
 }
 
 int LiveGameGeneralOptionsWidget::nextId() const
 {
     saveOptions();
 
-    if (ui->comboBoxGameType->currentText() == Database::DokoLiveGame::TYPE)
-    {
-        return NewGameWizard::Page_LiveGameDokoOptions;
+    if(ui->checkBox->isChecked()){
+        return NewGameWizard::Page_ChooseUnfinishedGame;
     }
-    else if(ui->comboBoxGameType->currentText() == "Skat")
-    {
-        return NewGameWizard::Page_SkatLiveGameOptionsWidget;
+    else{
+        if (ui->comboBoxGameType->currentText() == Database::DokoLiveGame::TYPE)
+        {
+            return NewGameWizard::Page_LiveGameDokoOptions;
+        }
+        else if(ui->comboBoxGameType->currentText() == "Skat")
+        {
+            return NewGameWizard::Page_SkatLiveGameOptionsWidget;
+        }
     }
 
     return NewGameWizard::Page_LiveGameGeneralOptions;
@@ -96,6 +102,8 @@ void LiveGameGeneralOptionsWidget::setupWidget()
     placesbox->setCurrentIndex(selectedIndex);
 
     ui->groupBox_3->setLayout(layout);
+
+    ui->checkBox->setChecked(settings.value("LiveGameGeneralOptionsWidget/checkBoxUnfinishedGames","").toBool());
 }
 
 QList<Database::Player*> LiveGameGeneralOptionsWidget::selectedPlayers()
@@ -265,13 +273,16 @@ void Gui::Wizards::NewGame::LiveGameGeneralOptionsWidget::on_pushButtonGenerateP
     generatePlayerPositions();
 }
 
-void Gui::Wizards::NewGame::LiveGameGeneralOptionsWidget::on_pushButton_clicked()
-{
-    ChooseUnfinishedGameDialog* dialog = new ChooseUnfinishedGameDialog(this->selectedPlayers(),static_cast<QWidget*>(this->parent()));
-    connect(dialog,SIGNAL(accepted()),this,SLOT(on_chooseUnfinishedGamesDialogAccepted()));
-    dialog->exec();
-}
-
 void LiveGameGeneralOptionsWidget::on_chooseUnfinishedGamesDialogAccepted(){
     this->wizard()->close();
+}
+
+void Gui::Wizards::NewGame::LiveGameGeneralOptionsWidget::on_checkBox_clicked(bool checked)
+{
+
+}
+
+bool Gui::Wizards::NewGame::LiveGameGeneralOptionsWidget::isCheckedForUnfinishedGames()
+{
+    return ui->checkBox->isChecked();
 }

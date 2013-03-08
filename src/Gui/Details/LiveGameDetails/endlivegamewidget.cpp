@@ -77,6 +77,10 @@ void EndLiveGameWidget::setupWidget(){
         count++;
     }
 
+    if(m_livegame->comment->value() != "") {
+        m_commentTextEdit->setText(m_livegame->comment->value());
+    }
+
     Gui::Misc::GroupBox* stats = new Gui::Misc::GroupBox(players,this);
     this->layout()->addWidget(stats);
 

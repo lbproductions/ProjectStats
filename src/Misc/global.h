@@ -7,6 +7,7 @@ class QTime;
 
 namespace Database{
     class Player;
+    class RowPair;
 }
 
 /*!
@@ -23,4 +24,14 @@ double round(double zahl, int stellen);
   Erstellt auf Basis eines Strings eine PlayerList.
   */
 QList<Database::Player*> stringToPlayerList(QString string);
+
+
+bool operator<(const Database::RowPair &e1, const Database::RowPair &e2);
+
+bool operator==(const Database::RowPair &e1, const Database::RowPair &e2);
+
+QDebug operator<<(QDebug d, const QList<Database::RowPair> list);
+
+QDebug operator<<(QDebug d, const Database::RowPair pair);
+
 #endif // GLOBAL_H

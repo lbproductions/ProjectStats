@@ -3,7 +3,6 @@
 #include <AppKit/AppKit.h>
 #include <Cocoa/Cocoa.h>
 #include <AppKit/NSApplication.h>
-#include <Sparkle/Sparkle.h>
 #import <objc/objc-runtime.h>
 
 #include <QApplication>

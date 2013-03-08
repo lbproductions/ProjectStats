@@ -6,6 +6,7 @@
 namespace Database
 {
     class LeagueFolderCategorie;
+    class ChildCategorie;
 }
 
 namespace Gui
@@ -31,6 +32,9 @@ public:
     ~LeagueView();
 
     void updateStatusbar();
+
+public slots:
+    void on_sidebar_categorieChanged(Database::ChildCategorie*c);
 
 private:
     void saveSettings();

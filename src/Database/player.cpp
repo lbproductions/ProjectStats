@@ -167,4 +167,9 @@ DokoPlayerStats* Player::dokoStats(){
     return m_dokoStats;
 }
 
+QString Player::toString() const
+{
+    return this->name->value();
+}
+
 END_ROW_IMPLEMENTATION()

@@ -158,6 +158,11 @@ Statusbar *MainWindow::statusBar() const
     return m_statusbar;
 }
 
+Sidebar *MainWindow::sidebar() const
+{
+    return m_sidebar;
+}
+
 void MainWindow::on_sidebar_categorieChanged(Database::ChildCategorie* c)
 {
     if(c == 0 || c->view() == 0)

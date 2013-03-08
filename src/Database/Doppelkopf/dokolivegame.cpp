@@ -108,9 +108,9 @@ START_ROW_IMPLEMENTATION(DokoLiveGame, Game, LiveGame)
     IMPLEMENT_ATTRIBUTE_IN_CALC(QString,DokoLiveGame,DokoLiveGameCalculator,calc,doko_schmeissereiStats,tr("Doko_SchmeissereiStats"))
     doko_schmeissereiCountAfterRounds->addDependingAttribute(doko_schmeissereiStats);
 
-    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QPair<Player* COMMA Player*>,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_gamesTogether,tr("Doko_GamesTogether"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(RowPair,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_gamesTogether,tr("Doko_GamesTogether"))
     roundCount->addDependingAttribute(doko_gamesTogether);
-    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QPair<Player* COMMA Player*>,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_winsTogether,tr("Doko_WinsTogether"))
+    IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(QList<Player*> ,int,DokoLiveGame,DokoLiveGameCalculator,calc,doko_winsTogether,tr("Doko_WinsTogether"))
     roundCount->addDependingAttribute(doko_winsTogether);
 
     IMPLEMENT_MAPPINGATTRIBUTE_IN_CALC(Player*,double,DokoLiveGame,DokoLiveGameCalculator,calc,doko_pointAveragePerWin,tr("Doko_PointAveragePerWin"))

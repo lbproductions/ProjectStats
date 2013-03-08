@@ -69,6 +69,7 @@ START_ROW_DECLARATION(Player, Row)
 
     DokoPlayerStats* dokoStats();
 
+    QString toString() const;
 private:
 
     QPointer<DokoPlayerStats> m_dokoStats;

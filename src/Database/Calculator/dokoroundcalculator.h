@@ -22,6 +22,10 @@ public:
 
     QMap<Player*,bool> calculate_doko_re();
 
+    QList<Player*> calculate_doko_winningPlayers();
+
+    QList<QList<Player*> > calculate_doko_togetherPlayingPlayers();
+
 private:
     QPointer<DokoRound> m_dokoround;
 };

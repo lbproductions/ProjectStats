@@ -54,6 +54,8 @@ namespace Gui
 
                     Database::Place *selectedPlace();
 
+                    bool isCheckedForUnfinishedGames();
+
                 private:
                     Ui::LiveGameGeneralOptionsWidget *ui;
                     Gui::Misc::PlacesComboBox* placesbox;
@@ -67,9 +69,9 @@ namespace Gui
                     void on_comboBoxGameType_currentIndexChanged(int index);
 
                     void on_pushButtonGeneratePositions_clicked();
-                    void on_pushButton_clicked();
 
                      void on_chooseUnfinishedGamesDialogAccepted();
+                     void on_checkBox_clicked(bool checked);
             };
 
         }

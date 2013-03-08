@@ -3,14 +3,20 @@
 
 #include <QWidget>
 
+#include "detailswidget.h"
+
+namespace Database{
+    class Row;
+}
+
 namespace Gui {
 namespace Details {
 
-class SummaryWidget : public QWidget
+class SummaryWidget : public DetailsWidget
 {
     Q_OBJECT
 public:
-    explicit SummaryWidget(QWidget *parent = 0);
+    explicit SummaryWidget(Database::Row *row, QWidget *parent = 0);
 
 signals:
 

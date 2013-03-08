@@ -31,6 +31,7 @@ namespace NewGame
     class LiveDokoGameOptionsWidget;
     class WizardSideWidget;
     class SkatLiveGameOptionsWidget;
+    class ChooseUnfinishedGameDialog;
 }
 
 /**
@@ -58,8 +59,11 @@ public:
         Page_OfflineSummary ,
         Page_DetailledOfflineDokoGame ,
         Page_StartLiveGame,
-        Page_SkatLiveGameOptionsWidget
+        Page_SkatLiveGameOptionsWidget,
+        Page_ChooseUnfinishedGame
     };
+
+    NewGame::LiveGameGeneralOptionsWidget* liveGameGeneralOptionsWidget();
 
 private slots:
     void on_accepted();
@@ -72,6 +76,7 @@ private:
     QPointer<NewGame::LiveGameGeneralOptionsWidget> m_liveGameGeneralOptionsWidget;
     QPointer<NewGame::LiveDokoGameOptionsWidget> m_liveDokoGameOptionsWidget;
     QPointer<NewGame::SkatLiveGameOptionsWidget> m_skatLiveGameOptionsWidget;
+    QPointer<NewGame::ChooseUnfinishedGameDialog> m_chooseUnfinishedGameDialog;
 
     QPointer<NewGame::WizardSideWidget> m_sideWidget;
 

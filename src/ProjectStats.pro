@@ -10,8 +10,8 @@ TARGET = ProjectStats
 TEMPLATE = app
 DEFINES *= QT_USE_QSTRINGBUILDER
 
-CONFIG += link_pkgconfig
-PKGCONFIG += gsoap++
+#CONFIG += link_pkgconfig
+#PKGCONFIG += gsoap++
 
 SOURCES += main.cpp\
     Database/table.cpp \
@@ -196,7 +196,10 @@ SOURCES += main.cpp\
     Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsgroupbox.cpp \
     Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsroundbox.cpp \
     Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsspecialstats.cpp \
-    Gui/Details/LiveGameDetails/Sidebar/commentsidebarpage.cpp
+    Gui/Details/LiveGameDetails/Sidebar/commentsidebarpage.cpp \
+    Database/league.cpp \
+    Database/leagueplayerassignment.cpp \
+    Gui/MainWindow/Views/LeagueView/leaguetable.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -408,7 +411,10 @@ HEADERS  += \
     Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsgroupbox.h \
     Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsroundbox.h \
     Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsspecialstats.h \
-    Gui/Details/LiveGameDetails/Sidebar/commentsidebarpage.h
+    Gui/Details/LiveGameDetails/Sidebar/commentsidebarpage.h \
+    Database/league.h \
+    Database/leagueplayerassignment.h \
+    Gui/MainWindow/Views/LeagueView/leaguetable.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \

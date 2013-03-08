@@ -1,7 +1,7 @@
 #ifndef CHOOSEUNFINISHEDGAMEDIALOG_H
 #define CHOOSEUNFINISHEDGAMEDIALOG_H
 
-#include <QDialog>
+#include <QWizardPage>
 
 class QListWidgetItem;
 
@@ -12,6 +12,7 @@ namespace Ui {
 namespace Database
 {
     class Player;
+    class LiveGame;
 }
 
 namespace Gui
@@ -19,27 +20,38 @@ namespace Gui
 
 namespace Wizards
 {
+    class NewGameWizard;
 
 namespace NewGame
 {
 
-class ChooseUnfinishedGameDialog : public QDialog
+class ChooseUnfinishedGameDialog : public QWizardPage
 {
     Q_OBJECT
 
 public:
-    explicit ChooseUnfinishedGameDialog(QList<Database::Player*> list, QWidget *parent = 0);
+    explicit ChooseUnfinishedGameDialog(Gui::Wizards::NewGameWizard *parent);
     ~ChooseUnfinishedGameDialog();
 
-private slots:
-    void on_buttonBox_accepted();
+    Database::LiveGame* selectedGame();
 
-    void on_buttonBox_rejected();
+    bool newGameItemIsChosen();
+
+private slots:
+    int nextId() const;
+
+    bool isComplete() const;
+
+    void initializePage();
 
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:
+    void keyPressEvent(QKeyEvent* event);
+
     Ui::ChooseUnfinishedGameDialog *ui;
+
+    Gui::Wizards::NewGameWizard* m_wizard;
 };
 
 }}}
