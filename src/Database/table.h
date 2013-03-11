@@ -548,7 +548,7 @@ void Table<RowType>::initializeRowCaches()
                 AttributeBase* rowAttribute = row->attribute(databaseAttributes.at(i)->name());
                 if(rowAttribute) // Nicht jedes Attribut ist in jeder Row enthalten!
                 {
-                    rowAttribute->changeValue(select.value(i+1),false);
+                    rowAttribute->changeValue(select.value(i+1));
                 }
             }
         }

@@ -36,7 +36,7 @@ void MessageSystem::registerAtGrowl(){
 
         QProcess p;
         p.start(osascript, processArguments);
-        p.write(aScript.toAscii());
+        p.write(aScript.toLatin1());
         p.closeWriteChannel();
         p.waitForFinished();
 }
@@ -60,7 +60,7 @@ void MessageSystem::showWelcomeMessage(){
 
         QProcess p;
         p.start(osascript, processArguments);
-        p.write(aScript.toAscii());
+        p.write(aScript.toLatin1());
         p.closeWriteChannel();
         p.waitForFinished();
 }
@@ -90,7 +90,7 @@ void MessageSystem::showMessage(QString title, QString message, QString avatarpa
 
         QProcess p;
         p.start(osascript, processArguments);
-        p.write(aScript.toAscii());
+        p.write(aScript.toLatin1());
         p.closeWriteChannel();
         p.waitForFinished();
 }

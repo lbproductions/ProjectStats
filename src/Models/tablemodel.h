@@ -48,7 +48,7 @@ signals:
     void visibleHeadersChanged();
 
 private slots:
-    virtual void on_attribute_changed(::Database::AttributeBase *attribute) = 0;
+    virtual void on_attribute_changed(const ::Database::AttributeBase *attribute) = 0;
 
 };
 
@@ -75,12 +75,14 @@ public:
 
     void updateData();
 
+    Qt::DropActions supportedDragActions() const;
+
     Database::AttributeBase* attributeAt(const QModelIndex& index) const;
 
 private:
     friend class Database::Table<RowType>;
 
-    void on_attribute_changed(::Database::AttributeBase *attribute);
+    void on_attribute_changed(const Database::AttributeBase *attribute);
 
     QList<RowType*> m_data;
     Owner *m_owner;
@@ -92,14 +94,12 @@ TableModel<RowType, Owner>::TableModel(QList<RowType*> data, Owner *parent) :
     m_data(data),
     m_owner(parent)
 {
-    this->setSupportedDragActions(Qt::CopyAction);
-
     foreach(Database::AttributeOwner *owner, parent->rows()->value())
     {
         foreach(Database::AttributeBase *attribute, owner->attributes())
         {
-            connect(attribute,SIGNAL(changed(::Database::AttributeBase *)),
-                    this,SLOT(on_attribute_changed(::Database::AttributeBase *)));
+            connect(attribute,SIGNAL(changed(const ::Database::AttributeBase *)),
+                    this,SLOT(on_attribute_changed(const ::Database::AttributeBase *)));
         }
     }
 }
@@ -110,14 +110,12 @@ TableModel<RowType, Owner>::TableModel(Owner *parent) :
     m_data(parent->rows()->value().values()),
     m_owner(parent)
 {
-    this->setSupportedDragActions(Qt::CopyAction);
-
     foreach(Database::AttributeOwner *owner, parent->rows()->value())
     {
         foreach(Database::AttributeBase *attribute, owner->attributes())
         {
-            connect(attribute,SIGNAL(changed(::Database::AttributeBase *)),
-                    this,SLOT(on_attribute_changed(::Database::AttributeBase *)));
+            connect(attribute,SIGNAL(changed(const ::Database::AttributeBase *)),
+                    this,SLOT(on_attribute_changed(const ::Database::AttributeBase *)));
         }
     }
 }
@@ -129,20 +127,27 @@ void TableModel<RowType, Owner>::updateData()
 }
 
 template<class RowType, class Owner>
+Qt::DropActions TableModel<RowType, Owner>::supportedDragActions() const
+{
+    return Qt::CopyAction;
+}
+
+template<class RowType, class Owner>
 bool TableModel<RowType, Owner>::setData(QList<RowType*> list)
 {
+    beginResetModel();
     m_data = list;
-    this->reset();
+    endResetModel();
     return true;
 }
 
 template<class RowType, class Owner>
-void TableModel<RowType, Owner>::on_attribute_changed(::Database::AttributeBase *attribute)
+void TableModel<RowType, Owner>::on_attribute_changed(const ::Database::AttributeBase *attribute)
 {
     RowType *row = static_cast<RowType*>(attribute->owner());
 
     int i = m_data.indexOf(row);
-    int j = m_owner->registeredAttributes()->values().indexOf(attribute);
+    int j = m_owner->registeredAttributes()->values().indexOf(const_cast< ::Database::AttributeBase *>(attribute));
 
     QModelIndex changedIndex = index(i,j,QModelIndex());
     emit dataChanged(changedIndex, changedIndex);
@@ -275,7 +280,7 @@ bool TableModel<RowType, Owner>::setData(const QModelIndex &index, const QVarian
 
         if(attribute->isDatabaseAttribute())
         {
-            attribute->changeValue(value,true);
+            attribute->changeValue(value, true);
         }
         emit dataChanged(index, index);
         return true;

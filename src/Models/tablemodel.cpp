@@ -18,8 +18,9 @@ AttributeVariant::DisplayRole TableModelBase::displayRole(){
 }
 
 void TableModelBase::setDisplayRole(AttributeVariant::DisplayRole role){
+    beginResetModel();
     m_displayRole = role;
-    this->reset();
+    endResetModel();
 }
 
 void TableModelBase::setVisibleColumns(QList<int> list)

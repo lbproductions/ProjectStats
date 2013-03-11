@@ -75,7 +75,11 @@ QString Drink::mimeType() const
 
 QImage Drink::calculate_icon()
 {
-    QImage image(iconPath->value());
+    QString path = iconPath->value();
+    if(path.isEmpty())
+        return QImage();
+
+    QImage image(path);
     if(!image.isNull())
     {
         return image.scaledToHeight(40);

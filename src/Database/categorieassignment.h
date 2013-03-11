@@ -7,6 +7,9 @@
 #include "databaseattribute.h"
 
 START_ROW_DECLARATION(CategorieAssignment, Row)
+#if QT_VERSION > 0x050000
+    Q_OBJECT
+#endif
     DECLARE_ROW_CONSTRUCTORS(CategorieAssignment, CategorieAssignment)
 
     DECLARE_DATABASEATTRIBUTE(int,CategorieAssignment,categorieId)

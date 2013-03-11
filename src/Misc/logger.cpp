@@ -63,7 +63,7 @@ void Logger::print(const QString &message)
 {
     QString msg = QTime::currentTime().toString() + " " + message;
 
-    fprintf(stderr, "%s\n", (char *)  msg.toAscii().data());
+    fprintf(stderr, "%s\n", (char *)  msg.toLatin1().data());
 
     if(m_logFile->isOpen())
     {
@@ -98,8 +98,8 @@ void Logger::fatal(const char *msg)
 
 void Logger::init()
 {
-#ifndef Q_OS_WIN
-    qInstallMsgHandler(myMessageOutput);
+#if false
+    qInstallMessageHandler(myMessageOutput);
 #endif
 }
 

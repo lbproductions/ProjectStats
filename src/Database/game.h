@@ -19,6 +19,10 @@ namespace Database{
 }
 
 START_ROW_DECLARATION(Game, Row)
+#if QT_VERSION > 0x050000
+    Q_OBJECT
+#endif
+
     DECLARE_ROW_CONSTRUCTORS(Game, Game)
 
     Game(QString type, bool live);

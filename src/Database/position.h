@@ -7,6 +7,10 @@
 #include "databaseattribute.h"
 
 START_ROW_DECLARATION(Position, Row)
+#if QT_VERSION > 0x050000
+    Q_OBJECT
+#endif
+
     DECLARE_ROW_CONSTRUCTORS(Position, Position)
 
     Position(Player* player, Game* game, int position);

@@ -9,11 +9,12 @@
 #include <QDesktopWidget>
 #include <QSettings>
 #include <QFileDialog>
+#include <QApplication>
 
 //#include <databasewindow.h>
 #include <Misc/messagesystem.h>
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 #   include <Misc/Updater/sparkleupdater.h>
 #elif defined Q_WS_WIN
 #   //include <Misc/Updater/winsparkleupdater.h>
@@ -52,7 +53,7 @@ Handler::Handler(int argc, char *argv[])
 
     this->setWindowIcon(QIcon(":/icons/pslogo"));
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     //m_updater = new SparkleUpdater("http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast_macos.xml");
 #elif defined Q_WS_WIN
     //m_updater = new WinSparkleUpdater("http://dl.dropbox.com/u/140012/ProjectStats/ProjectStatsAppCast_win.xml");
@@ -88,7 +89,7 @@ Handler::~Handler()
     QMetaObject::invokeMethod(Database::TaskScheduler::instance(),"shutdown");
 }
 
-Handler* const Handler::getInstance() {
+Handler *Handler::getInstance() {
     return qobject_cast<Handler*>(QApplication::instance());
 }
 
