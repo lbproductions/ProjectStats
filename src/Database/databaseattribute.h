@@ -6,7 +6,12 @@
 #include "row.h"
 
 #include <QVariant>
+
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#else
 #include <QtConcurrentRun>
+#endif
 
 namespace Database {
 

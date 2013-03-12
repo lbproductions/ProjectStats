@@ -28,7 +28,7 @@ void SidebarItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     if(c->isParentCategorie())
     {
-        QFont font = qVariantValue<QFont>(index.data(Qt::FontRole));
+        QFont font = index.data(Qt::FontRole).value<QFont>();
         font.setPixelSize(11);
         font.setBold(true);
 
@@ -48,7 +48,7 @@ void SidebarItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
         QString text = index.data(Qt::UserRole + 2).toString();
 
-        QFont font = qVariantValue<QFont>(index.data(Qt::FontRole));
+        QFont font = index.data(Qt::FontRole).value<QFont>();
         font.setPixelSize(12);
 
         if(m_view->selectionModel()->selectedIndexes().contains(index))

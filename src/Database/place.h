@@ -13,6 +13,10 @@
 #include <Database/Calculator/placecalculator.h>
 
 START_ROW_DECLARATION(Place, Row)
+#if QT_VERSION >= 0x050000
+    Q_OBJECT
+#endif
+
     DECLARE_ROW_CONSTRUCTORS(Place, Place)
 
     DECLARE_DATABASEATTRIBUTE(int,Place,plz)

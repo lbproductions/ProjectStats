@@ -42,7 +42,7 @@ class Changeable : public QObject
 public:
     explicit Changeable(QObject *parent = 0);
 
-    virtual const QString toString();
+    virtual QString toString() const;
 
 signals:
     void changed();
@@ -122,9 +122,9 @@ public:
       */
     virtual QString sqlType() const = 0;
 
-    virtual const AttributeVariant toVariant() = 0;
-    virtual const QString toString() = 0;
-    virtual const QVariant displayVariant() = 0;
+    virtual AttributeVariant toVariant() const = 0;
+    virtual QString toString() const = 0;
+    virtual QVariant displayVariant() const = 0;
     virtual void changeValue(QVariant value, bool updateDatabase);
 
     virtual AttributeFutureWatcher* startCalculationTask() = 0;
@@ -163,7 +163,7 @@ protected slots:
 
 signals:
 
-    void changed(::Database::AttributeBase*);
+    void changed(const ::Database::AttributeBase*);
 
     /*!
       Wird gesendet, kurz bevor ein Hintergrundtask für die Berechnung oder Update dieses Attributs gestartet wird.<br>
@@ -229,13 +229,13 @@ public:
 
       \return der Wert des Attributs.
       */
-    virtual const T value();
+    virtual T value() const;
 
-    const AttributeVariant toVariant();
+    AttributeVariant toVariant() const;
 
-    const QString toString();
+    QString toString() const;
 
-    const QVariant displayVariant();
+    QVariant displayVariant() const;
     /*!
       Startet im Hintergrund eine Neuberechnung des Attributs und
       gibt den AttributeFutureWatcher dieses Attributs zurück.
@@ -300,7 +300,8 @@ public:
 
     void setCacheInitialized(bool initialized);
 
-    virtual void changeValue(const T value);
+    void changeValue(const T value);
+
 protected:
     friend class TableModel<R, Table<R> >;
     friend class RecalculationTask<Attribute<T,R,C>,T>;
@@ -314,7 +315,7 @@ protected:
     /*!
       Setzt den Wert des Attributs auf \p value. Diese Funktion sollte nur für Datenbankattribute oder intern aufgerufen werden!
       */
-    virtual void changeValue(const QVariant &value);
+    void changeValue(const QVariant &value);
 
     /*!
       Wird aufgerufen, falls sich Attribute ändern, von denen dieses Attribut abhängt.<br>
@@ -336,8 +337,8 @@ protected:
 
     void endCalculation();
 
-    bool m_cacheInitialized; //!< true, wenn der Cache den korrekten Wert enthält.
-    T m_value; //!< Der Cache für den Wert des Attributs.
+    mutable bool m_cacheInitialized; //!< true, wenn der Cache den korrekten Wert enthält.
+    mutable T m_value; //!< Der Cache für den Wert des Attributs.
     AttributeFutureWatcher* m_futureWatcher; //!< Der FutureWatcher dieser Klasse.
 
     C* m_calculator; //! Calculator für Calc-Funktion
@@ -345,11 +346,11 @@ protected:
     UpdateFunction m_updateFunction; //!< Die Funktion zum Updaten des Attributs.
     QHash<QString,AttributeSpecificUpdateFunction> m_updateFunctions;
 
-    QMutex m_mutex; //!< Ein Mutex zum Threadsicher machen...
+    mutable QMutex m_mutex; //!< Ein Mutex zum Threadsicher machen...
     QMutex m_waitingMutex;
     QWaitCondition m_waitCondition;
-    Task* m_currentTask;
-    bool m_isCalculating;
+    mutable Task* m_currentTask;
+    mutable bool m_isCalculating;
 };
 
 //! Dieses Interface dient dazu, der template-Klasse AttributeFutureWatcher signals und slots, sowie ein Dasein als QObject zu ermöglichen.
@@ -450,7 +451,7 @@ Attribute<T,R,C>::~Attribute()
 }
 
 template<class T, class R, class C>
-const AttributeVariant Attribute<T,R,C>::toVariant()
+AttributeVariant Attribute<T, R, C>::toVariant() const
 {
     AttributeVariant v;
     v.setValue(value());
@@ -458,7 +459,7 @@ const AttributeVariant Attribute<T,R,C>::toVariant()
 }
 
 template<class T, class R, class C>
-const QVariant Attribute<T,R,C>::displayVariant()
+QVariant Attribute<T, R, C>::displayVariant() const
 {
     QMutexLocker locker(&m_mutex); (void) locker;
 
@@ -479,7 +480,7 @@ const QVariant Attribute<T,R,C>::displayVariant()
 }
 
 template<class T, class R, class C>
-const QString Attribute<T,R,C>::toString()
+QString Attribute<T, R, C>::toString() const
 {
     AttributeVariant variant = toVariant();
     QString string = variant.toString();
@@ -632,7 +633,7 @@ void RecalculationTask<AttributeType,ValueType>::execute()
 }
 
 template<class T, class R, class C>
-const T Attribute<T,R,C>::value()
+T Attribute<T, R, C>::value() const
 {
     m_mutex.lock();
     Task* task = m_currentTask;

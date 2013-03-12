@@ -13,6 +13,10 @@ namespace Database{
 }
 
 START_ROW_DECLARATION(Categorie, Row)
+#if QT_VERSION >= 0x050000
+    Q_OBJECT
+#endif
+
     DECLARE_ROW_CONSTRUCTORS(Categorie, Categorie)
 
     /*!

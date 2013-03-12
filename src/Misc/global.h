@@ -8,6 +8,8 @@ class QTime;
 namespace Database{
     class Player;
     class RowPair;
+    bool qMapLessThanKey(const RowPair &key1, const RowPair &key2);
+    bool operator<(const RowPair &e1, const RowPair &e2);
 }
 
 /*!
@@ -25,8 +27,6 @@ double round(double zahl, int stellen);
   */
 QList<Database::Player*> stringToPlayerList(QString string);
 
-
-bool operator<(const Database::RowPair &e1, const Database::RowPair &e2);
 
 bool operator==(const Database::RowPair &e1, const Database::RowPair &e2);
 

@@ -12,6 +12,10 @@ namespace Database
 }
 
 START_ROW_DECLARATION(LiveGameDrink, Row)
+#if QT_VERSION >= 0x050000
+    Q_OBJECT
+#endif
+
     DECLARE_ROW_CONSTRUCTORS(LiveGameDrink, LiveGameDrink)
 
     LiveGameDrink(Player* player, Round* round, Drink* drink);

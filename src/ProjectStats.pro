@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql webkit network xml
+QT       += core gui sql webkit webkitwidgets network xml
 
 TARGET = ProjectStats
 TEMPLATE = app

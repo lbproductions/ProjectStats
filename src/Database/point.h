@@ -14,6 +14,10 @@ namespace Database
 }
 
 START_ROW_DECLARATION(Point, Row)
+#if QT_VERSION >= 0x050000
+    Q_OBJECT
+#endif
+
     DECLARE_ROW_CONSTRUCTORS(Point, Point)
 
     Point(Round* round, Player* player, int points);

@@ -42,9 +42,16 @@ QList<Database::Player*> stringToPlayerList(QString string)
     return players;
 }
 
-bool operator<(const Database::RowPair &e1, const Database::RowPair &e2)
+namespace Database {
+bool qMapLessThanKey(const RowPair &key1, const RowPair &key2)
+{
+    return key1 < key2;
+}
+
+bool operator<(const RowPair &e1, const RowPair &e2)
 {
     return e1.first()->id() < e2.first()->id();
+}
 }
 
 bool operator==(const Database::RowPair &e1, const Database::RowPair &e2)

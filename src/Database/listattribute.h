@@ -17,9 +17,9 @@ public:
     /*!
     Gibt für den Wert an der Stelle pos zurück.
     */
-    const V value(int pos);
+    V value(int pos) const;
 
-    const QList<V> value();
+    QList<V> value() const;
 };
 
 template<class V, class R, class C>
@@ -29,12 +29,13 @@ ListAttribute<V,R,C>::ListAttribute(const QString &name, const QString &displayN
 }
 
 template<class V, class R, class C>
-const V ListAttribute<V,R,C>::value(int pos){
+V ListAttribute<V, R, C>::value(int pos) const
+{
     return value().at(pos);
 }
 
 template<class V, class R, class C>
-const QList<V> ListAttribute<V,R,C>::value(){
+QList<V> ListAttribute<V, R, C>::value() const{
      return Attribute<QList<V>,R,C>::value();
 }
 
