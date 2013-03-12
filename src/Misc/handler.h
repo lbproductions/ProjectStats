@@ -8,13 +8,13 @@
 
 #include <Database/attributevariant.h>
 #include <Database/rowpair.h>
+#include <Database/database.h>
 
 class MessageSystem;
 class QDateTime;
 
 namespace Database
 {
-    class Database;
     class AttributeBase;
     class Player;
     class Game;
@@ -63,7 +63,7 @@ public:
     /*!
       Gibt die eine QApplication Instanz zurück.
       */
-    static Handler* const getInstance();
+    static Handler* getInstance();
 
 
     /*!

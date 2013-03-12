@@ -1,8 +1,9 @@
 #ifndef SINGLETON_H
 #define SINGLETON_H
 
+#include <QApplication>
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 
 #include <QPointer>
 #include <QMutex>

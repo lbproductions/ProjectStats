@@ -10,6 +10,10 @@ class QDateTime;
 #include "player.h"
 
 START_ROW_DECLARATION(League, Row)
+#if QT_VERSION >= 0x050000
+    Q_OBJECT
+#endif
+
     DECLARE_ROW_CONSTRUCTORS(League, League)
 
     DECLARE_DATABASEATTRIBUTE(QString,League,name)

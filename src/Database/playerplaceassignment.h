@@ -6,6 +6,10 @@
 #include "databaseattribute.h"
 
 START_ROW_DECLARATION(PlayerPlaceAssignment, Row)
+#if QT_VERSION >= 0x050000
+    Q_OBJECT
+#endif
+
     DECLARE_ROW_CONSTRUCTORS(PlayerPlaceAssignment, PlayerPlaceAssignment)
 
     DECLARE_DATABASEATTRIBUTE(int,PlayerPlaceAssignment,playerId)

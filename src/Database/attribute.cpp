@@ -17,7 +17,7 @@ Changeable::Changeable(QObject *parent) :
 {
 }
 
-const QString Changeable::toString()
+QString Changeable::toString() const
 {
     return QString();
 }
@@ -47,7 +47,7 @@ AttributeBase::AttributeBase(const QString &name, const QString &displayName, At
     m_displayRole(AttributeVariant::MainWindow),
     m_emitChange(true)
 {
-    connect(this,SIGNAL(changed(::Database::AttributeBase*)),this,SIGNAL(changed()));
+    connect(this,SIGNAL(changed(const ::Database::AttributeBase*)),this,SIGNAL(changed()));
 }
 
 AttributeOwner *AttributeBase::owner() const
@@ -85,7 +85,7 @@ bool AttributeBase::isDatabaseAttribute() const
     return false;
 }
 
-void AttributeBase::changeValue(QVariant value, bool /*updateDatabase*/)
+void AttributeBase::changeValue(QVariant value, bool updateDatabase)
 {
     changeValue(value);
 }

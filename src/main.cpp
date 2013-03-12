@@ -1,4 +1,4 @@
-#include <QtGui/QApplication>
+#include <QApplication>
 
 #include <Misc/logger.h>
 #include <Misc/cocoainitializer.h>

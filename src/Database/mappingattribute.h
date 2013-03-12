@@ -52,9 +52,9 @@ public:
     /*!
     Gibt für \p key den richtigen Wert zurück.
     */
-    const V value(K key);
+    V value(K key) const;
 
-    const QMap<K,V> value();
+    QMap<K,V> value() const;
 
     MappingAttributeFutureWatcher<K,V,R,C> *mappingFutureWatcher(const K& key);
 
@@ -74,12 +74,13 @@ MappingAttribute<K,V,R,C>::MappingAttribute(const QString &name, const QString &
 }
 
 template<class K, class V, class R, class C>
-const V MappingAttribute<K,V,R,C>::value(K key){
+V MappingAttribute<K,V,R,C>::value(K key) const
+{
     return value().value(key);
 }
 
 template<class K, class V, class R, class C>
-const QMap<K,V> MappingAttribute<K,V,R,C>::value()
+QMap<K,V> MappingAttribute<K,V,R,C>::value() const
 {
      return Attribute<QMap<K,V>,R,C>::value();
 }

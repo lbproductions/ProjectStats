@@ -6,3 +6,5 @@
 
 /src/Makefile
 ProjectStats-build-desktop/
+.DS_Store
+*.pro.user.*
