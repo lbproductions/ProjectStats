@@ -10,7 +10,7 @@
 #include <Database/Calculator/offlinegamecalculator.h>
 
 START_ROW_DECLARATION(OfflineGame, Game)
-#if QT_VERSION > 0x050000
+#if QT_VERSION >= 0x050000
     Q_OBJECT
 #endif
 

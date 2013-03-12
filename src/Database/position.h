@@ -7,7 +7,7 @@
 #include "databaseattribute.h"
 
 START_ROW_DECLARATION(Position, Row)
-#if QT_VERSION > 0x050000
+#if QT_VERSION >= 0x050000
     Q_OBJECT
 #endif
 

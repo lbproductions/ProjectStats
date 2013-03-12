@@ -13,7 +13,7 @@
 #include <Database/Calculator/drinkcalculator.h>
 
 START_ROW_DECLARATION(Drink, Row)
-#if QT_VERSION > 0x050000
+#if QT_VERSION >= 0x050000
     Q_OBJECT
 #endif
 
