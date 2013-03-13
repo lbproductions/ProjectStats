@@ -199,7 +199,9 @@ SOURCES += main.cpp\
     Gui/Details/LiveGameDetails/Sidebar/commentsidebarpage.cpp \
     Database/league.cpp \
     Database/leagueplayerassignment.cpp \
-    Gui/MainWindow/Views/LeagueView/leaguetable.cpp
+    Gui/MainWindow/Views/LeagueView/leaguetable.cpp \
+    Gui/Details/LiveGameDetails/Doppelkopf/newrounddialog.cpp \
+    Gui/Misc/playerscombobox.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -414,7 +416,9 @@ HEADERS  += \
     Gui/Details/LiveGameDetails/Sidebar/commentsidebarpage.h \
     Database/league.h \
     Database/leagueplayerassignment.h \
-    Gui/MainWindow/Views/LeagueView/leaguetable.h
+    Gui/MainWindow/Views/LeagueView/leaguetable.h \
+    Gui/Details/LiveGameDetails/Doppelkopf/newrounddialog.h \
+    Gui/Misc/playerscombobox.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -451,7 +455,8 @@ FORMS    += \
     Gui/Details/LiveGameDetails/Sidebar/sidebarcontroller.ui \
     Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsgroupbox.ui \
     Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsroundbox.ui \
-    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsspecialstats.ui
+    Gui/Details/LiveGameDetails/Sidebar/Doppelkopf/dokoplayerstatsspecialstats.ui \
+    Gui/Details/LiveGameDetails/Doppelkopf/newrounddialog.ui
 
 
 mac {

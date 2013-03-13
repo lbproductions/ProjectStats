@@ -3,6 +3,7 @@
 #include "schmeisserei.h"
 #include "dokolivegame.h"
 
+#include <Database/database.h>
 #include <Database/player.h>
 
 START_ROW_IMPLEMENTATION(DokoRound, Round, Round)
@@ -45,6 +46,36 @@ void DokoRound::addSchmeisserei(Player* player, const QString& type)
     addChildRow(schmeisserei);
     static_cast<DokoLiveGame*>(game->value())->doko_schmeisserei->recalculateFromScratch();
     this->doko_schmeissereien->recalculateFromScratch();
+}
+
+Player *DokoRound::rePlayer1() const
+{
+    return Players::instance()->rowById(doko_re1PlayerId->value()).data();
+}
+
+Player *DokoRound::rePlayer2() const
+{
+    return Players::instance()->rowById(doko_re2PlayerId->value()).data();
+}
+
+Player *DokoRound::schweinereiPlayer() const
+{
+    return Players::instance()->rowById(doko_schweinereiPlayerId->value()).data();
+}
+
+Player *DokoRound::hochzeitPlayer() const
+{
+    return Players::instance()->rowById(doko_hochzeitPlayerId->value()).data();
+}
+
+Player *DokoRound::dokoSoloPlayer() const
+{
+    return Players::instance()->rowById(doko_soloPlayerId->value()).data();
+}
+
+Player *DokoRound::trumpfabgabePlayer() const
+{
+    return Players::instance()->rowById(doko_trumpfabgabePlayerId->value()).data();
 }
 
 END_ROW_IMPLEMENTATION()
