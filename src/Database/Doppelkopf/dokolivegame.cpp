@@ -217,4 +217,24 @@ Round *DokoLiveGame::createRound()
     return round;
 }
 
+QStringList DokoLiveGame::allowedSoli() const
+{
+    QStringList soli;
+
+    if(doko_mitBubensolo->value())
+        soli << "Buben";
+    if(doko_mitDamensolo->value())
+        soli << "Damen";
+    if(doko_mitFarbsolo->value())
+        soli << "Farb";
+    if(doko_mitFleischlos->value())
+        soli << "Fleischlos";
+    if(doko_mitTrumpfsolo->value())
+        soli << "Trumpf";
+    if(doko_mitSchwarzsolo->value())
+        soli << "Schwarz";
+
+    return soli;
+}
+
 END_ROW_IMPLEMENTATION()

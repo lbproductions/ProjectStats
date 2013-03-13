@@ -118,6 +118,8 @@ START_ROW_DECLARATION(DokoLiveGame, LiveGame)
 
     Gui::Details::SummaryWidget* summaryWidget();
 
+    QStringList allowedSoli() const;
+
     static const QString TYPE;
 
 protected:
