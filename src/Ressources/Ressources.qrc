@@ -12,6 +12,7 @@
         <file alias="greybackground">graphics/styles/mac/greybackground.png</file>
         <file alias="greybackground2">graphics/styles/mac/greybackground2.png</file>
         <file alias="sheetbackground">graphics/styles/mac/sheetbackground.png</file>
+        <file alias="background_linen">graphics/styles/mac/background_linen.png</file>
     </qresource>
     <qresource prefix="/graphics/styles/mac/sidebar">
         <file alias="sidebar_options_addbutton_pressed">graphics/styles/mac/sidebar/sidebar_options_addbutton_pressed.png</file>
@@ -111,5 +112,12 @@
     </qresource>
     <qresource prefix="/graphics/styles/mac/groupbox/fullscreen">
         <file alias="background">graphics/styles/mac/groupbox/fullscreen/background.png</file>
+    </qresource>
+    <qresource prefix="/graphics/styles/mac/pushbutton_iphotodarktab">
+        <file alias="background_checked_pressed">graphics/styles/mac/pushbutton_iphotodarktab/background_checked_pressed.png</file>
+        <file alias="background_checked">graphics/styles/mac/pushbutton_iphotodarktab/background_checked.png</file>
+        <file alias="background_pressed">graphics/styles/mac/pushbutton_iphotodarktab/background_pressed.png</file>
+        <file alias="background">graphics/styles/mac/pushbutton_iphotodarktab/background.png</file>
+        <file alias="stylesheet">graphics/styles/mac/pushbutton_iphotodarktab/stylesheet.css</file>
     </qresource>
 </RCC>

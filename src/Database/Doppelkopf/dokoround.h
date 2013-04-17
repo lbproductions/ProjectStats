@@ -36,6 +36,13 @@ START_ROW_DECLARATION(DokoRound, Round)
 
     void addSchmeisserei(Player* player, const QString& type);
 
+    Player *rePlayer1() const;
+    Player *rePlayer2() const;
+    Player *schweinereiPlayer() const;
+    Player *hochzeitPlayer() const;
+    Player *dokoSoloPlayer() const;
+    Player *trumpfabgabePlayer() const;
+
 END_ROW_DECLARATION(DokoRound)
 
 #endif // DATABASE_DOKOROUND_H

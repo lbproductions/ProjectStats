@@ -5,9 +5,11 @@
 #include "newdokoroundwidget.h"
 #include "dokoendlivegamewidget.h"
 #include "newdoppelkopfroundwidget.h"
+#include "newrounddialog.h"
 
 #include <Gui/Details/LiveGameDetails/Doppelkopf/dokolivegamedetailswidget.h>
 #include <Database/Doppelkopf/dokolivegame.h>
+#include <Database/Doppelkopf/dokoround.h>
 #include <Server/soapprojectstatsService.h>
 
 #include <QDebug>
@@ -85,8 +87,9 @@ void DokoLiveGameRowWindow::reflectState()
 
 void DokoLiveGameRowWindow::showNewRoundDialog()
 {
-    LiveGameDetails::DokoLiveGameDetails::NewDokoRoundWidget newDokoRoundWidget(m_dokolivegame,this);
-    newDokoRoundWidget.exec();
+    DokoLiveGameWindowNS::NewRoundDialog dialog(this);
+    dialog.setDoppelkopfRound(static_cast<Database::DokoRound *>(m_dokolivegame->currentRound->value()));
+    dialog.exec();
     /*
     LiveGameDetails::DokoLiveGameDetails::NewDoppelkopfRoundWidget newDokoRoundWidget(m_dokolivegame,this);
     newDokoRoundWidget.exec();
