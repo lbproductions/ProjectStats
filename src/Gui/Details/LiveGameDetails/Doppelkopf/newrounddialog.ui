@@ -123,7 +123,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_3">
       <layout class="QFormLayout" name="formLayout_3">
@@ -295,24 +295,24 @@
        <item row="1" column="1">
         <widget class="QComboBox" name="comboBoxSoloType"/>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="label_16">
          <property name="text">
           <string>Schweine:</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="PlayersComboBox" name="comboBoxSoloSchweine"/>
        </item>
-       <item row="4" column="0">
+       <item row="6" column="0">
         <widget class="QLabel" name="label_14">
          <property name="text">
           <string>Points:</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="6" column="1">
         <widget class="QSpinBox" name="spinBoxSoloPoints">
          <property name="minimum">
           <number>-1000</number>
@@ -322,14 +322,14 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="8" column="0">
         <widget class="QLabel" name="label_15">
          <property name="text">
           <string>Comment:</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="8" column="1">
         <widget class="QTextEdit" name="textEditSoloComment"/>
        </item>
        <item row="2" column="0">
@@ -346,15 +346,25 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="7" column="1">
         <widget class="QComboBox" name="comboBoxSoloWinner"/>
        </item>
-       <item row="5" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="label_23">
          <property name="text">
           <string>Winner:</string>
          </property>
         </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_25">
+         <property name="text">
+          <string>Hochzeit:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="PlayersComboBox" name="comboBoxSoloHochzeit"/>
        </item>
       </layout>
      </widget>

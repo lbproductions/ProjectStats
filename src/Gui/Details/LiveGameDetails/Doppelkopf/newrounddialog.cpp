@@ -92,6 +92,9 @@ void NewRoundDialog::setDoppelkopfRound(Database::DokoRound *round)
     ui->comboBoxSoloSchweine->setEnabled(game->doko_mitSchweinerei->value());
     ui->comboBoxSoloSchweine->addPlayers(round->currentPlayingPlayers->value());
     ui->comboBoxSoloSchweine->setCurrentPlayer(round->schweinereiPlayer());
+    ui->comboBoxSoloHochzeit->setEnabled(game->doko_mitSchweinerei->value());
+    ui->comboBoxSoloHochzeit->addPlayers(round->currentPlayingPlayers->value());
+    ui->comboBoxSoloHochzeit->setCurrentPlayer(round->schweinereiPlayer());
     ui->checkBoxSoloPflicht->setEnabled(game->doko_mitPflichtsolo->value());
     ui->comboBoxSoloType->addItems(game->allowedSoli());
     if(game->allowedSoli().indexOf(round->doko_soloType->value()) >= 0)
@@ -229,10 +232,13 @@ void NewRoundDialog::checkSoloRoundContents()
 
     if(ui->comboBoxSoloType->currentText() == "Trumpf") {
         ui->comboBoxSoloSchweine->setEnabled(true);
+        ui->comboBoxSoloHochzeit->setEnabled(true);
     }
     else {
         ui->comboBoxSoloSchweine->setEnabled(false);
+        ui->comboBoxSoloHochzeit->setEnabled(false);
         ui->comboBoxSoloSchweine->setCurrentPlayer(0);
+        ui->comboBoxSoloHochzeit->setCurrentPlayer(0);
     }
 
     ui->buttonBox->button(QDialogButtonBox::Save)->setEnabled(ui->comboBoxSoloPlayer->currentPlayer());
@@ -382,7 +388,8 @@ void NewRoundDialog::saveSoloRound()
     m_doppelkopfRound->comment->setValue(ui->textEditSoloComment->toPlainText());
     if(ui->comboBoxSoloSchweine->currentPlayer())
         m_doppelkopfRound->doko_schweinereiPlayerId->setValue(ui->comboBoxSoloSchweine->currentPlayer()->id());
-
+    if(ui->comboBoxSoloHochzeit->currentPlayer())
+        m_doppelkopfRound->doko_hochzeitPlayerId->setValue(ui->comboBoxSoloHochzeit->currentPlayer()->id());
     m_doppelkopfRound->doko_soloType->setValue(ui->comboBoxSoloType->currentText());
     m_doppelkopfRound->doko_soloPflicht->setValue(ui->checkBoxSoloPflicht->isChecked());
 
