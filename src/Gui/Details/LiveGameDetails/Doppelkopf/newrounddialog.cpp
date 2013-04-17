@@ -337,11 +337,11 @@ void NewRoundDialog::saveNormalRound()
     m_doppelkopfRound->setState(Database::Round::FinishedState);
     if(ui->comboBoxWinner->currentText() == "Re")
     {
-//        m_doppelkopfRound->doko(Database::DokoRound::Re); TODO: if round has 0 points: save who has won the round
+        m_doppelkopfRound->doko_winner->setValue(Database::DokoRound::Re);
     }
     else
     {
-//        m_doppelkopfRound->setWinner(Database::DokoRound::Contra);
+        m_doppelkopfRound->doko_winner->setValue(Database::DokoRound::Contra);
     }
 
     Database::DokoLiveGame *game = static_cast<Database::DokoLiveGame *>(m_doppelkopfRound->game->value());
@@ -368,13 +368,13 @@ void NewRoundDialog::saveHochzeitRound()
     }
     m_doppelkopfRound->setState(Database::Round::FinishedState);
 
-    if(ui->comboBoxHochzeitWinner->currentText() == "Re")
+    if(ui->comboBoxWinner->currentText() == "Re")
     {
-//        m_doppelkopfRound->setWinner(Database::DokoRound::Re);
+        m_doppelkopfRound->doko_winner->setValue(Database::DokoRound::Re);
     }
     else
     {
-//        m_doppelkopfRound->setWinner(Database::DokoRound::Contra);
+        m_doppelkopfRound->doko_winner->setValue(Database::DokoRound::Contra);
     }
 
     Database::DokoLiveGame *game = static_cast<Database::DokoLiveGame *>(m_doppelkopfRound->game->value());
@@ -403,13 +403,13 @@ void NewRoundDialog::saveSoloRound()
     }
     m_doppelkopfRound->setState(Database::Round::FinishedState);
 
-    if(ui->comboBoxSoloWinner->currentText() == "Re")
+    if(ui->comboBoxWinner->currentText() == "Re")
     {
-//        m_doppelkopfRound->setWinner(Database::DokoRound::Re);
+        m_doppelkopfRound->doko_winner->setValue(Database::DokoRound::Re);
     }
     else
     {
-//        m_doppelkopfRound->setWinner(Database::DokoRound::Contra);
+        m_doppelkopfRound->doko_winner->setValue(Database::DokoRound::Contra);
     }
 
     Database::DokoLiveGame *game = static_cast<Database::DokoLiveGame *>(m_doppelkopfRound->game->value());
@@ -437,13 +437,13 @@ void NewRoundDialog::saveTrumpfabgabeRound()
     }
     m_doppelkopfRound->setState(Database::Round::FinishedState);
 
-    if(ui->comboBoxTrumpfabgabeWinner->currentText() == "Re")
+    if(ui->comboBoxWinner->currentText() == "Re")
     {
-//        m_doppelkopfRound->setWinner(Database::DokoRound::Re);
+        m_doppelkopfRound->doko_winner->setValue(Database::DokoRound::Re);
     }
     else
     {
-//        m_doppelkopfRound->setWinner(Database::DokoRound::Contra);
+        m_doppelkopfRound->doko_winner->setValue(Database::DokoRound::Contra);
     }
 
     Database::DokoLiveGame *game = static_cast<Database::DokoLiveGame *>(m_doppelkopfRound->game->value());

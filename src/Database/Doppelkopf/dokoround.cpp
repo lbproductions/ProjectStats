@@ -19,6 +19,7 @@ START_ROW_IMPLEMENTATION(DokoRound, Round, Round)
     IMPLEMENT_DATABASEATTRIBUTE(int,DokoRound,doko_re2PlayerId,tr("Doko_Re2PlayerId"))
     IMPLEMENT_DATABASEATTRIBUTE(QString,DokoRound,doko_soloType,tr("Doko_SoloType"))
     IMPLEMENT_DATABASEATTRIBUTE(bool,DokoRound,doko_soloPflicht,tr("Doko_SoloPflicht"))
+    IMPLEMENT_DATABASEATTRIBUTE(int,DokoRound,doko_winner,tr("Doko_Winner"))
 
     IMPLEMENT_LISTATTRIBUTE_IN_CALC(Schmeisserei*,DokoRound,DokoRoundCalculator,calc,doko_schmeissereien,tr("Schmeissereien"))
 

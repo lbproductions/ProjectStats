@@ -20,6 +20,13 @@ START_ROW_DECLARATION(DokoRound, Round)
 
     DokoRound(DokoLiveGame* game, int number);
 
+    enum Winner {
+        Re = 1,
+        Contra = 2,
+        Draw = 3,
+        Unknown = 4
+    };
+
     DECLARE_DATABASEATTRIBUTE(int,DokoRound,doko_hochzeitPlayerId)
     DECLARE_DATABASEATTRIBUTE(int,DokoRound,doko_trumpfabgabePlayerId)
     DECLARE_DATABASEATTRIBUTE(int,DokoRound,doko_soloPlayerId)
@@ -28,6 +35,7 @@ START_ROW_DECLARATION(DokoRound, Round)
     DECLARE_DATABASEATTRIBUTE(int,DokoRound,doko_re2PlayerId)
     DECLARE_DATABASEATTRIBUTE(QString,DokoRound,doko_soloType)
     DECLARE_DATABASEATTRIBUTE(bool,DokoRound,doko_soloPflicht)
+    DECLARE_DATABASEATTRIBUTE(int,DokoRound,doko_winner)
 
     DECLARE_LISTATTRIBUTE_IN_CALC(Schmeisserei*,DokoRound,DokoRoundCalculator,doko_schmeissereien)
     DECLARE_MAPPINGATTRIBUTE_IN_CALC(Player*,bool,DokoRound,DokoRoundCalculator,doko_re)
