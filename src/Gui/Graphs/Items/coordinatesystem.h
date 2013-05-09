@@ -15,6 +15,7 @@ namespace Items
 {
 
 class Graph;
+class Junction;
 
 //! Oberklasse für alle Koordinatensysteme.
 /*!
@@ -84,6 +85,14 @@ public:
 
     void updateDimensions();
 
+    QList<QPointer<Items::Graph> > graphs();
+
+    Junction *junction(const QPoint &p1, const QPoint &p2);
+
+    QList<Junction*> junctions();
+
+    void addJunction(Junction* junction);
+
 signals:
     /*!
       Dieses Signal wird gesendet, wenn ein neuer Punkt zu einem enthaltenen Graphen hinzugefügt wurde.
@@ -106,6 +115,8 @@ protected:
     int m_yMax; //!< Der Maximale Y-Wert aller Graphen dieses Koordinatensystems.
     int m_xMin; //!< Der Minimale X-Wert aller Graphen dieses Koordinatensystems.
     int m_yMin; //!< Der Minimale Y-Wert aller Graphen dieses Koordinatensystems.
+
+    QList<Junction*> m_junctions;
 };
 }
 }

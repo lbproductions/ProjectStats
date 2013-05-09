@@ -2,9 +2,11 @@
 
 #include "graphpoint.h"
 #include "coordinatesystem.h"
+#include "junction.h"
 #include "../graphview.h"
 
 #include <QPainter>
+#include <QDebug>
 
 using namespace Gui::Graphs::Items;
 
@@ -47,7 +49,7 @@ void Graph::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/
     {
 	if(p1 != 0 && p2 != 0)
 	{
-	    drawJunction(p1->point(),p2->point(),painter);
+        drawJunction(p1->point(),p2->point(),painter);
 	}
 	p1 = p2;
     }
@@ -57,11 +59,14 @@ void Graph::drawJunction(const QPoint &p1, const QPoint &p2, QPainter *painter)
 {
     m_pen.setJoinStyle(Qt::RoundJoin);
     painter->setPen(m_pen);
-    QPen pen = painter->pen();
-    pen.setWidth(3);
-    painter->setPen(pen);
-    painter->drawLine(p1.x() * m_coordinateSystem->xScale(),-p1.y() * m_coordinateSystem->yScale(),
-		       p2.x() * m_coordinateSystem->xScale(),-p2.y() * m_coordinateSystem->yScale());
+
+    Junction* line = m_coordinateSystem->junction(p1,p2);
+    if(line == 0) {
+        line = new Junction(p1,p2,m_coordinateSystem);
+        m_coordinateSystem->addJunction(line);
+    }
+    line->draw(painter);
+
 }
 
 CoordinateSystem *Graph::coordinateSystem() const
@@ -103,3 +108,4 @@ QList<QPointer<GraphPoint> > Graph::points() const
 {
     return m_points;
 }
+

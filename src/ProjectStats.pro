@@ -201,7 +201,8 @@ SOURCES += main.cpp\
     Database/leagueplayerassignment.cpp \
     Gui/MainWindow/Views/LeagueView/leaguetable.cpp \
     Gui/Details/LiveGameDetails/Doppelkopf/newrounddialog.cpp \
-    Gui/Misc/playerscombobox.cpp
+    Gui/Misc/playerscombobox.cpp \
+    Gui/Graphs/Items/junction.cpp
 
 HEADERS  += \
     Database/table.h \
@@ -250,7 +251,7 @@ HEADERS  += \
     Misc/messagesystem.h \
     Database/listattribute.h \
     Misc/Updater/Updater.h \
-    Misc/Updater/sparkleupdater.h \
+    #Misc/Updater/sparkleupdater.h \
     Misc/global.h \
     Database/Calculator/roundcalculator.h \
     Database/Calculator/offlinegamecalculator.h \
@@ -418,7 +419,8 @@ HEADERS  += \
     Database/leagueplayerassignment.h \
     Gui/MainWindow/Views/LeagueView/leaguetable.h \
     Gui/Details/LiveGameDetails/Doppelkopf/newrounddialog.h \
-    Gui/Misc/playerscombobox.h
+    Gui/Misc/playerscombobox.h \
+    Gui/Graphs/Items/junction.h
 
 FORMS    += \
     Gui/Details/PlaceDetails/placedetailswidget.ui \
@@ -465,16 +467,16 @@ mac {
                         Gui/Misc/macwindowcontroller.mm
 
     LIBS += -F../frameworks \
-            -framework AppKit \
-            -framework Sparkle
+            -framework AppKit
+            #-framework Sparkle
 
-    INCLUDEPATH += ../frameworks/Sparkle.framework/Headers
+    #INCLUDEPATH += ../frameworks/Sparkle.framework/Headers
 
-    OTHER_FILES += Misc/Updater/sparkleupdater.mm
+    #OTHER_FILES += Misc/Updater/sparkleupdater.mm
 
-    PRIVATE_FRAMEWORKS.files = ../frameworks/Sparkle.framework
-    PRIVATE_FRAMEWORKS.path = Contents/Frameworks
-    QMAKE_BUNDLE_DATA += PRIVATE_FRAMEWORKS
+    #PRIVATE_FRAMEWORKS.files = ../frameworks/Sparkle.framework
+    #PRIVATE_FRAMEWORKS.path = Contents/Frameworks
+    #QMAKE_BUNDLE_DATA += PRIVATE_FRAMEWORKS
 }
 
 win32 {

@@ -58,6 +58,11 @@ Database::DokoRound* DokoGraphPoint::round() const
     return m_dokoround;
 }
 
+Database::Player *DokoGraphPoint::player() const
+{
+    return m_player;
+}
+
 void DokoGraphPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/)
 {
     painter->setPen(m_player->color->value());

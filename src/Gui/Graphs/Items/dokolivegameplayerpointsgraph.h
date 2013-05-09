@@ -35,6 +35,11 @@ public slots:
     void update();
 
     void addRound(::Database::Round*);
+
+    void drawJunction(const QPoint &p1, const QPoint &p2, QPainter *painter);
+
+private:
+
 };
 
 }}}

@@ -3,6 +3,9 @@
 #include "../graphview.h"
 #include "graph.h"
 #include "graphpoint.h"
+#include "junction.h"
+
+#include <QDebug>
 
 using namespace Gui::Graphs::Items;
 
@@ -31,6 +34,11 @@ void CoordinateSystem::updateDimensions()
             updateDimensions(point->point());
         }
     }
+}
+
+QList<QPointer<Graph> > CoordinateSystem::graphs()
+{
+    return m_graphs;
 }
 
 void CoordinateSystem::addGraph(Items::Graph *graph)
@@ -110,4 +118,25 @@ int CoordinateSystem::xMin() const
 int CoordinateSystem::yMin() const
 {
     return m_yMin;
+}
+
+Junction* CoordinateSystem::junction(const QPoint &p1, const QPoint &p2)
+{
+    foreach(Junction* junction, m_junctions) {
+        qDebug() << junction;
+        if(junction->x1() == p1.x() && junction->y1() == p1.y() && junction->x2() == p2.x() && junction->y2() == p2.y()){
+            return junction;
+        }
+    }
+    return 0;
+}
+
+QList<Junction *> CoordinateSystem::junctions()
+{
+    return m_junctions;
+}
+
+void CoordinateSystem::addJunction(Junction *junction)
+{
+    m_junctions.append(junction);
 }

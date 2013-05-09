@@ -9,8 +9,11 @@
 #include <Gui/Graphs/Items/livegamecoordinatesystem.h>
 #include <Gui/Graphs/Items/dokographpoint.h>
 
+#include "junction.h"
+
 #include <QDebug>
 #include <QGraphicsScene>
+#include <QPainter>
 
 using namespace Gui::Graphs::Items;
 
@@ -82,3 +85,18 @@ void DokoLiveGamePlayerPointsGraph::addRound(::Database::Round *r){
         addPoint(QPoint(r->number->value()+1,m_totalPoints),dokoround);
     }
 }
+
+void DokoLiveGamePlayerPointsGraph::drawJunction(const QPoint &p1, const QPoint &p2, QPainter *painter)
+{
+    m_pen.setJoinStyle(Qt::RoundJoin);
+    painter->setPen(m_pen);
+
+    Junction* line = m_coordinateSystem->junction(p1,p2);
+    if(line == 0) {
+        line = new Junction(p1,p2,m_coordinateSystem);
+        m_coordinateSystem->addJunction(line);
+    }
+    line->draw(painter, m_player);
+
+}
+

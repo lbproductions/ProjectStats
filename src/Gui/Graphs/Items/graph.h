@@ -18,6 +18,7 @@ namespace Items
 
 class CoordinateSystem;
 class GraphPoint;
+class Junction;
 
 //! Oberklasse für alle Graphen.
 /*!
@@ -77,6 +78,9 @@ public:
 
     QList<QPointer<GraphPoint> > points() const;
 
+    QMap<QPair<int,int>, QPair<int,int> > drawnLines() const;
+
+
 signals:
     /*!
       Dieses Signal wird gesendet, wenn ein Punkt zu diesem Graphen hinzugefügt wurde.
@@ -101,6 +105,8 @@ protected:
     int m_yMax; //!< Der Maximale Y-Wert aller Graphen dieses Koordinatensystems.
     int m_xMin; //!< Der Minimale X-Wert aller Graphen dieses Koordinatensystems.
     int m_yMin; //!< Der Minimale Y-Wert aller Graphen dieses Koordinatensystems.
+
+
 };
 
 }
